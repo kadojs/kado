@@ -1,1 +1,7 @@
 
+[submodule "app/blog"]
+	path = app/blog
+	url = https://github.com/nullivex/kado-blog
+[submodule "app/staff"]
+	path = app/staff
+	url = https://github.com/nullivex/kado-staff
