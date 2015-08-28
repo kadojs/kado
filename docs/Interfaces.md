@@ -5,6 +5,7 @@ Kado implements a variety of interfaces than can be enabled optionally as they
 are needed. A brief list of these interfaces.
 
 * admin
+* api
 * bin
 * client
 * main
@@ -17,6 +18,12 @@ Now that I have introduced the interfaces lets go over what they will all do.
 
 The admin panel will control how the system functions. Admin modules will 
 provide internal and staff only functionality.
+
+### API
+
+This interface is purely programmatic and provides a restful API interface.
+There may be socket based options implemented later that will talk through
+the same functions.
 
 ### Bin
 
@@ -54,12 +61,13 @@ most of our core modules to provide a more encompassed interface.
 Just to get it out of the way early, lets go over the listening ports that
 are setup by default for the Kado interfaces.
 
-* admin - 3003
+* admin - HTTP: 3000
+* api - HTTP: 3001
 * bin - none (command line only, maybe tty0 :)
-* client - 3004
-* main - 3000
-* sales - 3005
-* seller - 3006
+* client - HTTP: 3003
+* main - HTTP: 3004
+* sales - HTTP: 3005
+* seller - HTTP: 3006
 
 In production I recommend leaving these port numbers as they are however
 assign a separate localhost IP to each instance of Kado. For example,
