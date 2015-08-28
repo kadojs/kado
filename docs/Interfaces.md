@@ -13,7 +13,7 @@ are needed. A brief list of these interfaces.
 
 Now that I have introduced the interfaces lets go over what they will all do.
 
-#$# Admin
+### Admin
 
 The admin panel will control how the system functions. Admin modules will 
 provide internal and staff only functionality.
