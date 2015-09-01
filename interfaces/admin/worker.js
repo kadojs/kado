@@ -68,10 +68,10 @@ app.use(function(req,res,next){
 })
 app.use(express.static(__dirname + '/public'))
 app.use(function(req,res,next){
-  if(!req.session.staff && req.url.indexOf('/login') < 0){
+  if(!req.session.user && req.url.indexOf('/login') < 0){
     res.redirect('/login')
   } else {
-    app.locals.user = req.session.staff
+    app.locals.user = req.session.user
     next()
   }
 })
@@ -81,6 +81,7 @@ if('development' === app.get('env'))
   app.use(morgan('dev'))
 
 //login
+app.post('/login',routes.loginAction)
 app.get('/login',routes.login)
 
 //home page

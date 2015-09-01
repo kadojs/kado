@@ -4,33 +4,52 @@ include table
 doctype html
 html
   head
+    block meta
+      meta(charset='utf-8')
+      meta(http-equiv='X-UA-Compatible' content='IE=edge')
+      meta(name='viewport' content='width=device-width, initial-scale=1')
     block css
       link(rel='stylesheet', type='text/css', href='//bowercdn.net/c/html5-boilerplate-4.3.0/css/normalize.css')
       link(rel='stylesheet', type='text/css', href='//bowercdn.net/c/html5-boilerplate-4.3.0/css/main.css')
       link(rel='stylesheet', type='text/css', href='//bowercdn.net/c/bootstrap-3.2.0/dist/css/bootstrap.min.css')
+      link(rel='stylesheet', type='text/css', href='/css/simple-sidebar.css')
       link(rel='stylesheet', type='text/css', href='/css/layout.css')
     block title
   body
-    if user
-      //navbar
-      .navbar.navbar-fixed-top.navbar-inverse(role='navigation')
-        .container
-          a.navbar-brand(href='/') Kado
-          ul.nav.navbar-nav
-            each kadoNav as navGroup
-              li
-                a(href=navGroup.uri)= navGroup.name
-          ul.nav.navbar-nav.navbar-right
-            li.dropdown
-              a.dropdown-toggle(data-toggle='dropdown') #{user.email}
-                b.caret
-              ul.dropdown-menu
-                li
-                  a(href='/logout') Logout
-    //main content
-    block content
-    .text-center
-      small(style='font-size: 12px;') &copy; Kado Version #{version}
+    #wrapper
+      #sidebar-wrapper
+        ul.sidebar-nav
+          li.sidebar-brand
+            a(href='/') Kado
+          li
+            a(href='/blog/list')
+              span.glyphicon.glyphicon-book
+              span  Blog
+          li
+            a(href='/user/list')
+              span.glyphicon.glyphicon-user
+              span  Users
+      #page-content-wrapper
+        //if user
+          //navbar
+          .navbar.navbar-fixed-top.navbar-inverse(role='navigation')
+            .container
+              a.navbar-brand(href='/') Kado
+              //ul.nav.navbar-nav
+                each kadoNav as navGroup
+                  li
+                    a(href=navGroup.uri)= navGroup.name
+              ul.nav.navbar-nav.navbar-right
+                li.dropdown
+                  a.dropdown-toggle(data-toggle='dropdown') #{user.email}
+                    b.caret
+                  ul.dropdown-menu
+                    li
+                      a(href='/logout') Logout
+        //main content
+        block content
+        .text-center
+          small(style='font-size: 12px;') &copy; Kado Version #{version}
     //load scripts
     block js
       script(src='//bowercdn.net/c/jquery-1.11.1/dist/jquery.min.js')

@@ -1,9 +1,11 @@
 'use strict';
+var fs = require('fs')
 var Sequelize = require('sequelize')
 
 var config = require('../config')
 
 var inst
+var modelPath = __dirname + '/../models'
 
 
 /**
@@ -22,6 +24,11 @@ var createInst = function(){
       logging: config.mysql.logging || false
     }
   )
+  //load models automatically from the fs
+  fs.readdirSync(modelPath).forEach(function(file){
+    if('.' === file || '.' === file) return
+    inst.import(modelPath + '/' + file)
+  })
   inst.doConnect = function(){
     var that = this
     return that.authenticate().then(function(){return that.sync()})
