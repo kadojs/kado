@@ -11,11 +11,12 @@ var worker = require('infant').worker
 var morgan = require('morgan')
 var RedisStore = require('connect-redis')(expressSession)
 
-var sequelize = require('../helpers/sequelize')()
+var sequelize = require('../../helpers/sequelize')()
 
 var app = express()
-var config = require('../config')
+var config = require('../../config')
 var server = http.createServer(app)
+
 var routes = require('./routes')
 
 //make some promises
@@ -67,9 +68,6 @@ app.use(function(req,res,next){
 })
 app.use(express.static(__dirname + '/public'))
 app.use(function(req,res,next){
-  //allow public routes
-  if(req.url.match(/\/api\//)) return next()
-  //private
   if(!req.session.staff && req.url.indexOf('/login') < 0){
     res.redirect('/login')
   } else {
@@ -82,85 +80,11 @@ app.use(function(req,res,next){
 if('development' === app.get('env'))
   app.use(morgan('dev'))
 
-//----------------
-//private routes
-//----------------
-
-//auth
-app.post('/login',routes.staff.loginAction)
-app.get('/login',routes.staff.login)
-app.get('/logout',routes.staff.logout)
-
-//staff
-app.post('/staff/list',routes.staff.listAction)
-app.post('/staff/save',routes.staff.save)
-app.get('/staff/list',routes.staff.list)
-app.get('/staff/create',routes.staff.create)
-app.get('/staff/edit',routes.staff.edit)
-app.get('/staff',function(req,res){ res.redirect('/staff/list') })
-
-//buyer
-app.post('/buyer/list',routes.buyer.listAction)
-app.get('/buyer/list',routes.buyer.list)
-app.get('/buyer/detail',routes.buyer.detail)
-app.get('/buyer',function(req,res){ res.redirect('/buyer/list') })
-
-//seller
-app.post('/seller/list',routes.seller.listAction)
-app.post('/seller/save',routes.seller.save)
-app.get('/seller/create',routes.seller.create)
-app.get('/seller/edit',routes.seller.edit)
-app.get('/seller/list',routes.seller.list)
-app.get('/seller/detail',routes.seller.detail)
-app.get('/seller',function(req,res){ res.redirect('/seller/list') })
-
-//item
-app.post('/item/list',routes.item.listAction)
-app.post('/item/save',routes.item.save)
-app.get('/item/create',routes.item.create)
-app.get('/item/edit',routes.item.edit)
-app.get('/item/list',routes.item.list)
-app.get('/item',function(req,res){ res.redirect('/item/list') })
-
-//order
-app.post('/order/list',routes.order.listAction)
-app.post('/order/save',routes.order.save)
-app.get('/order/shipped',routes.order.shipped)
-app.get('/order/pending',routes.order.pending)
-app.get('/order/feedback',routes.order.awaitingFeedback)
-app.get('/order/detail',routes.order.detail)
-app.get('/order/list',routes.order.list)
-app.get('/order',function(req,res){ res.redirect('/order/list') })
-
-//dispute
-app.post('/dispute/save',routes.dispute.save)
-app.post('/dispute/list',routes.dispute.listAction)
-app.post('/dispute/resolved',routes.dispute.listActionResolved)
-app.post('/dispute/rejected',routes.dispute.listActionRejected)
-app.get('/dispute/list',routes.dispute.list)
-app.get('/dispute/resolved',routes.dispute.resolved)
-app.get('/dispute/rejected',routes.dispute.rejected)
-app.get('/dispute/detail',routes.dispute.detail)
-app.get('/dispute',function(req,res){ res.redirect('/dispute/list') })
-
-//pages
-app.post('/page/list',routes.page.listAction)
-app.post('/page/save',routes.page.save)
-app.get('/page/list',routes.page.list)
-app.get('/page/create',routes.page.create)
-app.get('/page/edit',routes.page.edit)
-app.get('/page',function(req,res){ res.redirect('/page/list') })
-
-//blog entries
-app.post('/blog/list',routes.blog.listAction)
-app.post('/blog/save',routes.blog.save)
-app.get('/blog/list',routes.blog.list)
-app.get('/blog/create',routes.blog.create)
-app.get('/blog/edit',routes.blog.edit)
-app.get('/blog',function(req,res){ res.redirect('/blog/list') })
+//login
+app.get('/login',routes.login)
 
 //home page
-app.get('/',routes.index)
+app.get('/',routes.home)
 
 
 /**

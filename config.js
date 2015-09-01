@@ -9,85 +9,35 @@ var pkg = require('./package.json')
 config = new ObjectManage()
 //dist config schema
 config.$load({
-  title: 'SaleLeap',
-  name: 'saleleap',
+  title: 'Kado',
+  name: 'kado',
   version: pkg.version,
-  recaptcha: {
-    publicKey: '6LfOxgYTAAAAAFCBPZRiCcLAPGSQI1QDQ1sNmjDz',
-    privateKey: '6LfOxgYTAAAAAMowULoqQfvX_XT_tW6ny5qaL3Ye'
-  },
   //databases
   redis: {
     host: '127.0.0.1',
     port: 6379,
     db: 0,
-    prefix: 'saleleap',
+    prefix: 'kado',
     options: {}
   },
   mysql: {
-    name: 'saleleap',
+    name: 'kado',
     host: '127.0.0.1',
     port: 3306,
     user: '',
     password: '',
     logging: false
   },
-  //services
-  gmail:{
-    service: 'gmail',
-    auth: {
-      user: 'notify@animegg.com',
-      pass: 'notifyanimeggpeople'
-    },
-    to: 'staff@esited.com',
-    from: ' Animegg Alert! <notify@animegg.com>'
-  },
-  gmailcontact:{
-    service: 'gmail',
-    auth: {
-      user: 'notify@animegg.com',
-      pass: 'notifyanimeggpeople'
-    },
-    to: 'staff@esited.com, bradg07@animegg.com',
-    from: ' Animegg Contact Email! <notify@animegg.com>'
-  },
-  oose: {
-    purchaseReferrer: ['animegg.com','animegg.tv','localhost'],
-    purchaseCacheLife: 5, //1 minute
-    domain: 'cdn.oose.io',
-    username: 'animegg',
-    password: '4LL_Su(5ggq#yk=6f@q8O^TtL4qtNa7N*$+yD4R_5Lw6H2Px=h=@0Ha1#Q&+6!2c',
-    token: ''
-  },
-  shredder: {
-    callback: {
-      method: 'post',
-      url: 'https://animegg.app.us.org/api/shredder/update',
-      rejectUnauthorized: false
-    },
-    domain: 'shredder.io',
-    master: {
-      host: 'master.shredder.io',
-      port: 5980
-    },
-    username: 'animegg',
-    password: '+r2)00*%!Nc7*5%)4(P7e2)5r$qTx2165k10mNdSK)i2IJ#G)kb)s4M35p(uK+#8',
-    token: ''
-  },
-  crunchyroll:{
-    user:'',
-    password:''
-  },
-  //instances
+  //interfaces
   admin: {
     enabled: false,
-    port: 3003,
+    port: 3000,
     host: null,
     workers: {
       count: 1,
       maxConnections: 10000
     },
-    mainBaseUrl: 'http://localhost:3000',
+    baseUrl: 'http://localhost:3000',
     cookie: {
       secret: '',
       maxAge: 2592000000 //30 days
@@ -142,8 +92,8 @@ if(fs.existsSync(__dirname + '/config.local.js')){
 }
 
 //load instance overrides
-if(process.env.ANIMEGG_CONFIG){
-  config.$load(require(process.env.ANIMEGG_CONFIG))
+if(process.env.KADO_CONFIG){
+  config.$load(require(process.env.KADO_CONFIG))
 }
 
 

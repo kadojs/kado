@@ -1,0 +1,24 @@
+mixin active(bool)
+  if(bool)
+    span.glyphicon.glyphicon-check
+  else
+    span.glyphicon.glyphicon-remove
+
+mixin showReleaseSchedule(schedules)
+  each schedule, index in schedules
+    .col-sm-10(style='margin-top: 5px;', class=(index > 0 ? 'col-sm-offset-2' : ''))
+      span  Day Of The Week
+      select(name='releaseScheduleDay[]')
+        option
+          each day, i in {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday'}
+            option(value=i, selected=schedule.day == i)= day
+      span  Hour (0-23)
+      select(name='releaseScheduleHour[]', style='width: 75px')
+        option
+        - for (var i = 0; i < 24; i++)
+          option(value=i, selected=schedule.hour == i)= i
+      span  Minute (0-59)
+      select(name='releaseScheduleMinute[]', style='width: 75px')
+        option
+        - for (var i = 0; i < 60; i++)
+          option(value=i, selected=schedule.minute == i)= i

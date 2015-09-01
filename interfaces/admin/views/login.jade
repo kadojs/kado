@@ -1,0 +1,11 @@
+extends layout
+block append css
+  link(type='text/css', rel='stylesheet', href='/css/login.css')
+block content
+  .container.login-container
+    h2 Login
+    +alerts()
+    form.form-login(action='/login', method='post', role='form')
+      input.form-control(type='text', name='email', placeholder='Email Address')
+      input.form-control(type='password', name='password', placeholder='Password')
+      button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign In
