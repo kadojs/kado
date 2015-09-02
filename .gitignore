@@ -5,3 +5,4 @@ node_modules
 dt/
 /dt.json
 npm-debug.log
+modules.json

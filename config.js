@@ -33,25 +33,35 @@ config.$load({
     enabled: false,
     port: 3000,
     host: null,
+    baseUrl: 'http://localhost:3000',
     workers: {
       count: 1,
       maxConnections: 10000
     },
-    baseUrl: 'http://localhost:3000',
     cookie: {
       secret: '',
       maxAge: 2592000000 //30 days
     }
   },
-  seller: {
+  api: {
     enabled: false,
-    port: 3005,
+    port: 3001,
     host: null,
+    baseUrl: 'http://localhost:3000=1',
+    workers: {
+      count: 1,
+      maxConnections: 10000
+    }
+  },
+  client: {
+    enabled: false,
+    port: 3003,
+    host: null,
+    baseUrl: 'http://localhost:3003',
     workers: {
       count: 1,
       maxConnections: 10000
     },
-    mainBaseUrl: 'http://localhost:3000',
     cookie: {
       secret: '',
       maxAge: 2592000000 //30 days
@@ -59,10 +69,9 @@ config.$load({
   },
   main: {
     enabled: false,
-    port: 3000,
+    port: 3004,
     host: null,
-    theme: 'saleleap',
-    homeCategoryWeight: 0,
+    baseUrl: 'http://localhost:3004',
     workers: {
       count: 1,
       maxConnections: 10000
@@ -70,21 +79,50 @@ config.$load({
     cookie: {
       secret: '',
       maxAge: 2592000000 //30 days
+    }
+  },
+  sales: {
+    enabled: false,
+    port: 3005,
+    host: null,
+    baseUrl: 'http://localhost:3005',
+    workers: {
+      count: 1,
+      maxConnections: 10000
     },
-    embed: {
-      defaultPreviewUrl: 'http://animegg.com/images/animegg-logo.png',
-      defaultVideoUrl: 'http://animegg.com/images/animegg-logo.png'
+    cookie: {
+      secret: '',
+      maxAge: 2592000000 //30 days
+    }
+  },
+  seller: {
+    enabled: false,
+    port: 3006,
+    host: null,
+    baseUrl: 'http://localhost:3005',
+    workers: {
+      count: 1,
+      maxConnections: 10000
     },
-    sitemap: {
-      baseUrl: 'http://www.animegg.net',
-      maxUrlCount: 50000
-    },
-    finder: {
-      user: 'animegg',
-      pass: 'ir2jk95da'
+    cookie: {
+      secret: '',
+      maxAge: 2592000000 //30 days
     }
   }
 })
+
+//load module config
+if(fs.existsSync('./modules.json')){
+  var modules = require('./modules.json').modules
+  modules.forEach(function(modInfo){
+    if(modInfo.enabled){
+      var module = require(__dirname + '/' + modInfo.path)
+      if(module.config && 'function' === typeof module.config){
+        module.config(config)
+      }
+    }
+  })
+}
 
 //load user config
 if(fs.existsSync(__dirname + '/config.local.js')){
@@ -95,6 +133,37 @@ if(fs.existsSync(__dirname + '/config.local.js')){
 if(process.env.KADO_CONFIG){
   config.$load(require(process.env.KADO_CONFIG))
 }
+
+//load user overrides
+if(fs.existsSync(__dirname + '/settings.json')){
+  config.$load(require(__dirname + '/settings.json'))
+}
+
+//tell everyone where we are. this trick works because every interface starter
+//loads this file first which will be in every process that a module will ever
+//load... i suppose if for some reason an interface is created without the use
+//of this file it will cause problems.. warning issued!
+
+
+/**
+ * Kado Root Folder
+ * @type {String}
+ */
+process.env.KADO_ROOT = __dirname
+
+
+/**
+ * Kado Config File Location
+ * @type {String}
+ */
+process.env.KADO_CONFIG_FILE = __filename
+
+
+/**
+ * Kado Modules File
+ * @type {string}
+ */
+process.env.KADO_MODULES = __dirname + '/modules.json'
 
 
 /**

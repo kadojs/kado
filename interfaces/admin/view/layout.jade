@@ -1,0 +1,35 @@
+include alerts
+include mixins
+include navbar
+include table
+doctype html
+html
+  head
+    block meta
+      meta(charset='utf-8')
+      meta(http-equiv='X-UA-Compatible' content='IE=edge')
+      meta(name='viewport' content='width=device-width, initial-scale=1')
+    block css
+      link(rel='stylesheet', type='text/css', href='//bowercdn.net/c/html5-boilerplate-4.3.0/css/normalize.css')
+      link(rel='stylesheet', type='text/css', href='//bowercdn.net/c/html5-boilerplate-4.3.0/css/main.css')
+      link(rel='stylesheet', type='text/css', href='//bowercdn.net/c/bootstrap-3.2.0/dist/css/bootstrap.min.css')
+      link(rel='stylesheet', type='text/css', href='/css/sidebar.css')
+      link(rel='stylesheet', type='text/css', href='/css/layout.css')
+    block title
+      title #{appTitle} Admin Panel - Kado Version #{version}
+  body
+    if user
+      +sidebar()
+      .main
+        +navbar()
+        //main content
+        .main-content
+          block content
+    else
+      //main content
+      block content
+    //load scripts
+    block js
+      script(src='//bowercdn.net/c/jquery-1.11.1/dist/jquery.min.js')
+      script(src='//bowercdn.net/c/bootstrap-3.2.0/dist/js/bootstrap.min.js')
+      script(src='/js/sidebar.js')

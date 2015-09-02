@@ -42,3 +42,14 @@ exports.loginAction = function(req,res){
       res.redirect(301,'/login')
     })
 }
+
+
+/**
+ * Logout
+ * @param {object} req
+ * @param {object} res
+ */
+exports.logout = function(req,res){
+  delete req.session.user
+  res.redirect(301,'/login')
+}

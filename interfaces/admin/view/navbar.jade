@@ -1,0 +1,76 @@
+mixin navbar()
+  //navbar
+  nav.navbar.kado-toolbar
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-toolbar-navbar-collapse-1')
+          span.sr-only Toggle Navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href='/')= appTitle
+      .collapse.navbar-collapse#bs-toolbar-navbar-collapse-1
+        form.navbar-form.navbar-left(role='search', method='get', action='/search')
+          .form-group
+            input.form-control(type='text', name='phrase', placeholder='Search')
+          button.btn.btn-default(type='submit')
+            span.glyphicon.glyphicon-search
+        ul.nav.navbar-nav.navbar-right
+          li
+            a(href='/user/list')
+              span.glyphicon.glyphicon-user
+              span  Users
+          li
+            a(href='/setting/list')
+              span.glyphicon.glyphicon-wrench
+              span  Settings
+          li.dropdown
+            a.dropdown-toggle(data-toggle='dropdown') #{user.email}
+              b.caret
+            ul.dropdown-menu
+              li
+                a(href='/profile') Profile
+              li
+                a(href='/logout') Logout
+mixin sidebar()
+  nav.navbar.navbar-inverse.sidebar(role='navigation')
+    .sidebar-copyright
+      div &copy; Kado. Version #{version}
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-sidebar-navbar-collapse-1')
+          span.sr-only Toggle Navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href='/') Navigation
+      .collapse.navbar-collapse#bs-sidebar-navbar-collapse-1
+        ul.nav.navbar-nav
+          each group in nav.group
+            - console.log(group.uri,currentUri)
+            if(nav.nav[group.name].length > 0)
+              li(class=group.uri === currentUri ? 'active' : '' + ' dropdown')
+                a.dropdown-toggle(href=group.uri, data-toggle='dropdown')
+                  if(group.icon)
+                    b.caret
+                    span  #{group.name}
+                    span(class="pull-right hidden-xs showopacity glyphicon glyphicon-#{group.icon}")
+                  else
+                    span #{group.name}
+                ul.dropdown-menu
+                  each item in nav.nav[group.name]
+                    li(class=item.uri === currentUri ? 'active' : '')
+                      a(href=item.uri)
+                        if(group.icon)
+                          span  #{item.name}
+                          span(class="pull-right hidden-xs showopacity glyphicon glyphicon-#{item.icon}")
+                        else
+                          span #{item.name}
+            else
+              li(class=group.uri === currentUri ? 'active' : '')
+                a(href=group.uri)
+                  if(group.icon)
+                    span #{group.name}
+                    span(class="pull-right hidden-xs showopacity glyphicon glyphicon-#{group.icon}")
+                  else
+                    span #{group.name}

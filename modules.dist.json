@@ -1,0 +1,7 @@
+{
+  "modules": [
+    {"path": "app/blog", "enabled": true},
+    {"path": "app/setting", "enabled": false},
+    {"path": "app/user", "enabled": false}
+  ]
+}
