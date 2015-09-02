@@ -47,7 +47,6 @@ mixin sidebar()
       .collapse.navbar-collapse#bs-sidebar-navbar-collapse-1
         ul.nav.navbar-nav
           each group in nav.group
-            - console.log(group.uri,currentUri)
             if(nav.nav[group.name].length > 0)
               li(class=group.uri === currentUri ? 'active' : '' + ' dropdown')
                 a.dropdown-toggle(href=group.uri, data-toggle='dropdown')

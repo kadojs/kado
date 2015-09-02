@@ -124,6 +124,17 @@ if(fs.existsSync('./modules.json')){
   })
 }
 
+
+/**
+ * clone the original config for looking back
+ * @type {object}
+ */
+config.originalConfig = ObjectManage.$clone(config)
+
+//-----------------
+//Begin Overrides
+//-----------------
+
 //load user config
 if(fs.existsSync(__dirname + '/config.local.js')){
   config.$load(require(__dirname + '/config.local.js'))
@@ -134,10 +145,11 @@ if(process.env.KADO_CONFIG){
   config.$load(require(process.env.KADO_CONFIG))
 }
 
-//load user overrides
+//load user settings
 if(fs.existsSync(__dirname + '/settings.json')){
   config.$load(require(__dirname + '/settings.json'))
 }
+
 
 //tell everyone where we are. this trick works because every interface starter
 //loads this file first which will be in every process that a module will ever
