@@ -3,5 +3,5 @@
 	path = app/blog
 	url = https://github.com/nullivex/kado-blog
 [submodule "app/staff"]
-	path = app/staff
+	path = app/user
 	url = https://github.com/nullivex/kado-staff
