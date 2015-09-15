@@ -53,12 +53,28 @@ module.exports = function(sequelize,DataTypes) {
         /**
          * Validate Permission of URI
          * @param {object} user - instance of the user module
-         * @param {string} interface - name of the interface being requested
+         * @param {string} userInterface - name of the interface being requested
          * @param {string} uri
          * @return {integer} - The level that is available
          */
-        verifyPermission: function(user,interface,uri){
-          return 0
+        verifyPermission: function(user,userInterface,uri){
+          var UserPermission =
+            require('../helpers/sequelize')().models.UserPermission
+          var UserPermissionError = require('../helpers/UserPermissionError')
+          return UserPermission.findOne({
+            where: {
+              UserId: user.id,
+              interface: userInterface,
+              uri: uri
+            }
+          })
+            .then(function(result){
+              if(!result) throw new UserPermissionError('No permissions set')
+              return result.level
+            })
+            .catch(UserPermissionError,function(){
+              return 0
+            })
         }
       }
     })

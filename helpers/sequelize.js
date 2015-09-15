@@ -16,6 +16,14 @@ var modelPath = __dirname + '/../models'
 var keyMapping = function(s){
   //probably going to be some local key mappings here related to the permission
   //system
+  var User = s.models.User
+  var UserRole = s.models.UserRole
+  var UserPermission = s.models.UserPermission
+  User.hasMany(UserRole)
+  User.hasMany(UserPermission)
+  UserRole.hasMany(UserPermission)
+  UserPermission.belongsTo(User)
+  UserPermission.belongsTo(UserRole)
 }
 
 
