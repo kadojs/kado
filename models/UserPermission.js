@@ -61,11 +61,17 @@ module.exports = function(sequelize,DataTypes) {
           var UserPermission =
             require('../helpers/sequelize')().models.UserPermission
           var UserPermissionError = require('../helpers/UserPermissionError')
-          return UserPermission.findOne({
-            where: {
-              UserId: user.id,
-              interface: userInterface,
-              uri: uri
+          P.try(function(){
+            if(user.superAdmin){
+              return 4
+            } else {
+              return UserPermission.findOne({
+                where: {
+                  UserId: user.id,
+                  interface: userInterface,
+                  uri: uri
+                }
+              })
             }
           })
             .then(function(result){

@@ -36,6 +36,11 @@ module.exports = function(sequelize,DataTypes) {
         validate: {is: /^[a-z0-9\s]+$/i},
         defaultValue: 'SaleLeap Staff'
       },
+      superAdmin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
       active: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
