@@ -1,14 +1,11 @@
 'use strict';
 var child = require('infant').child
 var parent = require('infant').parent
+var path = require('path')
 
 var lifecycle = new (require('infant').Lifecycle)()
 
 var config = require('./config')
-
-var admin = parent('./admin')
-var main = parent('./main')
-var seller = parent('./seller')
 
 //setup lifecycle logging
 lifecycle.on('start',function(item){
@@ -24,46 +21,27 @@ lifecycle.on('offline',function(){
   console.log('Shutdown complete')
 })
 
-//admin panel
-if(config.admin.enabled){
-  lifecycle.add(
-    'admin',
-    function(next){
-      admin.start(next)
-    },
-    function(next){
-      admin.stop(next)
-    }
-  )
-}
-
-//seller panel
-if(config.seller.enabled){
-  lifecycle.add(
-    'seller',
-    function(next){
-      seller.start(next)
-    },
-    function(next){
-      seller.stop(next)
-    }
-  )
-}
-
-/**
- * Main website
- */
-if(config.main.enabled){
-  lifecycle.add(
-    'main',
-    function(next){
-      main.start(next)
-    },
-    function(next){
-      main.stop(next)
-    }
-  )
-}
+//register interfaces for startup
+Object.keys(config.interfaces).forEach(function(ifaceName){
+  //admin panel
+  if(
+    true === config.$get([ifaceName,'enabled']) &&
+    true === config.interfaces[ifaceName].http
+  ){
+    var ifacePath = path.resolve(config.interfaces[ifaceName].path)
+    //process.exit()
+    var iface = parent(config.interfaces[ifaceName].path)
+    lifecycle.add(
+      ifaceName,
+      function(next){
+        iface.start(next)
+      },
+      function(next){
+        iface.stop(next)
+      }
+    )
+  }
+})
 
 
 /**
@@ -92,6 +70,7 @@ exports.stop = function(done){
   })
 }
 
+//check if we are called directly or chained
 if(require.main === module){
   child(
     config.name,

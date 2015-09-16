@@ -1,25 +1,29 @@
 {
-  "author": "SnailJS <developers@snailjs.org>",
-  "name": "saleleap",
-  "description": "Review trading escrow system",
-  "version": "0.1.0",
-  "homepage": "http://www.saleleap.com/",
+  "author": "Bryan Tong <contact@nullivex.com>",
+  "name": "kado",
+  "description": "Modular Business Management System",
+  "version": "1.0.0",
+  "homepage": "http://www.kadojs.org/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nullivex/saleleap.git"
+    "url": "https://github.com/nullivex/kado.git"
   },
   "keywords": [
-    "saleleap",
-    "amazon",
-    "review",
-    "escrow"
+    "kado",
+    "modular",
+    "app",
+    "client",
+    "support",
+    "ticketing",
+    "ecommerce",
+    "point of sales"
   ],
   "engines": {
     "node": ">=0.10.0"
   },
   "dependencies": {
     "bcrypt": "0.8.x",
-    "bluebird": "2.9.x",
+    "bluebird": "2.10.x",
     "body-parser": "^1.13.3",
     "cli-table": "0.3.x",
     "commander": "2.8.x",
@@ -31,15 +35,17 @@
     "express": "4.13.x",
     "express-session": "1.11.x",
     "graceful-fs": "4.1.x",
-    "infant": "0.9.x",
+    "infant": "^0.9.5",
     "jade": "^1.11.0",
+    "moment": "^2.10.6",
     "morgan": "1.6.x",
     "mysql": "2.9.x",
     "object-manage": "0.8.x",
     "pretty-bytes": "^2.0.1",
     "redis": "^1.0.0",
-    "sequelize": "^3.6.0",
-    "string": "^3.3.1"
+    "sequelize": "^3.8.0",
+    "string": "^3.3.1",
+    "validator": "^4.0.5"
   },
   "scripts": {
     "start": "node app"

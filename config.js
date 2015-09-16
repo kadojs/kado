@@ -12,6 +12,16 @@ config.$load({
   title: 'Kado',
   name: 'kado',
   version: pkg.version,
+  //define interfaces
+  interfaces: {
+    admin: {title: 'Admin', path: __dirname + '/interfaces/admin', http: true},
+    api: {title: 'API', path: __dirname + '/interfaces/api', http: true},
+    bin: {title: 'CLI', path: __dirname + '/bin', http: false},
+    client: {title: 'Client', path: __dirname + '/interfaces/client', http: true},
+    main: {title: 'Main', path: __dirname + '/interfaces/main', http: true},
+    sales: {title: 'Sales', path: __dirname + '/interfaces/sales', http: true},
+    seller: {title: 'Seller', path: __dirname + '/interfaces/seller', http: true}
+  },
   //databases
   redis: {
     host: '127.0.0.1',
