@@ -22,7 +22,7 @@ module.exports = function(sequelize,DataTypes) {
       uri: {
         type: DataTypes.STRING(191),
         allowNull: false,
-        validate: {isUrl: true}
+        validate: {is: /^[a-z0-9\/]+$/i}
       },
       //These are the levels of permission
       // 0 - None
