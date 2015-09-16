@@ -10,6 +10,7 @@ var http = require('http')
 var worker = require('infant').worker
 var morgan = require('morgan')
 var RedisStore = require('connect-redis')(expressSession)
+var path = require('path')
 
 var Nav = require('../../helpers/Nav')
 var sequelize = require('../../helpers/sequelize')()
@@ -31,27 +32,28 @@ P.promisifyAll(server)
 app.nav = new Nav()
 
 
+//setup view enging
+app.set('trust proxy',true)
+app.set('views',path.join(__dirname,'view'))
+app.set('view engine','jade')
+
+
 /**
  * Global template vars
  * @type {*}
  */
 app.locals = {
   pretty: true,
+  basedir: app.get('views'),
   S: require('string'),
   moment: require('moment'),
   prettyBytes: require('pretty-bytes'),
   appName: config.name,
   appTitle: config.title,
   version: config.version,
-  nav: app.nav,
-  viewFolder: __dirname + '/view'
+  nav: app.nav
 }
 
-
-//setup view enging
-app.set('trust proxy',true)
-app.set('views',__dirname + '/' + 'view')
-app.set('view engine','jade')
 
 //load middleware
 app.use(compress())

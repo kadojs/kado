@@ -16,10 +16,16 @@ mixin navbar()
           button.btn.btn-default(type='submit')
             span.glyphicon.glyphicon-search
         ul.nav.navbar-nav.navbar-right
-          li
-            a(href='/user/list')
+          li.dropdown
+            a.dropdown-toggle(data-toggle='dropdown')
               span.glyphicon.glyphicon-user
               span  Users
+              b.caret
+            ul.dropdown-menu
+              li
+                a(href='/user/list') List Users
+                a(href='/user/role/list') User Roles
+                a(href='/user/permission/list') User Permissions
           li
             a(href='/setting/list')
               span.glyphicon.glyphicon-wrench

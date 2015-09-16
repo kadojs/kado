@@ -175,17 +175,48 @@ process.env.KADO_ROOT = __dirname
 
 
 /**
- * Kado Config File Location
- * @type {String}
+ * Kado Helpers
+ * @type {string}
  */
-process.env.KADO_CONFIG_FILE = __filename
+process.env.KADO_BIN = process.env.KADO_ROOT + '/bin'
+
+
+/**
+ * Kado Helpers
+ * @type {string}
+ */
+process.env.KADO_HELPERS = process.env.KADO_ROOT + '/helpers'
+
+
+/**
+ * Kado Interfaces
+ * @type {string}
+ */
+process.env.KADO_INTERFACES = process.env.KADO_ROOT + '/interfaces'
+
+
+/**
+ * Kado Models
+ * @type {string}
+ */
+process.env.KADO_MODELS = process.env.KADO_ROOT + '/models'
 
 
 /**
  * Kado Modules File
  * @type {string}
  */
-process.env.KADO_MODULES = __dirname + '/modules.json'
+process.env.KADO_MODULES = process.env.KADO_ROOT + '/modules.json'
+
+
+/**
+ * Kado Config File Location
+ * @type {String}
+ */
+process.env.KADO_CONFIG_FILE = __filename
+
+
+
 
 
 /**
