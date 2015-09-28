@@ -17,13 +17,18 @@ var keyMapping = function(s){
   //probably going to be some local key mappings here related to the permission
   //system
   var User = s.models.User
+  var UserActivity = s.models.UserActivity
   var UserRole = s.models.UserRole
   var UserPermission = s.models.UserPermission
+  var UserRolePermission = s.models.UserRolePermission
+  User.hasMany(UserActivity)
   User.hasMany(UserRole)
   User.hasMany(UserPermission)
-  UserRole.hasMany(UserPermission)
+  UserRole.hasMany(UserRolePermission)
+  UserRole.belongsToMany(User,{through: 'UsersRoles'})
+  UserActivity.belongsTo(User)
   UserPermission.belongsTo(User)
-  UserPermission.belongsTo(UserRole)
+  UserRolePermission.belongsTo(UserRole)
 }
 
 

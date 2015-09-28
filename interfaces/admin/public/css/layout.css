@@ -21,10 +21,28 @@
 }
 
 .main-content {
-  padding: 0 20px;
+  padding: 0 5px;
 }
 
-.detail-box {
+.main-content>div.container {
+  width: 100%;
+}
+
+.navbar {
+  margin-bottom: 5px;
+}
+
+h1 {
+  margin-top: 5px;
+}
+
+.detail-box  {
   border: 1px solid #eee;
   border-radius: 3px;
+  margin: 5px;
 }
+
+.col-sm-6.detail-box {
+  width: 49%;
+}
+
