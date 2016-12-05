@@ -82,10 +82,10 @@ app.use(function(req,res,next){
 })
 app.use(express.static(__dirname + '/public'))
 app.use(function(req,res,next){
-  if(!req.session.user && req.url.indexOf('/login') < 0){
+  if((!req.session || !req.session.user) && req.url.indexOf('/login') < 0){
     res.redirect('/login')
   } else {
-    app.locals.user = req.session.user
+    if(req.session && req.session.user) app.locals.user = req.session.user
     next()
   }
 })
