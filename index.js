@@ -40,7 +40,8 @@ exports.start = function(done){
       true === config.$get(['interface',name,'enabled']) &&
       -1 < config.$get(['interface',name,'transport']).indexOf('http')
     ){
-      interfaces.push(parent(config.interface[name].path))
+      var iface = parent(config.interface[name].path)
+      interfaces.push(iface)
       lifecycle.add(
         name,
         function(done){iface.start(done)},
