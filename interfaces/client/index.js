@@ -3,7 +3,7 @@ var child = require('infant').child
 var clusterSetup = require('infant').cluster
 
 var cluster
-var config = require('../config')
+var config = require('../../config')
 
 if(require.main === module){
   child(
@@ -13,8 +13,8 @@ if(require.main === module){
         './worker',
         {
           enhanced: true,
-          count: config.admin.workers.count,
-          maxConnections: config.admin.workers.maxConnections
+          count: config.interface.client.workers.count,
+          maxConnections: config.interface.client.workers.maxConnections
         }
       )
       cluster.start(function(err){

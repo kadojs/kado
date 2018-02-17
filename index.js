@@ -1,9 +1,9 @@
 'use strict';
 var child = require('infant').child
 var parent = require('infant').parent
-var path = require('path')
 
 var lifecycle = new (require('infant').Lifecycle)()
+var interfaces = []
 
 var config = {}
 exports.config = config = require('./config')
@@ -38,10 +38,14 @@ exports.start = function(done){
     //web panel
     if(
       true === config.$get(['interface',name,'enabled']) &&
-      0 > config.$get(['interface',name,'transport']).indexOf('http')
+      -1 < config.$get(['interface',name,'transport']).indexOf('http')
     ){
-      var iface = parent(config.interfaces[name].path)
-      lifecycle.add(name,iface.start,iface.stop)
+      interfaces.push(parent(config.interface[name].path))
+      lifecycle.add(
+        name,
+        function(done){iface.start(done)},
+        function(done){iface.stop(done)}
+      )
     }
   })
   lifecycle.start(function(err){

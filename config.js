@@ -1,5 +1,4 @@
 'use strict';
-var fs = require('graceful-fs')
 var ObjectManage = require('object-manage')
 
 var config
@@ -45,6 +44,7 @@ config.$load({
       }
     },
     cli: {
+      enabled: true,
       title: 'CLI',
       transport: ['tty','system'],
       path: __dirname + '/bin'
@@ -103,19 +103,6 @@ config.$load({
     }
   }
 })
-
-//load module config
-if(fs.existsSync('./modules.json')){
-  var modules = require('./modules.json').modules
-  modules.forEach(function(modInfo){
-    if(modInfo.enabled){
-      var module = require(__dirname + '/' + modInfo.path)
-      if(module.config && 'function' === typeof module.config){
-        module.config(config)
-      }
-    }
-  })
-}
 
 
 /**
