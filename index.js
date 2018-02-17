@@ -5,7 +5,9 @@ var path = require('path')
 
 var lifecycle = new (require('infant').Lifecycle)()
 
-var config = require('./config')
+var config = {}
+exports.config = config = require('./config')
+
 
 //setup lifecycle logging
 lifecycle.on('start',function(item){
@@ -21,27 +23,6 @@ lifecycle.on('offline',function(){
   console.log('Shutdown complete')
 })
 
-//register interfaces for startup
-Object.keys(config.interfaces).forEach(function(ifaceName){
-  //admin panel
-  if(
-    true === config.$get([ifaceName,'enabled']) &&
-    true === config.interfaces[ifaceName].http
-  ){
-    var ifacePath = path.resolve(config.interfaces[ifaceName].path)
-    //process.exit()
-    var iface = parent(config.interfaces[ifaceName].path)
-    lifecycle.add(
-      ifaceName,
-      function(next){
-        iface.start(next)
-      },
-      function(next){
-        iface.stop(next)
-      }
-    )
-  }
-})
 
 
 /**
@@ -50,6 +31,18 @@ Object.keys(config.interfaces).forEach(function(ifaceName){
  */
 exports.start = function(done){
   console.log('Beginning startup')
+  console.log('Scanning for interfaces')
+  //register interfaces for startup
+  Object.keys(config.interface).forEach(function(name){
+    //web panel
+    if(
+      true === config.$get(['interface',name,'enabled']) &&
+      0 < config.$get(['interface',name,'transport']).indexOf('http')
+    ){
+      var iface = parent(config.interfaces[name].path)
+      lifecycle.add(name,iface.start,iface.stop)
+    }
+  })
   lifecycle.start(function(err){
     if(err) throw err
     done()
