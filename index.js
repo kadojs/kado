@@ -38,7 +38,7 @@ exports.start = function(done){
     //web panel
     if(
       true === config.$get(['interface',name,'enabled']) &&
-      0 < config.$get(['interface',name,'transport']).indexOf('http')
+      0 > config.$get(['interface',name,'transport']).indexOf('http')
     ){
       var iface = parent(config.interfaces[name].path)
       lifecycle.add(name,iface.start,iface.stop)
