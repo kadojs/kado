@@ -2,6 +2,10 @@
 
 Modular application development framework based on Node.js
 
+## Preface
+
+Take a look at this blog post: https://www.nullivex.com/blog/kado-comeback
+
 ## What does it do
 
 Kado provides a simple extensible environment to run

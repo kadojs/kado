@@ -18,9 +18,7 @@ config.$load({
     api: {title: 'API', path: __dirname + '/interfaces/api', http: true},
     bin: {title: 'CLI', path: __dirname + '/bin', http: false},
     client: {title: 'Client', path: __dirname + '/interfaces/client', http: true},
-    main: {title: 'Main', path: __dirname + '/interfaces/main', http: true},
-    sales: {title: 'Sales', path: __dirname + '/interfaces/sales', http: true},
-    seller: {title: 'Seller', path: __dirname + '/interfaces/seller', http: true}
+    main: {title: 'Main', path: __dirname + '/interfaces/main', http: true}
   },
   //databases
   redis: {
@@ -82,34 +80,6 @@ config.$load({
     port: 3004,
     host: null,
     baseUrl: 'http://localhost:3004',
-    workers: {
-      count: 1,
-      maxConnections: 10000
-    },
-    cookie: {
-      secret: '',
-      maxAge: 2592000000 //30 days
-    }
-  },
-  sales: {
-    enabled: false,
-    port: 3005,
-    host: null,
-    baseUrl: 'http://localhost:3005',
-    workers: {
-      count: 1,
-      maxConnections: 10000
-    },
-    cookie: {
-      secret: '',
-      maxAge: 2592000000 //30 days
-    }
-  },
-  seller: {
-    enabled: false,
-    port: 3006,
-    host: null,
-    baseUrl: 'http://localhost:3005',
     workers: {
       count: 1,
       maxConnections: 10000

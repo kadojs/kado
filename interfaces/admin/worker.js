@@ -12,8 +12,8 @@ var morgan = require('morgan')
 var RedisStore = require('connect-redis')(expressSession)
 var path = require('path')
 
-var Nav = require('../../helpers/Nav')
-var sequelize = require('../../helpers/sequelize')()
+var Nav = require('./helpers/Nav')
+var sequelize = require('../../db/sequelize')()
 
 var app = express()
 var config = require('../../config')

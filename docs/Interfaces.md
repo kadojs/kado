@@ -6,11 +6,9 @@ are needed. A brief list of these interfaces.
 
 * admin
 * api
-* bin
+* cli
 * client
 * main
-* sales
-* seller
 
 Now that I have introduced the interfaces lets go over what they will all do.
 
@@ -25,9 +23,9 @@ This interface is purely programmatic and provides a restful API interface.
 There may be socket based options implemented later that will talk through
 the same functions.
 
-### Bin
+### CLI
 
-The bin interface ecompasses the Kado script system. Allowing Kado users to
+The bin interface encompasses the Kado script system. Allowing Kado users to
 access different parts of the system through command line to run scripts
 and perform maintenance on the Kado installation itself or the modules.
 
@@ -45,17 +43,6 @@ Any company has a public facing website and this section of Kado is specifically
 tailored to provide a public website. The wonderful part about Kado is that
 each interface is completely full featured and modular.
 
-### Sales
-
-This interface is intended to be used with Point of Sales systems. The modules
-that publish to this interface will follow touch friendly coding techniques.
-
-### Seller
-
-Most companies like to either A create a market place where sellers meet clients
-or resell the companies services. Kado aims to implement seller privileges with
-most of our core modules to provide a more encompassed interface.
-
 ## Listening Ports
 
 Just to get it out of the way early, lets go over the listening ports that
@@ -66,8 +53,6 @@ are setup by default for the Kado interfaces.
 * bin - none (command line only, maybe tty0 :)
 * client - HTTP: 3003
 * main - HTTP: 3004
-* sales - HTTP: 3005
-* seller - HTTP: 3006
 
 In production I recommend leaving these port numbers as they are however
 assign a separate localhost IP to each instance of Kado. For example,

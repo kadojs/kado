@@ -1,0 +1,9 @@
+extends layout
+append title
+  title Anime Blog
+block content
+  .content.content-container
+      each item in blogList
+        h3(style='font-weight:bold')=item.title
+        p(style='text-decoration: underline;margin-top:-8px')= 'Posted' + ': ' + moment(item.datePosted).format('MMM DD, YYYY')
+        p(style='margin-top:30px;margin-bottom:35px')!=item.html

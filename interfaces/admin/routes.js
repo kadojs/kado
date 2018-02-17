@@ -1,6 +1,6 @@
 'use strict';
 
-var sequelize = require('../../helpers/sequelize')()
+var sequelize = require('../../db/sequelize')()
 
 var User = sequelize.models.User
 

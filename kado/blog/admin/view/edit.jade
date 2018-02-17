@@ -1,0 +1,21 @@
+extends /layout
+block content
+  .container
+    h1 Update Entry
+    form.form-horizontal(action='/blog/save', method='post', role='form')
+      input(type='hidden', name='id', value=blog.id)
+      .form-group
+        label.control-label.col-sm-2 Title
+        .col-sm-10
+          input.form-control(type='text', name='title', placeholder='Blog Title', value=blog.title)
+      .form-group
+        label.control-label.col-sm-2 Markdown
+        .col-sm-10
+          textarea.form-control(rows='10', name='content')= blog.content
+      .form-group
+        label.control-label.col-sm-2 Active
+        .col-sm-10
+          input(type='checkbox', name='active', checked=blog.active)
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          button.btn.btn-success(type='submit') Save
