@@ -30,6 +30,7 @@ lifecycle.on('offline',function(){
  * @param {function} done
  */
 exports.start = function(done){
+  if(!done) done = function(){}
   console.log('Beginning startup')
   console.log('Scanning for interfaces')
   //register interfaces for startup
@@ -55,6 +56,7 @@ exports.start = function(done){
  * @param {function} done
  */
 exports.stop = function(done){
+  if(!done) done = function(){}
   //start the shutdown process
   console.log('Beginning shutdown')
   lifecycle.stop(function(err){
