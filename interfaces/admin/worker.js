@@ -208,10 +208,8 @@ modules.forEach(function(modInfo){
  * @param {function} done
  */
 exports.start = function(done){
-  sequelize.doConnect()
-    .then(function(){
-      return server.listenAsync(+config.admin.port,config.admin.host)
-    }).then(done).catch(function(err){
+  return server.listenAsync(+config.admin.port,config.admin.host)
+    .then(done).catch(function(err){
       done(err)
     })
 }
@@ -222,11 +220,7 @@ exports.start = function(done){
  * @param {function} done
  */
 exports.stop = function(done){
-  //dont wait for this since it will take to long and we are stopping now
   server.close()
-  //close our db connection
-  sequelize.close()
-  //just return now
   done()
 }
 
