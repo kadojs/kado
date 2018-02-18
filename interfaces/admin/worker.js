@@ -6,14 +6,15 @@ var cookieParser = require('cookie-parser')
 var flash = require('connect-flash')
 var express = require('express')
 var expressSession = require('express-session')
+var glob = require('glob')
 var http = require('http')
 var worker = require('infant').worker
 var morgan = require('morgan')
-var RedisStore = require('connect-redis')(expressSession)
-var path = require('path')
+var serveStatic = require('serve-static')
+var SessionStore = require('express-sql-session')(expressSession)
 
-var Nav = require('./helpers/Nav')
-var sequelize = require('../../db/sequelize')()
+var kado = require('../../helpers/kado')
+var Nav = require('../../helpers/Nav')
 
 var app = express()
 var config = require('../../config')
@@ -32,10 +33,20 @@ P.promisifyAll(server)
 app.nav = new Nav()
 
 
-//setup view enging
+//setup view engine
 app.set('trust proxy',true)
-app.set('views',path.join(__dirname,'view'))
-app.set('view engine','jade')
+app.set('views',__dirname + '/' + 'views')
+app.set('view engine','pug')
+
+/**
+ * Moment standard format
+ *  extend moment().format() so that this one place changes everywhere
+ *  truthiness is checked and a placeholder can be provided in emptyString
+ * @param {Date} d
+ * @param {string} emptyString
+ * @return {string}
+ */
+app.locals.momentStandardFormat = kado.printDate
 
 
 /**
@@ -47,40 +58,98 @@ app.locals = {
   basedir: app.get('views'),
   S: require('string'),
   moment: require('moment'),
+  //moment no longer supports any method of getting the short timezone
+  timezone: ['(',')'].join(
+    (new Date()).toLocaleTimeString(
+      'en-US',{timeZoneName:'short'}
+    ).split(' ').pop()
+  ),
   prettyBytes: require('pretty-bytes'),
   appName: config.name,
-  appTitle: config.title,
+  appTitle: config.interface.admin.title,
   version: config.version,
   nav: app.nav
 }
 
+//scan plugins
+glob(kado.pluginDir() + '/**/kado.json',function(err,files){
+  var plugins = []
+  files.forEach(function(file){
+    var plugin = require(file)
+    if(plugin.enabled && plugin.admin.enabled){
+      plugins.push(plugin)
+      var routeFile = kado.pluginDir(plugin.name) + '/route.js'
+      var pluginRoute = require(routeFile)
+      app.get(plugin.nav.uri,pluginRoute.index || function(){})
+      plugin.routes.forEach(function(route){
+        app[route.method](route.path,pluginRoute[route.fn])
+      })
+    }
+  })
+  app.locals.plugins = plugins
+})
 
 //load middleware
 app.use(compress())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-app.use(cookieParser(config.admin.cookie.secret))
+app.use(cookieParser(config.interface.admin.cookie.secret))
+//inject headers
 app.use(function(req,res,next){
   res.set('Cache-control','no-cache, no-store, must-revalidate')
   res.set('Pragma','no-cache')
   res.set('Expires','0')
   next()
 })
+//session setup
 app.use(expressSession({
   cookie: {
-    maxAge: config.admin.cookie.maxAge
+    maxAge: config.interface.admin.cookie.maxAge
   },
   resave: true,
   saveUninitialized: true,
-  store: new RedisStore(),
-  secret: config.admin.cookie.secret
+  store: new SessionStore({
+    dialect: 'sqlite3',
+    connection: {
+      filename: kado.path('sessions.s3db')
+    },
+    table: 'session'
+  }),
+  secret: config.interface.admin.cookie.secret
 }))
 app.use(flash())
 app.use(function(req,res,next){
   res.locals.flash = req.flash.bind(req)
+  req.flashPug = function(type,view,vars){
+    if(type && view){
+      if(-1 === Object.keys(viewFn).indexOf(view)){
+        viewFn[view] =
+          compileFile(app.get('views') + '/_alerts/' + view + '.pug',{})
+      }
+      return req.flash(type,viewFn[view](('object'===typeof vars)?vars:{}))
+    } else if(type){
+      return req.flash(type)
+    } else {
+      return req.flash()
+    }
+  }
   next()
 })
-app.use(express.static(__dirname + '/public'))
+//static files
+app.use(serveStatic(__dirname + '/public'))
+//npm installed scripts
+var setupScriptServer = function(name,scriptPath){
+  if(!scriptPath) scriptPath = name
+  scriptPath = path.resolve(path.join(__dirname,'..','node_modules',scriptPath))
+  app.use('/node_modules/' + name,serveStatic(scriptPath))
+}
+//DEFINE external public script packages here, then access them by using
+// /script/<name> such as /script/bootstrap/dist/bootstrap.min.js
+setupScriptServer('bootstrap')
+setupScriptServer('bootstrap-select')
+setupScriptServer('html5-boilerplate')
+setupScriptServer('ladda')
+//auth protection
 app.use(function(req,res,next){
   if((!req.session || !req.session.user) && req.url.indexOf('/login') < 0){
     res.redirect('/login')

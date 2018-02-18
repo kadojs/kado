@@ -5,8 +5,22 @@ var parent = require('infant').parent
 var lifecycle = new (require('infant').Lifecycle)()
 var interfaces = []
 
+//cascade kado core helper into this export
+module.exports = exports = require('./helpers/kado')
+
 var config = {}
 exports.config = config = require('./config')
+
+
+/**
+ * Load new configuration
+ * @param {object} conf
+ * @return {ObjectManage}
+ */
+exports.configure = function(conf){
+  exports.config.$load(conf)
+  return exports.config
+}
 
 
 //setup lifecycle logging
