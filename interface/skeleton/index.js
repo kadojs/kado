@@ -2,35 +2,15 @@
 var iface = require('../../helpers/interface')
 var interfaceRoot = __dirname
 var interfaceName = 'skeleton'
-var master = iface.master()
-var worker = iface.worker(interfaceName,interfaceRoot)
-worker.enableHtml(function(app){
-  //setup view engine
-  app.set('trust proxy',true)
-  app.set('views',interfaceRoot + '/' + 'view') //VARIABLE
-  app.set('view engine','pug')
-  //static files
-  app.use(serveStatic(interfaceRoot + '/public'))
-})
-worker.setup(function(app){
-  //home page
-  app.get('/',function(req,res){
-    res.render('home')
-  })
-  //add default navbar entries
-  app.nav.addGroup('/','Dashboard','home')
-})
-
+var master = iface.master(interfaceName,interfaceRoot)
 if(require.main === module){
   worker(
     server,
-    config.name + ':main',
+    config.name + ':' + interfaceName + ':master',
     function(done){
-      master.start()
-      worker.start(done)
+      master.start(done)
     },
     function(done){
-      worker.stop()
       master.stop(done)
     }
   )

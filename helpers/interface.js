@@ -8,13 +8,15 @@ var config = K.config
 
 /**
  * Master process
+ * @param {string} interfaceName
+ * @param {string} interfaceRoot
  */
-exports.master = function(){
+exports.master = function(interfaceName,interfaceRoot){
   var cluster
   var that = this
   that.start =  function(done){
     cluster = clusterSetup(
-      './worker',
+      interfaceRoot + '/worker',
       {
         enhanced: true,
         count: config.interface.admin.workers.count,
@@ -43,6 +45,7 @@ exports.master = function(){
 exports.worker = function(interfaceName,interfaceRoot){
   if(!interfaceName) interfaceName = 'admin'
   if(!interfaceRoot) interfaceRoot = __dirname
+  var that = this
   //third party requirements
   var bodyParser = require('body-parser')
   var compress = require('compression')
@@ -54,14 +57,11 @@ exports.worker = function(interfaceName,interfaceRoot){
   var path = require('path')
   var serveStatic = require('serve-static')
   var SessionStore = require('express-sql-session')(expressSession)
-
   //user space helpers
   var Nav = require('../helpers/Nav')
-
   //interface context
   var app = that.app = express()
-  var server = http.createServer(app)
-
+  var server = that.server = http.createServer(app)
   //make some promises
   P.promisifyAll(server)
 
@@ -105,23 +105,18 @@ exports.worker = function(interfaceName,interfaceRoot){
     version: config.version,
     nav: app.nav
   }
-
   //load middleware
   app.use(compress())
   app.use(bodyParser.urlencoded({extended: true}))
   app.use(bodyParser.json())
-
   //set the active nav
   app.use(function(req,res,next){
     app.locals.currentUri = req.originalUrl
     next()
   })
-
   // development only
   if('development' === app.get('env'))
     app.use(morgan('dev'))
-
-
   //so here it is time to actually scan for modules and this is where i have been
   //on the fence about how to best go about scanning modules, should we have a
   //modules.json with a list of their names and folders or should i scan and try
@@ -156,6 +151,8 @@ exports.worker = function(interfaceName,interfaceRoot){
     that.setupScriptServer('ladda')
     callback(app)
   }
+
+
   /**
    * Enable interface session handling
    */

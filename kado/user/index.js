@@ -30,8 +30,42 @@ exports.description = 'Manage Kado Users and Permissions'
 
 
 /**
+ * Export locations of models
+ * @param {object} sequelize
+ */
+exports.model = function(sequelize){
+  sequelize.import(__dirname + '/model/User.js')
+  sequelize.import(__dirname + '/model/UserActivity.js')
+  sequelize.import(__dirname + '/model/UserPermission.js')
+  sequelize.import(__dirname + '/model/UserRole.js')
+  sequelize.import(__dirname + '/model/UserRolePermission.js')
+}
+
+
+/**
  * Register in Admin Interface
- * @param {object}app
+ * @param {object} s
+ */
+exports.modelKeyMapping = function(s){
+  var User = s.models.User
+  var UserActivity = s.models.UserActivity
+  var UserRole = s.models.UserRole
+  var UserPermission = s.models.UserPermission
+  var UserRolePermission = s.models.UserRolePermission
+  User.hasMany(UserActivity)
+  User.hasMany(UserRole)
+  User.hasMany(UserPermission)
+  UserRole.hasMany(UserRolePermission)
+  UserRole.belongsToMany(User,{through: 'UsersRoles'})
+  UserActivity.belongsTo(User)
+  UserPermission.belongsTo(User)
+  UserRolePermission.belongsTo(UserRole)
+}
+
+
+/**
+ * Register in Admin Interface
+ * @param {object} app
  */
 exports.admin = function(app){
   var user = require('./user')

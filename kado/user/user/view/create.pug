@@ -1,0 +1,25 @@
+extends /layout
+block content
+  .container
+    h1 Create User
+    form.form-horizontal(action='/user/save', method='post', role='form')
+      input(type='hidden', name='active', value='true')
+      .form-group
+        label.control-label.col-sm-2 Email
+        .col-sm-10
+          input.form-control(type='email', name='email', placeholder='Email Address')
+      .form-group
+        label.control-label.col-sm-2 Name
+        .col-sm-10
+          input.form-control(type='text', name='name', placeholder='Name')
+      .form-group
+        label.control-label.col-sm-2 Password
+        .col-sm-10
+          input.form-control(type='password', name='password')
+      .form-group
+        label.control-label.col-sm-2 Confirm
+        .col-sm-10
+          input.form-control(type='password', name='passwordConfirm')
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          button.btn.btn-success(type='submit') Save
