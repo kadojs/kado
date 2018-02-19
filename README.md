@@ -24,8 +24,8 @@ Basic administration panel
 ```
 # mkdir myproject
 # cd myproject
-# npm install kado kado-admin --save
-# node_modules/kado/bin/kado bootstrap
+# npm install kado --save
+# node node_modules/kado/bin/kado bootstrap --enable-admin
 # node app
 ```
 
@@ -34,8 +34,8 @@ Simple blog website (equivalent of wordpress)
 ```
 # mkdir myblog
 # cd myblog
-# npm install kado-blog --save
-# node_modules/kado/bin/kado bootstrap
+# npm install kado --save
+# node_modules/kado/bin/kado bootstrap --enable-blog
 # node app
 ```
 
@@ -52,11 +52,8 @@ based programs.
 
 ```
 - kado/myplugin
-  - view
-    main.pug (view files, could be html)
-  - hook.js (hooks called by the system, cli, other plugins)
+  - index.js (plugin entry point, called by system)
   - kado.json (kado plugin definition)
-  - route.js (content for routes registered in plugin.json)
 ```
 
 #### Kado.json
@@ -69,7 +66,7 @@ languages (which may required a Javascript shim).
 
 ```json
 {
-  "enabled": true,
+  "enabled": false,
   "name": "myPlugin",
   "admin": {
     "enabled": true,
@@ -77,11 +74,7 @@ languages (which may required a Javascript shim).
       "sequence": 5,
       "name": "My Plugin",
       "uri" : "/myplugin"
-    },
-    "routes": [
-      {"uri": "/myplugin/save", "method": "post", "fn": "save"},
-      {"uri": "/myplugin/edit", "method": "get", "fn": "edit"}
-    ]
+    }
   }
 }
 ```
@@ -96,11 +89,6 @@ This format is somewhat self explanatory. However in detail:
     * `sequence` - Order to display the nav in, conflicts go alphabetical
     * `name` - Name of the plugin to display in the nav bar
     * `uri` - URI to the admin plugin
-  * `routes` - Object containing admin panel routes
-    * `uri` - URI to the route of the plugin
-    * `method` - HTTP method to access the route
-    * `fn` - Function to call the route from must be in `routes.js`
-
 
 ## Changelog
 
