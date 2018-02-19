@@ -1,9 +1,9 @@
 'use strict';
+var K = require('../../helpers/kado')
 var infant = require('infant')
 var iface = require('../../helpers/interface')
 var interfaceRoot = __dirname
 var interfaceName = 'skeleton'
-var master = iface.master()
 var worker = iface.worker(interfaceName,interfaceRoot)
 worker.enableHtml(function(app){
   //setup view engine
@@ -24,14 +24,12 @@ worker.setup(function(app){
 if(require.main === module){
   infant.worker(
     worker.server,
-    config.name + ':main',
+    K.config.name + ':main',
     function(done){
-      master.start()
       worker.start(done)
     },
     function(done){
-      worker.stop()
-      master.stop(done)
+      worker.stop(done)
     }
   )
 }

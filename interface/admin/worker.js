@@ -1,4 +1,5 @@
 'use strict';
+var K = require('../../helpers/kado')
 var infant = require('infant')
 var iface = require('../../helpers/interface')
 var interfaceRoot = __dirname
@@ -77,7 +78,7 @@ worker.setup(function(app){
 if(require.main === module){
   infant.worker(
     worker.server,
-    config.name + ':' + interfaceName + ':worker',
+    K.config.name + ':' + interfaceName + ':worker',
     function(done){
       worker.start(done)
     },

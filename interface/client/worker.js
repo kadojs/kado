@@ -1,9 +1,9 @@
 'use strict';
+var K = require('../../helpers/kado')
 var infant = require('infant')
 var iface = require('../../helpers/interface')
 var interfaceRoot = __dirname
 var interfaceName = 'client'
-var master = iface.master()
 var worker = iface.worker(interfaceName,interfaceRoot)
 worker.enableSession(function(app){
   var flash = require('connect-flash')
@@ -77,14 +77,12 @@ worker.setup(function(app){
 if(require.main === module){
   infant.worker(
     worker.server,
-    config.name + ':' + interfaceName,
+    K.config.name + ':' + interfaceName,
     function(done){
-      master.start()
       worker.start(done)
     },
     function(done){
-      worker.stop()
-      master.stop(done)
+      worker.stop(done)
     }
   )
 }

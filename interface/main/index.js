@@ -1,4 +1,5 @@
 'use strict';
+var K = require('../../helpers/kado')
 var infant = require('infant')
 var iface = require('../../helpers/interface')
 var interfaceRoot = __dirname
@@ -6,7 +7,7 @@ var interfaceName = 'main'
 var master = iface.master(interfaceName,interfaceRoot)
 if(require.main === module){
   infant.child(
-    config.name + ':' + interfaceName + ':master',
+    K.config.name + ':' + interfaceName + ':master',
     function(done){
       master.start(done)
     },
