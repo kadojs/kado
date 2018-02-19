@@ -7,3 +7,6 @@ settings.json
 /dt.json
 /log
 npm-debug.log
+app.js
+bundle.*
+/sessions.s3db

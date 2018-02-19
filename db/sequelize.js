@@ -1,35 +1,10 @@
 'use strict';
-var fs = require('fs')
-var path = require('path')
+var K = require('../index')
 var Sequelize = require('sequelize')
 
-var config = require('../config')
+var config = K.config
 
 var inst
-var modelPath = __dirname + '/../models'
-
-
-/**
- * Setup the database relationships
- * @param {Sequelize} s
- */
-var keyMapping = function(s){
-  //probably going to be some local key mappings here related to the permission
-  //system
-  var User = s.models.User
-  var UserActivity = s.models.UserActivity
-  var UserRole = s.models.UserRole
-  var UserPermission = s.models.UserPermission
-  var UserRolePermission = s.models.UserRolePermission
-  User.hasMany(UserActivity)
-  User.hasMany(UserRole)
-  User.hasMany(UserPermission)
-  UserRole.hasMany(UserRolePermission)
-  UserRole.belongsToMany(User,{through: 'UsersRoles'})
-  UserActivity.belongsTo(User)
-  UserPermission.belongsTo(User)
-  UserRolePermission.belongsTo(UserRole)
-}
 
 
 /**
@@ -37,43 +12,34 @@ var keyMapping = function(s){
  * @return {Sequelize}
  */
 var createInst = function(){
-  //load modules
-  var modules = []
-  if(fs.existsSync(process.env.KADO_MODULES)){
-    modules = require(process.env.KADO_MODULES).modules
-  }
   //configure the instance for connection
   var inst = new Sequelize(
-    config.mysql.name,
-    config.mysql.user,
-    config.mysql.password,
+    config.db.mysql.name,
+    config.db.mysql.user,
+    config.db.mysql.password,
     {
-      host: config.mysql.host,
-      port: config.mysql.port,
-      logging: config.mysql.logging || false
+      host: config.db.mysql.host,
+      port: config.db.mysql.port,
+      dialect: config.db.mysql.dialect || 'mysql',
+      logging: config.db.mysql.logging || false
     }
   )
-  //load models automatically from the fs
-  fs.readdirSync(modelPath).forEach(function(file){
-    if('.' === file || '.' === file) return
-    inst.import(modelPath + '/' + file)
-  })
   //load modules and load their models
-  modules.forEach(function(modInfo){
-    if(modInfo.enabled){
-      var module = require(path.join(process.env.KADO_ROOT,modInfo.path))
+  K.modules.forEach(function(mod){
+    if(mod.enabled){
+      var module = require(mod.root)
       if(module.model) module.model(inst)
     }
   })
   //now do key mappings
-  //local first
-  keyMapping(inst)
   //now for the modules
   //load modules and load their models
-  modules.forEach(function(modInfo){
-    if(modInfo.enabled){
-      var module = require(path.join(process.env.KADO_ROOT,modInfo.path))
-      if(module.modelKeyMapping) module.modelKeyMapping(inst)
+  K.modules.forEach(function(mod){
+    if(mod.enabled){
+      var module = require(mod.root)
+      if('function' === typeof module.modelKeyMapping){
+        module.modelKeyMapping(inst)
+      }
     }
   })
   //finally connect to the database

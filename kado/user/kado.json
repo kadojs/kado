@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "name": "user",
+  "admin": {
+    "enabled": true,
+    "nav": {
+      "name": "Users",
+      "sequence": "5",
+      "uri": "/user"
+    }
+  }
+}

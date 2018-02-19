@@ -1,9 +1,11 @@
 'use strict';
+var K = require('../../index')
+
 var child = require('infant').child
 var clusterSetup = require('infant').cluster
 
 var cluster
-var config = require('../../config')
+var config = K.config
 
 if(require.main === module){
   child(

@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "name": "setting",
+  "admin": {
+    "enabled": true,
+    "nav": {
+      "name": "Setting",
+      "sequence": "5",
+      "uri": "/setting"
+    }
+  }
+}

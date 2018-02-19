@@ -1,23 +1,25 @@
 'use strict';
+var K = require('../../index')
 var P = require('bluebird')
 var bodyParser = require('body-parser')
 var compress = require('compression')
 var cookieParser = require('cookie-parser')
 var flash = require('connect-flash')
+var compileFile = require('pug').compileFile
 var express = require('express')
 var expressSession = require('express-session')
 var glob = require('glob')
 var http = require('http')
 var worker = require('infant').worker
 var morgan = require('morgan')
+var path = require('path')
 var serveStatic = require('serve-static')
 var SessionStore = require('express-sql-session')(expressSession)
 
-var kado = require('../../helpers/kado')
 var Nav = require('../../helpers/Nav')
 
 var app = express()
-var config = require('../../config')
+var config = K.config
 var server = http.createServer(app)
 
 var routes = require('./routes')
@@ -35,8 +37,9 @@ app.nav = new Nav()
 
 //setup view engine
 app.set('trust proxy',true)
-app.set('views',__dirname + '/' + 'views')
+app.set('views',__dirname + '/' + 'view')
 app.set('view engine','pug')
+
 
 /**
  * Moment standard format
@@ -46,7 +49,7 @@ app.set('view engine','pug')
  * @param {string} emptyString
  * @return {string}
  */
-app.locals.momentStandardFormat = kado.printDate
+app.locals.momentStandardFormat = K.printDate
 
 
 /**
@@ -71,24 +74,6 @@ app.locals = {
   nav: app.nav
 }
 
-//scan plugins
-glob(kado.pluginDir() + '/**/kado.json',function(err,files){
-  var plugins = []
-  files.forEach(function(file){
-    var plugin = require(file)
-    if(plugin.enabled && plugin.admin.enabled){
-      plugins.push(plugin)
-      var routeFile = kado.pluginDir(plugin.name) + '/route.js'
-      var pluginRoute = require(routeFile)
-      app.get(plugin.nav.uri,pluginRoute.index || function(){})
-      plugin.routes.forEach(function(route){
-        app[route.method](route.path,pluginRoute[route.fn])
-      })
-    }
-  })
-  app.locals.plugins = plugins
-})
-
 //load middleware
 app.use(compress())
 app.use(bodyParser.urlencoded({extended: true}))
@@ -111,13 +96,14 @@ app.use(expressSession({
   store: new SessionStore({
     dialect: 'sqlite3',
     connection: {
-      filename: kado.path('sessions.s3db')
+      filename: K.path('sessions.s3db')
     },
     table: 'session'
   }),
-  secret: config.interface.admin.cookie.secret
+  secret: config.interface.admin.cookie.secret || 'kado'
 }))
 app.use(flash())
+var viewFn = {}
 app.use(function(req,res,next){
   res.locals.flash = req.flash.bind(req)
   req.flashPug = function(type,view,vars){
@@ -190,14 +176,10 @@ app.nav.addGroup('/','Dashboard','home')
 //when modules are installed they will need to run the kado cli to turn them
 //selves on which i suppose is acceptable
 
-//okay do decided on the manual approach, whew life just got easier
-var modules = require('../../modules.json').modules
-
 //so now loop here and load modules that want to be loaded
-//NOTICE this whole procedure should probably be abstracted
-modules.forEach(function(modInfo){
-  if(modInfo.enabled){
-    var module = require('../../' + modInfo.path)
+K.modules.forEach(function(mod){
+  if(mod.enabled){
+    var module = require(mod.root)
     if(module.admin) module.admin(app)
   }
 })
@@ -208,7 +190,7 @@ modules.forEach(function(modInfo){
  * @param {function} done
  */
 exports.start = function(done){
-  return server.listenAsync(+config.admin.port,config.admin.host)
+  server.listenAsync(+config.interface.admin.port,config.interface.admin.host)
     .then(done).catch(function(err){
       done(err)
     })

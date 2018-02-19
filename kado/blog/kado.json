@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "name": "blog",
+  "admin": {
+    "enabled": true,
+    "nav": {
+      "name": "Blog",
+      "sequence": "5",
+      "uri": "/blog"
+    }
+  }
+}
