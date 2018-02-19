@@ -1,0 +1,48 @@
+.kado-toolbar {
+  background: #eee;
+  padding: 0 20px 0 5px;
+}
+
+.kado-toolbar .navbar-toggle {
+  background: #222;
+  border-color: #000;
+}
+
+.kado-toolbar .navbar-toggle .icon-bar {
+  background-color: #fff;
+}
+
+.kado-toolbar .navbar-toggle:hover {
+  background: #fff;
+}
+
+.kado-toolbar .navbar-toggle:hover .icon-bar{
+  background: #000;
+}
+
+.main-content {
+  padding: 0 5px;
+}
+
+.main-content>div.container {
+  width: 100%;
+}
+
+.navbar {
+  margin-bottom: 5px;
+}
+
+h1 {
+  margin-top: 5px;
+}
+
+.detail-box  {
+  border: 1px solid #eee;
+  border-radius: 3px;
+  margin: 5px;
+}
+
+.col-sm-6.detail-box {
+  width: 49%;
+}
+

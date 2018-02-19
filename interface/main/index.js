@@ -1,31 +1,37 @@
 'use strict';
-var child = require('infant').child
-var clusterSetup = require('infant').cluster
-
-var cluster
-var config = require('../../config')
+var iface = require('../../helpers/interface')
+var interfaceRoot = __dirname
+var interfaceName = 'main'
+var master = iface.master()
+var worker = iface.worker(interfaceName,interfaceRoot)
+worker.enableHtml(function(app){
+  //setup view engine
+  app.set('trust proxy',true)
+  app.set('views',interfaceRoot + '/' + 'view') //VARIABLE
+  app.set('view engine','pug')
+  //static files
+  app.use(serveStatic(interfaceRoot + '/public'))
+})
+worker.setup(function(app){
+  //home page
+  app.get('/',function(req,res){
+    res.render('home')
+  })
+  //add default navbar entries
+  app.nav.addGroup('/','Dashboard','home')
+})
 
 if(require.main === module){
-  child(
-    config.name + ':main:master',
+  worker(
+    server,
+    config.name + ':main',
     function(done){
-      cluster = clusterSetup(
-        './worker',
-        {
-          enhanced: true,
-          count: config.interface.main.workers.count,
-          maxConnections: config.interface.main.workers.maxConnections
-        }
-      )
-      cluster.start(function(err){
-        done(err)
-      })
+      master.start()
+      worker.start(done)
     },
     function(done){
-      if(!cluster) return done()
-      cluster.stop(function(err){
-        done(err)
-      })
+      worker.stop()
+      master.stop(done)
     }
   )
 }
