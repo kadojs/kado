@@ -8,6 +8,25 @@ var inst
 
 
 /**
+ * Setup the database relationships
+ * @param {Sequelize} s
+ */
+var keyMapping = function(s){
+  var User = s.models.User
+  var UserActivity = s.models.UserActivity
+  var UserRole = s.models.UserRole
+  var UserPermission = s.models.UserPermission
+  var UserRolePermission = s.models.UserRolePermission
+  User.hasMany(UserActivity)
+  User.hasMany(UserRole)
+  User.hasMany(UserPermission)
+  UserRole.hasMany(UserRolePermission)
+  UserRole.belongsToMany(User,{through: 'UsersRoles'})
+  UserActivity.belongsTo(User)
+  UserPermission.belongsTo(User)
+  UserRolePermission.belongsTo(UserRole)
+}
+/**
  * Create the Sequelze instance
  * @return {Sequelize}
  */
@@ -32,6 +51,7 @@ var createInst = function(){
     }
   })
   //now do key mappings
+  keyMapping(inst)
   //now for the modules
   //load modules and load their models
   K.modules.forEach(function(mod){
