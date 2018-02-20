@@ -4,29 +4,7 @@ var iface = require('../../helpers/interface')
 var interfaceRoot = __dirname
 var interfaceName = 'api'
 var worker = iface.worker(interfaceName,interfaceRoot)
-worker.enableSession(function(app){
-  var flash = require('connect-flash')
-  var compileFile = require('pug').compileFile
-  app.use(flash())
-  var viewFn = {}
-  app.use(function(req,res,next){
-    res.locals.flash = req.flash.bind(req)
-    req.flashPug = function(type,view,vars){
-      if(type && view){
-        if(-1 === Object.keys(viewFn).indexOf(view)){
-          viewFn[view] =
-            compileFile(app.get('views') + '/_alerts/' + view + '.pug',{})
-        }
-        return req.flash(type,viewFn[view](('object'===typeof vars)?vars:{}))
-      } else if(type){
-        return req.flash(type)
-      } else {
-        return req.flash()
-      }
-    }
-    next()
-  })
-})
+worker.enableSession()
 worker.setup(function(app){
   //login
   app.post('/login',function(req,res){
