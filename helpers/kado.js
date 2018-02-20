@@ -13,6 +13,7 @@ var pkg = require('../package.json')
 
 var config = new ObjectManage()
 var interfaces = []
+var logger = require('./logger')
 
 
 //-----------------
@@ -72,6 +73,9 @@ config.$load({
   title: 'Kado',
   name: 'kado',
   version: pkg.version,
+  log: {
+    dateFormat: 'YYYY-MM-DD@HH:mm:ss.SSS'
+  },
   //define interfaces
   interface: {
     admin: {
@@ -215,20 +219,6 @@ config.$load({
  * @type {object}
  */
 config.originalConfig = ObjectManage.$clone(config)
-
-//setup lifecycle logging
-lifecycle.on('start',function(item){
-  console.log('Starting ' + item.title)
-})
-lifecycle.on('stop',function(item){
-  console.log('Stopping ' + item.title)
-})
-lifecycle.on('online',function(){
-  console.log('Startup complete')
-})
-lifecycle.on('offline',function(){
-  console.log('Shutdown complete')
-})
 
 
 /**
@@ -409,8 +399,23 @@ exports.modules = []
  */
 exports.start = function(done){
   if(!done) done = function(){}
-  console.log('Beginning startup')
-  console.log('Scanning modules')
+  var log
+  exports.log = log = logger.setupLogger(config.name,config.log.dateFormat)
+  //setup lifecycle logging
+  lifecycle.on('start',function(item){
+    log.info('Starting ' + item.title)
+  })
+  lifecycle.on('stop',function(item){
+    log.info('Stopping ' + item.title)
+  })
+  lifecycle.on('online',function(){
+    log.info('Startup complete')
+  })
+  lifecycle.on('offline',function(){
+    log.info('Shutdown complete')
+  })
+  log.info('Beginning startup')
+  log.info('Scanning modules')
   var loadModule = function(file){
     var module = new ObjectManage(require(file))
     if(!module.name) module.name = path.basename(file)
@@ -441,8 +446,8 @@ exports.start = function(done){
     })
     .then(function(){
       //scan user modules
-      console.log('Found ' + exports.modules.length + ' modules')
-      console.log('Scanning for interfaces')
+      log.info('Found ' + exports.modules.length + ' modules')
+      log.info('Scanning for interfaces')
       //register interfaces for startup
       Object.keys(config.interface).forEach(function(name){
         //web panel
@@ -459,6 +464,8 @@ exports.start = function(done){
           )
         }
       })
+      log.info('Found ' + interfaces.length + ' interfaces')
+      log.info('Init complete')
       lifecycle.start(function(err){
         if(err) throw err
         done()
@@ -474,7 +481,7 @@ exports.start = function(done){
 exports.stop = function(done){
   if(!done) done = function(){}
   //start the shutdown process
-  console.log('Beginning shutdown')
+  exports.info('Beginning shutdown')
   lifecycle.stop(function(err){
     if(err) throw err
     done()

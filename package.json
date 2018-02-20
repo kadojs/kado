@@ -57,8 +57,9 @@
     "sequelize": "^4.33.4",
     "serve-static": "^1.13.2",
     "string": "^3.3.3",
+    "uglify-es": "^3.3.8",
     "validator": "^9.4.0",
-    "uglify-es": "^3.3.8"
+    "winston": "^2.4.0"
   },
   "scripts": {
     "postinstall": "browserify interface/admin/js/main.js -o interface/admin/public/bundle/bundle.js && uglifyjs interface/admin/public/bundle/bundle.js --source-map -o interface/admin/public/bundle/bundle.min.js && browserify interface/client/js/main.js -o interface/client/public/bundle/bundle.js && uglifyjs interface/client/public/bundle/bundle.js --source-map -o interface/client/public/bundle/bundle.min.js && browserify interface/main/js/main.js -o interface/main/public/bundle/bundle.js && uglifyjs interface/main/public/bundle/bundle.js --source-map -o interface/main/public/bundle/bundle.min.js",
