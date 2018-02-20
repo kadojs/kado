@@ -106,6 +106,10 @@ config.$load({
       workers: {
         count: 1,
         maxConnections: 10000
+      },
+      cookie: {
+        secret: '',
+        maxAge: 2592000000 //30 days
       }
     },
     cli: {

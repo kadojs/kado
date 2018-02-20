@@ -6,15 +6,18 @@ var clusterSetup = require('infant').cluster
 //assign config
 var config = K.config
 
+
 /**
  * Master process
+ * @this {object}
  * @param {string} interfaceName
  * @param {string} interfaceRoot
+ * @return {object}
  */
 exports.master = function(interfaceName,interfaceRoot){
   var cluster
   var that = this
-  that.start =  function(done){
+  that.start = function(done){
     cluster = clusterSetup(
       interfaceRoot + '/worker',
       {
@@ -39,8 +42,10 @@ exports.master = function(interfaceName,interfaceRoot){
 
 /**
  * Worker process
+ * @this {object}
  * @param {string} interfaceName
  * @param {string} interfaceRoot
+ * @return {object}
  */
 exports.worker = function(interfaceName,interfaceRoot){
   if(!interfaceName) interfaceName = 'admin'
@@ -155,6 +160,7 @@ exports.worker = function(interfaceName,interfaceRoot){
 
   /**
    * Enable interface session handling
+   * @param {function} callback
    */
   that.enableSession = function(callback){
     if(!callback) callback = function(){}
@@ -197,14 +203,17 @@ exports.worker = function(interfaceName,interfaceRoot){
 
 
   /**
-   * Start admin
+   * Start interface
    * @param {function} done
    */
   that.start = function(done){
-    server.listenAsync(+config.interface.admin.port,config.interface.admin.host)
+    server.listenAsync(
+      +config.interface[interfaceName].port,
+      config.interface[interfaceName].host
+    )
       .then(done).catch(function(err){
-      done(err)
-    })
+        done(err)
+      })
   }
 
 
