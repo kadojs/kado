@@ -2,7 +2,7 @@
 var K = require('../../helpers/kado')
 var interfaceRoot = __dirname
 var interfaceName = 'client'
-var worker = K.iface.worker(interfaceName,interfaceRoot)
+var worker = K.iface.worker(K,interfaceName,interfaceRoot)
 worker.enableSession(function(app){
   var flash = require('connect-flash')
   var compileFile = require('pug').compileFile

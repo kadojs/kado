@@ -2,7 +2,7 @@
 var K = require('../../helpers/kado')
 var interfaceRoot = __dirname
 var interfaceName = 'admin'
-var master = K.iface.master(interfaceName,interfaceRoot)
+var master = K.iface.master(K,interfaceName,interfaceRoot)
 if(require.main === module){
   K.infant.child(
     K.config.name + ':' + interfaceName + ':master',

@@ -2,7 +2,7 @@
 var K = require('../../helpers/kado')
 var interfaceRoot = __dirname
 var interfaceName = 'main'
-var worker = K.iface.worker(interfaceName,interfaceRoot)
+var worker = K.iface.worker(K,interfaceName,interfaceRoot)
 worker.enableHtml(function(app){
   var serveStatic = require('serve-static')
   //setup view engine

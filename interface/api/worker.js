@@ -2,7 +2,7 @@
 var K = require('../../helpers/kado')
 var interfaceRoot = __dirname
 var interfaceName = 'api'
-var worker = K.iface.worker(interfaceName,interfaceRoot)
+var worker = K.iface.worker(K,interfaceName,interfaceRoot)
 worker.enableSession()
 worker.setup(function(app){
   //login

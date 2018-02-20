@@ -1,20 +1,18 @@
 'use strict';
-var K = require('../index')
 var P = require('bluebird')
 var clusterSetup = require('infant').cluster
-
-//assign config
-var config = K.config
 
 
 /**
  * Master process
  * @this {object}
+ * @param {K} K
  * @param {string} interfaceName
  * @param {string} interfaceRoot
  * @return {object}
  */
-exports.master = function(interfaceName,interfaceRoot){
+exports.master = function(K,interfaceName,interfaceRoot){
+  var config = K.config
   var cluster
   var that = this
   that.start = function(done){
@@ -43,11 +41,13 @@ exports.master = function(interfaceName,interfaceRoot){
 /**
  * Worker process
  * @this {object}
+ * @param {K} K
  * @param {string} interfaceName
  * @param {string} interfaceRoot
  * @return {object}
  */
-exports.worker = function(interfaceName,interfaceRoot){
+exports.worker = function(K,interfaceName,interfaceRoot){
+  var config = K.config
   if(!interfaceName) interfaceName = 'admin'
   if(!interfaceRoot) interfaceRoot = __dirname
   var that = this
