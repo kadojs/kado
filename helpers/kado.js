@@ -446,7 +446,7 @@ exports.start = function(done){
     })
     .then(function(){
       //scan user modules
-      log.info('Found ' + exports.modules.length + ' modules')
+      log.info('Found ' + exports.modules.length + ' module(s)')
       log.info('Scanning for interfaces')
       //register interfaces for startup
       Object.keys(config.interface).forEach(function(name){
@@ -464,7 +464,7 @@ exports.start = function(done){
           )
         }
       })
-      log.info('Found ' + interfaces.length + ' interfaces')
+      log.info('Found ' + interfaces.length + ' interface(s)')
       log.info('Init complete')
       lifecycle.start(function(err){
         if(err) throw err
