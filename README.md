@@ -25,7 +25,7 @@ Basic administration panel
 # mkdir myproject
 # cd myproject
 # npm install kado --save
-# node node_modules/kado/bin/kado bootstrap --enable-admin
+# node node_modules/kado/bin/kado bootstrap --name myproject --enable-admin
 # node app
 ```
 
@@ -35,13 +35,13 @@ Simple blog website (equivalent of wordpress)
 # mkdir myblog
 # cd myblog
 # npm install kado --save
-# node_modules/kado/bin/kado bootstrap --enable-blog
+# node_modules/kado/bin/kado bootstrap --name myblog --enable-blog
 # node app
 ```
 
-## Plugins
+## Modules
 
-Kado plugins drive the entire user space system which comprises
+Kado modules drive the entire user space system which comprises
 the actionable code.
 
 The plugin format follows a rather loose format to provide
