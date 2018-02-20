@@ -1,9 +1,8 @@
 'use strict';
 var K = require('../../helpers/kado')
-var iface = require('../../helpers/interface')
 var interfaceRoot = __dirname
 var interfaceName = 'admin'
-var worker = iface.worker(interfaceName,interfaceRoot)
+var worker = K.iface.worker(interfaceName,interfaceRoot)
 worker.enableSession(function(app){
   var flash = require('connect-flash')
   var compileFile = require('pug').compileFile

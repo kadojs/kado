@@ -1,9 +1,8 @@
 'use strict';
 var K = require('../../helpers/kado')
-var iface = require('../../helpers/interface')
 var interfaceRoot = __dirname
 var interfaceName = 'main'
-var worker = iface.worker(interfaceName,interfaceRoot)
+var worker = K.iface.worker(interfaceName,interfaceRoot)
 worker.enableHtml(function(app){
   var serveStatic = require('serve-static')
   //setup view engine

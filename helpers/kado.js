@@ -226,6 +226,12 @@ config.originalConfig = ObjectManage.$clone(config)
 
 
 /**
+ * Interface helper
+ */
+exports.iface = require('./interface')
+
+
+/**
  * Export Infant for global usage
  * @type {infant}
  */
