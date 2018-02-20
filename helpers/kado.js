@@ -3,8 +3,7 @@ var P = require('bluebird')
 var execSync = require('child_process').execSync
 var fs = require('fs')
 var glob = require('glob')
-var parent = require('infant').parent
-var lifecycle = new (require('infant').Lifecycle)()
+var infant = require('infant')
 var LineByLine = require('n-readlines')
 var moment = require('moment')
 var ObjectManage = require('object-manage')
@@ -13,6 +12,7 @@ var pkg = require('../package.json')
 
 var config = new ObjectManage()
 var interfaces = []
+var lifecycle = new infant.Lifecycle()
 var logger = require('./logger')
 
 
@@ -222,6 +222,13 @@ config.originalConfig = ObjectManage.$clone(config)
 
 
 /**
+ * Export Infant for global usage
+ * @type {infant}
+ */
+exports.infant = infant
+
+
+/**
  * Export lifecycle object
  * @type {object}
  */
@@ -394,12 +401,20 @@ exports.modules = []
 
 
 /**
+ * Initiate logger and then load over it with context
+ * @type {winston.Logger}
+ */
+exports.log = logger.setupLogger()
+
+
+/**
  * Start master
  * @param {function} done
  */
 exports.start = function(done){
   if(!done) done = function(){}
   var log
+  //override logger with runtime logger
   exports.log = log = logger.setupLogger(config.name,config.log.dateFormat)
   //setup lifecycle logging
   lifecycle.on('start',function(item){
@@ -455,7 +470,7 @@ exports.start = function(done){
           true === config.$get(['interface',name,'enabled']) &&
           -1 < config.$get(['interface',name,'transport']).indexOf('http')
         ){
-          var iface = parent(config.interface[name].path)
+          var iface = infant.parent(config.interface[name].path)
           interfaces.push(iface)
           lifecycle.add(
             name,
@@ -481,7 +496,7 @@ exports.start = function(done){
 exports.stop = function(done){
   if(!done) done = function(){}
   //start the shutdown process
-  exports.info('Beginning shutdown')
+  exports.log.info('Beginning shutdown')
   lifecycle.stop(function(err){
     if(err) throw err
     done()

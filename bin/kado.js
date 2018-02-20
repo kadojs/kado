@@ -7,6 +7,9 @@ var path = require('path')
 
 program.version(K.config.version)
 program.command('bootstrap')
+  .option('--enable-blog')
+  .option('--enable-setting')
+  .option('--enable-user')
   .action(function(){
     var folder = process.cwd()
     var appFile = path.resolve(folder + '/app.js')
@@ -25,10 +28,25 @@ program.command('bootstrap')
       '  }\n' +
       '})\n' +
       '\n' +
-      'K.start(function(err){\n' +
-      '  if(err) throw err\n' +
-      '  console.log(\'Kado started!\')\n' +
-      '})\n'
+      'if(require.main === module){' +
+      '  infant.child(' +
+      '    \'myapp\',' +
+      '    function(done){' +
+      '      K.start(function(err){' +
+      '        if(err) return done(err)' +
+      '        K.log.info(\'Kado started!\')' +
+      '        done()' +
+      '      })' +
+      '    },' +
+      '    function(done){' +
+      '      K.stop(function(err){' +
+      '        if(err) return done(err)' +
+      '        K.log.info(\'Kado stopped!\')' +
+      '        done()' +
+      '      })' +
+      '    }' +
+      '  )' +
+      '}'
     fs.writeFileSync(appFile,appData)
     console.log('Application is ready!')
     process.exit()

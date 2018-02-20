@@ -1,11 +1,11 @@
 'use strict';
 var K = require('../../helpers/kado')
-var infant = require('infant')
 var iface = require('../../helpers/interface')
 var interfaceRoot = __dirname
 var interfaceName = 'main'
 var worker = iface.worker(interfaceName,interfaceRoot)
 worker.enableHtml(function(app){
+  var serveStatic = require('serve-static')
   //setup view engine
   app.set('trust proxy',true)
   app.set('views',interfaceRoot + '/' + 'view') //VARIABLE
@@ -23,7 +23,7 @@ worker.setup(function(app){
 })
 
 if(require.main === module){
-  infant.worker(
+  K.infant.worker(
     worker.server,
     K.config.name + ':main',
     function(done){

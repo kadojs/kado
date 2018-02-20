@@ -1,10 +1,9 @@
 'use strict';
 var K = require('../../helpers/kado')
-var infant = require('infant')
 var iface = require('../../helpers/interface')
 var interfaceRoot = __dirname
 var interfaceName = 'api'
-var worker = iface.worker(interfceName,interfaceRoot)
+var worker = iface.worker(interfaceName,interfaceRoot)
 worker.enableSession(function(app){
   var flash = require('connect-flash')
   var compileFile = require('pug').compileFile
@@ -31,6 +30,8 @@ worker.enableSession(function(app){
 worker.setup(function(app){
   //login
   app.post('/login',function(req,res){
+    res.json({status: 'error', message: 'Not implemented'})
+    /*
     User.login(req.body.email,req.body.password)
       .then(function(user){
         req.session.user = user.dataValues
@@ -41,6 +42,7 @@ worker.setup(function(app){
         req.flash('error','Invalid login')
         res.redirect(301,'/login')
       })
+     */
   })
   app.get('/login',function(req,res){
     res.render('login')
@@ -65,7 +67,7 @@ worker.setup(function(app){
 })
 
 if(require.main === module){
-  infant.worker(
+  K.infant.worker(
     worker.server,
     K.config.name + ':' + interfaceName,
     function(done){
