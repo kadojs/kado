@@ -4,7 +4,8 @@ var K = require('../index')
 var program = require('commander')
 var path = require('path')
 var list = require(process.env.KADO_HELPERS + '/list')
-var sequelize = require(process.env.KADO_HELPERS + '/sequelize')()
+//var sequelize = require(process.env.KADO_DB + '/sequelize')()
+var sequelize = require('../db/sequelize')()
 
 var User = sequelize.models.User
 
