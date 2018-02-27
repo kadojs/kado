@@ -15,7 +15,7 @@ exports.setupLogger = function(name,dateFormat){
   if(!name) name = 'kado'
   name = name.toUpperCase()
   if(!dateFormat) dateFormat = 'YYYY-MM-DD@HH:mm:ss.SSS'
-  return new winston.Logger({
+  var logger = new winston.Logger({
     exitOnError: false,
     transports: [
       new winston.transports.Console({
@@ -32,4 +32,8 @@ exports.setupLogger = function(name,dateFormat){
       })
     ]
   })
+  if('kado' === process.env.NODE_DEBUG){
+    logger.transports.console.level = 'debug'
+  }
+  return logger
 }
