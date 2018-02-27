@@ -70,31 +70,14 @@ program.command('bootstrap')
     enableModule('setting',cmd.enableSetting)
     enableModule('user',cmd.enableUser)
     if(moduleConfig) moduleConfig = moduleConfig + '\n  }\n'
+    var appRequire = '\'kado\''
+    if(!process.argv[1].match(/node_moudules/i)) appRequire = '\'./index\''
     var appData = '\'use strict\';\n' +
-      'var K = require(\'kado\');\n' +
+      'var K = require(' + appRequire + ');\n' +
       'K.configure({\n' +
       '  root: __dirname' + interfaceConfig + moduleConfig +
       '})\n' +
-      '\n' +
-      'if(require.main === module){\n' +
-      '  K.infant.child(\n' +
-      '    \'' + cmd.name + '\',\n' +
-      '    function(done){\n' +
-      '      K.start(function(err){\n' +
-      '        if(err) return done(err)\n' +
-      '        K.log.info(\'Kado started!\')\n' +
-      '        done()\n' +
-      '      })\n' +
-      '    },\n' +
-      '    function(done){\n' +
-      '      K.stop(function(err){\n' +
-      '        if(err) return done(err)\n' +
-      '        K.log.info(\'Kado stopped!\')\n' +
-      '        done()\n' +
-      '      })\n' +
-      '    }\n' +
-      '  )\n' +
-      '}\n'
+      'K.go(\'' + cmd.name + '\')\n'
     fs.writeFileSync(appFile,appData)
     console.log('Application is ready!')
     process.exit()
