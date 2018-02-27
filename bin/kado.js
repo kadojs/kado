@@ -71,7 +71,7 @@ program.command('bootstrap')
     enableModule('user',cmd.enableUser)
     if(moduleConfig) moduleConfig = moduleConfig + '\n  }\n'
     var appRequire = '\'kado\''
-    if(!process.argv[1].match(/node_moudules/i)) appRequire = '\'./index\''
+    if(!process.argv[1].match(/node_modules/i)) appRequire = '\'./index\''
     var appData = '\'use strict\';\n' +
       'var K = require(' + appRequire + ');\n' +
       'K.configure({\n' +
