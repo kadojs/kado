@@ -7,7 +7,7 @@ var path = require('path')
 
 program.version(K.config.version)
 program.command('bootstrap')
-  .option('--name <string>')
+  .option('--appname <string>')
   .option('--enable-admin')
   .option('--enable-all')
   .option('--enable-api')
@@ -17,14 +17,13 @@ program.command('bootstrap')
   .option('--enable-setting')
   .option('--enable-user')
   .action(function(cmd){
-    if(!cmd.name) cmd.name = 'myapp'
     var folder = process.cwd()
     var appFile = path.resolve(folder + '/app.js')
     if(fs.existsSync(appFile)){
       console.log('ERROR app file already exits')
       process.exit(1)
     }
-    if(!cmd.name) cmd.name = 'kado'
+    if(!cmd.appname) cmd.appname = 'myapp'
     if(cmd.enableAll){
       cmd.enableAdmin = true
       cmd.enableApi = true
@@ -78,7 +77,7 @@ program.command('bootstrap')
       'K.configure({\n' +
       '  root: __dirname' + interfaceConfig + moduleConfig +
       '})\n' +
-      'K.go(\'' + cmd.name + '\')\n'
+      'K.go(\'' + cmd.appname + '\')\n'
     fs.writeFileSync(appFile,appData)
     console.log('Application is ready!')
     process.exit()
