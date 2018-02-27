@@ -426,4 +426,6 @@ client.N1Query = N1Query
  * Export client
  * @return {object} client
  */
-module.exports = client
+module.exports = function(){
+  return client
+}

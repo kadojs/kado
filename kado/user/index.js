@@ -100,3 +100,14 @@ exports.admin = function(app){
   app.post('/user/permission/list',permission.listAction)
   app.post('/user/permission/save',permission.save)
 }
+
+
+/**
+ * CLI Access
+ * @param args
+ */
+exports.cli = function(args){
+  args.splice(2,1)
+  process.argv = args
+  require('./bin/user')
+}

@@ -11,7 +11,6 @@ var path = require('path')
 var pkg = require('../package.json')
 
 var config = new ObjectManage()
-var interfaces = []
 var lifecycle = new infant.Lifecycle()
 var logger = require('./logger')
 
@@ -156,6 +155,7 @@ config.$load({
   //databases
   db: {
     couchbase: {
+      enabled: false,
       protocol: 'couchbase://',
       host: '127.0.0.1',
       dsnHost: null,
@@ -178,6 +178,7 @@ config.$load({
       }
     },
     couchdb: {
+      enabled: false,
       host: '127.0.0.1',
       port: '5984',
       prefix: '',
@@ -193,7 +194,8 @@ config.$load({
         }
       }
     },
-    mysql: {
+    sequelize: {
+      enabled: false,
       name: 'kado',
       host: '127.0.0.1',
       port: 3306,
@@ -202,7 +204,13 @@ config.$load({
       logging: false,
       dialect: 'mysql'
     },
+    sqlite: {
+      enabled: false,
+      name: 'kado',
+      path: null
+    },
     redis: {
+      enabled: false,
       host: '127.0.0.1',
       port: 6379,
       db: 0,
@@ -404,10 +412,24 @@ exports.modulePath = function(p){
 
 
 /**
- * Store registered modules
- * @type {Array}
+ * Store database connectors
+ * @type {object}
  */
-exports.modules = []
+exports.db = {}
+
+
+/**
+ * Store registered interfaces
+ * @type {object}
+ */
+exports.interfaces = {}
+
+
+/**
+ * Store registered modules
+ * @type {object}
+ */
+exports.modules = {}
 
 
 /**
@@ -418,79 +440,130 @@ exports.log = logger.setupLogger()
 
 
 /**
- * Start master
- * @param {function} done
+ * Init, scan modules and interfaces
  */
-exports.start = function(done){
-  if(!done) done = function(){}
-  var log
+exports.init = function(){
   //override logger with runtime logger
-  exports.log = log = logger.setupLogger(config.name,config.log.dateFormat)
+  exports.log = logger.setupLogger(config.name,config.log.dateFormat)
   //setup lifecycle logging
   lifecycle.on('start',function(item){
-    log.info('Starting ' + item.title)
+    exports.log.info('Starting ' + item.title)
   })
   lifecycle.on('stop',function(item){
-    log.info('Stopping ' + item.title)
+    exports.log.info('Stopping ' + item.title)
   })
   lifecycle.on('online',function(){
-    log.info('Startup complete')
+    exports.log.info('Startup complete')
   })
   lifecycle.on('offline',function(){
-    log.info('Shutdown complete')
+    exports.log.info('Shutdown complete')
   })
-  log.info('Beginning startup')
-  log.info('Scanning modules')
+  exports.log.debug('Beginning startup')
+  var loadConnector = function(file){
+    var name = path.basename(file,'.js')
+    //check if the connector is registered and enabled
+    if(config.db[name] && config.db[name].enabled){
+      exports.db[name] = require(file)
+    }
+  }
   var loadModule = function(file){
     var module = new ObjectManage(require(file))
-    if(!module.name) module.name = path.basename(file)
-    module.root = path.dirname(file,'.json')
+    if(!module.name) module.name = path.basename(file,'.json')
+    module.root = path.dirname(file)
     if(exports.config.module[module.name]){
       module.$load(exports.config.module[module.name])
     }
     if(module.enabled){
-      exports.modules.push(module)
+      if(exports.modules[module.name]){
+        exports.log.debug('WARN: Duplicate module registration attempted ' +
+          module.name)
+      } else {
+        exports.modules[module.name] = module
+      }
     }
   }
+  var dbGlob = process.env.KADO_ROOT + '/db/*.js'
   var sysGlob = process.env.KADO_MODULES + '/**/kado.json'
   var userGlob = process.env.KADO_USER_MODULES + '/**/kado.json'
-  //scan system plugins
-  new P(function(resolve){
-    glob(sysGlob,function(err,files){
-      files.forEach(loadModule)
-      resolve()
-    })
-  })
-    .then(function(){
-      return new P(function(resolve){
-        glob(userGlob,function(err,files){
-          files.forEach(loadModule)
-          resolve()
-        })
+  var doScan = function(pattern,handler){
+    return new P(function(resolve){
+      glob(pattern,function(err,files){
+        files.forEach(handler)
+        resolve()
       })
+    })
+  }
+  //scan db connectors
+  exports.log.debug('Scanning connectors')
+  return doScan(dbGlob,loadConnector)
+    .then(function(){
+      //scan system plugins
+      exports.log.debug('Scanning system modules')
+      return doScan(sysGlob,loadModule)
     })
     .then(function(){
       //scan user modules
-      log.info('Found ' + exports.modules.length + ' module(s)')
-      log.info('Scanning for interfaces')
+      exports.log.debug('Scanning user space modules')
+      return doScan(userGlob,loadModule)
+    })
+    .then(function(){
+      exports.log.debug('Found ' + Object.keys(exports.modules).length +
+        ' module(s)')
+      exports.log.debug('Scanning interfaces')
       //register interfaces for startup
       Object.keys(config.interface).forEach(function(name){
         //web panel
         if(
           true === config.$get(['interface',name,'enabled']) &&
           -1 < config.$get(['interface',name,'transport']).indexOf('http')
-        ){
+        )
+        {
           var iface = infant.parent(config.interface[name].path)
-          interfaces.push(iface)
+          exports.interfaces[name] = iface
           lifecycle.add(
             name,
-            function(done){iface.start(done)},
-            function(done){iface.stop(done)}
+            function(done){
+              iface.start(done)
+            },
+            function(done){
+              iface.stop(done)
+            }
           )
         }
       })
-      log.info('Found ' + interfaces.length + ' interface(s)')
-      log.info('Init complete')
+      exports.log.debug('Found ' + Object.keys(exports.interfaces).length +
+        ' interface(s)')
+      exports.log.debug('Init complete')
+    })
+}
+
+
+/**
+ * CLI Access to modules
+ * @param args
+ */
+exports.cli = function(args){
+  exports.init()
+    .then(function(){
+      Object.keys(exports.modules).forEach(function(modName){
+        var mod = exports.modules[modName]
+        if(mod.name === args[2]){
+          var module = require(mod.root)
+          module.cli(args)
+        }
+      })
+    })
+}
+
+
+/**
+ * Start master
+ * @param {function} done
+ */
+exports.start = function(done){
+  if(!done) done = function(){}
+  exports.init()
+    .then(function(){
       lifecycle.start(function(err){
         if(err) throw err
         done()
@@ -511,4 +584,33 @@ exports.stop = function(done){
     if(err) throw err
     done()
   })
+}
+
+
+/**
+ * Rapidly start Kado
+ * @param {string} name - name of app
+ */
+exports.go = function(name){
+  if(process.argv.length <= 2){
+    exports.infant.child(
+      name,
+      function(done){
+        exports.start(function(err){
+          if(err) return done(err)
+          exports.log.info(name.toUpperCase() + ' started!')
+          done()
+        })
+      },
+      function(done){
+        exports.stop(function(err){
+          if(err) return done(err)
+          exports.log.info(name.toUpperCase() + ' stopped!')
+          done()
+        })
+      }
+    )
+  } else {
+    exports.cli(process.argv)
+  }
 }

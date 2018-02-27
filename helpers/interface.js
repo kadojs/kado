@@ -133,7 +133,8 @@ exports.worker = function(K,interfaceName,interfaceRoot){
   //selves on which i suppose is acceptable
 
   //so now loop here and load modules that want to be loaded
-  K.modules.forEach(function(mod){
+  Object.keys(K.modules).forEach(function(modName){
+    var mod = exports.modules[modName]
     if(mod.enabled){
       var module = require(mod.root)
       if(module.admin) module.admin(app)

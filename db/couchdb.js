@@ -63,4 +63,6 @@ client.schema = new CouchSchema(config.couchdb.prefix)
  * Export client
  * @return {object} client
  */
-module.exports = client
+module.exports = function(){
+  return client
+}

@@ -34,6 +34,7 @@
     "connect-flash": "0.1.x",
     "connect-redis": "3.3.x",
     "cookie-parser": "1.4.x",
+    "couchbase": "^2.4.3",
     "debug": "3.1.x",
     "express": "4.16.x",
     "express-session": "1.15.x",

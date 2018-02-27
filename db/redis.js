@@ -104,4 +104,6 @@ client.schema = new RedisSchema(config.redis.prefix)
  * Export client
  * @return {object} client
  */
-module.exports = client
+module.exports = function(){
+  return client
+}
