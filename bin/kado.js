@@ -17,6 +17,7 @@ program.command('bootstrap')
   .option('--enable-setting')
   .option('--enable-user')
   .action(function(cmd){
+    if(!cmd.name) cmd.name = 'myapp'
     var folder = process.cwd()
     var appFile = path.resolve(folder + '/app.js')
     if(fs.existsSync(appFile)){
