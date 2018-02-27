@@ -73,7 +73,7 @@ program.command('bootstrap')
     var appRequire = '\'kado\''
     if(!process.argv[1].match(/node_modules/i)) appRequire = '\'./index\''
     var appData = '\'use strict\';\n' +
-      'var K = require(' + appRequire + ');\n' +
+      'var K = require(' + appRequire + ')\n' +
       'K.configure({\n' +
       '  root: __dirname' + interfaceConfig + moduleConfig +
       '})\n' +
