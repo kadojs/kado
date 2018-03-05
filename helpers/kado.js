@@ -75,6 +75,77 @@ config.$load({
   log: {
     dateFormat: 'YYYY-MM-DD@HH:mm:ss.SSS'
   },
+  //database connectors
+  db: {
+    couchbase: {
+      enabled: false,
+      load: false,
+      protocol: 'couchbase://',
+      host: '127.0.0.1',
+      dsnHost: null,
+      port: '8091',
+      admin: {
+        username: '',
+        password: ''
+      },
+      username: '',
+      password: '',
+      prefix: '',
+      connectionTimeout: 60000,
+      operationTimeout: 30000,
+      bucket: {
+        kado: {
+          name: 'kado',
+          secret: '',
+          ramQuotaMB: 512
+        }
+      }
+    },
+    couchdb: {
+      enabled: false,
+      load: false,
+      host: '127.0.0.1',
+      port: '5984',
+      prefix: '',
+      database: 'oose',
+      options: {
+        secure: false,
+        cache: false,
+        retries: 3,
+        retryTimeout: 10000,
+        auth: {
+          username: 'oose',
+          password: ''
+        }
+      }
+    },
+    sequelize: {
+      enabled: false,
+      load: true,
+      name: 'kado',
+      host: '127.0.0.1',
+      port: 3306,
+      user: '',
+      password: '',
+      logging: false,
+      dialect: 'mysql'
+    },
+    sqlite: {
+      enabled: false,
+      load: true,
+      name: 'kado',
+      path: null
+    },
+    redis: {
+      enabled: false,
+      load: false,
+      host: '127.0.0.1',
+      port: 6379,
+      db: 0,
+      prefix: 'kado',
+      options: {}
+    }
+  },
   //define interfaces
   interface: {
     admin: {
@@ -150,72 +221,6 @@ config.$load({
         secret: '',
         maxAge: 2592000000 //30 days
       }
-    }
-  },
-  //databases
-  db: {
-    couchbase: {
-      enabled: false,
-      protocol: 'couchbase://',
-      host: '127.0.0.1',
-      dsnHost: null,
-      port: '8091',
-      admin: {
-        username: '',
-        password: ''
-      },
-      username: '',
-      password: '',
-      prefix: '',
-      connectionTimeout: 60000,
-      operationTimeout: 30000,
-      bucket: {
-        kado: {
-          name: 'kado',
-          secret: '',
-          ramQuotaMB: 512
-        }
-      }
-    },
-    couchdb: {
-      enabled: false,
-      host: '127.0.0.1',
-      port: '5984',
-      prefix: '',
-      database: 'oose',
-      options: {
-        secure: false,
-        cache: false,
-        retries: 3,
-        retryTimeout: 10000,
-        auth: {
-          username: 'oose',
-          password: ''
-        }
-      }
-    },
-    sequelize: {
-      enabled: false,
-      name: 'kado',
-      host: '127.0.0.1',
-      port: 3306,
-      user: '',
-      password: '',
-      logging: false,
-      dialect: 'mysql'
-    },
-    sqlite: {
-      enabled: false,
-      name: 'kado',
-      path: null
-    },
-    redis: {
-      enabled: false,
-      host: '127.0.0.1',
-      port: 6379,
-      db: 0,
-      prefix: 'kado',
-      options: {}
     }
   },
   module: {
@@ -462,7 +467,7 @@ exports.init = function(){
   var loadConnector = function(file){
     var name = path.basename(file,'.js')
     //check if the connector is registered and enabled
-    if(config.db[name] && config.db[name].enabled){
+    if(config.db[name] && config.db[name].load){
       exports.db[name] = require(file)
     }
   }
@@ -509,6 +514,30 @@ exports.init = function(){
     .then(function(){
       exports.log.debug('Found ' + Object.keys(exports.modules).length +
         ' module(s)')
+      exports.log.debug('Setting up data storage access')
+      Object.keys(exports.modules).forEach(function(modKey){
+        if(exports.modules.hasOwnProperty(modKey)){
+          var modConf = exports.modules[modKey]
+          if(true === modConf.enabled){
+            var mod = require(modConf.root)
+            if('function' === typeof mod.db){
+              console.log(mod.db)
+              mod.db(exports.db)
+            }
+          }
+        }
+      })
+      var dbEnabled = 0
+      Object.keys(exports.db).forEach(function(dbKey){
+        if(exports.db.hasOwnProperty(dbKey)){
+          var db = exports.db[dbKey]
+          if(db.enabled){
+            exports.log.debug(db.name )
+            dbEnabled++
+          }
+        }
+      })
+      exports.log.debug('Found ' + dbEnabled + ' database connectors')
       exports.log.debug('Scanning interfaces')
       //register interfaces for startup
       Object.keys(config.interface).forEach(function(name){

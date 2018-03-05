@@ -2,12 +2,12 @@
 var Database = require('better-sqlite3')
 var path = require('path')
 
-var nouter = require('./nouter')
-var config = require('../config')
+var K = require('../index')
+var config = K.config.db
 
 var dbfile
 if(!config.sqlite.path){
-  dbfile = nouter.path(config.sqlite.name + '.s3db')
+  dbfile = K.path(config.sqlite.name + '.s3db')
 } else {
   dbfile = path.resolve(config.sqlite.path + '/' + config.sqlite.name + '.s3db')
 }
@@ -19,7 +19,7 @@ if(!config.sqlite.path){
  */
 var open = function(dbfile){
   //if the path is relative run nouter.path on it
-  if(!dbfile.match(/^([/\\]+|[A-Z]:).*$/)) dbfile = nouter.path(dbfile)
+  if(!dbfile.match(/^([/\\]+|[A-Z]:).*$/)) dbfile = K.path(dbfile)
   dbfile = path.resolve(dbfile)
   return new Database(dbfile)
 }
@@ -43,7 +43,7 @@ client.open = function(dbfile){
  * @return {*|Database}
  */
 client.plugin = function(plugin){
-  return open(nouter.path('plugins/' + plugin + '/' + plugin + '.s3db'))
+  return open(K.path('plugins/' + plugin + '/' + plugin + '.s3db'))
 }
 
 

@@ -30,28 +30,21 @@ exports.description = 'Manage Kado Users and Permissions'
 
 
 /**
- * Export locations of models
- * @param {object} sequelize
+ * Initialize database access
+ * @param {K.db} db
  */
-exports.model = function(sequelize){
-  sequelize.import(__dirname + '/model/User.js')
-  sequelize.import(__dirname + '/model/UserActivity.js')
-  sequelize.import(__dirname + '/model/UserPermission.js')
-  sequelize.import(__dirname + '/model/UserRole.js')
-  sequelize.import(__dirname + '/model/UserRolePermission.js')
-}
-
-
-/**
- * Register in Admin Interface
- * @param {object} s
- */
-exports.modelKeyMapping = function(s){
-  var User = s.models.User
-  var UserActivity = s.models.UserActivity
-  var UserRole = s.models.UserRole
-  var UserPermission = s.models.UserPermission
-  var UserRolePermission = s.models.UserRolePermission
+exports.db = function(db){
+  db.sequelize.enabled = true
+  db.sequelize.import(__dirname + '/model/User.js')
+  db.sequelize.import(__dirname + '/model/UserActivity.js')
+  db.sequelize.import(__dirname + '/model/UserPermission.js')
+  db.sequelize.import(__dirname + '/model/UserRole.js')
+  db.sequelize.import(__dirname + '/model/UserRolePermission.js')
+  var User = db.sequelize.models.User
+  var UserActivity = db.sequelize.models.UserActivity
+  var UserRole = db.sequelize.models.UserRole
+  var UserPermission = db.sequelize.models.UserPermission
+  var UserRolePermission = db.sequelize.models.UserRolePermission
   User.hasMany(UserActivity)
   User.hasMany(UserRole)
   User.hasMany(UserPermission)
