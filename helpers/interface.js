@@ -21,7 +21,10 @@ exports.master = function(K,interfaceName,interfaceRoot){
       {
         enhanced: true,
         count: config.interface.admin.workers.count,
-        maxConnections: config.interface.admin.workers.maxConnections
+        maxConnections: config.interface.admin.workers.maxConnections,
+        env: {
+          KADO_CONFIG: JSON.stringify(config.$strip())
+        }
       }
     )
     cluster.start(function(err){
@@ -137,7 +140,11 @@ exports.worker = function(K,interfaceName,interfaceRoot){
     var mod = exports.modules[modName]
     if(mod.enabled){
       var module = require(mod.root)
-      if(module.admin) module.admin(app)
+      if('function' === typeof module[interfaceName]){
+        module[interfaceName](K,app)
+      } else {
+        K.log.warn('Failed to load module interface, no entry function',modName)
+      }
     }
   })
   that.setupScriptServer = function(name,scriptPath){
@@ -208,10 +215,13 @@ exports.worker = function(K,interfaceName,interfaceRoot){
    * @param {function} done
    */
   that.start = function(done){
-    server.listenAsync(
-      +config.interface[interfaceName].port,
-      config.interface[interfaceName].host
-    )
+    K.init()
+      .then(function(){
+        return server.listenAsync(
+          +config.interface[interfaceName].port,
+          config.interface[interfaceName].host
+        )
+      })
       .then(done).catch(function(err){
         done(err)
       })

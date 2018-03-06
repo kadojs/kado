@@ -3,6 +3,7 @@
   "name": "user",
   "admin": {
     "enabled": true,
+    "providesAuthentication": true,
     "nav": {
       "name": "Users",
       "sequence": "5",

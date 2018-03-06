@@ -78,41 +78,7 @@ module.exports = function(sequelize,DataTypes) {
           method: 'BTREE',
           fields: [{attribute: 'dateFail', order: 'DESC'}]
         }
-      ],
-      classMethods: {
-        /**
-         * Staff login
-         * @param {string} email
-         * @param {string} password
-         * @return {P}
-         */
-        login: function(email,password){
-          var sequelize = require('../helpers/sequelize')()
-          var User = sequelize.models.User
-          var now = (+new Date()) / 1000 //as a timestamp
-          var user
-          return User.find({where: {email: email}})
-            .then(function(result){
-              if(!result) throw new Error('No user found')
-              if(!result.active) throw new Error('User inactive')
-              //globalize seller
-              user = result
-              //verify password
-              return bcrypt.compareAsync(password,user.password)
-            })
-            .then(function(match){
-              if(!match) throw new Error('Invalid password')
-              return user.updateAttributes({dateSeen: now})
-            })
-            .then(function(){
-              //success return our seller
-              return user
-            })
-            .catch(function(err){
-              if(user) user.updateAttributes({dateFail: now})
-              throw err
-            })
-        }
-      }
-    })
+      ]
+    }
+  )
 }

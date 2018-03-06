@@ -1,4 +1,5 @@
 'use strict';
+var bcrypt = require('bcrypt')
 
 
 /**
@@ -31,9 +32,10 @@ exports.description = 'Manage Kado Users and Permissions'
 
 /**
  * Initialize database access
+ * @param {K} K Master Kado Object
  * @param {K.db} db
  */
-exports.db = function(db){
+exports.db = function(K,db){
   db.sequelize.enabled = true
   db.sequelize.import(__dirname + '/model/User.js')
   db.sequelize.import(__dirname + '/model/UserActivity.js')
@@ -57,10 +59,55 @@ exports.db = function(db){
 
 
 /**
+ * Authenticate requests
+ * @param {K} K Master Kado Object
+ * @param {string} username
+ * @param {string} password
+ * @param {function} done
+ */
+exports.authenticate = function(K,username,password,done){
+  var userLogin = function(email,password){
+    var User = K.db.sequelize.models.User
+    var now = (+new Date()) / 1000 //as a timestamp
+    var user
+    return User.find({where: {email: email}})
+      .then(function(result){
+        if(!result) throw new Error('No user found')
+        if(!result.active) throw new Error('User inactive')
+        //globalize seller
+        user = result
+        //verify password
+        return bcrypt.compareAsync(password,user.password)
+      })
+      .then(function(match){
+        if(!match) throw new Error('Invalid password')
+        return user.updateAttributes({dateSeen: now})
+      })
+      .then(function(){
+        //success return our seller
+        return user
+      })
+      .catch(function(err){
+        if(user) user.updateAttributes({dateFail: now})
+        throw err
+      })
+  }
+  userLogin(username,password)
+    .then(function(user){
+      done(null,true,user.dataValues)
+    })
+    .catch(function(e){
+      done(e,false)
+    })
+}
+
+
+/**
  * Register in Admin Interface
+ * @param {K} K Master Kado Object
  * @param {object} app
  */
-exports.admin = function(app){
+exports.admin = function(K,app){
   var user = require('./user')
   var role = require('./role')
   var permission = require('./permission')
@@ -97,9 +144,10 @@ exports.admin = function(app){
 
 /**
  * CLI Access
- * @param args
+ * @param {K} K Master Kado Object
+ * @param {Array} args
  */
-exports.cli = function(args){
+exports.cli = function(K,args){
   args.splice(2,1)
   process.argv = args
   require('./bin/user')

@@ -1,5 +1,5 @@
 'use strict';
-var K = require('../../helpers/kado')
+var K = require('../../index')
 var interfaceRoot = __dirname
 var interfaceName = 'admin'
 var worker = K.iface.worker(K,interfaceName,interfaceRoot)
@@ -38,33 +38,73 @@ worker.enableHtml(function(app){
 worker.setup(function(app){
   //login
   app.post('/login',function(req,res){
-    res.json({status: 'error', message: 'Not implemented'})
-    /*
-    User.login(req.body.email,req.body.password)
-      .then(function(user){
-        req.session.user = user.dataValues
-        res.redirect(301,'/')
+    var promises = []
+    var authTried = 0
+    var invalidLoginError = new Error('Invalid login')
+    Object.keys(K.modules).forEach(function(modName){
+      if(K.modules.hasOwnProperty(modName)){
+        var modConf = K.modules[modName]
+        if(modConf.admin && true === modConf.admin.providesAuthentication){
+          promises.push(new K.bluebird(function(resolve,reject){
+            var mod = require(modConf.root)
+            if('function' === typeof mod.authenticate){
+              authTried++
+              mod.authenticate(
+                K,
+                req.body.email,
+                req.body.password,
+                function(err,authValid,sessionValues){
+                  console.log(err,authValid,sessionValues)
+                  if(err){
+                    return reject(err)
+                  }
+                  if(true !== authValid){
+                    return reject(invalidLoginError)
+                  }
+                  var session = new K.ObjectManage(req.session.user || {})
+                  session.$load(sessionValues)
+                  req.session.user = session.$strip()
+                  resolve()
+                }
+              )
+            } else {
+              reject(invalidLoginError)
+            }
+          }))
+        }
+      }
+    })
+    K.bluebird.all(promises)
+      .then(function(){
+        if(0 === authTried){
+          K.log.warn('No authentication provider modules enabled')
+          throw invalidLoginError
+        }
+        req.flash('success','Login success')
+        res.redirect('/')
       })
-      .catch(function(e){
-        console.log(e)
-        req.flash('error','Invalid login')
-        res.redirect(301,'/login')
+      .catch(function(err){
+        req.flash('error',err.message || 'Invalid login')
+        res.redirect('/login')
       })
-    */
   })
   app.get('/login',function(req,res){
     res.render('login')
   })
   app.get('/logout',function(req,res){
-    delete req.session.user
+    req.session.destroy()
+    delete res.locals.user
     res.redirect(301,'/login')
   })
   //auth protection
   app.use(function(req,res,next){
-    if((!req.session || !req.session.user) && req.url.indexOf('/login') < 0){
+    //private
+    if(!req.session.user && req.url.indexOf('/login') < 0){
       res.redirect('/login')
+    } else if(req.session.user){
+      res.locals.user = req.session.user
+      next()
     } else {
-      if(req.session && req.session.user) app.locals.user = req.session.user
       next()
     }
   })

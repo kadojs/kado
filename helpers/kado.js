@@ -245,6 +245,13 @@ exports.iface = require('./interface')
 
 
 /**
+ * Export bluebird for promise support
+ * @type {P}
+ */
+exports.bluebird = P
+
+
+/**
  * Export Infant for global usage
  * @type {infant}
  */
@@ -256,6 +263,13 @@ exports.infant = infant
  * @type {object}
  */
 exports.lifecycle = lifecycle
+
+
+/**
+ * Export ObjectManage object
+ * @type {*|ObjectManage}
+ */
+exports.ObjectManage = ObjectManage
 
 
 /**
@@ -302,44 +316,6 @@ exports.dir = function(){
 exports.path = function(part){
   if(part) return path.resolve(exports.dir() + '/' + part)
   else return exports.dir()
-}
-
-
-/**
- * Plugin folder
- * @param {string} name
- * @return {string}
- */
-exports.pluginDir = function(name){
-  if(name) name = 'kado/' + name
-  else name = 'kado'
-  return exports.path(name)
-}
-
-
-/**
- * Plugin Path
- * @param {string} path
- * @return {string}
- */
-exports.pluginPath = function(path){
-  if(path) path = 'kado/' + path
-  else path = 'kado'
-  return exports.path(path)
-}
-
-
-/**
- * Return a pluggable pluginPath function
- * @param {string} name
- * @return {Function}
- */
-exports.pluginPathFunction = function(name){
-  var basePath = exports.pluginPath(name)
-  return function(part){
-    var path = require('path')
-    return path.resolve(basePath + '/' + part)
-  }
 }
 
 
@@ -445,11 +421,33 @@ exports.log = logger.setupLogger()
 
 
 /**
+ * Init status flag
+ * @type {boolean}
+ */
+exports.initComplete = false
+
+
+/**
  * Init, scan modules and interfaces
+ * @type {function}
+ * @return {*}
  */
 exports.init = function(){
+  //load any config left in the env for us
+  if(process.env.KADO_CONFIG){
+    try {
+      var configDelta = JSON.parse(process.env.KADO_CONFIG)
+      exports.log.debug('Adding found environment config')
+      exports.config.$load(configDelta)
+    } catch(e){
+      exports.log.warn('Failed to load env config: ' + e.message)
+    }
+  }
   //override logger with runtime logger
-  exports.log = logger.setupLogger(config.name,config.log.dateFormat)
+  exports.log = logger.setupLogger(
+    process.pid + '-' + config.name,
+    config.log.dateFormat
+  )
   //setup lifecycle logging
   lifecycle.on('start',function(item){
     exports.log.info('Starting ' + item.title)
@@ -484,7 +482,7 @@ exports.init = function(){
         exports.log.debug('WARN: Duplicate module registration attempted ' +
           module.name)
       } else {
-        exports.modules[module.name] = module
+        exports.modules[module.name] = module.$strip()
       }
     }
   }
@@ -522,7 +520,7 @@ exports.init = function(){
           if(true === modConf.enabled){
             var mod = require(modConf.root)
             if('function' === typeof mod.db){
-              mod.db(exports.db)
+              mod.db(exports,exports.db)
             }
           }
         }
@@ -532,7 +530,7 @@ exports.init = function(){
         if(exports.db.hasOwnProperty(dbKey)){
           var db = exports.db[dbKey]
           if(db.enabled){
-            exports.log.debug(db.name + ' connector enabled')
+            exports.log.debug(dbKey + ' connector enabled')
             dbEnabled++
           }
         }
@@ -547,7 +545,8 @@ exports.init = function(){
           -1 < config.$get(['interface',name,'transport']).indexOf('http')
         )
         {
-          var iface = infant.parent(config.interface[name].path)
+          //var iface = infant.parent(config.interface[name].path)
+          var iface = require(config.interface[name].path)
           exports.interfaces[name] = iface
           lifecycle.add(
             name,
@@ -562,6 +561,7 @@ exports.init = function(){
       })
       exports.log.debug('Found ' + Object.keys(exports.interfaces).length +
         ' interface(s)')
+      exports.initComplete = true
       exports.log.debug('Init complete')
     })
 }
@@ -569,7 +569,7 @@ exports.init = function(){
 
 /**
  * CLI Access to modules
- * @param args
+ * @param {Array} args
  */
 exports.cli = function(args){
   exports.init()
@@ -578,7 +578,7 @@ exports.cli = function(args){
         var mod = exports.modules[modName]
         if(mod.name === args[2]){
           var module = require(mod.root)
-          module.cli(args)
+          module.cli(exports,args)
         }
       })
     })
