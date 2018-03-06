@@ -123,30 +123,9 @@ exports.worker = function(K,interfaceName,interfaceRoot){
     next()
   })
   // development only
-  if('development' === app.get('env'))
+  if('development' === app.get('env')){
     app.use(morgan('dev'))
-  //so here it is time to actually scan for modules and this is where i have been
-  //on the fence about how to best go about scanning modules, should we have a
-  //modules.json with a list of their names and folders or should i scan and try
-  //to detect?
-
-  //maybe do some pros and cons. ease for the auto scan, however the auto scan
-  //is slower and less predictable, also less controllable. con of manual is that
-  //when modules are installed they will need to run the kado cli to turn them
-  //selves on which i suppose is acceptable
-
-  //so now loop here and load modules that want to be loaded
-  Object.keys(K.modules).forEach(function(modName){
-    var mod = exports.modules[modName]
-    if(mod.enabled){
-      var module = require(mod.root)
-      if('function' === typeof module[interfaceName]){
-        module[interfaceName](K,app)
-      } else {
-        K.log.warn('Failed to load module interface, no entry function',modName)
-      }
-    }
-  })
+  }
   that.setupScriptServer = function(name,scriptPath){
     if(!scriptPath) scriptPath = name
     scriptPath = path.resolve(
@@ -215,7 +194,33 @@ exports.worker = function(K,interfaceName,interfaceRoot){
    * @param {function} done
    */
   that.start = function(done){
-    K.init()
+    K.init(function(){
+      //so here it is time to actually scan for modules and this is where i have
+      //been on the fence about how to best go about scanning modules, should we
+      //have a kado.json with a list of their names and folders or should i scan
+      //and try to detect?
+
+      //maybe do some pros and cons. ease for the auto scan, however the auto
+      //scan is slower and less predictable, also less controllable. con of
+      //manual is that when modules are installed they will need to run the kado
+      //cli to turn them selves on which i suppose is acceptable
+
+      //so now loop here and load modules that want to be loaded
+      Object.keys(K.modules).forEach(function(modName){
+        var mod = K.modules[modName]
+        if(mod.enabled){
+          var module = require(mod.root)
+          if('function' === typeof module[interfaceName]){
+            module[interfaceName](K,app)
+          } else {
+            K.log.warn(
+              'Failed to load module interface, no entry function',
+              modName
+            )
+          }
+        }
+      })
+    })
       .then(function(){
         return server.listenAsync(
           +config.interface[interfaceName].port,

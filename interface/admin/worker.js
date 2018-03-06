@@ -54,7 +54,6 @@ worker.setup(function(app){
                 req.body.email,
                 req.body.password,
                 function(err,authValid,sessionValues){
-                  console.log(err,authValid,sessionValues)
                   if(err){
                     return reject(err)
                   }

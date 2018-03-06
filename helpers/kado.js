@@ -430,9 +430,10 @@ exports.initComplete = false
 /**
  * Init, scan modules and interfaces
  * @type {function}
- * @return {*}
+ * @param {function} done
+ * @return {P}
  */
-exports.init = function(){
+exports.init = function(done){
   //load any config left in the env for us
   if(process.env.KADO_CONFIG){
     try {
@@ -563,6 +564,7 @@ exports.init = function(){
         ' interface(s)')
       exports.initComplete = true
       exports.log.debug('Init complete')
+      if('function' === typeof done) done()
     })
 }
 

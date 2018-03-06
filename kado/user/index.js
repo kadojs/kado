@@ -74,9 +74,7 @@ exports.authenticate = function(K,username,password,done){
       .then(function(result){
         if(!result) throw new Error('No user found')
         if(!result.active) throw new Error('User inactive')
-        //globalize seller
         user = result
-        //verify password
         return bcrypt.compareAsync(password,user.password)
       })
       .then(function(match){
@@ -84,7 +82,6 @@ exports.authenticate = function(K,username,password,done){
         return user.updateAttributes({dateSeen: now})
       })
       .then(function(){
-        //success return our seller
         return user
       })
       .catch(function(err){
@@ -139,6 +136,7 @@ exports.admin = function(K,app){
   app.get('/user/permission/create',permission.create)
   app.post('/user/permission/list',permission.listAction)
   app.post('/user/permission/save',permission.save)
+  console.log('REGISTERED USER ROUTES')
 }
 
 
