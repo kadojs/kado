@@ -468,7 +468,8 @@ exports.init = function(){
     var name = path.basename(file,'.js')
     //check if the connector is registered and enabled
     if(config.db[name] && config.db[name].load){
-      exports.db[name] = require(file)
+      exports.log.debug(name + ' connector loaded')
+      exports.db[name] = require(file)()
     }
   }
   var loadModule = function(file){
@@ -521,7 +522,6 @@ exports.init = function(){
           if(true === modConf.enabled){
             var mod = require(modConf.root)
             if('function' === typeof mod.db){
-              console.log(mod.db)
               mod.db(exports.db)
             }
           }
@@ -532,7 +532,7 @@ exports.init = function(){
         if(exports.db.hasOwnProperty(dbKey)){
           var db = exports.db[dbKey]
           if(db.enabled){
-            exports.log.debug(db.name )
+            exports.log.debug(db.name + ' connector enabled')
             dbEnabled++
           }
         }

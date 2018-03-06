@@ -16,7 +16,7 @@ exports.list = function(req,res){
   var search = req.query.search || ''
   if(start < 0) start = 0
   UserRole.findAndCountAll({
-    where: sequelize.or(
+    where: sequelize.Op.or(
       {name: {like: '%' + search + '%'}}
     ),
     limit: limit,
@@ -70,7 +70,7 @@ exports.create = function(req,res){
  * @param {object} res
  */
 exports.edit = function(req,res){
-  UserRole.findById(req.query.id)
+  UserRole.findOne(req.query.id)
     .then(function(result){
       if(!result) throw new Error('User Role not found')
       res.render(__dirname + '/view/edit',{role: result})
@@ -88,7 +88,7 @@ exports.edit = function(req,res){
  */
 exports.save = function(req,res){
   var data = req.body
-  UserRole.findById(data.id)
+  UserRole.findOne(data.id)
     .then(function(doc){
       if(!doc) doc = UserRole.build()
       doc.name = data.name

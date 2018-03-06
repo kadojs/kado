@@ -21,7 +21,7 @@ exports.list = function(req,res){
   var search = req.query.search || ''
   if(start < 0) start = 0
   User.findAndCountAll({
-    where: sequelize.or(
+    where: sequelize.Op.or(
       {email: {like: '%' + search + '%'}},
       {name: {like: '%' + search + '%'}}
     ),
@@ -96,7 +96,7 @@ exports.manage = function(req,res){
  * @param {object} res
  */
 exports.edit = function(req,res){
-  User.findById(req.query.id)
+  User.findOne(req.query.id)
     .then(function(result){
       if(!result) throw new Error('User not found')
       res.render(__dirname + '/view/edit',{user: result})
@@ -114,7 +114,7 @@ exports.edit = function(req,res){
  */
 exports.save = function(req,res){
   var data = req.body
-  User.findById(data.id)
+  User.findOne(data.id)
     .then(function(doc){
       if(!doc) doc = User.build()
       doc.name = data.name

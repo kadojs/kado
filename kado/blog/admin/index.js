@@ -18,7 +18,7 @@ exports.list = function(req,res){
   var search = req.query.search || ''
   if(start < 0) start = 0
   Blog.findAndCountAll({
-    where: sequelize.or(
+    where: sequelize.Op.or(
       {title: {like: '%' + search + '%'}}
     ),
     offset: start,
@@ -74,7 +74,7 @@ exports.create = function(req,res){
  * @param {object} res
  */
 exports.edit = function(req,res){
-  Blog.findById(req.query.id)
+  Blog.findOne(req.query.id)
     .then(function(blog){
       if(!blog) throw new Error('Blog entry not found')
       res.render(__dirname + '/view/edit',{blog: blog})
@@ -92,7 +92,7 @@ exports.edit = function(req,res){
  */
 exports.save = function(req,res){
   var data = req.body
-  Blog.findById(data.id)
+  Blog.findOne(data.id)
     .then(function(blog){
       if(!blog) blog = Blog.build()
       if(data.title) blog.title = data.title

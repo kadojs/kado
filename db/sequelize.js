@@ -14,33 +14,17 @@ var inst
 var createInst = function(){
   //configure the instance for connection
   var inst = new Sequelize(
-    config.db.mysql.name,
-    config.db.mysql.user,
-    config.db.mysql.password,
+    config.db.sequelize.name,
+    config.db.sequelize.user,
+    config.db.sequelize.password,
     {
-      host: config.db.mysql.host,
-      port: config.db.mysql.port,
-      dialect: config.db.mysql.dialect || 'mysql',
-      logging: config.db.mysql.logging || false
+      host: config.db.sequelize.host,
+      port: config.db.sequelize.port,
+      dialect: config.db.sequelize.dialect || 'mysql',
+      operatorsAliases: Sequelize.Op,
+      logging: config.db.sequelize.logging || false
     }
   )
-  //load modules and load their models
-  K.modules.forEach(function(mod){
-    if(mod.enabled){
-      var module = require(mod.root)
-      if(module.model) module.model(inst)
-    }
-  })
-  //now for the modules
-  //load modules and load their models
-  K.modules.forEach(function(mod){
-    if(mod.enabled){
-      var module = require(mod.root)
-      if('function' === typeof module.modelKeyMapping){
-        module.modelKeyMapping(inst)
-      }
-    }
-  })
   //finally connect to the database
   inst.doConnect = function(){
     var that = this

@@ -19,7 +19,7 @@ exports.list = function(req,res){
   var search = req.query.search || ''
   if(start < 0) start = 0
   UserPermission.findAndCountAll({
-    where: sequelize.or(
+    where: sequelize.Op.or(
       {uri: {like: '%' + search + '%'}},
       {interface: {like: '%' + search + '%'}}
     ),
@@ -78,7 +78,7 @@ exports.create = function(req,res){
  * @param {object} res
  */
 exports.edit = function(req,res){
-  UserPermission.findById(req.query.id)
+  UserPermission.findOne(req.query.id)
     .then(function(result){
       if(!result) throw new Error('User Permission not found')
       res.render(__dirname + '/view/edit',{
@@ -100,7 +100,7 @@ exports.edit = function(req,res){
  */
 exports.save = function(req,res){
   var data = req.body
-  UserPermission.findById(data.id)
+  UserPermission.findOne(data.id)
     .then(function(doc){
       if(!doc) doc = UserPermission.build()
       doc.interface = data.interface
