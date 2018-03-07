@@ -32,4 +32,5 @@ require('../../../helpers/js/jqueryAnimateNumber.min')
 
 //user space
 require('../../../helpers/js/dashboard')
+require('../../../helpers/js/sidebar')
 require('../../../helpers/js/table')

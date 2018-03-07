@@ -266,6 +266,13 @@ exports.lifecycle = lifecycle
 
 
 /**
+ * Panel list helper
+ * @type {object}
+ */
+exports.list = require('./list')
+
+
+/**
  * Export ObjectManage object
  * @type {*|ObjectManage}
  */

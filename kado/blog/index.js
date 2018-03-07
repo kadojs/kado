@@ -43,28 +43,22 @@ exports.config = function(config){
 
 
 /**
- * Export locations of models
- * @param {object} sequelize
+ * Initialize database access
+ * @param {K} K Master Kado Object
+ * @param {K.db} db
  */
-exports.model = function(sequelize){
-  sequelize.import(__dirname + '/models/Blog.js')
+exports.db = function(K,db){
+  db.sequelize.enabled = true
+  db.sequelize.import(__dirname + '/models/Blog.js')
 }
 
 
 /**
- * Export Model Key Mapping
- * @param {object} sequelize
- */
-//exports.modelKeyMapping = function(sequelize){
-  //do some key mapping here
-//}
-
-
-/**
  * Register in Admin Interface
- * @param {object}app
+ * @param {K} K Master Kado Object
+ * @param {object} app
  */
-exports.admin = function(app){
+exports.admin = function(K,app){
   var admin = require('./admin')
   //register routes
   app.get('/blog',function(req,res){
@@ -83,9 +77,10 @@ exports.admin = function(app){
 
 /**
  * Register in Main Interface
+ * @param {K} K Master Kado Object
  * @param {object} app
  */
-exports.main = function(app){
+exports.main = function(K,app){
   var main = require('./main')
   //register routes
   app.get('/blog',main.list)

@@ -1,10 +1,11 @@
 'use strict';
-var list = require(process.env.KADO_HELPERS + '/list')
-var sequelize = require(process.env.KADO_HELPERS + '/sequelize')()
+var K = require('../../../index')
+var list = K.list
+var sequelize = K.db.sequelize
 
 var Blog = sequelize.models.Blog
 
-var config = require(process.env.KADO_CONFIG_FILE)
+var config = K.config
 
 
 /**
@@ -18,7 +19,7 @@ exports.list = function(req,res){
   var search = req.query.search || ''
   if(start < 0) start = 0
   Blog.findAndCountAll({
-    where: sequelize.Op.or(
+    where: sequelize.or(
       {title: {like: '%' + search + '%'}}
     ),
     offset: start,
@@ -31,8 +32,7 @@ exports.list = function(req,res){
         count: result.count,
         search: search,
         limit: limit,
-        list: result.rows,
-        mainBaseUrl: config.admin.mainBaseUrl
+        list: result.rows
       })
     })
     .catch(function(err){
@@ -74,7 +74,7 @@ exports.create = function(req,res){
  * @param {object} res
  */
 exports.edit = function(req,res){
-  Blog.findOne(req.query.id)
+  Blog.findOne({where: {id: req.query.id}})
     .then(function(blog){
       if(!blog) throw new Error('Blog entry not found')
       res.render(__dirname + '/view/edit',{blog: blog})
@@ -92,7 +92,7 @@ exports.edit = function(req,res){
  */
 exports.save = function(req,res){
   var data = req.body
-  Blog.findOne(data.id)
+  Blog.findOne({where: {id: data.id}})
     .then(function(blog){
       if(!blog) blog = Blog.build()
       if(data.title) blog.title = data.title

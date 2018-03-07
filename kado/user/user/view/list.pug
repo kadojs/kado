@@ -1,6 +1,4 @@
 extends /layout
-block append js
-  script(src='/js/table.js')
 block content
   .container
     +tableHeader('Users','/user/create','Create User')
@@ -19,7 +17,7 @@ block content
             td
               input(type='checkbox', name='remove[]', value=row.id)
             td
-              a(href='/user/manage?id=#{row.id}')= row.name
+              a(href='/user/manage?id=' + row.id)= row.name
             td= row.email
             td
               if row.dateSeen
@@ -29,7 +27,7 @@ block content
             td
               +active(row.active)
             td
-              a(href='/user/edit?id=#{row.id}')
+              a(href='/user/edit?id=' + row.id)
                 span.glyphicon.glyphicon-edit
                 span  Edit
       +tableFooter(page,count)

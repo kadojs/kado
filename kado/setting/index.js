@@ -31,9 +31,10 @@ exports.description = 'Manage Kado settings directly to the config'
 
 /**
  * Register in Admin Interface
- * @param {object}app
+ * @param {K} K Master Kado Object
+ * @param {object} app
  */
-exports.admin = function(app){
+exports.admin = function(K,app){
   var admin = require('./admin')
   //register routes
   app.get('/setting',function(req,res){

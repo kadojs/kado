@@ -119,7 +119,7 @@ exports.worker = function(K,interfaceName,interfaceRoot){
   app.use(bodyParser.json())
   //set the active nav
   app.use(function(req,res,next){
-    app.locals.currentUri = req.originalUrl
+    res.locals.currentUri = req.originalUrl
     next()
   })
   // development only

@@ -1,6 +1,4 @@
 extends /layout
-block append js
-  script(src='/js/table.js')
 block content
   .container-fluid
     +tableHeader('Blog','/blog/create','Create Entry')
@@ -18,7 +16,7 @@ block content
             td
               input(type='checkbox', name='remove[]', value=row.id)
             td
-              a(href='/blog/edit?id=#{row.id}')= row.title
+              a(href='/blog/edit?id=' + row.id)= row.title
             td= new Date(row.createdAt).toDateString()
             td= new Date(row.updatedAt).toDateString()
             td

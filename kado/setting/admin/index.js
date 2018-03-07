@@ -1,15 +1,16 @@
 'use strict';
-var P = require('bluebird')
+var K = require('../../../index')
+var P = K.bluebird
+var config = K.config
 var fs = require('graceful-fs')
-var ObjectManage = require('object-manage')
-
-var list = require(process.env.KADO_HELPERS + '/list')
-
-var config = require(process.env.KADO_CONFIG_FILE)
+var list = K.list
+var ObjectManage = K.ObjectManage
 var definitions = {}
+
 if(fs.existsSync(__dirname + '/definitions.json'))
   require(__dirname + './definitions.json')
 
+//make some promises
 P.promisifyAll(fs)
 
 

@@ -136,7 +136,6 @@ exports.admin = function(K,app){
   app.get('/user/permission/create',permission.create)
   app.post('/user/permission/list',permission.listAction)
   app.post('/user/permission/save',permission.save)
-  console.log('REGISTERED USER ROUTES')
 }
 
 

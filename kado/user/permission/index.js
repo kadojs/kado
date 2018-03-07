@@ -1,8 +1,9 @@
 'use strict';
-var list = require(process.env.KADO_HELPERS + '/list')
-var sequelize = require(process.env.KADO_HELPERS + '/sequelize')()
+var K = require('../../../index')
+var list = K.list
+var sequelize = K.db.sequelize
 
-var config = require(process.env.KADO_CONFIG_FILE)
+var config = K.config
 var levels = require('./helpers/levels')
 
 var UserPermission = sequelize.models.UserPermission
@@ -19,7 +20,7 @@ exports.list = function(req,res){
   var search = req.query.search || ''
   if(start < 0) start = 0
   UserPermission.findAndCountAll({
-    where: sequelize.Op.or(
+    where: sequelize.or(
       {uri: {like: '%' + search + '%'}},
       {interface: {like: '%' + search + '%'}}
     ),

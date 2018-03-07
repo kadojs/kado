@@ -19,16 +19,16 @@ mixin tableHeader(title,createUrl,createLabel)
 mixin tableFooterNoAction(page,count)
   div
     .pull-right.btn-group
-      a.btn.btn-default(href='?start=#{page.previous}&search=#{search}') Previous
-      a.btn.btn-default(href='?start=#{page.next}&search=#{search}') Next
+      a.btn.btn-default(href='?start=' + page.previous + '&search=' + search) Previous
+      a.btn.btn-default(href='?start=' + page.next + '&search=' + search) Next
     span #{page.start + 1} - #{page.end} of #{count} entries
 mixin tableFooter(page,count,actionText,actionClass)
   - if(!actionText) actionText = 'Delete Checked'
   - if(!actionClass) actionClass = 'btn-danger'
   div
     .pull-right.btn-group
-      a.btn.btn-default(href='?start=#{page.previous}&search=#{search}') Previous
-      a.btn.btn-default(href='?start=#{page.next}&search=#{search}') Next
+      a.btn.btn-default(href='?start=' + page.previous + '&search=' + search) Previous
+      a.btn.btn-default(href='?start=' +page.next + '&search=' + search) Next
     span #{page.start + 1} - #{page.end} of #{count} entries
     div
       button.btn#tableDelete(type='submit', class=actionClass)= actionText
@@ -36,8 +36,8 @@ mixin tableFooter(page,count,actionText,actionClass)
 mixin tableMaintenanceFooter(page,count)
   div
     .pull-right.btn-group
-      a.btn.btn-default(href='?start=#{page.previous}&search=#{search}') Previous
-      a.btn.btn-default(href='?start=#{page.next}&search=#{search}') Next
+      a.btn.btn-default(href='?start=' + page.previous + '&search=' + search) Previous
+      a.btn.btn-default(href='?start=' + page.next + '&search=' + search) Next
     span #{page.start + 1} - #{page.end} of #{count} entries
     div
       button.btn.btn-success#tableResolve(type='submit') Resolve Checked

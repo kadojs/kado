@@ -1,5 +1,6 @@
 'use strict';
-var sequelize = require(process.env.KADO_HELPERS + '/sequelize')()
+var K = require('../../../index')
+var sequelize = K.db.sequelize
 
 var Blog = sequelize.models.Blog
 
