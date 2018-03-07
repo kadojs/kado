@@ -54,12 +54,12 @@ mixin sidebar()
         ul.nav.navbar-nav
           each group in nav.group
             if(nav.nav[group.name].length > 0)
-              li(class=group.uri === currentUri ? 'active' : '' + ' dropdown')
+              li(class=currentUri.match(group.uri) ? 'active' : '' + ' dropdown')
                 a.dropdown-toggle(href=group.uri, data-toggle='dropdown')
                   if(group.icon)
                     b.caret
                     span  #{group.name}
-                    span(class="pull-right hidden-xs showopacity glyphicon glyphicon-#{group.icon}")
+                    span(class="pull-right hidden-xs showopacity glyphicon glyphicon-" + group.icon)
                   else
                     span #{group.name}
                 ul.dropdown-menu
@@ -68,7 +68,7 @@ mixin sidebar()
                       a(href=item.uri)
                         if(group.icon)
                           span  #{item.name}
-                          span(class="pull-right hidden-xs showopacity glyphicon glyphicon-#{item.icon}")
+                          span(class="pull-right hidden-xs showopacity glyphicon glyphicon-" + item.icon)
                         else
                           span #{item.name}
             else
@@ -76,6 +76,6 @@ mixin sidebar()
                 a(href=group.uri)
                   if(group.icon)
                     span #{group.name}
-                    span(class="pull-right hidden-xs showopacity glyphicon glyphicon-#{group.icon}")
+                    span(class="pull-right hidden-xs showopacity glyphicon glyphicon-" + group.icon)
                   else
                     span #{group.name}
