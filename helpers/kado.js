@@ -544,6 +544,21 @@ exports.init = function(done){
         }
       })
       exports.log.debug('Found ' + dbEnabled + ' database connectors')
+      exports.log.debug('Connecting to found database connectors')
+      var dbConnected = 0
+      Object.keys(exports.db).forEach(function(dbKey){
+        if(exports.db.hasOwnProperty(dbKey)){
+          var db = exports.db[dbKey]
+          if(db.enabled){
+            if('function' === typeof exports.db[dbKey].doConnect){
+              exports.db[dbKey].doConnect()
+              exports.log.debug(dbKey + ' connector connected')
+              dbConnected++
+            }
+          }
+        }
+      })
+      exports.log.debug(dbConnected + ' connected database connectors')
       exports.log.debug('Scanning interfaces')
       //register interfaces for startup
       Object.keys(config.interface).forEach(function(name){
