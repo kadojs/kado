@@ -1,6 +1,7 @@
 'use strict';
 var P = require('bluebird')
 var clusterSetup = require('infant').cluster
+var fs = require('graceful-fs')
 
 
 /**
@@ -132,7 +133,7 @@ exports.worker = function(K,interfaceName,interfaceRoot){
     scriptPath = path.resolve(
       path.join(interfaceRoot,'..','..','..','..','node_modules',scriptPath))
     //fall back to a local path if we must
-    if(!path.existsSync(scriptPath)){
+    if(!fs.existsSync(scriptPath)){
       scriptPath = path.resolve(
         path.join(interfaceRoot,'..','..','node_modules',scriptPath))
     }
