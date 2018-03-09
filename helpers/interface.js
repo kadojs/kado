@@ -128,8 +128,14 @@ exports.worker = function(K,interfaceName,interfaceRoot){
   }
   that.setupScriptServer = function(name,scriptPath){
     if(!scriptPath) scriptPath = name
+    //try for a local path first and then a system path as a backup
     scriptPath = path.resolve(
-      path.join(interfaceRoot,'..','..','node_modules',scriptPath))
+      path.join(interfaceRoot,'..','..','..','..','node_modules',scriptPath))
+    //fall back to a local path if we must
+    if(!path.existsSync(scriptPath)){
+      scriptPath = path.resolve(
+        path.join(interfaceRoot,'..','..','node_modules',scriptPath))
+    }
     app.use('/node_modules/' + name,serveStatic(scriptPath))
   }
   that.enableHtml = function(callback){
