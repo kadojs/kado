@@ -1,9 +1,10 @@
 {
-  "author": "Bryan Tong <contact@nullivex.com>",
+  "author": "Bryan Tong <bryan@nullivex.com>",
   "name": "kado",
   "description": "Modular App development system",
   "version": "1.0.0",
-  "homepage": "http://www.kadojs.org/",
+  "homepage": "http://www.nullivex.com/kado",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/nullivex/kado.git"
