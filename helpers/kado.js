@@ -77,48 +77,6 @@ config.$load({
   },
   //database connectors
   db: {
-    couchbase: {
-      enabled: false,
-      load: false,
-      protocol: 'couchbase://',
-      host: '127.0.0.1',
-      dsnHost: null,
-      port: '8091',
-      admin: {
-        username: '',
-        password: ''
-      },
-      username: '',
-      password: '',
-      prefix: '',
-      connectionTimeout: 60000,
-      operationTimeout: 30000,
-      bucket: {
-        kado: {
-          name: 'kado',
-          secret: '',
-          ramQuotaMB: 512
-        }
-      }
-    },
-    couchdb: {
-      enabled: false,
-      load: false,
-      host: '127.0.0.1',
-      port: '5984',
-      prefix: '',
-      database: 'oose',
-      options: {
-        secure: false,
-        cache: false,
-        retries: 3,
-        retryTimeout: 10000,
-        auth: {
-          username: 'oose',
-          password: ''
-        }
-      }
-    },
     sequelize: {
       enabled: false,
       load: true,

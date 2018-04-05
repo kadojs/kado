@@ -81,10 +81,10 @@ exports.admin = function(K,app){
  * @param {object} app
  */
 exports.main = function(K,app){
-  var main = require('./main')
+  //var main = require('./main')
   //register routes
-  app.get('/blog',main.list)
-  app.get('/blog/:uri',main.entry)
+  //app.get('/blog',main.list)
+  //app.get('/blog/:uri',main.entry)
   //register navigation
   app.nav.addGroup('/blog','Blog','book')
 }

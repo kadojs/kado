@@ -92,5 +92,10 @@ This format is somewhat self explanatory. However in detail:
 
 ## Changelog
 
+### 1.1.0
+* Remove couchdb connector
+* Remove couchbase connector
+* Fix failure on blog main startup
+
 ### 1.0.0
 * Initial release
