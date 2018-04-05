@@ -2,7 +2,7 @@
   "author": "Bryan Tong <bryan@nullivex.com>",
   "name": "kado",
   "description": "Modular App development system",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "homepage": "http://www.nullivex.com/kado",
   "license": "MIT",
   "repository": {
@@ -23,7 +23,6 @@
   "dependencies": {
     "bcrypt": "1.0.x",
     "bluebird": "3.5.x",
-    "better-sqlite3": "4.x",
     "body-parser": "^1.18.2",
     "bootbox": "^4.4.0",
     "bootstrap": "^3.3.7",
@@ -49,7 +48,6 @@
     "markdown": "^0.5.0",
     "moment": "^2.21.0",
     "morgan": "1.9.x",
-    "mysql2": "1.5.x",
     "n-readlines": "^0.2.8",
     "object-manage": "1.0.x",
     "popper.js": "^1.12.9",

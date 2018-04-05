@@ -92,6 +92,10 @@ This format is somewhat self explanatory. However in detail:
 
 ## Changelog
 
+### 1.1.1
+* Remove database connectors from dependencies they should be installed at
+app build time.
+
 ### 1.1.0
 * Remove couchdb connector
 * Remove couchbase connector
