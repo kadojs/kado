@@ -65,7 +65,7 @@ exports.worker = function(K,interfaceName,interfaceRoot){
   const morgan = require('morgan')
   const path = require('path')
   const serveStatic = require('serve-static')
-  const SessionStore = require('express-sql-session')(expressSession)
+  const SessionStore = require('connect-redis')(expressSession)
   //user space helpers
   const Nav = require('../helpers/Nav')
   //interface context
@@ -175,18 +175,7 @@ exports.worker = function(K,interfaceName,interfaceRoot){
       },
       resave: true,
       saveUninitialized: true,
-      store: new SessionStore({
-        client: 'mysql',
-        connection: {
-          host: config.db.sequelize.host,
-          port: config.db.sequelize.port,
-          user: config.db.sequelize.user,
-          password: config.db.sequelize.password,
-          database: config.db.sequelize.name
-        },
-        table: interfaceName + 'Session',
-        expires: 365 * 24 * 60 * 60 * 1000
-      }),
+      store: new SessionStore(),
       secret: config.interface[interfaceName].cookie.secret || 'kado'
     }))
     callback(app)
