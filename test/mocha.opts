@@ -1,3 +1,4 @@
 --throw-deprecation
 --reporter spec
 --ui bdd
+--exit
