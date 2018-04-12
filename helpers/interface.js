@@ -225,7 +225,10 @@ exports.worker = function(K,interfaceName,interfaceRoot){
           config.interface[interfaceName].host
         )
       })
-      .then(done).catch(function(err){
+      .then(function(){
+        done()
+      })
+      .catch(function(err){
         done(err)
       })
   }

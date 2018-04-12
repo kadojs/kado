@@ -389,10 +389,9 @@ exports.initComplete = false
 /**
  * Init, scan modules and interfaces
  * @type {function}
- * @param {function} done
  * @return {P}
  */
-exports.init = function(done){
+exports.init = function(){
   //load any config left in the env for us
   if(process.env.KADO_CONFIG_STRING){
     try {
@@ -457,98 +456,100 @@ exports.init = function(done){
       })
     })
   }
-  //scan db connectors
-  exports.log.debug('Scanning connectors')
-  return doScan(dbGlob,loadConnector)
-    .then(function(){
-      //scan system plugins
-      exports.log.debug('Scanning system modules')
-      return doScan(sysGlob,loadModule)
-    })
-    .then(function(){
-      //scan user modules
-      exports.log.debug('Scanning user space modules')
-      return doScan(userGlob,loadModule)
-    })
-    .then(function(){
-      exports.log.debug('Found ' + Object.keys(exports.modules).length +
-        ' module(s)')
-      exports.log.debug('Setting up data storage access')
-      Object.keys(exports.modules).forEach(function(modKey){
-        if(exports.modules.hasOwnProperty(modKey)){
-          let modConf = exports.modules[modKey]
-          if(true === modConf.enabled){
-            let mod = require(modConf.root)
-            if('function' === typeof mod.db){
-              mod.db(exports,exports.db)
-            }
-          }
-        }
+  return new P(function(resolve){
+    //scan db connectors
+    exports.log.debug('Scanning connectors')
+      doScan(dbGlob,loadConnector)
+      .then(function(){
+        //scan system plugins
+        exports.log.debug('Scanning system modules')
+        return doScan(sysGlob,loadModule)
       })
-      let dbEnabled = 0
-      Object.keys(exports.db).forEach(function(dbKey){
-        if(exports.db.hasOwnProperty(dbKey)){
-          let db = exports.db[dbKey]
-          if(db.enabled){
-            exports.log.debug(dbKey + ' connector enabled')
-            dbEnabled++
-          }
-        }
+      .then(function(){
+        //scan user modules
+        exports.log.debug('Scanning user space modules')
+        return doScan(userGlob,loadModule)
       })
-      exports.log.debug('Found ' + dbEnabled + ' database connectors')
-      exports.log.debug('Connecting to found database connectors')
-      let dbConnected = 0
-      Object.keys(exports.db).forEach(function(dbKey){
-        if(exports.db.hasOwnProperty(dbKey)){
-          let db = exports.db[dbKey]
-          if(db.enabled){
-            if('function' === typeof exports.db[dbKey].doConnect){
-              exports.db[dbKey].doConnect()
-              exports.log.debug(dbKey + ' connector connected')
-              dbConnected++
-            }
-          }
-        }
-      })
-      exports.log.debug(dbConnected + ' connected database connectors')
-      exports.log.debug('Scanning interfaces')
-      //register interfaces for startup
-      let addInterface = function(name){
-        exports.interfaces[name] = infant.parent(
-          config.interface[name].path,
-          {
-            fork: {
-              env: {
-                KADO_CONFIG_STRING: JSON.stringify(config.$strip())
+      .then(function(){
+        exports.log.debug('Found ' + Object.keys(exports.modules).length +
+          ' module(s)')
+        exports.log.debug('Setting up data storage access')
+        Object.keys(exports.modules).forEach(function(modKey){
+          if(exports.modules.hasOwnProperty(modKey)){
+            let modConf = exports.modules[modKey]
+            if(true === modConf.enabled){
+              let mod = require(modConf.root)
+              if('function' === typeof mod.db){
+                mod.db(exports,exports.db)
               }
             }
-          })
-        lifecycle.add(
-          name,
-          function(done){
-            exports.interfaces[name].start(done)
-          },
-          function(done){
-            exports.interfaces[name].stop(done)
           }
-        )
-      }
-      Object.keys(config.interface).forEach(function(name){
-        //web panel
-        if(
-          true === config.$get(['interface',name,'enabled']) &&
-          -1 < config.$get(['interface',name,'transport']).indexOf('http')
-        )
-        {
-          //let iface =
-          addInterface(name)
+        })
+        let dbEnabled = 0
+        Object.keys(exports.db).forEach(function(dbKey){
+          if(exports.db.hasOwnProperty(dbKey)){
+            let db = exports.db[dbKey]
+            if(db.enabled){
+              exports.log.debug(dbKey + ' connector enabled')
+              dbEnabled++
+            }
+          }
+        })
+        exports.log.debug('Found ' + dbEnabled + ' database connectors')
+        exports.log.debug('Connecting to found database connectors')
+        let dbConnected = 0
+        Object.keys(exports.db).forEach(function(dbKey){
+          if(exports.db.hasOwnProperty(dbKey)){
+            let db = exports.db[dbKey]
+            if(db.enabled){
+              if('function' === typeof exports.db[dbKey].doConnect){
+                exports.db[dbKey].doConnect()
+                exports.log.debug(dbKey + ' connector connected')
+                dbConnected++
+              }
+            }
+          }
+        })
+        exports.log.debug(dbConnected + ' connected database connectors')
+        exports.log.debug('Scanning interfaces')
+        //register interfaces for startup
+        let addInterface = function(name){
+          exports.interfaces[name] = infant.parent(
+            config.interface[name].path,
+            {
+              fork: {
+                env: {
+                  KADO_CONFIG_STRING: JSON.stringify(config.$strip())
+                }
+              }
+            })
+          lifecycle.add(
+            name,
+            function(done){
+              exports.interfaces[name].start(done)
+            },
+            function(done){
+              exports.interfaces[name].stop(done)
+            }
+          )
         }
+        Object.keys(config.interface).forEach(function(name){
+          //web panel
+          if(
+            true === config.$get(['interface',name,'enabled']) &&
+            -1 < config.$get(['interface',name,'transport']).indexOf('http')
+          )
+          {
+            //let iface =
+            addInterface(name)
+          }
+        })
+        exports.log.debug('Found ' + Object.keys(exports.interfaces).length +
+          ' interface(s)')
+        exports.initComplete = true
+        exports.log.debug('Init complete')
+        resolve()
       })
-      exports.log.debug('Found ' + Object.keys(exports.interfaces).length +
-        ' interface(s)')
-      exports.initComplete = true
-      exports.log.debug('Init complete')
-      if('function' === typeof done) done()
     })
 }
 
@@ -592,13 +593,17 @@ exports.start = function(done){
  * @param {function} done
  */
 exports.stop = function(done){
-  if(!done) done = function(){}
-  //start the shutdown process
-  exports.log.info('Beginning shutdown')
-  lifecycle.stop(function(err){
-    if(err) throw err
-    done()
+  return new P(function(resolve){
+    if(!done) done = function(){}
+    //start the shutdown process
+    exports.log.info('Beginning shutdown')
+    lifecycle.stop(function(err){
+      if(err) throw err
+      done()
+      resolve()
+    })
   })
+
 }
 
 
@@ -607,25 +612,30 @@ exports.stop = function(done){
  * @param {string} name - name of app
  */
 exports.go = function(name){
-  if(process.argv.length <= 2){
-    exports.infant.child(
-      name,
-      function(done){
-        exports.start(function(err){
-          if(err) return done(err)
-          exports.log.info(name.toUpperCase() + ' started!')
-          done()
-        })
-      },
-      function(done){
-        exports.stop(function(err){
-          if(err) return done(err)
-          exports.log.info(name.toUpperCase() + ' stopped!')
-          done()
-        })
-      }
-    )
-  } else {
-    exports.cli(process.argv)
-  }
+  return new P(function(resolve){
+    if(process.argv.length <= 2){
+      exports.infant.child(
+        name,
+        function(done){
+          exports.start(function(err){
+            if(err) return done(err)
+            exports.log.info(name.toUpperCase() + ' started!')
+            done()
+            resolve()
+
+          })
+        },
+        function(done){
+          exports.stop(function(err){
+            if(err) return done(err)
+            exports.log.info(name.toUpperCase() + ' stopped!')
+            done()
+          })
+        }
+      )
+    } else {
+      exports.cli(process.argv)
+      resolve()
+    }
+  })
 }

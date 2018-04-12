@@ -2,7 +2,7 @@
 const K = require('../helpers/kado')
 
 describe('kado',function(){
-  this.timeout(10000)
+  this.timeout(20000)
   //start servers and create a user
   before(function(){
     K.configure({
@@ -16,9 +16,9 @@ describe('kado',function(){
       },
       interface: {
         admin: { enabled: true },
-        api: { enabled: false },
-        client: { enabled: false },
-        main: { enabled: false }
+        api: { enabled: true },
+        client: { enabled: true },
+        main: { enabled: true }
       },
       module: {
         blog: { enabled: true },
@@ -26,11 +26,12 @@ describe('kado',function(){
         user: { enabled: true }
       }
     })
+    process.argv = process.argv.splice(0,2)
     return K.go('test')
   })
   //remove user and stop services
-  after(function(done){
-    K.stop(done)
+  after(function(){
+    return K.stop()
   })
   //test interfaces
   describe('interfaces',function(){
