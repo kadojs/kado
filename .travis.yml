@@ -1,0 +1,19 @@
+language: node_js
+sudo: required
+node_js:
+  - "8"
+  - "9"
+services:
+  - mysql
+  - redis
+env:
+  - TRAVIS=travis
+before_script:
+  # Init database
+  - npm install mysql2
+  - mysql -e 'create database kado';
+  - mysql -u travis -e 'grant all on kado.* to \'kado\'@\'localhost\' identified by \'kado\'; flush privileges;'
+  - node bin/kado dbSetup
+  - node bin/kado bootstrap --appname test --enable-all
+  - node app user create -e foo@foo.com -p foo -n foo
+
