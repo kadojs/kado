@@ -1,7 +1,7 @@
 'use strict';
-var K = require('../../../index')
-var bcrypt = require('bcrypt')
-var P = K.bluebird
+const K = require('../../../index')
+const bcrypt = require('bcrypt')
+const P = K.bluebird
 
 //make some promises
 P.promisifyAll(bcrypt)

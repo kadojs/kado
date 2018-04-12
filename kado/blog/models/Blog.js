@@ -1,6 +1,6 @@
 'use strict';
-var markdown = require('markdown').markdown
-var validator = require('validator')
+const markdown = require('markdown').markdown
+const validator = require('validator')
 
 
 /**
@@ -21,7 +21,7 @@ module.exports = function(sequelize,DataTypes) {
       set: function(value){
         value = validator.trim(value)
         value = validator.escape(value)
-        var html = markdown.toHTML(value)
+        let html = markdown.toHTML(value)
         this.setDataValue('content',value)
         this.setDataValue('html',html)
       }

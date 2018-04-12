@@ -59,7 +59,7 @@ exports.db = function(K,db){
  * @param {object} app
  */
 exports.admin = function(K,app){
-  var admin = require('./admin')
+  let admin = require('./admin')
   //register routes
   app.get('/blog',function(req,res){
     res.redirect(301,'/blog/list')
@@ -81,7 +81,7 @@ exports.admin = function(K,app){
  * @param {object} app
  */
 exports.main = function(K,app){
-  //var main = require('./main')
+  //let main = require('./main')
   //register routes
   //app.get('/blog',main.list)
   //app.get('/blog/:uri',main.entry)

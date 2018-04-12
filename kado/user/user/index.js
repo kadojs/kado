@@ -1,14 +1,14 @@
 'use strict';
-var K = require('../../../index')
-var list = K.list
-var sequelize = K.db.sequelize
+const K = require('../../../index')
+const list = K.list
+const sequelize = K.db.sequelize
 
-var permissionLevels = require('../permission/helpers/levels')
+const permissionLevels = require('../permission/helpers/levels')
 
-var User = sequelize.models.User
-var UserActivity = sequelize.models.UserActivity
-var UserRole = sequelize.models.UserRole
-var UserPermission = sequelize.models.UserPermission
+const User = sequelize.models.User
+const UserActivity = sequelize.models.UserActivity
+const UserRole = sequelize.models.UserRole
+const UserPermission = sequelize.models.UserPermission
 
 
 /**
@@ -17,9 +17,9 @@ var UserPermission = sequelize.models.UserPermission
  * @param {object} res
  */
 exports.list = function(req,res){
-  var limit = +req.query.limit || 10
-  var start = +req.query.start || 0
-  var search = req.query.search || ''
+  let limit = +req.query.limit || 10
+  let start = +req.query.start || 0
+  let search = req.query.search || ''
   if(start < 0) start = 0
   User.findAndCountAll({
     where: sequelize.or(
@@ -114,7 +114,7 @@ exports.edit = function(req,res){
  * @param {object} res
  */
 exports.save = function(req,res){
-  var data = req.body
+  let data = req.body
   User.findOne(data.id)
     .then(function(doc){
       if(!doc) doc = User.build()

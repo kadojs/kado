@@ -1,7 +1,7 @@
 'use strict';
-var K = require('../../../index')
-var bcrypt = require('bcrypt')
-var P = K.bluebird
+const K = require('../../../index')
+const bcrypt = require('bcrypt')
+const P = K.bluebird
 
 //make some promises
 P.promisifyAll(bcrypt)
@@ -25,7 +25,7 @@ module.exports = function(sequelize,DataTypes) {
         allowNull: false,
         set: function(v){
           //dont re-encrypt crypted passswords
-          if(v.match(/^\$2a\$12\$/)) return this.setDataValue('password',v)
+          if(v.match(/^\$2[abxy]\$12\$/)) return this.setDataValue('password',v)
           return this.setDataValue(
             'password',
             bcrypt.hashSync(v,bcrypt.genSaltSync(12)))
@@ -35,7 +35,7 @@ module.exports = function(sequelize,DataTypes) {
         type: DataTypes.STRING,
         allowNull: true,
         validate: {is: /^[a-z0-9\s]+$/i},
-        defaultValue: 'SaleLeap Staff'
+        defaultValue: 'Kado Staff'
       },
       superAdmin: {
         type: DataTypes.BOOLEAN,

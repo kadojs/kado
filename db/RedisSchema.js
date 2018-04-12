@@ -7,7 +7,7 @@
  * @param {string} prefix
  * @constructor
  */
-var RedisSchema = function(prefix){
+let RedisSchema = function(prefix){
   if(!prefix) prefix = 'oose'
   this.prefix = prefix
 }

@@ -1,6 +1,6 @@
 'use strict';
-var P = require('bluebird')
-var validator = require('validator')
+const P = require('bluebird')
+const validator = require('validator')
 
 
 /**
@@ -13,8 +13,8 @@ exports.remove = function(Model,items){
   return P.try(function(){
     if(!(items instanceof Array))
       throw new Error('Invalid data passed for record removal')
-    var promises = []
-    var i = items.length - 1
+    let promises = []
+    let i = items.length - 1
     for(; i >= 0; i--){
       if(validator.isNumeric(items[i])){
         promises.push(Model.destroy({where: {id: items[i]}}))
@@ -34,7 +34,7 @@ exports.remove = function(Model,items){
  */
 exports.pagination = function(start,count,limit){
   if(start > count) start = count - limit
-  var page = {
+  let page = {
     start: start,
     end: start + limit,
     previous: start - limit,

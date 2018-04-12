@@ -1,7 +1,7 @@
 'use strict';
-var P = require('bluebird')
-var clusterSetup = require('infant').cluster
-var fs = require('graceful-fs')
+let P = require('bluebird')
+let clusterSetup = require('infant').cluster
+let fs = require('graceful-fs')
 
 
 /**
@@ -13,9 +13,9 @@ var fs = require('graceful-fs')
  * @return {object}
  */
 exports.master = function(K,interfaceName,interfaceRoot){
-  var config = K.config
-  var cluster
-  var that = this
+  let config = K.config
+  let cluster
+  let that = this
   that.start = function(done){
     cluster = clusterSetup(
       interfaceRoot + '/worker',
@@ -51,26 +51,26 @@ exports.master = function(K,interfaceName,interfaceRoot){
  * @return {object}
  */
 exports.worker = function(K,interfaceName,interfaceRoot){
-  var config = K.config
+  const config = K.config
   if(!interfaceName) interfaceName = 'admin'
   if(!interfaceRoot) interfaceRoot = __dirname
-  var that = this
+  const that = this
   //third party requirements
-  var bodyParser = require('body-parser')
-  var compress = require('compression')
-  var cookieParser = require('cookie-parser')
-  var express = require('express')
-  var expressSession = require('express-session')
-  var http = require('http')
-  var morgan = require('morgan')
-  var path = require('path')
-  var serveStatic = require('serve-static')
-  var SessionStore = require('express-sql-session')(expressSession)
+  const bodyParser = require('body-parser')
+  const compress = require('compression')
+  const cookieParser = require('cookie-parser')
+  const express = require('express')
+  const expressSession = require('express-session')
+  const http = require('http')
+  const morgan = require('morgan')
+  const path = require('path')
+  const serveStatic = require('serve-static')
+  const SessionStore = require('express-sql-session')(expressSession)
   //user space helpers
-  var Nav = require('../helpers/Nav')
+  const Nav = require('../helpers/Nav')
   //interface context
-  var app = that.app = express()
-  var server = that.server = http.createServer(app)
+  let app = that.app = express()
+  let server = that.server = http.createServer(app)
   //make some promises
   P.promisifyAll(server)
 
@@ -130,14 +130,17 @@ exports.worker = function(K,interfaceName,interfaceRoot){
   that.setupScriptServer = function(name,scriptPath){
     if(!scriptPath) scriptPath = name
     //try for a local path first and then a system path as a backup
-    scriptPath = path.resolve(
+    let ourScriptPath = path.resolve(
       path.join(interfaceRoot,'..','..','..','..','node_modules',scriptPath))
     //fall back to a local path if we must
-    if(!fs.existsSync(scriptPath)){
-      scriptPath = path.resolve(
+    if(!fs.existsSync(ourScriptPath)){
+      ourScriptPath = path.resolve(
         path.join(interfaceRoot,'..','..','node_modules',scriptPath))
     }
-    app.use('/node_modules/' + name,serveStatic(scriptPath))
+    if(!fs.existsSync(ourScriptPath)){
+      console.log('falling back2',ourScriptPath)
+    }
+    app.use('/node_modules/' + name,serveStatic(ourScriptPath))
   }
   that.enableHtml = function(callback){
     if(!callback) callback = function(){}
@@ -146,7 +149,6 @@ exports.worker = function(K,interfaceName,interfaceRoot){
     // /script/<name> such as /script/bootstrap/dist/bootstrap.min.js
     that.setupScriptServer('bootstrap')
     that.setupScriptServer('bootstrap-select')
-    that.setupScriptServer('html5-boilerplate')
     that.setupScriptServer('ladda')
     callback(app)
   }
@@ -174,11 +176,16 @@ exports.worker = function(K,interfaceName,interfaceRoot){
       resave: true,
       saveUninitialized: true,
       store: new SessionStore({
-        dialect: 'sqlite3',
+        client: 'mysql',
         connection: {
-          filename: K.path('sessions.s3db')
+          host: config.db.sequelize.host,
+          port: config.db.sequelize.port,
+          user: config.db.sequelize.user,
+          password: config.db.sequelize.password,
+          database: config.db.sequelize.name
         },
-        table: 'session'
+        table: interfaceName + 'Session',
+        expires: 365 * 24 * 60 * 60 * 1000
       }),
       secret: config.interface[interfaceName].cookie.secret || 'kado'
     }))
@@ -214,9 +221,9 @@ exports.worker = function(K,interfaceName,interfaceRoot){
 
       //so now loop here and load modules that want to be loaded
       Object.keys(K.modules).forEach(function(modName){
-        var mod = K.modules[modName]
+        let mod = K.modules[modName]
         if(mod.enabled){
-          var module = require(mod.root)
+          let module = require(mod.root)
           if('function' === typeof module[interfaceName]){
             module[interfaceName](K,app)
           } else {

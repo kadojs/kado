@@ -1,17 +1,17 @@
 'use strict';
-var P = require('bluebird')
-var redis = require('redis')
+const P = require('bluebird')
+const redis = require('redis')
 
-var RedisSchema = require('../helpers/RedisSchema')
+let RedisSchema = require('../helpers/RedisSchema')
 
-var config = require('../config')
+let config = require('../config')
 
 //make some promises
 P.promisifyAll(redis)
 
 /*jshint bitwise: false*/
-var cfg = config.redis
-var client = redis.createClient(cfg.port,cfg.host,cfg.options)
+let cfg = config.redis
+let client = redis.createClient(cfg.port,cfg.host,cfg.options)
 //handle auth
 if(cfg.auth) client.auth(cfg.auth)
 //select db
@@ -23,9 +23,9 @@ client.select(cfg.db || 0)
  * @param {object} obj
  * @return {object}
  */
-var sortObjectByKey = function(obj){
-  var keys = Object.keys(obj)
-  var sorted = {}
+let sortObjectByKey = function(obj){
+  let keys = Object.keys(obj)
+  let sorted = {}
   // sort keys
   keys.sort()
   // create new array based on Sorted Keys
@@ -43,13 +43,13 @@ var sortObjectByKey = function(obj){
  * @this {cradle}
  */
 client.getKeysPattern = function(pattern){
-  var that = this
-  var keys = []
+  let that = this
+  let keys = []
   return that.keysAsync(pattern)
     .then(function(result){
       keys = result
-      var promises = []
-      for(var i = 0; i < keys.length; i++){
+      let promises = []
+      for(let i = 0; i < keys.length; i++){
         promises.push(
           that.getAsync(keys[i])
         )
@@ -57,8 +57,8 @@ client.getKeysPattern = function(pattern){
       return P.all(promises)
     })
     .then(function(results){
-      var data = {}
-      for(var i = 0; i < results.length; i++)
+      let data = {}
+      for(let i = 0; i < results.length; i++)
         data[keys[i]] = results[i]
       data = sortObjectByKey(data)
       return {success: 'ok', count: results.length, data: data}
@@ -73,12 +73,12 @@ client.getKeysPattern = function(pattern){
  * @this {cradle}
  */
 client.removeKeysPattern = function(pattern){
-  var that = this
-  var removed = 0
+  let that = this
+  let removed = 0
   return that.keysAsync(pattern)
     .then(function(keys){
-      var promises = []
-      for(var i = 0; i < keys.length; i++){
+      let promises = []
+      for(let i = 0; i < keys.length; i++){
         promises.push(
           that.delAsync(keys[i])
         )
@@ -86,7 +86,7 @@ client.removeKeysPattern = function(pattern){
       return P.all(promises)
     })
     .then(function(results){
-      for(var i = 0; i < results.length; i++)
+      for(let i = 0; i < results.length; i++)
         removed += results[i]
       return removed
     })

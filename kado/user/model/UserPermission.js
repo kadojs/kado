@@ -1,7 +1,7 @@
 'use strict';
-var K = require('../../../index')
-var bcrypt = require('bcrypt')
-var P = K.bluebird
+const K = require('../../../index')
+const bcrypt = require('bcrypt')
+const P = K.bluebird
 
 //make some promises
 P.promisifyAll(bcrypt)
@@ -59,9 +59,9 @@ module.exports = function(sequelize,DataTypes) {
          * @return {integer} - The level that is available
          */
         verifyPermission: function(user,userInterface,uri){
-          var UserPermission =
+          let UserPermission =
             require('../helpers/sequelize')().models.UserPermission
-          var UserPermissionError = require('../helpers/UserPermissionError')
+          let UserPermissionError = require('../helpers/UserPermissionError')
           P.try(function(){
             if(user.superAdmin){
               return 4

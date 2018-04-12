@@ -92,6 +92,11 @@ This format is somewhat self explanatory. However in detail:
 
 ## Changelog
 
+### 2.0.0
+* Remove SQLite, CouchDB, Couchbase connectors
+* Implement ES6
+* Update to latest dependencies
+
 ### 1.1.1
 * Remove database connectors from dependencies they should be installed at
 app build time.

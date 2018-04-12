@@ -1,19 +1,19 @@
 'use strict';
-var K = require('../index')
-var Sequelize = require('sequelize')
+const K = require('../index')
+const Sequelize = require('sequelize')
 
-var config = K.config
+let config = K.config
 
-var inst
+let inst
 
 
 /**
  * Create the Sequelze instance
  * @return {Sequelize}
  */
-var createInst = function(){
+let createInst = function(){
   //configure the instance for connection
-  var inst = new Sequelize(
+  let inst = new Sequelize(
     config.db.sequelize.name,
     config.db.sequelize.user,
     config.db.sequelize.password,
@@ -27,7 +27,7 @@ var createInst = function(){
   )
   //finally connect to the database
   inst.doConnect = function(){
-    var that = this
+    let that = this
     return that.authenticate().then(function(){return that.sync()})
   }
   return inst

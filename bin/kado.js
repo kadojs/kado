@@ -1,9 +1,9 @@
 #!/use/bin/env node
 'use strict';
-var K = require('../index')
-var program = require('commander')
-var fs = require('fs')
-var path = require('path')
+const K = require('../index')
+const program = require('commander')
+const fs = require('fs')
+const path = require('path')
 
 program.version(K.config.version)
 program.command('bootstrap')
@@ -17,8 +17,8 @@ program.command('bootstrap')
   .option('--enable-setting')
   .option('--enable-user')
   .action(function(cmd){
-    var folder = process.cwd()
-    var appFile = path.resolve(folder + '/app.js')
+    let folder = process.cwd()
+    let appFile = path.resolve(folder + '/app.js')
     if(fs.existsSync(appFile)){
       console.log('ERROR app file already exits')
       process.exit(1)
@@ -37,10 +37,10 @@ program.command('bootstrap')
       cmd.enableAdmin = true
     }
     if(cmd.enableBlog) cmd.enableMain = true
-    var interfaceConfig = ''
-    var enableInterface = function(name,flag){
+    let interfaceConfig = ''
+    let enableInterface = function(name,flag){
       if(flag){
-        var isFirst = false
+        let isFirst = false
         if(!interfaceConfig){
           interfaceConfig = ',\n  interface: {\n'
           isFirst = true
@@ -54,10 +54,10 @@ program.command('bootstrap')
     enableInterface('client',cmd.enableClient)
     enableInterface('main',cmd.enableMain)
     if(interfaceConfig) interfaceConfig = interfaceConfig + '\n  }'
-    var moduleConfig = ''
-    var enableModule = function(name,flag){
+    let moduleConfig = ''
+    let enableModule = function(name,flag){
       if(flag){
-        var isFirst = false
+        let isFirst = false
         if(!moduleConfig){
           moduleConfig = ',\n  module: {\n'
           isFirst = true
@@ -70,10 +70,10 @@ program.command('bootstrap')
     enableModule('setting',cmd.enableSetting)
     enableModule('user',cmd.enableUser)
     if(moduleConfig) moduleConfig = moduleConfig + '\n  }\n'
-    var appRequire = '\'kado\''
+    let appRequire = '\'kado\''
     if(!process.argv[1].match(/node_modules/i)) appRequire = '\'./index\''
-    var appData = '\'use strict\';\n' +
-      'var K = require(' + appRequire + ')\n' +
+    let appData = '\'use strict\';\n' +
+      'let K = require(' + appRequire + ')\n' +
       'K.configure({\n' +
       '  root: __dirname' + interfaceConfig + moduleConfig +
       '})\n' +

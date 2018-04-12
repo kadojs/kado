@@ -1,8 +1,8 @@
 'use strict';
-var K = require('../../../index')
-var sequelize = K.db.sequelize
+const K = require('../../../index')
+const sequelize = K.db.sequelize
 
-var Blog = sequelize.models.Blog
+const Blog = sequelize.models.Blog
 
 
 /**

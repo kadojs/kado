@@ -1,4 +1,3 @@
-'use strict';
 var commaSepStep = $.animateNumber.numberStepFactories.separator(',')
 var updateStat = function(id,num){
   $('#' + id).animateNumber(

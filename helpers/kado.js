@@ -1,18 +1,18 @@
 'use strict';
-var P = require('bluebird')
-var execSync = require('child_process').execSync
-var fs = require('fs')
-var glob = require('glob')
-var infant = require('infant')
-var LineByLine = require('n-readlines')
-var moment = require('moment')
-var ObjectManage = require('object-manage')
-var path = require('path')
-var pkg = require('../package.json')
+const P = require('bluebird')
+const execSync = require('child_process').execSync
+const fs = require('fs')
+const glob = require('glob')
+const infant = require('infant')
+const LineByLine = require('n-readlines')
+const moment = require('moment')
+const ObjectManage = require('object-manage')
+const path = require('path')
+const pkg = require('../package.json')
 
-var config = new ObjectManage()
-var lifecycle = new infant.Lifecycle()
-var logger = require('./logger')
+let config = new ObjectManage()
+let lifecycle = new infant.Lifecycle()
+let logger = require('./logger')
 
 
 //-----------------
@@ -290,12 +290,12 @@ exports.path = function(part){
  * @return {string}
  */
 exports.tailFile = function(path){
-  var log = ''
+  let log = ''
   if(fs.existsSync(path)){
-    var fd = new LineByLine(path)
-    var line, lines = []
+    let fd = new LineByLine(path)
+    let line, lines = []
     while((line = fd.next())) lines.push(line)
-    var start = lines.length - 20
+    let start = lines.length - 20
     if(start < 0) start = 0
     log = lines.splice(start,lines.length-1).join('\n')
   }
@@ -336,7 +336,7 @@ exports.printDate = function(d,emptyString){
  * @return {string} output
  */
 exports.execSync = function(cmd,opts){
-  var out = exports.printDate(new Date()) + ' [INFO]: ' + cmd + '\n'
+  let out = exports.printDate(new Date()) + ' [INFO]: ' + cmd + '\n'
   try {
     out = out + execSync(cmd,opts)
   } catch(e){
@@ -402,7 +402,7 @@ exports.init = function(done){
   //load any config left in the env for us
   if(process.env.KADO_CONFIG){
     try {
-      var configDelta = JSON.parse(process.env.KADO_CONFIG)
+      let configDelta = JSON.parse(process.env.KADO_CONFIG)
       exports.log.debug('Adding found environment config')
       exports.config.$load(configDelta)
     } catch(e){
@@ -428,16 +428,16 @@ exports.init = function(done){
     exports.log.info('Shutdown complete')
   })
   exports.log.debug('Beginning startup')
-  var loadConnector = function(file){
-    var name = path.basename(file,'.js')
+  let loadConnector = function(file){
+    let name = path.basename(file,'.js')
     //check if the connector is registered and enabled
     if(config.db[name] && config.db[name].load){
       exports.log.debug(name + ' connector loaded')
       exports.db[name] = require(file)()
     }
   }
-  var loadModule = function(file){
-    var module = new ObjectManage(require(file))
+  let loadModule = function(file){
+    let module = new ObjectManage(require(file))
     if(!module.name) module.name = path.basename(file,'.json')
     module.root = path.dirname(file)
     if(exports.config.module[module.name]){
@@ -452,10 +452,10 @@ exports.init = function(done){
       }
     }
   }
-  var dbGlob = process.env.KADO_ROOT + '/db/*.js'
-  var sysGlob = process.env.KADO_MODULES + '/**/kado.json'
-  var userGlob = process.env.KADO_USER_MODULES + '/**/kado.json'
-  var doScan = function(pattern,handler){
+  let dbGlob = process.env.KADO_ROOT + '/db/*.js'
+  let sysGlob = process.env.KADO_MODULES + '/**/kado.json'
+  let userGlob = process.env.KADO_USER_MODULES + '/**/kado.json'
+  let doScan = function(pattern,handler){
     return new P(function(resolve){
       glob(pattern,function(err,files){
         files.forEach(handler)
@@ -482,19 +482,19 @@ exports.init = function(done){
       exports.log.debug('Setting up data storage access')
       Object.keys(exports.modules).forEach(function(modKey){
         if(exports.modules.hasOwnProperty(modKey)){
-          var modConf = exports.modules[modKey]
+          let modConf = exports.modules[modKey]
           if(true === modConf.enabled){
-            var mod = require(modConf.root)
+            let mod = require(modConf.root)
             if('function' === typeof mod.db){
               mod.db(exports,exports.db)
             }
           }
         }
       })
-      var dbEnabled = 0
+      let dbEnabled = 0
       Object.keys(exports.db).forEach(function(dbKey){
         if(exports.db.hasOwnProperty(dbKey)){
-          var db = exports.db[dbKey]
+          let db = exports.db[dbKey]
           if(db.enabled){
             exports.log.debug(dbKey + ' connector enabled')
             dbEnabled++
@@ -503,10 +503,10 @@ exports.init = function(done){
       })
       exports.log.debug('Found ' + dbEnabled + ' database connectors')
       exports.log.debug('Connecting to found database connectors')
-      var dbConnected = 0
+      let dbConnected = 0
       Object.keys(exports.db).forEach(function(dbKey){
         if(exports.db.hasOwnProperty(dbKey)){
-          var db = exports.db[dbKey]
+          let db = exports.db[dbKey]
           if(db.enabled){
             if('function' === typeof exports.db[dbKey].doConnect){
               exports.db[dbKey].doConnect()
@@ -526,8 +526,8 @@ exports.init = function(done){
           -1 < config.$get(['interface',name,'transport']).indexOf('http')
         )
         {
-          //var iface = infant.parent(config.interface[name].path)
-          var iface = require(config.interface[name].path)
+          //let iface = infant.parent(config.interface[name].path)
+          let iface = require(config.interface[name].path)
           exports.interfaces[name] = iface
           lifecycle.add(
             name,
@@ -557,9 +557,9 @@ exports.cli = function(args){
   exports.init()
     .then(function(){
       Object.keys(exports.modules).forEach(function(modName){
-        var mod = exports.modules[modName]
+        let mod = exports.modules[modName]
         if(mod.name === args[2]){
-          var module = require(mod.root)
+          let module = require(mod.root)
           module.cli(exports,args)
         }
       })

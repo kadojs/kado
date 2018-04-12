@@ -1,14 +1,14 @@
 'use strict';
-var K = require('../../../index')
-var P = require('bluebird')
-var Table = require('cli-table')
-var program = require('commander')
+const K = require('../../../index')
+const P = require('bluebird')
+const Table = require('cli-table')
+const program = require('commander')
 
-var sequelize = K.db.sequelize
+const sequelize = K.db.sequelize
 
-var User = sequelize.models.User
+const User = sequelize.models.User
 
-var config = K.config
+let config = K.config
 
 //create
 program
@@ -22,7 +22,7 @@ program
       console.log('Creating user')
       if(!opts.email || !opts.password)
         throw new Error('Email and password are required')
-      var doc = User.build({
+      let doc = User.build({
         email: opts.email,
         password: opts.password,
         name: opts.name,
@@ -92,7 +92,7 @@ program
   .action(function(){
     User.findAll()
       .then(function(results){
-        var table = new Table({
+        let table = new Table({
           head: ['Email','Name','Active']
         })
         results.forEach(function(row){
@@ -108,5 +108,5 @@ program
       })
   })
 program.version(config.version)
-var cli = program.parse(process.argv)
+let cli = program.parse(process.argv)
 if(!cli.args.length) program.help()

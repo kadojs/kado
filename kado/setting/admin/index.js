@@ -1,11 +1,11 @@
 'use strict';
-var K = require('../../../index')
-var P = K.bluebird
-var config = K.config
-var fs = require('graceful-fs')
-var list = K.list
-var ObjectManage = K.ObjectManage
-var definitions = {}
+const K = require('../../../index')
+const P = K.bluebird
+const config = K.config
+const fs = require('graceful-fs')
+const list = K.list
+const ObjectManage = K.ObjectManage
+let definitions = {}
 
 if(fs.existsSync(__dirname + '/definitions.json'))
   require(__dirname + './definitions.json')
@@ -21,11 +21,11 @@ P.promisifyAll(fs)
  * @param {number} limit
  * @return {{rows: Array, count: number}}
  */
-var queryConfig = function(search,start,limit){
-  var paths = config.$getPaths()
-  var db = {rows: [], count: 0}
+let queryConfig = function(search,start,limit){
+  let paths = config.$getPaths()
+  let db = {rows: [], count: 0}
   paths.forEach(function(path){
-    var parts = path.split('.')
+    let parts = path.split('.')
     //add a one line search filter :)
     if(search && parts.indexOf(search) < 0) return
     //dont show internals
@@ -75,9 +75,9 @@ var queryConfig = function(search,start,limit){
  * @param {string} path
  * @return {object}
  */
-var findConfig = function(path){
-  var result = queryConfig()
-  var entry = {}
+let findConfig = function(path){
+  let result = queryConfig()
+  let entry = {}
   result.rows.forEach(function(item){
     if(item.path === path) entry = item
   })
@@ -91,11 +91,11 @@ var findConfig = function(path){
  * @param {object} res
  */
 exports.list = function(req,res){
-  var limit = +req.query.limit || 20
-  var start = +req.query.start || 0
-  var search = req.query.search || ''
+  let limit = +req.query.limit || 20
+  let start = +req.query.start || 0
+  let search = req.query.search || ''
   if(start < 0) start = 0
-  var result = queryConfig(search,start,limit)
+  let result = queryConfig(search,start,limit)
   res.render(__dirname + '/view/list',{
     page: list.pagination(start,result.count,limit),
     count: result.count,
@@ -112,8 +112,8 @@ exports.list = function(req,res){
  * @param {object} res
  */
 exports.listAction = function(req,res){
-  var data = req.body
-  var settingsFile = process.env.KADO_ROOT + '/settings.json'
+  let data = req.body
+  let settingsFile = process.env.KADO_ROOT + '/settings.json'
   P.try(function(){
     //load settings overrides
     if(!fs.existsSync(settingsFile)){
@@ -121,7 +121,7 @@ exports.listAction = function(req,res){
     }
   })
     .then(function(){
-      var settings = new ObjectManage(require(settingsFile))
+      let settings = new ObjectManage(require(settingsFile))
       data.remove.forEach(function(path){
         //remove boot config
         settings.$remove(path)
@@ -148,7 +148,7 @@ exports.listAction = function(req,res){
  */
 exports.edit = function(req,res){
   P.try(function(){
-    var setting = findConfig(req.query.path)
+    let setting = findConfig(req.query.path)
     if(!setting) throw new Error('Setting not found')
     res.render(__dirname + '/view/edit',{setting: setting})
   })
@@ -164,8 +164,8 @@ exports.edit = function(req,res){
  * @param {object} res
  */
 exports.save = function(req,res){
-  var data = req.body
-  var settingsFile = process.env.KADO_ROOT + '/settings.json'
+  let data = req.body
+  let settingsFile = process.env.KADO_ROOT + '/settings.json'
   P.try(function(){
     //load settings overrides
     if(!fs.existsSync(settingsFile)){
@@ -173,7 +173,7 @@ exports.save = function(req,res){
     }
   })
     .then(function(){
-      var settings = new ObjectManage(require(settingsFile))
+      let settings = new ObjectManage(require(settingsFile))
       //save for restart
       settings.$set(data.path,data.value)
       //update running config

@@ -1,13 +1,13 @@
 'use strict';
-var K = require('../../index')
-var interfaceRoot = __dirname
-var interfaceName = 'admin'
-var worker = K.iface.worker(K,interfaceName,interfaceRoot)
+const K = require('../../index')
+const interfaceRoot = __dirname
+const interfaceName = 'admin'
+let worker = K.iface.worker(K,interfaceName,interfaceRoot)
 worker.enableSession(function(app){
-  var flash = require('connect-flash')
-  var compileFile = require('pug').compileFile
+  let flash = require('connect-flash')
+  let compileFile = require('pug').compileFile
   app.use(flash())
-  var viewFn = {}
+  let viewFn = {}
   app.use(function(req,res,next){
     res.locals.flash = req.flash.bind(req)
     req.flashPug = function(type,view,vars){
@@ -27,7 +27,7 @@ worker.enableSession(function(app){
   })
 })
 worker.enableHtml(function(app){
-  var serveStatic = require('serve-static')
+  let serveStatic = require('serve-static')
   //setup view engine
   app.set('trust proxy',true)
   app.locals.basedir = interfaceRoot + '/view'
@@ -39,15 +39,15 @@ worker.enableHtml(function(app){
 worker.setup(function(app){
   //login
   app.post('/login',function(req,res){
-    var promises = []
-    var authTried = 0
-    var invalidLoginError = new Error('Invalid login')
+    let promises = []
+    let authTried = 0
+    let invalidLoginError = new Error('Invalid login')
     Object.keys(K.modules).forEach(function(modName){
       if(K.modules.hasOwnProperty(modName)){
-        var modConf = K.modules[modName]
+        let modConf = K.modules[modName]
         if(modConf.admin && true === modConf.admin.providesAuthentication){
           promises.push(new K.bluebird(function(resolve,reject){
-            var mod = require(modConf.root)
+            let mod = require(modConf.root)
             if('function' === typeof mod.authenticate){
               authTried++
               mod.authenticate(
@@ -61,7 +61,7 @@ worker.setup(function(app){
                   if(true !== authValid){
                     return reject(invalidLoginError)
                   }
-                  var session = new K.ObjectManage(req.session.user || {})
+                  let session = new K.ObjectManage(req.session.user || {})
                   session.$load(sessionValues)
                   req.session.user = session.$strip()
                   resolve()

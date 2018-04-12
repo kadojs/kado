@@ -1,13 +1,13 @@
 'use strict';
-var K = require('../../helpers/kado')
-var interfaceRoot = __dirname
-var interfaceName = 'client'
-var worker = K.iface.worker(K,interfaceName,interfaceRoot)
+const K = require('../../helpers/kado')
+const interfaceRoot = __dirname
+const interfaceName = 'client'
+let worker = K.iface.worker(K,interfaceName,interfaceRoot)
 worker.enableSession(function(app){
-  var flash = require('connect-flash')
-  var compileFile = require('pug').compileFile
+  const flash = require('connect-flash')
+  const compileFile = require('pug').compileFile
   app.use(flash())
-  var viewFn = {}
+  let viewFn = {}
   app.use(function(req,res,next){
     res.locals.flash = req.flash.bind(req)
     req.flashPug = function(type,view,vars){
@@ -27,7 +27,7 @@ worker.enableSession(function(app){
   })
 })
 worker.enableHtml(function(app){
-  var serveStatic = require('serve-static')
+  let serveStatic = require('serve-static')
   //setup view engine
   app.set('trust proxy',true)
   app.set('views',interfaceRoot + '/' + 'view')

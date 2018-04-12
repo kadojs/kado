@@ -6,7 +6,7 @@
  * Nav constructor
  * @constructor
  */
-var Nav = function(){
+let Nav = function(){
   this.nav = {}
   this.group = []
 }

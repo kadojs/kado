@@ -1,6 +1,6 @@
 'use strict';
-var winston = require('winston')
-var moment = require('moment')
+const winston = require('winston')
+const moment = require('moment')
 
 winston.remove(winston.transports.Console)
 
@@ -15,7 +15,7 @@ exports.setupLogger = function(name,dateFormat){
   if(!name) name = 'kado'
   name = name.toUpperCase()
   if(!dateFormat) dateFormat = 'YYYY-MM-DD@HH:mm:ss.SSS'
-  var logger = new winston.Logger({
+  let logger = new winston.Logger({
     exitOnError: false,
     transports: [
       new winston.transports.Console({

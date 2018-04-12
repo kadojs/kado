@@ -1,8 +1,8 @@
 'use strict';
-var K = require('../../helpers/kado')
-var interfaceRoot = __dirname
-var interfaceName = 'api'
-var worker = K.iface.worker(K,interfaceName,interfaceRoot)
+const K = require('../../helpers/kado')
+const interfaceRoot = __dirname
+const interfaceName = 'api'
+let worker = K.iface.worker(K,interfaceName,interfaceRoot)
 worker.enableSession()
 worker.setup(function(app){
   //login

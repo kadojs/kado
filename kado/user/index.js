@@ -1,5 +1,5 @@
 'use strict';
-var bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt')
 
 
 /**
@@ -42,11 +42,11 @@ exports.db = function(K,db){
   db.sequelize.import(__dirname + '/model/UserPermission.js')
   db.sequelize.import(__dirname + '/model/UserRole.js')
   db.sequelize.import(__dirname + '/model/UserRolePermission.js')
-  var User = db.sequelize.models.User
-  var UserActivity = db.sequelize.models.UserActivity
-  var UserRole = db.sequelize.models.UserRole
-  var UserPermission = db.sequelize.models.UserPermission
-  var UserRolePermission = db.sequelize.models.UserRolePermission
+  let User = db.sequelize.models.User
+  let UserActivity = db.sequelize.models.UserActivity
+  let UserRole = db.sequelize.models.UserRole
+  let UserPermission = db.sequelize.models.UserPermission
+  let UserRolePermission = db.sequelize.models.UserRolePermission
   User.hasMany(UserActivity)
   User.hasMany(UserRole)
   User.hasMany(UserPermission)
@@ -66,10 +66,10 @@ exports.db = function(K,db){
  * @param {function} done
  */
 exports.authenticate = function(K,username,password,done){
-  var userLogin = function(email,password){
-    var User = K.db.sequelize.models.User
-    var now = (+new Date()) / 1000 //as a timestamp
-    var user
+  let userLogin = function(email,password){
+    let User = K.db.sequelize.models.User
+    let now = (+new Date()) / 1000 //as a timestamp
+    let user
     return User.find({where: {email: email}})
       .then(function(result){
         if(!result) throw new Error('No user found')
@@ -105,9 +105,9 @@ exports.authenticate = function(K,username,password,done){
  * @param {object} app
  */
 exports.admin = function(K,app){
-  var user = require('./user')
-  var role = require('./role')
-  var permission = require('./permission')
+  let user = require('./user')
+  let role = require('./role')
+  let permission = require('./permission')
   //user routes
   app.get('/user',function(req,res){
     res.redirect(301,'/user/list')
