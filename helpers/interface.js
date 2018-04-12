@@ -215,11 +215,6 @@ exports.worker = function(K,interfaceName,interfaceRoot){
           let module = require(mod.root)
           if('function' === typeof module[interfaceName]){
             module[interfaceName](K,app)
-          } else {
-            K.log.warn(
-              'Failed to load module interface, no entry function',
-              modName
-            )
           }
         }
       })

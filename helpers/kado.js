@@ -88,12 +88,6 @@ config.$load({
       logging: false,
       dialect: 'mysql'
     },
-    sqlite: {
-      enabled: false,
-      load: true,
-      name: 'kado',
-      path: null
-    },
     redis: {
       enabled: false,
       load: false,
@@ -400,11 +394,11 @@ exports.initComplete = false
  */
 exports.init = function(done){
   //load any config left in the env for us
-  if(process.env.KADO_CONFIG){
+  if(process.env.KADO_CONFIG_STRING){
     try {
-      let configDelta = JSON.parse(process.env.KADO_CONFIG)
+      let configDelta = JSON.parse(process.env.KADO_CONFIG_STRING)
       exports.log.debug('Adding found environment config')
-      exports.config.$load(configDelta)
+      config.$load(configDelta)
     } catch(e){
       exports.log.warn('Failed to load env config: ' + e.message)
     }
@@ -519,6 +513,26 @@ exports.init = function(done){
       exports.log.debug(dbConnected + ' connected database connectors')
       exports.log.debug('Scanning interfaces')
       //register interfaces for startup
+      let addInterface = function(name){
+        exports.interfaces[name] = infant.parent(
+          config.interface[name].path,
+          {
+            fork: {
+              env: {
+                KADO_CONFIG_STRING: JSON.stringify(config.$strip())
+              }
+            }
+          })
+        lifecycle.add(
+          name,
+          function(done){
+            exports.interfaces[name].start(done)
+          },
+          function(done){
+            exports.interfaces[name].stop(done)
+          }
+        )
+      }
       Object.keys(config.interface).forEach(function(name){
         //web panel
         if(
@@ -526,18 +540,8 @@ exports.init = function(done){
           -1 < config.$get(['interface',name,'transport']).indexOf('http')
         )
         {
-          //let iface = infant.parent(config.interface[name].path)
-          let iface = require(config.interface[name].path)
-          exports.interfaces[name] = iface
-          lifecycle.add(
-            name,
-            function(done){
-              iface.start(done)
-            },
-            function(done){
-              iface.stop(done)
-            }
-          )
+          //let iface =
+          addInterface(name)
         }
       })
       exports.log.debug('Found ' + Object.keys(exports.interfaces).length +
