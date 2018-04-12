@@ -13,7 +13,4 @@ before_script:
   - npm install mysql2
   - mysql -e 'create database kado';
   - mysql -e "grant all on kado.* to 'kado'@'localhost' identified by 'kado'; flush privileges;"
-  - node bin/kado dbSetup
-  - node bin/kado bootstrap --appname test --enable-all
-  - node app user create -e foo@foo.com -p foo -n foo
 
