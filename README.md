@@ -24,7 +24,7 @@ Basic administration panel
 ```
 # mkdir myproject
 # cd myproject
-# npm install kado --save
+# npm install kado mysql2 --save
 # node node_modules/kado/bin/kado bootstrap --app myproject --enable-staff
 # node app
 ```
@@ -34,7 +34,7 @@ Simple blog website (equivalent of wordpress)
 ```
 # mkdir myblog
 # cd myblog
-# npm install kado --save
+# npm install kado mysql2 --save
 # node_modules/kado/bin/kado bootstrap --app myblog --enable-all
 # node app
 ```
