@@ -97,6 +97,10 @@ This format is somewhat self explanatory. However in detail:
 * Implement ES6
 * Update to latest dependencies
 * Drop `user` module and implement more robust `staff` module for default login
+* Implement blog cli
+* Implement blog api
+* Implement complete e2e testing of the system
+* Add uri handing to blog module
 
 ### 1.1.1
 * Remove database connectors from dependencies they should be installed at
