@@ -48,7 +48,7 @@ The plugin format follows a rather loose format to provide
 agility with different progamming languages and non web
 based programs.
 
-### Example Plugin Structure
+### Example Module Structure
 
 ```
 - kado/myplugin
@@ -56,7 +56,52 @@ based programs.
   - kado.json (kado plugin definition)
 ```
 
-#### Kado.json
+### `index.js`
+
+This is the main entry point of the file and is used to either load
+native JS routes or hand off and/or proxy to sub programs.
+
+The properties of this object that Kado requires are:
+* `kado` - (bool) Must be set to `true` for module use
+* `name` - (string) Name of the module
+* `title` - (string) Title of the module
+* `description` - (string) Description of the module
+* `db` - (function(K,db)) function to setup db requirements and key maps
+* `authenticate` - (function(K,username,password,done)) function to authenticate system users, optional, rare
+* `admin` - (function(K,app)) Register for use in the admin interface setup routes
+* `api` - (function(K,app)) Register for use in the API interface setup routes
+* `main` - (function(K,app)) Register for use in the main interface setup routes
+* `cli` - (function(K,app)) Register for use in the cli routing engine hand off to module script
+
+Below is an abbreviated module
+
+```js
+exports.kado = true
+exports.name = 'mymod'
+exports.title = 'MyMod'
+exports.description = 'My module'
+exports.db = function(K,db){
+  db.sequelize.enabled = true
+  db.sequelize.import(__dirname + '/model/MyModel.js')
+}
+exports.authenticate = function(K,username,password,done){
+  //everyone wins
+  done(null,true)
+}
+exports.admin = function(K,app){
+  let admin = require('./admin')
+  app.get('/mymod/list',admin.list)
+  app.post('/mymod/save',admin.save)
+}
+exports.cli = function(K,args){
+  args.splice(2,1)
+  process.argv = args
+  require('./bin/mymod')
+}
+
+```
+
+#### `kado.json`
 
 The plugin definition file will tell Kado how to handle the
 plugin. This involves chain loading into other programming
