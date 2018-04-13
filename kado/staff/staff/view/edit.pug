@@ -1,0 +1,46 @@
+extends /layout
+block content
+  .container
+    div.btn.btn-group.btn-group-justified.bg-info
+      h1 Staff:Member
+      pre.mono.h4= staff.email
+    div.btn-group
+      div.btn-group.btn-group-justified
+        div.btn-group.btn-group-xs
+          button.btn Created
+            span.badge.mono.margin-l-8= momentStandardFormat(staff.createdAt)
+        div.btn-group.btn-group-xs
+          button.btn Updated
+            span.badge.mono.margin-l-8= momentStandardFormat(staff.updatedAt)
+    +alerts()
+    form.form-horizontal(action='/staff/save', method='post', role='form')
+      input(type='hidden', name='id', value=staff.id)
+      .form-group
+        label.control-label.col-sm-2 Email
+        .col-sm-10.mono
+          input.form-control(type='email', name='staffEmail', placeholder='Email Address', value=staff.email, autocomplete='off')
+      .form-group
+        label.control-label.col-sm-2 Name
+        .col-sm-10.mono
+          input.form-control(type='text', name='staffName', placeholder='Name', value=staff.name, autocomplete='off')
+      .form-group
+        label.control-label.col-sm-2 Last Password Change #{timezone}
+        .col-sm-10.mono
+          - let datePassword = staff.datePassword
+          - if(null !== datePassword && datePassword.toString() === staff.createdAt.toString()) datePassword = null
+          .form-control-static= momentStandardFormat(datePassword)
+      .form-group
+        label.control-label.col-sm-2 Password
+        .col-sm-10.mono
+          input.form-control(type='password', name='staffPassword', autocomplete='off')
+      .form-group
+        label.control-label.col-sm-2 Confirm
+        .col-sm-10.mono
+          input.form-control(type='password', name='staffPasswordConfirm', autocomplete='off')
+      .form-group
+        label.control-label.col-sm-2 Active
+        .col-sm-10.mono
+          input(type='checkbox', name='staffActive', checked=staff.active)
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          button.btn.btn-success.col-sm-10(type='submit') Save

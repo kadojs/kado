@@ -3,7 +3,7 @@ const K = require('../helpers/kado')
 
 describe('kado',function(){
   this.timeout(20000)
-  //start servers and create a user
+  //start servers and create a staff
   before(function(){
     K.configure({
       root: __dirname,
@@ -29,7 +29,7 @@ describe('kado',function(){
     process.argv = process.argv.splice(0,2)
     return K.go('test')
   })
-  //remove user and stop services
+  //remove staff and stop services
   after(function(){
     return K.stop()
   })

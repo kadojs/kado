@@ -19,13 +19,11 @@ mixin navbar()
           li.dropdown
             a.dropdown-toggle(data-toggle='dropdown')
               span.glyphicon.glyphicon-user
-              span  Users
+              span  Staff
               b.caret
             ul.dropdown-menu
               li
-                a(href='/user/list') List Users
-                a(href='/user/role/list') User Roles
-                a(href='/user/permission/list') User Permissions
+                a(href='/staff/list') List Staff
           li
             a(href='/setting/list')
               span.glyphicon.glyphicon-wrench
@@ -34,8 +32,6 @@ mixin navbar()
             a.dropdown-toggle(data-toggle='dropdown') #{user.email}
               b.caret
             ul.dropdown-menu
-              li
-                a(href='/profile') Profile
               li
                 a(href='/logout') Logout
 mixin sidebar()

@@ -1,7 +1,6 @@
 'use strict';
-const K = require('../../../index')
 const bcrypt = require('bcrypt')
-const P = K.bluebird
+const P = require('bluebird')
 
 //make some promises
 P.promisifyAll(bcrypt)
@@ -14,7 +13,7 @@ P.promisifyAll(bcrypt)
  * @return {object}
  */
 module.exports = function(sequelize,DataTypes) {
-  return sequelize.define('User',{
+  return sequelize.define('Staff',{
       email: {
         type: DataTypes.STRING(191),
         allowNull: false,
@@ -24,7 +23,7 @@ module.exports = function(sequelize,DataTypes) {
         type: DataTypes.STRING,
         allowNull: false,
         set: function(v){
-          //dont re-encrypt crypted passswords
+          //dont re-encrypt crypted passwords
           if(v.match(/^\$2[abxy]\$12\$/)) return this.setDataValue('password',v)
           return this.setDataValue(
             'password',
@@ -35,23 +34,32 @@ module.exports = function(sequelize,DataTypes) {
         type: DataTypes.STRING,
         allowNull: true,
         validate: {is: /^[a-z0-9\s]+$/i},
-        defaultValue: 'Kado Staff'
-      },
-      superAdmin: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
+        defaultValue: 'StretchFS Admin'
       },
       active: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: true
       },
+      loginCount: {
+        type: DataTypes.INTEGER(11).UNSIGNED,
+        allowNull: false,
+        defaultValue: 0
+      },
+      loginFailCount: {
+        type: DataTypes.INTEGER(11).UNSIGNED,
+        allowNull: false,
+        defaultValue: 0
+      },
       dateSeen: {
         type: DataTypes.DATE,
         allowNull: true
       },
       dateFail: {
+        type: DataTypes.DATE,
+        allowNull: true
+      },
+      datePassword: {
         type: DataTypes.DATE,
         allowNull: true
       }
@@ -78,8 +86,12 @@ module.exports = function(sequelize,DataTypes) {
           name: 'dateFail_index',
           method: 'BTREE',
           fields: [{attribute: 'dateFail', order: 'DESC'}]
+        },
+        {
+          name: 'datePassword_index',
+          method: 'BTREE',
+          fields: [{attribute: 'datePassword', order: 'DESC'}]
         }
       ]
-    }
-  )
+    })
 }

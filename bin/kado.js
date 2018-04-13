@@ -15,7 +15,7 @@ program.command('bootstrap')
   .option('--enable-main')
   .option('--enable-blog')
   .option('--enable-setting')
-  .option('--enable-user')
+  .option('--enable-staff')
   .action(function(cmd){
     let folder = process.cwd()
     let appFile = path.resolve(folder + '/app.js')

@@ -1,13 +1,13 @@
 {
-  "enabled": false,
-  "name": "user",
+  "enabled": true,
+  "name": "staff",
   "admin": {
     "enabled": true,
     "providesAuthentication": true,
     "nav": {
-      "name": "Users",
+      "name": "Staff",
       "sequence": "5",
-      "uri": "/user"
+      "uri": "/staff"
     }
   }
 }

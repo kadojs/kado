@@ -96,6 +96,7 @@ This format is somewhat self explanatory. However in detail:
 * Remove SQLite, CouchDB, Couchbase connectors
 * Implement ES6
 * Update to latest dependencies
+* Drop `user` module and implement more robust `staff` module for default login
 
 ### 1.1.1
 * Remove database connectors from dependencies they should be installed at

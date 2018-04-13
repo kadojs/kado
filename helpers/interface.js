@@ -66,7 +66,7 @@ exports.worker = function(K,interfaceName,interfaceRoot){
   const path = require('path')
   const serveStatic = require('serve-static')
   const SessionStore = require('connect-redis')(expressSession)
-  //user space helpers
+  //staff space helpers
   const Nav = require('../helpers/Nav')
   //interface context
   let app = that.app = express()
@@ -112,6 +112,20 @@ exports.worker = function(K,interfaceName,interfaceRoot){
     appName: config.name,
     appTitle: config.interface[interfaceName].title,
     version: config.version,
+    /**
+     * Moment standard format
+     *  extend moment().format() so that this one place changes everywhere
+     *  truthiness is checked and a placeholder can be provided in emptyString
+     * @param {Date} d
+     * @param {string} emptyString
+     * @return {string}
+     */
+    momentStandardFormat: function(d,emptyString){
+      return (
+        d ? app.locals.moment(d).format('YYYY-MM-DD hh:mm:ssA')
+          : ('string' === typeof emptyString) ? emptyString : 'Never'
+      )
+    },
     nav: app.nav
   }
   //load middleware

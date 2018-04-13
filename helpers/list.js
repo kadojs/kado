@@ -26,6 +26,21 @@ exports.remove = function(Model,items){
 
 
 /**
+ * Integer argument parser
+ * @param {string} arg
+ * @param {integer} minimumDefault
+ * @param {bool} [unsigned]
+ * @return {integer}
+ */
+exports.integerArgDefaulted = function(arg,minimumDefault,unsigned=false){
+  let rv = (!arg) ? minimumDefault : parseInt(arg,10)
+  if(unsigned && (0 >= rv)) rv = minimumDefault
+  if(rv < minimumDefault) rv = minimumDefault
+  return rv
+}
+
+
+/**
  * Pagination helper
  * @param {number} start
  * @param {number} count

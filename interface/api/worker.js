@@ -10,8 +10,8 @@ worker.setup(function(app){
     res.json({status: 'error', message: 'Not implemented'})
     /*
     User.login(req.body.email,req.body.password)
-      .then(function(user){
-        req.session.user = user.dataValues
+      .then(function(staff){
+        req.session.staff = staff.dataValues
         res.redirect(301,'/')
       })
       .catch(function(e){

@@ -30,7 +30,7 @@ toWindow('querystring',require('qs'))
 //jquery plugins
 require('../../../helpers/js/jqueryAnimateNumber.min')
 
-//user space
+//staff space
 require('../../../helpers/js/dashboard')
 require('../../../helpers/js/sidebar')
 require('../../../helpers/js/table')

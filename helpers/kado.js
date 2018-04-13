@@ -178,7 +178,7 @@ config.$load({
   module: {
     blog: {},
     setting: {},
-    user: {}
+    staff: {}
   }
 })
 
@@ -341,7 +341,7 @@ exports.execSync = function(cmd,opts){
 
 
 /**
- * Update plugin path to user modules
+ * Update plugin path to staff modules
  * @param {string} p
  * @return {string}
  */
@@ -388,10 +388,11 @@ exports.initComplete = false
 
 /**
  * Init, scan modules and interfaces
- * @type {function}
+ * @type {function} cb
  * @return {P}
  */
-exports.init = function(){
+exports.init = function(cb){
+  if('function' !== typeof cb) cb = ()=>{}
   //load any config left in the env for us
   if(process.env.KADO_CONFIG_STRING){
     try {
@@ -466,8 +467,8 @@ exports.init = function(){
         return doScan(sysGlob,loadModule)
       })
       .then(function(){
-        //scan user modules
-        exports.log.debug('Scanning user space modules')
+        //scan staff modules
+        exports.log.debug('Scanning staff space modules')
         return doScan(userGlob,loadModule)
       })
       .then(function(){
@@ -548,6 +549,7 @@ exports.init = function(){
           ' interface(s)')
         exports.initComplete = true
         exports.log.debug('Init complete')
+        cb()
         resolve()
       })
     })
