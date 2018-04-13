@@ -1,0 +1,15 @@
+//-
+  used internally to generate Alert content (not served in a route)
+  Args:
+    subject: First word of the alert (subject noun), will be Firstcapped
+     action: What happened to the subject (action verb, past tense)
+         id: Displayed human-readable name/id
+       href: (optional) Wrap anchor around the above id with this href
+span.text-capitalize= subject
+=" "
+if(href)
+  a.alert-link.mono(href=href) [#{id}]
+else
+  span.mono [#{id}]
+=" "
+| was #{action}

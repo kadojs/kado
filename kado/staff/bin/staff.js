@@ -98,13 +98,13 @@ program
   .description('List staff members')
   .action(function(){
     let table = new Table({
-      head: ['Email','Name','Active']
+      head: ['Id','Email','Name','Active']
     })
     let staffCount = 0
     Staff.findAll()
       .each(function(row){
         staffCount++
-        table.push([row.email,row.name,row.active ? 'Yes' : 'No'])
+        table.push([row.id,row.email,row.name,row.active ? 'Yes' : 'No'])
       })
       .then(function(){
         if(!staffCount) table.push(['No staff members'])

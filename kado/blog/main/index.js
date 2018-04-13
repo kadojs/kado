@@ -11,10 +11,28 @@ const Blog = sequelize.models.Blog
  * @param {object} res
  */
 exports.index = function(req,res){
-  Blog.findAll({order: [['datePosted','DESC']]})
+  Blog.findAll({where: {active: true}, order: [['datePosted','DESC']]})
+    .then(function(results){
+      res.render('blog/list',{
+        blogList: results
+      })
+    })
+    .catch(function(err){
+      res.render('error',{error: err})
+    })
+}
+
+
+/**
+ * Entry
+ * @param {object} req
+ * @param {object} res
+ */
+exports.entry = function(req,res){
+  Blog.findOne({where: {uri: req.params.blogUri}})
     .then(function(result){
-      res.render('blog',{
-        blogList: result
+      res.render(__dirname + '/view/blog',{
+        blog: result
       })
     })
     .catch(function(err){

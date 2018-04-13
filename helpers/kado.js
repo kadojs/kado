@@ -124,7 +124,7 @@ config.$load({
       path: path.resolve(process.env.KADO_INTERFACES + '/api'),
       port: 3001,
       host: null,
-      baseUrl: 'http://localhost:3000=1',
+      baseUrl: 'http://localhost:3001',
       workers: {
         count: 1,
         maxConnections: 10000
@@ -140,31 +140,14 @@ config.$load({
       transport: ['tty','system'],
       path: path.resolve(process.env.KADO_INTERFACES + '/bin')
     },
-    client: {
-      enabled: false,
-      title: 'Client',
-      transport: ['http'],
-      path: path.resolve(process.env.KADO_INTERFACES + '/client'),
-      port: 3003,
-      host: null,
-      baseUrl: 'http://localhost:3003',
-      workers: {
-        count: 1,
-        maxConnections: 10000
-      },
-      cookie: {
-        secret: '',
-        maxAge: 2592000000 //30 days
-      }
-    },
     main: {
       enabled: false,
       title: 'Main',
       transport: ['http'],
       path: path.resolve(process.env.KADO_INTERFACES + '/main'),
-      port: 3004,
+      port: 3002,
       host: null,
-      baseUrl: 'http://localhost:3004',
+      baseUrl: 'http://localhost:3002',
       workers: {
         count: 1,
         maxConnections: 10000
@@ -460,15 +443,15 @@ exports.init = function(cb){
   return new P(function(resolve){
     //scan db connectors
     exports.log.debug('Scanning connectors')
-      doScan(dbGlob,loadConnector)
+    doScan(dbGlob,loadConnector)
       .then(function(){
-        //scan system plugins
+        //scan system modules
         exports.log.debug('Scanning system modules')
         return doScan(sysGlob,loadModule)
       })
       .then(function(){
-        //scan staff modules
-        exports.log.debug('Scanning staff space modules')
+        //scan extra modules
+        exports.log.debug('Scanning extra modules')
         return doScan(userGlob,loadModule)
       })
       .then(function(){

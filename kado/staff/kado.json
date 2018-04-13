@@ -1,5 +1,5 @@
 {
-  "enabled": true,
+  "enabled": false,
   "name": "staff",
   "admin": {
     "enabled": true,
@@ -9,5 +9,9 @@
       "sequence": "5",
       "uri": "/staff"
     }
+  },
+  "api": {
+    "enabled": true,
+    "providesAuthentication": true
   }
 }

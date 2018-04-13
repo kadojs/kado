@@ -16,7 +16,7 @@ exports.remove = function(Model,items){
     let promises = []
     let i = items.length - 1
     for(; i >= 0; i--){
-      if(validator.isNumeric(items[i])){
+      if(validator.isNumeric('' + items[i])){
         promises.push(Model.destroy({where: {id: items[i]}}))
       }
     }

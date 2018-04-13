@@ -62,7 +62,6 @@ exports.worker = function(K,interfaceName,interfaceRoot){
   const express = require('express')
   const expressSession = require('express-session')
   const http = require('http')
-  const morgan = require('morgan')
   const path = require('path')
   const serveStatic = require('serve-static')
   const SessionStore = require('connect-redis')(expressSession)
@@ -138,9 +137,6 @@ exports.worker = function(K,interfaceName,interfaceRoot){
     next()
   })
   // development only
-  if('development' === app.get('env')){
-    app.use(morgan('dev'))
-  }
   that.setupScriptServer = function(name,scriptPath){
     if(!scriptPath) scriptPath = name
     //try for a local path first and then a system path as a backup

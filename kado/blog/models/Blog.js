@@ -1,5 +1,6 @@
 'use strict';
 const markdown = require('markdown').markdown
+const uriname = require('uriname')
 const validator = require('validator')
 
 
@@ -12,6 +13,14 @@ const validator = require('validator')
 module.exports = function(sequelize,DataTypes) {
   return sequelize.define('Blog',{
     title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      set: function(v){
+        this.setDataValue('uri',uriname(v))
+        this.setDataValue('title',v)
+      }
+    },
+    uri: {
       type: DataTypes.STRING,
       allowNull: false
     },

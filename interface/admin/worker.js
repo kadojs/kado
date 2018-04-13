@@ -61,9 +61,9 @@ worker.setup(function(app){
                   if(true !== authValid){
                     return reject(invalidLoginError)
                   }
-                  let session = new K.ObjectManage(req.session.user || {})
+                  let session = new K.ObjectManage(req.session.staff || {})
                   session.$load(sessionValues)
-                  req.session.user = session.$strip()
+                  req.session.staff = session.$strip()
                   resolve()
                 }
               )
@@ -93,16 +93,16 @@ worker.setup(function(app){
   })
   app.get('/logout',function(req,res){
     req.session.destroy()
-    delete res.locals.user
+    delete res.locals.staff
     res.redirect(301,'/login')
   })
   //auth protection
   app.use(function(req,res,next){
     //private
-    if(!req.session.user && req.url.indexOf('/login') < 0){
+    if(!req.session.staff && req.url.indexOf('/login') < 0){
       res.redirect('/login')
-    } else if(req.session.user){
-      res.locals.user = req.session.user
+    } else if(req.session.staff){
+      res.locals.staff = req.session.staff
       next()
     } else {
       next()

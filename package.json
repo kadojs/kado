@@ -46,7 +46,6 @@
     "ladda": "^1.0.6",
     "markdown": "^0.5.0",
     "moment": "^2.22.0",
-    "morgan": "^1.9.0",
     "mysql2": "^1.5.3",
     "n-readlines": "^0.2.8",
     "object-manage": "^1.0.0",
@@ -58,17 +57,19 @@
     "serve-static": "^1.13.2",
     "string": "^3.3.3",
     "uglify-es": "^3.3.9",
+    "uriname": "^0.1.1",
     "validator": "^9.4.1",
     "winston": "^2.4.1"
   },
   "scripts": {
-    "postinstall": "browserify interface/admin/js/main.js -o interface/admin/public/bundle/bundle.js && uglifyjs interface/admin/public/bundle/bundle.js --source-map -o interface/admin/public/bundle/bundle.min.js && browserify interface/client/js/main.js -o interface/client/public/bundle/bundle.js && uglifyjs interface/client/public/bundle/bundle.js --source-map -o interface/client/public/bundle/bundle.min.js && browserify interface/main/js/main.js -o interface/main/public/bundle/bundle.js && uglifyjs interface/main/public/bundle/bundle.js --source-map -o interface/main/public/bundle/bundle.min.js",
+    "postinstall": "browserify interface/admin/js/main.js -o interface/admin/public/bundle/bundle.js && uglifyjs interface/admin/public/bundle/bundle.js --source-map -o interface/admin/public/bundle/bundle.min.js && browserify interface/main/js/main.js -o interface/main/public/bundle/bundle.js && uglifyjs interface/main/public/bundle/bundle.js --source-map -o interface/main/public/bundle/bundle.min.js",
     "bundle": "npm run postinstall",
     "start": "node app",
     "test": "node ./node_modules/mocha/bin/mocha ./test/*.test.js"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^5.0.5"
+    "mocha": "^5.1.0",
+    "request": "^2.85.0"
   }
 }

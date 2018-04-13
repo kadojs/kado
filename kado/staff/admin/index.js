@@ -173,6 +173,7 @@ exports.save = (req,res)=>{
         alert.action = 'unchanged (try again?)'
         req.flashPug('warning','subject-id-action',alert)
       }
+      res.setHeader('staffid',staffId)
       res.redirect('/staff/list')
     })
     .catch((err)=>{

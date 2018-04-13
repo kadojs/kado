@@ -8,6 +8,7 @@ settings.json
 /log
 npm-debug.log
 app.js
+app.js.bak
 bundle.*
 /sessions.s3db
 *.s3db

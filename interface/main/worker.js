@@ -7,6 +7,7 @@ worker.enableHtml(function(app){
   let serveStatic = require('serve-static')
   //setup view engine
   app.set('trust proxy',true)
+  app.locals.basedir = interfaceRoot + '/view'
   app.set('views',interfaceRoot + '/' + 'view')
   app.set('view engine','pug')
   //static files

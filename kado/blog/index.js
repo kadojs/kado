@@ -68,10 +68,25 @@ exports.admin = function(K,app){
   app.get('/blog/create',admin.create)
   app.get('/blog/edit',admin.edit)
   app.post('/blog/save',admin.save)
+  app.post('/blog/list',admin.listAction)
   //register navigation
   app.nav.addGroup('/blog','Blog','book')
   app.nav.addItem('Blog','/blog/list','List','list')
   app.nav.addItem('Blog','/blog/create','Create','plus')
+}
+
+
+/**
+ * Register in the API Interface
+ * @param {K} K Master Kado Object
+ * @param {object} app
+ */
+exports.api = function(K,app){
+  let api = require('./api')
+  app.post('/blog/findAll',api.findAll)
+  app.post('/blog/find',api.find)
+  app.post('/blog/save',api.save)
+  app.post('/blog/remove',api.remove)
 }
 
 
@@ -81,10 +96,23 @@ exports.admin = function(K,app){
  * @param {object} app
  */
 exports.main = function(K,app){
-  //let main = require('./main')
+  let main = require('./main')
   //register routes
-  //app.get('/blog',main.list)
-  //app.get('/blog/:uri',main.entry)
+  app.get('/blog',main.index)
+  app.get('/blog/:blogUri',main.entry)
   //register navigation
   app.nav.addGroup('/blog','Blog','book')
 }
+
+
+/**
+ * CLI Access
+ * @param {K} K Master Kado Object
+ * @param {Array} args
+ */
+exports.cli = function(K,args){
+  args.splice(2,1)
+  process.argv = args
+  require('./bin/blog')
+}
+

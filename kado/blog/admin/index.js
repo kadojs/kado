@@ -100,8 +100,15 @@ exports.save = function(req,res){
       return blog.save()
     })
     .then(function(blog){
-      req.flash('success','Blog entry saved')
-      res.redirect('/blog/edit?id=' + blog.id)
+      let alert = {
+        subject: 'Blog entry',
+        href: '/blog/edit?id=' + blog.id,
+        id: blog.id
+      }
+      alert.action = 'saved'
+      req.flashPug('success','subject-id-action',alert)
+      res.setHeader('blogid',blog.id)
+      res.redirect('/blog/list')
     })
     .catch(function(err){
       res.render('error',{error: err})

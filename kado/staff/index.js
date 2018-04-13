@@ -48,9 +48,9 @@ exports.db = function(K,db){
  * @param {function} done
  */
 exports.authenticate = function(K,username,password,done){
-  let staff = require('./staff')
+  let admin = require('./admin')
   let userLogin = function(email,password){
-    return staff.doLogin(email,password)
+    return admin.doLogin(email,password)
   }
   userLogin(username,password)
     .then(function(user){
@@ -68,16 +68,16 @@ exports.authenticate = function(K,username,password,done){
  * @param {object} app
  */
 exports.admin = function(K,app){
-  let staff = require('./staff')
+  let admin = require('./admin')
   //staff routes
   app.get('/staff',function(req,res){
     res.redirect(301,'/staff/list')
   })
-  app.get('/staff/list',staff.list)
-  app.get('/staff/create',staff.create)
-  app.get('/staff/edit',staff.edit)
-  app.post('/staff/list',staff.listAction)
-  app.post('/staff/save',staff.save)
+  app.get('/staff/list',admin.list)
+  app.get('/staff/create',admin.create)
+  app.get('/staff/edit',admin.edit)
+  app.post('/staff/list',admin.listAction)
+  app.post('/staff/save',admin.save)
 }
 
 
