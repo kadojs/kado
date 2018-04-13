@@ -1,4 +1,4 @@
-# Kado
+# Kado [![Build Status](https://travis-ci.org/nullivex/kado.svg?branch=master)](https://travis-ci.org/nullivex/kado)
 
 Modular application development framework based on Node.js
 
