@@ -101,6 +101,8 @@ This format is somewhat self explanatory. However in detail:
 * Implement blog api
 * Implement complete e2e testing of the system
 * Add uri handing to blog module
+* Drop `client` interface making core interfaces `admin`,`api`,`main
+* Complete `main` interface to display properly
 
 ### 1.1.1
 * Remove database connectors from dependencies they should be installed at

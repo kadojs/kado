@@ -6,7 +6,7 @@ block content
     .content.content-container(style='padding-top: 20px;')
       article.markdown-body
         h1
-          a(href='/blog/#{blog.uri}')= blog.title
+          a(href='/blog/' + blog.uri)= blog.title
         p(style='margin-top:-5px')
           | Posted: #{moment(blog.datePosted).format('MMM DD, YYYY')}
         | !{blog.html}

@@ -1,43 +1,18 @@
 mixin navbar()
   //navbar
-  nav.navbar.kado-toolbar
-    .container-fluid
-      .navbar-header
-        button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-toolbar-navbar-collapse-1')
-          span.sr-only Toggle Navigation
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
-        a.navbar-brand(href='/')= appTitle
-      .collapse.navbar-collapse#bs-toolbar-navbar-collapse-1
-        form.navbar-form.navbar-left(role='search', method='get', action='/search')
-          .form-group
-            input.form-control(type='text', name='phrase', placeholder='Search')
-          button.btn.btn-default(type='submit')
-            span.glyphicon.glyphicon-search
-        ul.nav.navbar-nav.navbar-right
-          li.dropdown
-            a.dropdown-toggle(data-toggle='dropdown')
-              span.glyphicon.glyphicon-user
-              span  Users
-              b.caret
-            ul.dropdown-menu
-              li
-                a(href='/staff/list') List Users
-                a(href='/staff/role/list') User Roles
-                a(href='/staff/permission/list') User Permissions
+  .navbar.navbar-default
+    .container
+      a.navbar-brand(href='/') Nullivex
+      ul.nav.navbar-nav
+        li
+          a(href='/blog')
+            span.fa.fa-newspaper-o  Blog
+      .pull-right
+        ul.nav.navbar-nav
           li
-            a(href='/setting/list')
-              span.glyphicon.glyphicon-wrench
-              span  Settings
-          li.dropdown
-            a.dropdown-toggle(data-toggle='dropdown') #{user.email}
-              b.caret
-            ul.dropdown-menu
-              li
-                a(href='/profile') Profile
-              li
-                a(href='/logout') Logout
+            a(href='https://bugs.nullivex.com')
+              span.fa.fa-bug  Bug Tracker
+
 mixin sidebar()
   nav.navbar.navbar-inverse.sidebar(role='navigation')
     .sidebar-copyright

@@ -13,7 +13,7 @@ const Blog = sequelize.models.Blog
 exports.index = function(req,res){
   Blog.findAll({where: {active: true}, order: [['datePosted','DESC']]})
     .then(function(results){
-      res.render('blog/list',{
+      res.render(__dirname + '/view/list',{
         blogList: results
       })
     })
