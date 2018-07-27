@@ -137,6 +137,9 @@ This format is somewhat self explanatory. However in detail:
 
 ## Changelog
 
+### 2.0.3
+* Fix user space module loading issue
+
 ### 2.0.2
 * Fix staff handling in admin panel templates
 

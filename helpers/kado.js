@@ -64,7 +64,8 @@ process.env.KADO_MODULES = path.resolve(process.env.KADO_ROOT + '/kado')
  * Kado User Plugins Path
  * @type {string}
  */
-process.env.KADO_USER_MODULES = path.resolve(process.env.KADO_ROOT + '/kado')
+process.env.KADO_USER_MODULES = path.resolve(
+  path.dirname(path.dirname(process.env.KADO_ROOT)) + '/kado')
 
 
 //dist config schema
