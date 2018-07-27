@@ -137,6 +137,9 @@ This format is somewhat self explanatory. However in detail:
 
 ## Changelog
 
+### 2.0.1
+* Small fix to template paths
+
 ### 2.0.0
 * Remove SQLite, CouchDB, Couchbase connectors
 * Implement ES6

@@ -2,7 +2,7 @@
   "author": "Bryan Tong <bryan@nullivex.com>",
   "name": "kado",
   "description": "Modular App development system",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "http://www.nullivex.com/kado",
   "license": "MIT",
   "repository": {
