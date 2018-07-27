@@ -137,6 +137,9 @@ This format is somewhat self explanatory. However in detail:
 
 ## Changelog
 
+###
+* Remove unused nav JSON structure from modules
+
 ### 2.0.3
 * Fix user space module loading issue
 

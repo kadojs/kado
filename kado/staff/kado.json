@@ -3,12 +3,7 @@
   "name": "staff",
   "admin": {
     "enabled": true,
-    "providesAuthentication": true,
-    "nav": {
-      "name": "Staff",
-      "sequence": "5",
-      "uri": "/staff"
-    }
+    "providesAuthentication": true
   },
   "api": {
     "enabled": true,
