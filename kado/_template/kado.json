@@ -1,0 +1,7 @@
+{
+  "enabled": false,
+  "name": "{{moduleName}}",
+  "admin": {
+    "enabled": true
+  }
+}

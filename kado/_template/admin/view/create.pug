@@ -1,0 +1,14 @@
+extends /layout
+block content
+  .container
+    h1 Create {{moduleItemName}}
+    form.form-horizontal(action='/{{moduleName}}/save', method='post', role='form')
+      {{#moduleFields}}
+        .form-group
+          label.control-label.col-sm-2 {{fieldTitle}}
+          .col-sm-10
+            input.form-control(type='text', name='{{fieldName}}', placeholder='{{fieldTitle}}')
+      {{/moduleFields}}
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          button.btn.btn-success(type='submit') Save

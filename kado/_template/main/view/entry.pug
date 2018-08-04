@@ -1,0 +1,11 @@
+extends /layout
+block title
+  title #{item.{{moduleTitleField}}}
+block content
+  .container
+    .content.content-container(style='padding-top: 20px;')
+      article.markdown-body
+        h1
+          a(href='/{{moduleName}}/' + item.id)= item.{{moduleTitleField}}
+        p(style='margin-top:-5px')
+          | Posted: #{moment(item.createdAt).format('MMM DD, YYYY')}

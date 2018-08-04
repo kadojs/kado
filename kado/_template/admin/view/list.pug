@@ -1,0 +1,28 @@
+extends /layout
+block content
+  .container-fluid
+    +tableHeader('{{moduleTitle}}','/{{moduleName}}/create','Create {{moduleItemName}}')
+    form(method='post', role='form')
+      table.table.table-striped
+        tr
+          th
+            input#toggle(type='checkbox')
+          {{#moduleFields}}
+            th {{fieldTitle}}
+          {{/moduleFields}}
+          th Active
+        each row,i in list
+          tr
+            td
+              input(type='checkbox', name='remove[]', value={{moduleIdField}})
+            td
+              a(href='/{{moduleUriName}}/edit?id=' + {{moduleIdField}})= {{moduleTitleField}}
+            {{#moduleFields}}
+              td=row.{{fieldName}}
+            {{/moduleFields}}
+            td
+              if(row.active)
+                span.glyphicon.glyphicon-check
+              else
+                span.glyphicon.glyphicon-remove
+      +tableFooter(page,count)

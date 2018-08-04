@@ -40,6 +40,7 @@
     "express-session": "^1.15.6",
     "glob": "^7.1.2",
     "graceful-fs": "^4.1.11",
+    "handlebars": "^4.0.11",
     "infant": "^1.0.0",
     "jquery": "^3.3.1",
     "jquery-ui": "^1.12.1",

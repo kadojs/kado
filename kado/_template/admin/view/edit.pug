@@ -1,0 +1,19 @@
+extends /layout
+block content
+  .container
+    h1 Update {{moduleItemName}}
+    form.form-horizontal(action='/{{moduleName}}/save', method='post', role='form')
+      input(type='hidden', name='id', value=item.id)
+      {{#moduleFields}}
+        .form-group
+          label.control-label.col-sm-2 {{fieldTitle}}
+          .col-sm-10
+            input.form-control(type='text', name='{{fieldName}}', placeholder='{{fieldTitle}}', value=item.{{fieldName}})
+      {{/moduleFields}}
+      .form-group
+        label.control-label.col-sm-2 Active
+        .col-sm-10
+          input(type='checkbox', name='active', checked=item.active)
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          button.btn.btn-success(type='submit') Save
