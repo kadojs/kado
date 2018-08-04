@@ -5,10 +5,10 @@ block content
     form.form-horizontal(action='/{{moduleName}}/save', method='post', role='form')
       input(type='hidden', name='id', value=item.id)
       {{#moduleFields}}
-        .form-group
-          label.control-label.col-sm-2 {{fieldTitle}}
-          .col-sm-10
-            input.form-control(type='text', name='{{fieldName}}', placeholder='{{fieldTitle}}', value=item.{{fieldName}})
+      .form-group
+        label.control-label.col-sm-2 {{fieldTitle}}
+        .col-sm-10
+          input.form-control(type='text', name='{{fieldName}}', placeholder='{{fieldTitle}}', value=item.{{fieldName}})
       {{/moduleFields}}
       .form-group
         label.control-label.col-sm-2 Active

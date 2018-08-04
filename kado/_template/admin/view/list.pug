@@ -8,7 +8,7 @@ block content
           th
             input#toggle(type='checkbox')
           {{#moduleFields}}
-            th {{fieldTitle}}
+          th {{fieldTitle}}
           {{/moduleFields}}
           th Active
         each row,i in list
@@ -18,7 +18,7 @@ block content
             td
               a(href='/{{moduleUriName}}/edit?id=' + {{moduleIdField}})= {{moduleTitleField}}
             {{#moduleFields}}
-              td=row.{{fieldName}}
+            td=row.{{fieldName}}
             {{/moduleFields}}
             td
               if(row.active)

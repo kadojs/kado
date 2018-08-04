@@ -26,7 +26,7 @@ program
       log.log('info','Creating {{moduleName}} entry')
       let doc = {
         {{#moduleFields}}
-          {{fieldName}}: opts.{{fieldName}},
+        {{fieldName}}: opts.{{fieldName}},
         {{/moduleFields}}
         active: true
       }
@@ -54,7 +54,7 @@ program
       .then(function(result){
         let doc = result
         {{#moduleFields}}
-          if(opts.{{fieldName}}) doc.{{fieldName}} = opts.{{fieldName}}
+        if(opts.{{fieldName}}) doc.{{fieldName}} = opts.{{fieldName}}
         {{/moduleFields}}
         return doc.save()
       })
@@ -91,7 +91,7 @@ program
       head: [
         'Id',
         {{#moduleFields}}
-          '{{fieldTitle}}',
+        '{{fieldTitle}}',
         {{/moduleFields}}
       ]
     })

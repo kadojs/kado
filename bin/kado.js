@@ -3,11 +3,20 @@
 const K = require('../index')
 const program = require('commander')
 const fs = require('fs')
+const mkdirp = require('mkdirp-then')
+const Mustache = require('mustache')
 const path = require('path')
+const readdir = require('recursive-readdir')
+const rmdir = require('rmdir-promise')
 
 const log = K.log
 
+//make some promises
+K.bluebird.promisifyAll(fs)
+
 program.version(K.config.version)
+
+
 program.command('dbsetup')
   .option('--dbsequelize','Enable sequelize connector')
   .option('--dbshost <string>','Set the sequelize database host')
@@ -51,6 +60,61 @@ program.command('dbsetup')
         process.exit()
       })
   })
+
+
+program.command('generate')
+  .option('--app <string>','Name of this application')
+  .option('--modconf <string>','Module config JSON file')
+  .option('--stomp','Remove the destination directory if it exists, DANGEROUS!')
+  .action(function(cmd){
+    let folder = process.cwd()
+    let modconfFile = folder + '/' + cmd.modconf
+    if(!modconfFile || !fs.existsSync(modconfFile)){
+      log.error('Must have module configuration JSON file, exiting')
+      process.exit(1)
+    }
+    let modconf = require(modconfFile)
+    let moduleFolder = path.resolve(folder + '/kado/' + modconf.moduleName)
+    let templateFolder = path.resolve(__dirname + '/../kado/_template')
+    let fileCount = 0
+    if(!cmd.app) cmd.app = 'myapp'
+    K.bluebird.try(function(){
+      let folderExists = fs.existsSync(moduleFolder)
+      if(folderExists && !cmd.stomp){
+        log.error('Module folder already exits')
+        process.exit(1)
+      } else if(folderExists && cmd.stomp){
+        log.info('Removing existing module folder')
+        return rmdir(moduleFolder)
+      } else {
+        log.info('Creating module folder')
+      }
+    })
+      .then(function(){
+        return readdir(templateFolder)
+      })
+      .each(function(file){
+        let relativePath = file.replace(templateFolder,'')
+        let template = fs.readFileSync(file,{encoding: 'utf-8'})
+        log.info('Rendering ' + modconf.moduleName + relativePath)
+        let result = Mustache.render(template,modconf)
+        let modulePath = path.resolve(moduleFolder + '/' + relativePath)
+        return mkdirp(path.dirname(modulePath))
+          .then(function(){
+            return fs.writeFileAsync(modulePath,result)
+          })
+          .then(function(){
+            fileCount++
+          })
+      })
+      .then(function(){
+        log.info('Created ' + fileCount + ' new files!')
+        log.info('Module generation complete! Please check: ' + moduleFolder)
+        process.exit()
+      })
+  })
+
+
 program.command('bootstrap')
   .option('--app <string>','Name of this application')
   .option('--enable-admin','Enable the admin interface')
@@ -72,7 +136,7 @@ program.command('bootstrap')
       console.log('ERROR app file already exits')
       process.exit(1)
     }
-    if(!cmd.appname) cmd.appname = 'myapp'
+    if(!cmd.app) cmd.app = 'myapp'
     if(cmd.enableAll){
       cmd.enableAdmin = true
       cmd.enableApi = true

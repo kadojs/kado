@@ -17,9 +17,9 @@ exports.findAll = function(req,res){
   let search = req.query.search || req.body.search || ''
   if(start < 0) start = 0
   {{moduleModelName}}.findAndCountAll({
-    where: sequelize.or(
-      {{{moduleTitleField}}: {like: '%' + search + '%'}}
-    ),
+    where: sequelize.or({
+      {{moduleTitleField}}: {like: '%' + search + '%'}
+    }),
     offset: start,
     limit: limit,
     order: ['{{moduleTitleField}}']
@@ -41,9 +41,9 @@ exports.findAll = function(req,res){
 exports.find = function(req,res){
   let search = req.query.search || req.body.search || ''
   {{moduleModelName}}.find({
-    where: sequelize.or(
-      {{{moduleTitleField}}: {like: '%' + search + '%'}}
-    ),
+    where: sequelize.or({
+      {{moduleTitleField}}: {like: '%' + search + '%'}
+    }),
     order: ['{{moduleTitleField}}']
   })
     .then(function(result){
@@ -66,7 +66,7 @@ exports.save = function(req,res){
     .then(function(result){
       if(!result) result = {{moduleModelName}}.build()
       {{#moduleFields}}
-        if(data.{{fieldName}}) result.{{fieldName}} = data.{{fieldName}}
+      if(data.{{fieldName}}) result.{{fieldName}} = data.{{fieldName}}
       {{/moduleFields}}
       if('undefined' === typeof data.active) result.active = false
       if(data.active) result.active = true

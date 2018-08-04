@@ -137,7 +137,11 @@ This format is somewhat self explanatory. However in detail:
 
 ## Changelog
 
-###
+### 2.1.0
+* Add module generator
+* Update dependencies
+
+### 2.0.4
 * Remove unused nav JSON structure from modules
 
 ### 2.0.3

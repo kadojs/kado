@@ -74,7 +74,7 @@ config.$load({
   name: 'kado',
   version: pkg.version,
   log: {
-    dateFormat: 'YYYY-MM-DD@HH:mm:ss.SSS'
+    dateFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
   },
   //database connectors
   db: {

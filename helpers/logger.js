@@ -2,8 +2,6 @@
 const winston = require('winston')
 const moment = require('moment')
 
-winston.remove(winston.transports.Console)
-
 
 /**
  * Setup logger
@@ -14,26 +12,22 @@ winston.remove(winston.transports.Console)
 exports.setupLogger = function(name,dateFormat){
   if(!name) name = 'kado'
   name = name.toUpperCase()
-  if(!dateFormat) dateFormat = 'YYYY-MM-DD@HH:mm:ss.SSS'
-  let logger = new winston.Logger({
-    exitOnError: false,
-    transports: [
-      new winston.transports.Console({
-        json: false,
-        prettyPrint: true,
-        timestamp: function(){
-          return moment().format(dateFormat)
-        },
-        formatter: function(err){
-          // Return string will be passed to logger.
-          return '[' + err.timestamp() + ']' + ' ' + name +
-            ' ' + err.level.toUpperCase() + ': ' + err.message + ' '
-        }
-      })
-    ]
+  if(!dateFormat) dateFormat = 'YYYY-MM-DD HH:mm:ss.SSS'
+  let formatLog = winston.format.printf(info => {
+    info.level = info.level.toUpperCase()
+    return `[${info.timestamp} ${info.label}] ${info.level}: ${info.message}`
   })
-  if('kado' === process.env.NODE_DEBUG){
-    logger.transports.console.level = 'debug'
-  }
-  return logger
+  let printLevel = 'kado' === process.env.NODE_DEBUG ? 'debug' : 'info'
+  let logTransport = new winston.transports.Console({level: printLevel})
+  return winston.createLogger({
+    exitOnError: false,
+    format: winston.format.combine(
+      winston.format.label({ label: name }),
+      winston.format.timestamp({
+        format: moment().format(dateFormat)
+      }),
+      formatLog
+    ),
+    transports: [logTransport]
+  })
 }
