@@ -137,6 +137,10 @@ This format is somewhat self explanatory. However in detail:
 
 ## Changelog
 
+### 2.2.0
+* Drop pug
+* Implement mustache templates
+
 ### 2.1.0
 * Add module generator
 * Update dependencies

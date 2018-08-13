@@ -1,0 +1,62 @@
+<nav class="navbar navbar-inverse sidebar" role="navigation">
+  <div class="sidebar-copyright">
+    &copy; {{currentYear}} <a href="https://www.kado.org">Kado</a>. Version {{version}}
+  </div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+        <span class="sr-only">Toggle Sidebar</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand">Navigation</a>
+    </div>
+    <div class="navbar-collapse collapse" id="bs-sidebar-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        {{#navGroups}}
+          {{#groupItems}}
+            <li class="{{groupDropdownClass}}">
+              <a class="dropdown-toggle" href="{{groupUri}}">
+                {{#groupIcon}}
+                  <b class="caret"></b>
+                  <span>{{groupName}}</span>
+                  <span class="pull-right hidden-xs showopacity glyphicon glyphicon-{{groupIcon}}">&nbsp;</span>
+                {{/groupIcon}}
+                {{^groupIcon}}
+                  <span>{{groupName}}</span>
+                {{/groupIcon}}
+              </a>
+              <ul class="dropdown-menu">
+                {{#navGroup}}
+                  <li class="{{navActiveClass}}">
+                    <a href="{{navUri}}">
+                      <span>{{navName}}</span>
+                      {{#navIcon}}
+                        <span class="pull-right hidden-xs showopacity glyphicon glypicon-{{navIcon}}">&nbsp;</span>
+                      {{/navIcon}}
+                    </a>
+                  </li>
+                {{/navGroup}}
+              </ul>
+            </li>
+          {{/groupItems}}
+          {{^groupItems}}
+            <li class="{{groupDropdownClass}}">
+              <a class="dropdown-toggle" href="{{groupUri}}">
+                {{#groupIcon}}
+                  <b class="caret"></b>
+                  <span>{{groupName}}</span>
+                  <span class="pull-right hidden-xs showopacity glyphicon glyphicon-{{groupIcon}}">&nbsp;</span>
+                {{/groupIcon}}
+                {{^groupIcon}}
+                  <span>{{groupName}}</span>
+                {{/groupIcon}}
+              </a>
+            </li>
+          {{/groupItems}}
+        {{/navGroups}}
+      </ul>
+    </div>
+  </div>
+</nav>

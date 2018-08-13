@@ -1,0 +1,27 @@
+<div>
+  <div class="pull-right">
+    <form class="form-inline" id="tableSearch" role="form" action="" method="get">
+      <div class="form-group">
+        <select class="form-control" id="tableLimit" title="limit" name="limit">
+          {{#limits}}
+            <option selected="{{limitSelected}}">{{limit}}</option>
+          {{/limits}}
+        </select>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="search" placeholder="Filter results" value="{{search}}" />
+        <button class="btn btn-primary" type="submit">
+          <span class="glyphicon glyphicon-search">&nbsp;</span>
+        </button>
+      </div>
+      {{#createUrl}}
+        <span>&nbsp;</span>
+        <a class="btn btn-success" href="{{createUrl}}">
+          <span class="glyphicon glyphicon-plus">&nbsp;</span>
+          <span>{{createLabel}}</span>
+        </a>
+      {{/createUrl}}
+    </form>
+  </div>
+  <h1>{{title}}</h1>
+</div>

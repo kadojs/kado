@@ -5,34 +5,22 @@ const interfaceName = 'admin'
 let worker = K.iface.worker(K,interfaceName,interfaceRoot)
 worker.enableSession(function(app){
   let flash = require('connect-flash')
-  let compileFile = require('pug').compileFile
   app.use(flash())
-  let viewFn = {}
   app.use(function(req,res,next){
     res.locals.flash = req.flash.bind(req)
-    req.flashPug = function(type,view,vars){
-      if(type && view){
-        if(-1 === Object.keys(viewFn).indexOf(view)){
-          viewFn[view] =
-            compileFile(app.get('views') + '/_alerts/' + view + '.pug',{})
-        }
-        return req.flash(type,viewFn[view](('object'===typeof vars)?vars:{}))
-      } else if(type){
-        return req.flash(type)
-      } else {
-        return req.flash()
-      }
-    }
     next()
   })
 })
 worker.enableHtml(function(app){
-  let serveStatic = require('serve-static')
+  const serveStatic = require('serve-static')
+  const mustacheExpress = require('mustache-express')
+  const path = require('path')
   //setup view engine
+  app.engine('mustache',mustacheExpress(null,'.html'))
   app.set('trust proxy',true)
-  app.locals.basedir = interfaceRoot + '/view'
-  app.set('views',interfaceRoot + '/view')
-  app.set('view engine','pug')
+  app.locals.basedir = path.resolve(interfaceRoot + '/view')
+  app.set('views',app.locals.basedir)
+  app.set('view engine','mustache')
   //static files
   app.use(serveStatic(interfaceRoot + '/public'))
 })

@@ -32,7 +32,6 @@ mixin tableFooter(page,count,actionText,actionClass)
     span #{page.start + 1} - #{page.end} of #{count} entries
     div
       button.btn#tableDelete(type='submit', class=actionClass)= actionText
-
 mixin tableMaintenanceFooter(page,count)
   div
     .pull-right.btn-group

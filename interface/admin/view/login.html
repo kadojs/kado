@@ -1,0 +1,12 @@
+{{>header}}
+<link type="text/css" rel="stylesheet" href="/css/login.css" />
+<div class="container login-container">
+  <h2>Login</h2>
+  {{#alert}}{{>alert}}{{/alert}}
+  <form class="form form-login" action="/login" method="post" role="form">
+    <input class="form-control" type="text" name="email" placeholder="Email Address" />
+    <input class="form-control" type="password" name="password" placeholder="Password" />
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+  </form>
+</div>
+{{>footer}}

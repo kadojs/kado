@@ -27,12 +27,14 @@ worker.enableSession(function(app){
   })
 })
 worker.enableHtml(function(app){
-  let serveStatic = require('serve-static')
+  const serveStatic = require('serve-static')
+  const mustacheExpress = require('mustache-express')
   //setup view engine
+  app.engine('mustache',mustacheExpress())
   app.set('trust proxy',true)
   app.locals.basedir = interfaceRoot + '/view'
   app.set('views',interfaceRoot + '/' + 'view')
-  app.set('view engine','pug')
+  app.set('view engine','mustache')
   //static files
   app.use(serveStatic(interfaceRoot + '/public'))
 })
