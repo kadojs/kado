@@ -15,7 +15,7 @@ module.exports = {
   'version': 'Versión',
   'welcome_to': 'Bienvenido a',
   'an_error_occurred': 'Se ha producido un error :(',
-  'remove': 'retirar',
+  'remove': 'Retirar',
   'login': 'Iniciar sesión',
   'sign_in': 'Registrarse',
   'toggle_nav': 'Alternar navegación',
