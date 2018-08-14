@@ -55,6 +55,7 @@
     "object-manage": "^1.0.0",
     "popper.js": "^1.14.4",
     "pretty-bytes": "^5.1.0",
+    "pug": "^2.0.3",
     "qs": "^6.5.2",
     "recursive-readdir": "^2.2.2",
     "rmdir-promise": "^1.0.0",

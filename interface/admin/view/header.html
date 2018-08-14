@@ -9,6 +9,10 @@
   <title>{{appTitle}} Admin Panel - Kado Version {{version}}</title>
 </head>
 <body>
-  {{#staff}}
-    {{>navbar}}
-  {{/staff}}
+{{#staff}}
+{{>sidebar}}
+<div class="main">
+  {{>navbar}}
+  <div class="main-content">
+    {{#alerts}}{{>alert}}{{/alerts}}
+{{/staff}}

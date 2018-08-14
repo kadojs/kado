@@ -12,15 +12,18 @@ worker.enableSession(function(app){
   })
 })
 worker.enableHtml(function(app){
-  const serveStatic = require('serve-static')
   const mustacheExpress = require('mustache-express')
+  const serveStatic = require('serve-static')
   const path = require('path')
-  //setup view engine
-  app.engine('mustache',mustacheExpress(null,'.html'))
+  //enable proxy senders
   app.set('trust proxy',true)
+  //setup view engine
   app.locals.basedir = path.resolve(interfaceRoot + '/view')
+  app.set('view engine','html')
   app.set('views',app.locals.basedir)
-  app.set('view engine','mustache')
+  app.set('partials',path.resolve(app.locals.basedir + '/partials'))
+  //app.enable('view cache')
+  app.engine('html',mustacheExpress())
   //static files
   app.use(serveStatic(interfaceRoot + '/public'))
 })

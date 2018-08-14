@@ -1,6 +1,6 @@
 <nav class="navbar navbar-inverse sidebar" role="navigation">
   <div class="sidebar-copyright">
-    &copy; {{currentYear}} <a href="https://www.kado.org">Kado</a>. Version {{version}}
+    &copy; {{currentYear}} <a href="https://www.kado.org" style="color: white;">Kado.</a> Version {{version}}
   </div>
   <div class="container-fluid">
     <div class="navbar-header">
@@ -14,48 +14,47 @@
     </div>
     <div class="navbar-collapse collapse" id="bs-sidebar-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        {{#navGroups}}
-          {{#groupItems}}
-            <li class="{{groupDropdownClass}}">
-              <a class="dropdown-toggle" href="{{groupUri}}">
-                {{#groupIcon}}
-                  <b class="caret"></b>
-                  <span>{{groupName}}</span>
-                  <span class="pull-right hidden-xs showopacity glyphicon glyphicon-{{groupIcon}}">&nbsp;</span>
-                {{/groupIcon}}
-                {{^groupIcon}}
-                  <span>{{groupName}}</span>
-                {{/groupIcon}}
-              </a>
-              <ul class="dropdown-menu">
-                {{#navGroup}}
-                  <li class="{{navActiveClass}}">
-                    <a href="{{navUri}}">
-                      <span>{{navName}}</span>
-                      {{#navIcon}}
-                        <span class="pull-right hidden-xs showopacity glyphicon glypicon-{{navIcon}}">&nbsp;</span>
-                      {{/navIcon}}
-                    </a>
-                  </li>
-                {{/navGroup}}
-              </ul>
-            </li>
-          {{/groupItems}}
-          {{^groupItems}}
-            <li class="{{groupDropdownClass}}">
-              <a class="dropdown-toggle" href="{{groupUri}}">
-                {{#groupIcon}}
-                  <b class="caret"></b>
-                  <span>{{groupName}}</span>
-                  <span class="pull-right hidden-xs showopacity glyphicon glyphicon-{{groupIcon}}">&nbsp;</span>
-                {{/groupIcon}}
-                {{^groupIcon}}
-                  <span>{{groupName}}</span>
-                {{/groupIcon}}
-              </a>
-            </li>
-          {{/groupItems}}
-        {{/navGroups}}
+        {{#nav.group}}
+          {{#nav.length}}
+          <li class="dropdown {{#isActive}}{{{uri}}},{{{currentUri}}}{{/isActive}}">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="{{{uri}}}">
+              {{#icon}}
+                <b class="caret"></b>
+                <span>{{name}}</span>
+                <span class="pull-right hidden-xs showopacity glyphicon glyphicon-{{icon}}">&nbsp;</span>
+              {{/icon}}
+              {{^icon}}
+                <span>{{name}}</span>
+              {{/icon}}
+            </a>
+            <ul class="dropdown-menu">
+              {{#nav}}
+              <li class="{{#isActive}}{{{uri}}},{{{currentUri}}}{{/isActive}}">
+                <a href="{{{uri}}}">
+                  <span>{{name}}</span>
+                  {{#icon}}
+                    <span class="pull-right hidden-xs showopacity glyphicon glyphicon-{{icon}}">&nbsp;</span>
+                  {{/icon}}
+                </a>
+              </li>
+              {{/nav}}
+            </ul>
+          </li>
+          {{/nav.length}}
+          {{^nav.length}}
+          <li class="{{groupDropdownClass}}">
+            <a href="{{{uri}}}">
+              {{#icon}}
+                <span>{{name}}</span>
+                <span class="pull-right hidden-xs showopacity glyphicon glyphicon-{{icon}}">&nbsp;</span>
+              {{/icon}}
+              {{^icon}}
+                <span>{{name}}</span>
+              {{/icon}}
+            </a>
+          </li>
+          {{/nav.length}}
+        {{/nav.group}}
       </ul>
     </div>
   </div>

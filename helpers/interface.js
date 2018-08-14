@@ -96,37 +96,36 @@ exports.worker = function(K,interfaceName,interfaceRoot){
    * Global template vars
    * @type {*}
    */
-  app.locals = {
-    pretty: true,
-    basedir: app.get('views'),
-    S: require('string'),
-    moment: require('moment'),
-    //moment no longer supports any method of getting the short timezone
-    timezone: ['(',')'].join(
-      (new Date()).toLocaleTimeString(
-        'en-US',{timeZoneName:'short'}
-      ).split(' ').pop()
-    ),
-    prettyBytes: require('pretty-bytes'),
-    appName: config.name,
-    appTitle: config.interface[interfaceName].title,
-    version: config.version,
-    /**
-     * Moment standard format
-     *  extend moment().format() so that this one place changes everywhere
-     *  truthiness is checked and a placeholder can be provided in emptyString
-     * @param {Date} d
-     * @param {string} emptyString
-     * @return {string}
-     */
-    momentStandardFormat: function(d,emptyString){
-      return (
-        d ? app.locals.moment(d).format('YYYY-MM-DD hh:mm:ssA')
-          : ('string' === typeof emptyString) ? emptyString : 'Never'
-      )
-    },
-    nav: app.nav
+  app.locals.pretty = true
+  app.locals.basedir = app.get('views')
+  app.locals.S = require('string')
+  app.locals.moment = require('moment')
+  //moment no longer supports any method of getting the short timezone
+  app.locals.timezone = ['(',')'].join(
+    (new Date()).toLocaleTimeString(
+      'en-US',{timeZoneName:'short'}
+    ).split(' ').pop()
+  )
+  app.locals.prettyBytes = require('pretty-bytes')
+  app.locals.appName = config.name
+  app.locals.appTitle = config.interface[interfaceName].title
+  app.locals.version = config.version
+  app.locals.currentYear = app.locals.moment().format('YYYY')
+  /**
+   * Moment standard format
+   *  extend moment().format() so that this one place changes everywhere
+   *  truthiness is checked and a placeholder can be provided in emptyString
+   * @param {Date} d
+   * @param {string} emptyString
+   * @return {string}
+   */
+  app.locals.momentStandardFormat = function(d,emptyString){
+    return (
+      d ? app.locals.moment(d).format('YYYY-MM-DD hh:mm:ssA')
+        : ('string' === typeof emptyString) ? emptyString : 'Never'
+    )
   }
+  app.locals.nav = app.nav
   //load middleware
   app.use(compress())
   app.use(bodyParser.urlencoded({extended: true}))
