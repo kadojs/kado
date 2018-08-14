@@ -8,15 +8,26 @@ $('#tableDelete').click(function(){
     return false
   }
 })
-$('#tableLimit').change(function(e){
-  e.preventDefault()
-  $('#tableSearch').submit()
-})
 $(document).ready(function(){
   $('[rel=tooltip]').tooltip()
 })
-$('#tableResolve').click(function(){
-  if(!confirm('Are you sure you want to resolve these items?')){
-    return false
-  }
+$(document).ready(function(){
+  $('#table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: window.location.href,
+    columns: function(){
+      let cols = []
+      $('#table th').each(function(i){
+        cols.push({
+          name: $(this).text(),
+          data: $(this).attr('data-name'),
+          target: i
+        })
+      })
+      console.log(cols)
+      return cols
+    }()
+  });
 })
+

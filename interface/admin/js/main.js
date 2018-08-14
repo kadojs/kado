@@ -12,6 +12,7 @@ var toWindow = function(name,val){
 
 //jquery
 var jQuery = require('jquery')
+
 toWindow('$',jQuery)
 toWindow('jQuery',jQuery)
 
@@ -20,6 +21,7 @@ require('bootstrap')
 require('bootstrap-select')
 require('chart.js')
 require('jquery-ui')
+require('datatables.net')(window,jQuery)
 
 //global dependencies
 toWindow('bootbox',require('bootbox'))

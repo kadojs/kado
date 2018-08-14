@@ -1,0 +1,114 @@
+'use strict';
+const K = require('./kado')
+
+
+/**
+ * Default code (ISO-659-2)
+ * @type {string}
+ */
+module.exports.default = 'eng'
+
+
+/**
+ * Default short code (ISO-659-1)
+ * @type {string}
+ */
+module.exports.defaultSC = 'en'
+
+
+/**
+ * Get supported ISO-659-1 codes
+ * @returns {any[]}
+ */
+module.exports.getSupportedSC = function(){
+  return Object.keys(this.pack)
+    .filter((v)=>{return v[0] !== '_'})
+    .map((v)=>{
+      if(this.pack[v]._pack_sc) return this.pack[v]._pack_sc
+      return v.split('').filter((x,i)=>{return i < 2}).join('')
+    })
+}
+
+/**
+ * Get a language pack by a loose locale name and then overlay defaults
+ * this will always return a full pack, it may be default if there is no
+ * requested pack
+ * @param {string} locale
+ * @return {{}}
+ */
+module.exports.getPack = function(locale){
+  const that = this
+  if(that.pack[locale]) return that.pack[locale]
+  let pack = that.pack[that.default]
+  for(let key in that.pack){
+    if(that.pack.hasOwnProperty(key)){
+      if(that.pack[key]._pack_sc === locale) pack = that.pack[key]
+    }
+  }
+  //now open the default pack and fill any missing values
+  for(let key in that.pack[that.default]){
+    if(that.pack[that.default].hasOwnProperty(key)){
+      if(!pack[key]) pack[key] = that.pack[that.default][key]
+    }
+  }
+  return pack
+}
+
+
+/**
+ * Store language packs
+ * @type {{}}
+ */
+module.exports.pack = {}
+
+
+/**
+ * Scan language packs
+ * @returns {*}
+ */
+module.exports.scan = function(){
+  const that = this
+  const glob = require('glob')
+  const path = require('path')
+  let defaultLangGlob = process.env.KADO_LANG + '/*.js'
+  let defaultModuleLangGlob = process.env.KADO_MODULES + '/**/lang/*.js'
+  let localModuleLangGlob = process.env.KADO_USER_MODULES + '/**/lang/*.js'
+  let localLangGlob = process.env.KADO_USER_LANG + '/*.js'
+  let loadLanguage = function(file){
+    let name = path.basename(file,'.js')
+    let pack = require(file)
+    if(!that.pack[name]) that.pack[name] = {}
+    for(let key in pack){
+      if(pack.hasOwnProperty(key)){
+        that.pack[name][key] = pack[key]
+      }
+    }
+    K.log.debug(that.pack[name]._pack_name +
+      ' v' + that.pack[name]._pack_version + ' language pack loaded')
+  }
+  let loadModuleLanguage = function(file){
+    let name = path.basename(file,'.js')
+    let module = path.basename(path.dirname(path.dirname(file)))
+    let pack = require(file)
+    if(!that.pack[name]) that.pack[name] = {}
+    if(!that.pack[name][module]) that.pack[name][module] = {}
+    for(let key in pack){
+      if(pack.hasOwnProperty(key)){
+        that.pack[name][module][key] = pack[key]
+      }
+    }
+    K.log.debug(pack._module_name + ' language pack loaded')
+  }
+  let doScan = function(pattern,handler){
+    return glob.sync(pattern)
+     .forEach(handler)
+  }
+  //scan lang packs
+  K.log.debug('Scanning language packs')
+  doScan(defaultLangGlob,loadLanguage)
+  doScan(defaultModuleLangGlob,loadModuleLanguage)
+  doScan(localModuleLangGlob,loadModuleLanguage)
+  doScan(localLangGlob,loadLanguage)
+  K.log.debug('Found ' + Object.keys(that.pack).length +
+    ' language(s)')
+}

@@ -1,0 +1,30 @@
+{{>header}}
+    <div class="container-fluid">
+      {{>tableHeader}}
+      <form method="post" role="form">
+        <table id="table">
+          <thead>
+          <tr>
+            <th data-name="title">Title</th>
+            <th data-name="createdAt">Created</th>
+            <th data-name="updatedAt">Modified</th>
+            <th data-name="active">Active</th>
+          </tr>
+          </thead>
+          <tbody>
+          {{#list}}
+          <tr>
+            <td><a href="/blog/edit?id={{id}}">{{title}}</a></td>
+            <td>{{#_toDateString}}{{createdAt}}{{/_toDateString}}</td>
+            <td>{{#_toDateString}}{{updatedAt}}{{/_toDateString}}</td>
+            <td>
+              <span class="glyphicon glyphicon-{{#_isActive}}{{active}},check,remove{{/_isActive}}">&nbsp;</span>
+            </td>
+          </tr>
+          {{/list}}
+          </tbody>
+        </table>
+        {{>tableFooter}}
+      </form>
+    </div>
+{{>footer}}

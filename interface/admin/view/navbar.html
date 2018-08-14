@@ -2,12 +2,12 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <button class="navbar-toggle" data-toggle="collapse" data-target="#bs-toolbar-navbar-collapse-1">
-          <span class="sr-only">Toggle Nav</span>
+          <span class="sr-only">{{_l.toggle_nav}}</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">{{appTitle}}</a>
+        <a class="navbar-brand" href="/">{{_appTitle}}</a>
       </div>
       <div class="navbar-collapse collapse" id="bs-toolbar-navbar-collapse-1">
         <form class="navbar-form navbar-left" role="search" method="get" action="/search">
@@ -26,22 +26,22 @@
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="/staff/list">List Staff</a></li>
+              <li><a href="/staff/list">{{_l.list}} {{_l.staff}}</a></li>
             </ul>
           </li>
           <li>
             <a href="/setting/list">
               <span class="glyphicon glyphicon-wrench">&nbsp;</span>
-              <span>Settings</span>
+              <span>{{_l.settings}}</span>
             </a>
           </li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown">
-              {{staff.email}}
+              {{_staff.email}}
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="/logout">Logout</a></li>
+              <li><a href="/logout">{{_l.logout}}</a></li>
             </ul>
           </li>
         </ul>

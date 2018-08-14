@@ -1,22 +1,22 @@
 <nav class="navbar navbar-inverse sidebar" role="navigation">
   <div class="sidebar-copyright">
-    &copy; {{currentYear}} <a href="https://www.kado.org" style="color: white;">Kado.</a> Version {{version}}
+    &copy; {{_currentYear}} <a href="https://www.kado.org" style="color: white;">{{_l.kado}}.</a> {{_l.version}} {{_version}}
   </div>
   <div class="container-fluid">
     <div class="navbar-header">
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
-        <span class="sr-only">Toggle Sidebar</span>
+        <span class="sr-only">{{_l.toggle_sidebar}}</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand">Navigation</a>
+      <a class="navbar-brand">{{_l.navigation}}</a>
     </div>
     <div class="navbar-collapse collapse" id="bs-sidebar-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        {{#nav.group}}
+        {{#_nav.group}}
           {{#nav.length}}
-          <li class="dropdown {{#isActive}}{{{uri}}},{{{currentUri}}}{{/isActive}}">
+          <li class="dropdown {{#checkActive}}{{{uri}}},{{{currentUri}}}{{/checkActive}}">
             <a class="dropdown-toggle" data-toggle="dropdown" href="{{{uri}}}">
               {{#icon}}
                 <b class="caret"></b>
@@ -29,7 +29,7 @@
             </a>
             <ul class="dropdown-menu">
               {{#nav}}
-              <li class="{{#isActive}}{{{uri}}},{{{currentUri}}}{{/isActive}}">
+              <li class="{{#checkActive}}{{{uri}}},{{{currentUri}}}{{/checkActive}}">
                 <a href="{{{uri}}}">
                   <span>{{name}}</span>
                   {{#icon}}
@@ -42,7 +42,7 @@
           </li>
           {{/nav.length}}
           {{^nav.length}}
-          <li class="{{groupDropdownClass}}">
+          <li class="{{#checkActive}}{{{uri}}},{{{currentUri}}}{{/checkActive}}">
             <a href="{{{uri}}}">
               {{#icon}}
                 <span>{{name}}</span>
@@ -54,7 +54,7 @@
             </a>
           </li>
           {{/nav.length}}
-        {{/nav.group}}
+        {{/_nav.group}}
       </ul>
     </div>
   </div>

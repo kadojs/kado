@@ -54,6 +54,13 @@ process.env.KADO_INTERFACES = path.resolve(process.env.KADO_ROOT + '/interface')
 
 
 /**
+ * Kado Lang Path
+ * @type {string}
+ */
+process.env.KADO_LANG = path.resolve(process.env.KADO_ROOT + '/lang')
+
+
+/**
  * Kado Plugins Path
  * @type {string}
  */
@@ -66,6 +73,14 @@ process.env.KADO_MODULES = path.resolve(process.env.KADO_ROOT + '/kado')
  */
 process.env.KADO_USER_MODULES = path.resolve(
   path.dirname(path.dirname(process.env.KADO_ROOT)) + '/kado')
+
+
+/**
+ * Kado User Lang Path
+ * @type {string}
+ */
+process.env.KADO_USER_LANG = path.resolve(
+  path.dirname(path.dirname(process.env.KADO_ROOT)) + '/lang')
 
 
 //dist config schema
@@ -103,7 +118,7 @@ config.$load({
   interface: {
     admin: {
       enabled: false,
-      title: 'Admin',
+      title: 'Kado Admin',
       transport: ['http'],
       path: path.resolve(process.env.KADO_INTERFACES + '/admin'),
       port: 3000,
@@ -120,7 +135,7 @@ config.$load({
     },
     api: {
       enabled: false,
-      title: 'API',
+      title: 'Kado API',
       transport: ['http'],
       path: path.resolve(process.env.KADO_INTERFACES + '/api'),
       port: 3001,
@@ -137,13 +152,13 @@ config.$load({
     },
     cli: {
       enabled: true,
-      title: 'CLI',
+      title: 'Kado CLI',
       transport: ['tty','system'],
       path: path.resolve(process.env.KADO_INTERFACES + '/bin')
     },
     main: {
       enabled: false,
-      title: 'Main',
+      title: 'Kado Main',
       transport: ['http'],
       path: path.resolve(process.env.KADO_INTERFACES + '/main'),
       port: 3002,
@@ -202,6 +217,13 @@ exports.lifecycle = lifecycle
 
 
 /**
+ * Sequelize datatables helper
+ * @type {object}
+ */
+exports.datatable = require('sequelize-datatable')
+
+
+/**
  * Panel list helper
  * @type {object}
  */
@@ -213,6 +235,21 @@ exports.list = require('./list')
  * @type {*|ObjectManage}
  */
 exports.ObjectManage = ObjectManage
+
+/**
+ * Moment standard format
+ *  extend moment().format() so that this one place changes everywhere
+ *  truthfulness is checked and a placeholder can be provided in emptyString
+ * @param {Date} d
+ * @param {string} emptyString
+ * @return {string}
+ */
+exports.printDate = function(d,emptyString){
+  return (
+    d ? moment(d).format('YYYY-MM-DD hh:mm:ssA')
+      : ('string' === typeof emptyString) ? emptyString : 'Never'
+  )
+}
 
 
 /**
@@ -354,6 +391,13 @@ exports.interfaces = {}
  * @type {object}
  */
 exports.modules = {}
+
+
+/**
+ * Language pack structures
+ * @type {*|ObjectManage}
+ */
+exports.lang = require('./lang')
 
 
 /**
@@ -504,6 +548,7 @@ exports.init = function(cb){
             {
               fork: {
                 env: {
+                  NODE_DEBUG: process.env.NODE_DEBUG,
                   KADO_CONFIG_STRING: JSON.stringify(config.$strip())
                 }
               }

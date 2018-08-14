@@ -5,14 +5,14 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <link rel="stylesheet" type="text/css" href="/main.css" />
-  <script type="text/javascript" src="/bundle/bundle.min.js"></script>
-  <title>{{appTitle}} Admin Panel - Kado Version {{version}}</title>
+  <script type="text/javascript" src="/bundle/bundle.js"></script>
+  <title>{{_appTitle}} {{_l.admin_panel}} - {{_l.kado}} {{_l.version}} {{_version}}</title>
 </head>
 <body>
-{{#staff}}
+{{#_staff}}
 {{>sidebar}}
 <div class="main">
   {{>navbar}}
   <div class="main-content">
-    {{#alerts}}{{>alert}}{{/alerts}}
-{{/staff}}
+    {{>alert}}
+{{/_staff}}

@@ -1,6 +1,6 @@
 'use strict';
 
-let isActive = function(){
+let checkActive = function(){
   return function(text,render){
     let val = render(text)
     let parts = val.split(',')
@@ -31,7 +31,7 @@ Nav.prototype.addGroup = function(uri,name,icon){
     uri: uri,
     name: name,
     icon: icon,
-    isActive: isActive,
+    checkActive: checkActive,
     nav: this.nav[name]
   })
 }
@@ -50,7 +50,7 @@ Nav.prototype.addItem = function(group,uri,name,icon){
     uri: uri,
     name: name,
     icon: icon,
-    isActive: isActive
+    checkActive: checkActive
   })
 }
 

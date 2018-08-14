@@ -7,14 +7,25 @@ worker.enableSession(function(app){
   let flash = require('connect-flash')
   app.use(flash())
   app.use(function(req,res,next){
-    res.locals.flash = req.flash.bind(req)
+    res.locals.flash = worker.flashHandler(req)
     next()
   })
+})
+worker.setupLang(function(){
+  //activate lang pack
+  K.log.debug(Object.keys(K.lang.pack).length +
+    ' ' + interfaceName + ' language packs activated')
 })
 worker.enableHtml(function(app){
   const mustacheExpress = require('mustache-express')
   const serveStatic = require('serve-static')
   const path = require('path')
+  //setup script servers
+  worker.setupScriptServer('bootstrap')
+  worker.setupScriptServer('bootstrap-select')
+  worker.setupScriptServer('datatables.net')
+  worker.setupScriptServer('datatables.net-dt')
+  worker.setupScriptServer('ladda')
   //enable proxy senders
   app.set('trust proxy',true)
   //setup view engine
@@ -52,9 +63,9 @@ worker.setup(function(app){
                   if(true !== authValid){
                     return reject(invalidLoginError)
                   }
-                  let session = new K.ObjectManage(req.session.staff || {})
+                  let session = new K.ObjectManage(req.session._staff || {})
                   session.$load(sessionValues)
-                  req.session.staff = session.$strip()
+                  req.session._staff = session.$strip()
                   resolve()
                 }
               )
@@ -84,16 +95,18 @@ worker.setup(function(app){
   })
   app.get('/logout',function(req,res){
     req.session.destroy()
-    delete res.locals.staff
+    delete res.locals._staff
     res.redirect(301,'/login')
   })
   //auth protection
   app.use(function(req,res,next){
     //private
-    if(!req.session.staff && req.url.indexOf('/login') < 0){
+    if(!req.session._staff && req.url.indexOf('/login') < 0){
       res.redirect('/login')
-    } else if(req.session.staff){
-      res.locals.staff = req.session.staff
+    } else if(req.session._staff){
+      res.locals._staff = req.session._staff
+      if(res.locals && res.locals._staff) delete res.locals._staff.password
+      if(app.locals && app.locals._staff) delete app.locals._staff.password
       next()
     } else {
       next()

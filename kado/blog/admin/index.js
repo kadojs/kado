@@ -12,6 +12,22 @@ const Blog = sequelize.models.Blog
  * @param {object} res
  */
 exports.list = function(req,res){
+  if(!req.query.length){
+    res.render(__dirname + '/view/list',{
+      tableCreateUri: '/blog/create',
+      tableCreateLabel: 'Create Blog',
+      tableTitle: 'Blog List'
+    })
+  } else {
+    K.datatable(Blog,req.query)
+      .then(function(result){
+        res.json(result)
+      })
+      .catch(function(err){
+        res.json({error: err.message})
+      })
+  }
+  /*
   let limit = +req.query.limit || 20
   let start = +req.query.start || 0
   let search = req.query.search || ''
@@ -35,7 +51,7 @@ exports.list = function(req,res){
     })
     .catch(function(err){
       res.render('error',{error: err})
-    })
+    })*/
 }
 
 

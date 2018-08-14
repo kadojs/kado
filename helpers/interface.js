@@ -24,6 +24,7 @@ exports.master = function(K,interfaceName,interfaceRoot){
         count: config.interface.admin.workers.count,
         maxConnections: config.interface.admin.workers.maxConnections,
         env: {
+          NODE_DEBUG: process.env.NODE_DEBUG,
           KADO_CONFIG: JSON.stringify(config.$strip())
         }
       }
@@ -62,70 +63,50 @@ exports.worker = function(K,interfaceName,interfaceRoot){
   const express = require('express')
   const expressSession = require('express-session')
   const http = require('http')
+  const locale = require('locale')
   const path = require('path')
   const serveStatic = require('serve-static')
   const SessionStore = require('connect-redis')(expressSession)
-  //staff space helpers
   const Nav = require('../helpers/Nav')
   //interface context
   let app = that.app = express()
   let server = that.server = http.createServer(app)
   //make some promises
   P.promisifyAll(server)
-
-
-  /**
-   * Navigation helper
-   * @type {Nav|exports|module.exports}
-   */
+  //navigation system
   app.nav = new Nav()
-
-
-  /**
-   * Moment standard format
-   *  extend moment().format() so that this one place changes everywhere
-   *  truthfulness is checked and a placeholder can be provided in emptyString
-   * @param {Date} d
-   * @param {string} emptyString
-   * @return {string}
-   */
-  app.locals.momentStandardFormat = K.printDate
-
-
   /**
    * Global template vars
    * @type {*}
    */
-  app.locals.pretty = true
-  app.locals.basedir = app.get('views')
-  app.locals.S = require('string')
-  app.locals.moment = require('moment')
+  app.locals._basedir = app.get('views')
+  app.locals._S = require('string')
+  app.locals._moment = require('moment')
+  app.locals._printDate = K.printDate
   //moment no longer supports any method of getting the short timezone
-  app.locals.timezone = ['(',')'].join(
+  app.locals._timezone = ['(',')'].join(
     (new Date()).toLocaleTimeString(
       'en-US',{timeZoneName:'short'}
     ).split(' ').pop()
   )
-  app.locals.prettyBytes = require('pretty-bytes')
-  app.locals.appName = config.name
-  app.locals.appTitle = config.interface[interfaceName].title
-  app.locals.version = config.version
-  app.locals.currentYear = app.locals.moment().format('YYYY')
-  /**
-   * Moment standard format
-   *  extend moment().format() so that this one place changes everywhere
-   *  truthiness is checked and a placeholder can be provided in emptyString
-   * @param {Date} d
-   * @param {string} emptyString
-   * @return {string}
-   */
-  app.locals.momentStandardFormat = function(d,emptyString){
-    return (
-      d ? app.locals.moment(d).format('YYYY-MM-DD hh:mm:ssA')
-        : ('string' === typeof emptyString) ? emptyString : 'Never'
-    )
+  app.locals._toDateString = function(){
+    return function(text,render){
+      return K.printDate(new Date(render(text)))
+    }
   }
-  app.locals.nav = app.nav
+  app.locals._isActive = function(){
+    return function(text,render){
+      let parts = render(text).split(',')
+      if(parts.length !== 3) throw new Error('Failed parsing isActive')
+      return !!parts[0] ? parts[1] : parts[2]
+    }
+  }
+  app.locals._prettyBytes = require('pretty-bytes')
+  app.locals._appName = config.name
+  app.locals._appTitle = config.interface[interfaceName].title
+  app.locals._version = config.version
+  app.locals._currentYear = app.locals._moment().format('YYYY')
+  app.locals._nav = app.nav
   //load middleware
   app.use(compress())
   app.use(bodyParser.urlencoded({extended: true}))
@@ -135,7 +116,22 @@ exports.worker = function(K,interfaceName,interfaceRoot){
     res.locals.currentUri = req.originalUrl
     next()
   })
-  // development only
+  that.setupLang = function(cb){
+    //setup language support
+    K.lang.scan() //this happens sync no way around it
+    app.use(locale(K.lang.getSupportedSC(),K.lang.defaultSC))
+    app.use(function(req,res,next){
+      if(req.query.lang){
+        if(req.session) req.session.lang = req.query.lang
+      }
+      if(req.session && req.session.lang) req.locale = req.session.lang
+      //actually finally load the pack
+      res.locals._l = K.lang.getPack(req.locale)
+      next()
+    })
+    if('function' === typeof(cb)) return cb(app)
+  }
+  // setup local js servers
   that.setupScriptServer = function(name,scriptPath){
     if(!scriptPath) scriptPath = name
     //try for a local path first and then a system path as a backup
@@ -151,14 +147,39 @@ exports.worker = function(K,interfaceName,interfaceRoot){
     }
     app.use('/node_modules/' + name,serveStatic(ourScriptPath))
   }
+  //flash handler
+  that.flashHandler = function(req){
+    return function(){
+      return function(text){
+        let parts = text.split(',')
+        if(parts.length > 2) throw new Error('Failure to parse alert template')
+        let level = parts[0],tpl = parts[1],out = ''
+        let messages = req.flash(level)
+        if(messages && messages.length){
+          messages.forEach(function(message){
+            if(message && message.message && message.href){
+              message = message.message +
+                '&nbsp; [<a href="' + message.href + '">' +
+                (message.name || message.id || 'Click') + '</a>]'
+            }
+            else if(message && message.message){
+              message = message.message
+            }
+            let msg = '      ' + tpl
+            msg = msg.replace('{{level}}',level)
+            msg = msg.replace('{{alert}}',message)
+            out = out + msg
+          })
+        }
+        return out
+      }
+    }
+  }
   that.enableHtml = function(callback){
     if(!callback) callback = function(){}
     //npm installed scripts
     //DEFINE external public script packages here, then access them by using
     // /script/<name> such as /script/bootstrap/dist/bootstrap.min.js
-    that.setupScriptServer('bootstrap')
-    that.setupScriptServer('bootstrap-select')
-    that.setupScriptServer('ladda')
     callback(app)
   }
 
