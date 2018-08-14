@@ -38,17 +38,34 @@ module.exports.getSupportedSC = function(){
  */
 module.exports.getPack = function(locale){
   const that = this
-  if(that.pack[locale]) return that.pack[locale]
-  let pack = that.pack[that.default]
+  let pack = {}
+  //check for objects when falling through defaults
+  function isObject(val) {
+    if (val === null) { return false;}
+    return ( (typeof val === 'function') || (typeof val === 'object') );
+  }
+  //assign the pack based on locale
   for(let key in that.pack){
     if(that.pack.hasOwnProperty(key)){
-      if(that.pack[key]._pack_sc === locale) pack = that.pack[key]
+      if(that.pack[key]._pack_sc === locale || key === locale){
+        pack = that.pack[key]
+      }
     }
   }
   //now open the default pack and fill any missing values
   for(let key in that.pack[that.default]){
     if(that.pack[that.default].hasOwnProperty(key)){
-      if(!pack[key]) pack[key] = that.pack[that.default][key]
+      let ourPack = that.pack[that.default][key]
+      if(isObject(ourPack)){
+        for(let key2 in ourPack){
+          if(ourPack.hasOwnProperty(key2)){
+            let subPack = ourPack[key2]
+            if(!pack[key][key2]) pack[key][key2] = subPack
+          }
+        }
+      } else if(!pack[key]){
+        pack[key] = that.pack[that.default][key]
+      }
     }
   }
   return pack
@@ -95,6 +112,7 @@ module.exports.scan = function(){
     for(let key in pack){
       if(pack.hasOwnProperty(key)){
         that.pack[name][module][key] = pack[key]
+        console.log(name,module,key,pack[key])
       }
     }
     K.log.debug(pack._module_name + ' language pack loaded')
