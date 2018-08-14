@@ -2,6 +2,7 @@
 @import url('/node_modules/bootstrap/dist/css/bootstrap-theme.min.css');
 @import url('/node_modules/bootstrap-select/dist/css/bootstrap-select.min.css');
 @import url('/node_modules/datatables.net-dt/css/jquery.dataTables.min.css');
+@import url('/node_modules/datatables.net-bs/css/dataTables.bootstrap.min.css');
 @import url('/node_modules/ladda/dist/ladda-themeless.min.css');
 @import url('/css/sidebar.css');
 @import url('/css/layout.css');

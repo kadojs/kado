@@ -19,7 +19,7 @@
     "node": ">=4"
   },
   "bin": "bin/kado.js",
-  "main": "index.js",
+  "main": "./app.js",
   "dependencies": {
     "bcrypt": "^3.0.0",
     "bluebird": "^3.5.1",
@@ -36,6 +36,7 @@
     "connect-redis": "^3.3.3",
     "cookie-parser": "^1.4.3",
     "datatables.net": "^1.10.19",
+    "datatables.net-bs": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "debug": "^3.1.0",
     "express": "^4.16.3",
@@ -75,12 +76,13 @@
     "postinstall": "browserify interface/admin/js/main.js -o interface/admin/public/bundle/bundle.js && uglifyjs interface/admin/public/bundle/bundle.js --source-map -o interface/admin/public/bundle/bundle.min.js && browserify interface/main/js/main.js -o interface/main/public/bundle/bundle.js && uglifyjs interface/main/public/bundle/bundle.js --source-map -o interface/main/public/bundle/bundle.min.js",
     "bundle": "npm run postinstall",
     "bootstrap": "node ./node_modules/kado/bin/kado bootstrap",
-    "start": "node app",
+    "start": "nodemon --config nodemon.json app.js",
     "test": "node ./node_modules/mocha/bin/mocha ./test/*.test.js"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
+    "nodemon": "^1.18.3",
     "request": "^2.87.0"
   }
 }

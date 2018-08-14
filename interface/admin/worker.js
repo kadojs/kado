@@ -25,6 +25,7 @@ worker.enableHtml(function(app){
   worker.setupScriptServer('bootstrap-select')
   worker.setupScriptServer('datatables.net')
   worker.setupScriptServer('datatables.net-dt')
+  worker.setupScriptServer('datatables.net-bs')
   worker.setupScriptServer('ladda')
   //enable proxy senders
   app.set('trust proxy',true)
