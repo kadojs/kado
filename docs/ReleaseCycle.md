@@ -13,5 +13,3 @@ Kado will be released on the following release cycle:
 * Minor versions will be released in the summer (Jun - Aug)
 * Security versions will target quarter ends (Mar,Jun,Sep,Dec)
 * Fix versions will target quarter ends (Mar,Jun,Sep,Dec)
-
-

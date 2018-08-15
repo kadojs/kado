@@ -13,8 +13,8 @@ Our goal is to be flexible in how we interact with existing and new systems.
 
 While modules are not required to expose an API it is encouraged that they do.
 
-Kado makes this simple by implementing an identical structure to what is used
-to manage web interfaces.
+Kado makes this simple by implementing an API within admin routes method to cut
+down on duplicate route methods.
 
 ## API Users
 
