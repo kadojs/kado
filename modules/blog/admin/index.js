@@ -1,6 +1,5 @@
 'use strict';
 const K = require('../../../index')
-const list = K.list
 const sequelize = K.db.sequelize
 
 const Blog = sequelize.models.Blog
@@ -27,31 +26,6 @@ exports.list = function(req,res){
         res.json({error: err.message})
       })
   }
-  /*
-  let limit = +req.query.limit || 20
-  let start = +req.query.start || 0
-  let search = req.query.search || ''
-  if(start < 0) start = 0
-  Blog.findAndCountAll({
-    where: sequelize.or(
-      {title: {like: '%' + search + '%'}}
-    ),
-    offset: start,
-    limit: limit,
-    order: ['title']
-  })
-    .then(function(result){
-      res.render(__dirname + '/view/list',{
-        page: list.pagination(start,result.count,limit),
-        count: result.count,
-        search: search,
-        limit: limit,
-        list: result.rows
-      })
-    })
-    .catch(function(err){
-      res.render('error',{error: err})
-    })*/
 }
 
 
@@ -90,6 +64,7 @@ exports.edit = function(req,res){
 exports.save = function(req,res){
   let data = req.body
   let isNew = false
+  let json = K.isClientJSON(req)
   Blog.findOne({where: {id: data.id}})
     .then(function(blog){
       if(!blog){
@@ -103,64 +78,23 @@ exports.save = function(req,res){
       return blog.save()
     })
     .then(function(blog){
-      req.flash('success',{
-        message: 'Blog entry ' + (isNew ? 'created' : 'saved'),
-        href: '/blog/edit?id=' + blog.id,
-        name: blog.id
-      })
-      res.redirect('/blog/list')
+      if(json){
+        res.json({blog: blog})
+      } else {
+        req.flash('success',{
+          message: 'Blog entry ' + (isNew ? 'created' : 'saved'),
+          href: '/blog/edit?id=' + blog.id,
+          name: blog.id
+        })
+        res.redirect('/blog/list')
+      }
     })
     .catch(function(err){
-      res.render('error',{error: err})
-    })
-}
-
-
-/**
- * Find blogs
- * @param {object} req
- * @param {object} res
- */
-exports.findAll = function(req,res){
-  let limit = +req.query.limit || req.body.limit || 20
-  let start = +req.query.start || req.body.start || 0
-  let search = req.query.search || req.body.search || ''
-  if(start < 0) start = 0
-  Blog.findAndCountAll({
-    where: sequelize.or(
-      {title: {like: '%' + search + '%'}}
-    ),
-    offset: start,
-    limit: limit,
-    order: ['title']
-  })
-    .then(function(result){
-      res.json(result)
-    })
-    .catch(function(err){
-      res.render('error',{error: err})
-    })
-}
-
-
-/**
- * Find a blog
- * @param {object} req
- * @param {object} res
- */
-exports.find = function(req,res){
-  let search = req.query.search || req.body.search || ''
-  Blog.find({
-    where: sequelize.or(
-      {title: {like: '%' + search + '%'}}
-    ),
-    order: ['title']
-  })
-    .then(function(result){
-      res.json(result)
-    })
-    .catch(function(err){
-      res.render('error',{error: err})
+      if(json){
+        res.json({error: err.message})
+      } else {
+        res.render('error',{error: err})
+      }
     })
 }
 
@@ -174,7 +108,7 @@ exports.remove = function(req,res){
   let json = K.isClientJSON(req)
   if(req.query.id) req.body.remove = req.query.id.split(',')
   if(!(req.body.remove instanceof Array)) req.body.remove = [req.body.remove]
-  list.remove(Blog,req.body.remove)
+  K.modelRemoveById(Blog,req.body.remove)
     .then(function(){
       if(json){
         res.json({success: 'Blog removed'})

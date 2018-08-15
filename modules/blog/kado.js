@@ -43,8 +43,6 @@ exports.admin = function(K,app){
     res.redirect(301,'/blog/list')
   })
   app.get('/blog/list',admin.list)
-  app.get('/blog/find',admin.find)
-  app.get('/blog/findAll',admin.findAll)
   app.get('/blog/create',admin.create)
   app.get('/blog/edit',admin.edit)
   app.post('/blog/save',admin.save)

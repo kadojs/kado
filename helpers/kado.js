@@ -217,10 +217,24 @@ exports.datatable = require('sequelize-datatable')
 
 
 /**
- * Panel list helper
+ * Remove from model by array of ids
  * @type {object}
  */
-exports.list = require('./list')
+exports.modelRemoveById = function(Model,items){
+  const validator = require('validator')
+  return P.try(function(){
+    if(!(items instanceof Array))
+      throw new Error('Invalid data passed for record removal')
+    let promises = []
+    let i = items.length - 1
+    for(; i >= 0; i--){
+      if(validator.isNumeric('' + items[i])){
+        promises.push(Model.destroy({where: {id: items[i]}}))
+      }
+    }
+    return P.all(promises)
+  })
+}
 
 
 /**
