@@ -193,6 +193,16 @@ exports.infant = infant
 
 
 /**
+ * Determine if an incoming reuqest is JSON
+ * @param {object} req
+ * @return {bool}
+ */
+exports.isClientJSON = function(req){
+  return (req.query.json || req.get('accept').match('application/json'))
+}
+
+
+/**
  * Export lifecycle object
  * @type {object}
  */

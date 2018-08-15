@@ -89,9 +89,13 @@ exports.edit = function(req,res){
  */
 exports.save = function(req,res){
   let data = req.body
+  let isNew = false
   Blog.findOne({where: {id: data.id}})
     .then(function(blog){
-      if(!blog) blog = Blog.build()
+      if(!blog){
+        isNew = true
+        blog = Blog.build()
+      }
       if(data.title) blog.title = data.title
       if(data.content) blog.content = data.content
       if('undefined' === typeof data.active) blog.active = false
@@ -99,14 +103,11 @@ exports.save = function(req,res){
       return blog.save()
     })
     .then(function(blog){
-      let alert = {
-        subject: 'Blog entry',
+      req.flash('success',{
+        message: 'Blog entry ' + (isNew ? 'created' : 'saved'),
         href: '/blog/edit?id=' + blog.id,
-        id: blog.id
-      }
-      alert.action = 'saved'
-      req.flashPug('success','subject-id-action',alert)
-      res.setHeader('blogid',blog.id)
+        name: blog.id
+      })
       res.redirect('/blog/list')
     })
     .catch(function(err){
@@ -170,12 +171,23 @@ exports.find = function(req,res){
  * @param {object} res
  */
 exports.remove = function(req,res){
+  let json = K.isClientJSON(req)
+  if(req.query.id) req.body.remove = req.query.id.split(',')
   if(!(req.body.remove instanceof Array)) req.body.remove = [req.body.remove]
   list.remove(Blog,req.body.remove)
     .then(function(){
-      res.json({success: 'Blog removed successfully'})
+      if(json){
+        res.json({success: 'Blog removed'})
+      } else {
+        req.flash('success','Blog(s) removed')
+        res.redirect('/blog/list')
+      }
     })
     .catch(function(err){
-      res.json({error: err.message || 'Blog removal error'})
+      if(json){
+        res.json({error: err.message || 'Blog removal error'})
+      } else {
+        res.render('error',{error: err.message})
+      }
     })
 }

@@ -12,7 +12,7 @@
         {{/tableCreateUri}}
         <h1>{{_l.blog.blog_list}}</h1>
       </div>
-      <table id="table" class="table table-bordered">
+      <table id="table" class="table table-bordered" data-remove="id" data-remove-uri="/blog/remove">
         <thead>
         <tr>
           <th data-name="title" data-uri="/blog/edit" data-link="id">{{_l.blog.title}}</th>
@@ -21,25 +21,39 @@
           <th data-name="active">{{_l.blog.active}}</th>
         </tr>
         </thead>
-        <tbody>
-        {{#list}}
-        <tr>
-          <td><a href="/blog/edit?id={{id}}">{{title}}</a></td>
-          <td>{{#_toDateString}}{{createdAt}}{{/_toDateString}}</td>
-          <td>{{#_toDateString}}{{updatedAt}}{{/_toDateString}}</td>
-          <td>
-            <span class="glyphicon glyphicon-{{#_isActive}}{{active}},check,remove{{/_isActive}}">&nbsp;</span>
-          </td>
-        </tr>
-        {{/list}}
-        </tbody>
       </table>
       <script type="text/javascript">
         $(document).ready(function(){
-          $('#table').DataTable({
+          let table = $('#table').DataTable({
             dom: 'Bfrtip',
-            buttons: ['copy','excel','pdf','csv'],
-            select: true,
+            buttons: [
+              'copyHtml5',
+              'excelHtml5',
+              'pdfHtml5',
+              'csvHtml5',
+              'print',
+              {
+                text: 'Remove',
+                className: 'btn-danger',
+                action: function ( e, dt, node, config ) {
+                  let rowCount = table.rows('.selected').data().length;
+                  let confMsg = 'Are you sure you want to remove ' +
+                    rowCount + ' rows?';
+                  let removeUri = $('#table').attr('data-remove-uri');
+                  let removeKey = $('#table').attr('data-remove')
+                  let ids = $.map(table.rows('.selected').data(), function (item) {
+                    return item.id
+                  });
+                  let removeUrl = removeUri + '?' + removeKey + '=' + ids
+                  if(confirm(confMsg)){
+                    window.location.href =  removeUrl
+                  } else {
+                    return e.preventDefault()
+                  }
+                }
+              }
+            ],
+            select: 'mutli',
             processing: true,
             serverSide: true,
             ajax: window.location.href,
@@ -53,7 +67,7 @@
                   name: $(that).text(),
                   data: dataName,
                   targets: i,
-                  render: function(data,type,row,meta){
+                  render: function(data,type,row){
                     let dataLink = $(that).attr('data-link')
                     let dataUri = $(that).attr('data-uri')
                     if(!dataLink) return data

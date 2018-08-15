@@ -20,16 +20,25 @@ worker.enableHtml(function(app){
   const mustacheExpress = require('mustache-express')
   const serveStatic = require('serve-static')
   const path = require('path')
-  //setup script servers
+  //bootstrap
   worker.setupScriptServer('bootstrap')
   worker.setupScriptServer('bootstrap-select')
+  //datatables
+  worker.setupScriptServer('jszip')
+  worker.setupScriptServer('pdfmake')
   worker.setupScriptServer('datatables.net')
-  worker.setupScriptServer('datatables.net-dt')
   worker.setupScriptServer('datatables.net-bs')
   worker.setupScriptServer('datatables.net-buttons')
   worker.setupScriptServer('datatables.net-buttons-bs')
+  worker.setupScriptServer('datatables.net-buttons-dt')
+  worker.setupScriptServer('datatables.net-colreorder-bs')
+  worker.setupScriptServer('datatables.net-fixedcolumns-bs')
+  worker.setupScriptServer('datatables.net-fixedheader-bs')
+  worker.setupScriptServer('datatables.net-keytable-bs')
+  worker.setupScriptServer('datatables.net-responsive-bs')
   worker.setupScriptServer('datatables.net-select')
   worker.setupScriptServer('datatables.net-select-bs')
+  //extra scripts
   worker.setupScriptServer('ladda')
   //enable proxy senders
   app.set('trust proxy',true)

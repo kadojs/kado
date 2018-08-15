@@ -49,6 +49,7 @@ exports.admin = function(K,app){
   app.get('/blog/edit',admin.edit)
   app.post('/blog/save',admin.save)
   app.post('/blog/remove',admin.remove)
+  app.get('/blog/remove',admin.remove)
   //register navigation
   app.nav.addGroup('/blog','Blog','book')
   app.nav.addItem('Blog','/blog/list','List','list')

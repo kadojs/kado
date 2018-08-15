@@ -1,10 +1,15 @@
 @import url('/node_modules/bootstrap/dist/css/bootstrap.min.css');
 @import url('/node_modules/bootstrap/dist/css/bootstrap-theme.min.css');
 @import url('/node_modules/bootstrap-select/dist/css/bootstrap-select.min.css');
-@import url('/node_modules/datatables.net-dt/css/jquery.dataTables.min.css');
 @import url('/node_modules/datatables.net-bs/css/dataTables.bootstrap.min.css');
-@import url('/node_modules/datatables.net-select-bs/css/select.bootstrap.min.css');
 @import url('/node_modules/datatables.net-buttons-bs/css/buttons.bootstrap.min.css');
+@import url('/node_modules/datatables.net-buttons-dt/css/buttons.dataTables.min.css');
+@import url('/node_modules/datatables.net-colreorder-bs/css/colReorder.bootstrap.min.css');
+@import url('/node_modules/datatables.net-fixedcolumns-bs/css/fixedColumns.bootstrap.min.css');
+@import url('/node_modules/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css');
+@import url('/node_modules/datatables.net-keytable-bs/css/keyTable.bootstrap.min.css');
+@import url('/node_modules/datatables.net-responsive-bs/css/responsive.bootstrap.min.css');
+@import url('/node_modules/datatables.net-select-bs/css/select.bootstrap.min.css');
 @import url('/node_modules/ladda/dist/ladda-themeless.min.css');
 @import url('/css/sidebar.css');
 @import url('/css/layout.css');
