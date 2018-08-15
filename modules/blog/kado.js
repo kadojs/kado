@@ -1,10 +1,12 @@
 'use strict';
 
 //module properties
-exports.kado = true
-exports.name = 'blog'
-exports.title = 'Blog'
-exports.description = 'Manage and publish blog entries'
+exports._kado = {
+  enabled: true,
+  name: 'blog',
+  title: 'Blog',
+  description: 'Manage and publish blog entries'
+}
 
 
 /**

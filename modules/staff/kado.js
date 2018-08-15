@@ -1,32 +1,15 @@
 'use strict';
 
-
-/**
- * Identify that we are a Kado module
- * @type {boolean}
- */
-exports.kado = true
-
-
-/**
- * Module Name
- * @type {string}
- */
-exports.name = 'staff'
-
-
-/**
- * Module title for display purposes
- * @type {string}
- */
-exports.title = 'Staff'
-
-
-/**
- * Module description
- * @type {string}
- */
-exports.description = 'Manage Kado Staff'
+//module properties
+exports._kado = {
+  kado: true,
+  name: 'staff',
+  title: 'Staff',
+  description: 'Manage Kado Staff',
+  admin: {
+    providesAuthentication: true
+  }
+}
 
 
 /**
@@ -76,8 +59,9 @@ exports.admin = function(K,app){
   app.get('/staff/list',admin.list)
   app.get('/staff/create',admin.create)
   app.get('/staff/edit',admin.edit)
-  app.post('/staff/list',admin.listAction)
   app.post('/staff/save',admin.save)
+  app.post('/staff/remove',admin.remove)
+  app.get('/staff/remove',admin.remove)
 }
 
 

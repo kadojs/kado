@@ -63,7 +63,7 @@ worker.setup(function(app){
         let modConf = K.modules[modName]
         if(modConf.admin && true === modConf.admin.providesAuthentication){
           promises.push(new K.bluebird(function(resolve,reject){
-            let mod = require(modConf.root)
+            let mod = require(modConf.root + '/kado.js')
             if('function' === typeof mod.authenticate){
               authTried++
               mod.authenticate(

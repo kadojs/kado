@@ -466,7 +466,7 @@ exports.init = function(cb){
     }
   }
   let loadModule = function(file){
-    let module = new ObjectManage(require(file))
+    let module = new ObjectManage(require(file)._kado)
     if(!module.name) module.name = path.basename(file,'.json')
     module.root = path.dirname(file)
     if(exports.config.module[module.name]){

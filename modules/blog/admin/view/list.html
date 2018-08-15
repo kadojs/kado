@@ -1,15 +1,13 @@
 {{>header}}
     <div class="container-fluid">
       <div>
-        {{#tableCreateUri}}
-          <div class="pull-right">
-            <span>&nbsp;</span>
-            <a class="btn btn-success" href="{{{tableCreateUri}}}">
-              <span class="glyphicon glyphicon-plus">&nbsp;</span>
-              <span>{{tableCreateLabel}}</span>
-            </a>
-          </div>
-        {{/tableCreateUri}}
+        <div class="pull-right">
+          <span>&nbsp;</span>
+          <a class="btn btn-success" href="/blog/create">
+            <span class="glyphicon glyphicon-plus">&nbsp;</span>
+            <span>{{_l.blog.create}}</span>
+          </a>
+        </div>
         <h1>{{_l.blog.blog_list}}</h1>
       </div>
       <table id="table" class="table table-bordered" data-remove="id" data-remove-uri="/blog/remove">

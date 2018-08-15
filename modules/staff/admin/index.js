@@ -1,78 +1,32 @@
 'use strict';
 const bcrypt = require('bcrypt')
 const P = require('bluebird')
-
 const K = require('../../../helpers/kado')
 
-let listHelper = K.list
 let sequelize = K.db.sequelize
+let Staff = sequelize.models.Staff
 
 //make some promises
 P.promisifyAll(bcrypt)
 
-let Staff = sequelize.models.Staff
-let Op = sequelize.Op
-
 
 /**
- * List staff members
+ * List staff
  * @param {object} req
  * @param {object} res
  */
-exports.list = (req,res)=>{
-  let search = req.query.search || ''
-  let start = listHelper.integerArgDefaulted(req.query.start,0,true)
-  let limit = listHelper.integerArgDefaulted(req.query.limit,10,true)
-
-  let findOpts = {}
-  if('' !== search){
-    findOpts.where = {
-      [Op.or]: [
-        {email: {like: '%' + search + '%'}},
-        {name:  {like: '%' + search + '%'}}
-      ]
-    }
-  }
-  findOpts.order = ['name']
-  findOpts.offset = start
-  findOpts.limit = limit
-
-  Staff.findAndCountAll(findOpts)
-    .then((result)=>{
-      res.render(__dirname + '/view/list',{
-        page: listHelper.pagination(start,result.count,limit),
-        count: result.count,
-        search: search,
-        limit: limit,
-        list: result.rows
+exports.list = function(req,res){
+  if(!req.query.length){
+    res.render(__dirname + '/view/list')
+  } else {
+    K.datatable(Staff,req.query)
+      .then(function(result){
+        res.json(result)
       })
-    })
-}
-
-
-/**
- * List action
- * @param {object} req
- * @param {object} res
- */
-exports.listAction = (req,res)=>{
-  let removals = req.body.remove || []
-  P.try(()=>{
-    return removals
-  })
-    .each((staffId)=>{
-      return Staff.destroy({where:{id:staffId}})
-    })
-    .each((idAffected)=>{
-      let currentRow = removals.shift()
-      if(currentRow === idAffected)
-        req.flash('success','Staff removed successfully')
-      else
-        req.flash('error','Staff refused to delete?')
-    })
-    .then(()=>{
-      res.redirect('/staff/list')
-    })
+      .catch(function(err){
+        res.json({error: err.message})
+      })
+  }
 }
 
 
@@ -161,17 +115,18 @@ exports.save = (req,res)=>{
         staffId = updated.dataValues.id
         staffEmail = updated.dataValues.email
       }
-      let alert = {
-        subject: 'Staff member',
-        href: '/staff/edit?id=' + staffId,
-        id: staffEmail
-      }
       if(false !== updated){
-        alert.action = 'saved'
-        req.flashPug('success','subject-id-action',alert)
+        req.flash('success',{
+          message: 'Staff member saved',
+          href: '/staff/edit?id=' + staffId,
+          name: staffEmail
+        })
       } else {
-        alert.action = 'unchanged (try again?)'
-        req.flashPug('warning','subject-id-action',alert)
+        req.flash('warning',{
+          message: 'Staff member unchanged',
+          href: '/staff/edit?id=' + staffId,
+          name: staffEmail
+        })
       }
       res.setHeader('staffid',staffId)
       res.redirect('/staff/list')
@@ -245,4 +200,32 @@ exports.logout = (req,res)=>{
   req.session.destroy()
   delete res.locals.staff
   res.redirect('/login')
+}
+
+
+/**
+ * Process removals
+ * @param {object} req
+ * @param {object} res
+ */
+exports.remove = function(req,res){
+  let json = K.isClientJSON(req)
+  if(req.query.id) req.body.remove = req.query.id.split(',')
+  if(!(req.body.remove instanceof Array)) req.body.remove = [req.body.remove]
+  K.modelRemoveById(Staff,req.body.remove)
+    .then(function(){
+      if(json){
+        res.json({success: 'Staff removed'})
+      } else {
+        req.flash('success','Staff removed')
+        res.redirect('/blog/list')
+      }
+    })
+    .catch(function(err){
+      if(json){
+        res.json({error: err.message || 'Staff removal error'})
+      } else {
+        res.render('error',{error: err.message})
+      }
+    })
 }

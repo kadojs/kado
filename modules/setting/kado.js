@@ -1,32 +1,12 @@
 'use strict';
 
-
-/**
- * Identify that we are a Kado module
- * @type {boolean}
- */
-exports.kado = true
-
-
-/**
- * Module Name
- * @type {string}
- */
-exports.name = 'setting'
-
-
-/**
- * Module title for display purposes
- * @type {string}
- */
-exports.title = 'Settings'
-
-
-/**
- * Module description
- * @type {string}
- */
-exports.description = 'Manage Kado settings directly to the config'
+//module properties
+exports._kado ={
+  enabled: true,
+  name: 'setting',
+  title: 'Settings',
+  description: 'Manage Kado settings directly to the config'
+}
 
 
 /**

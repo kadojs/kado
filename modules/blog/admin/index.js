@@ -12,11 +12,7 @@ const Blog = sequelize.models.Blog
  */
 exports.list = function(req,res){
   if(!req.query.length){
-    res.render(__dirname + '/view/list',{
-      tableCreateUri: '/blog/create',
-      tableCreateLabel: 'Create Blog',
-      tableTitle: 'Blog List'
-    })
+    res.render(__dirname + '/view/list')
   } else {
     K.datatable(Blog,req.query)
       .then(function(result){
@@ -100,7 +96,7 @@ exports.save = function(req,res){
 
 
 /**
- * Process list actions
+ * Process removals
  * @param {object} req
  * @param {object} res
  */
