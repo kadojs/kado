@@ -16,69 +16,15 @@
         <thead>
         <tr>
           <th data-name="title" data-uri="/blog/edit" data-link="id">{{_l.blog.title}}</th>
-          <th data-name="createdAt">{{_l.blog.created}}</th>
-          <th data-name="updatedAt">{{_l.blog.modified}}</th>
-          <th data-name="active">{{_l.blog.active}}</th>
+          <th data-name="createdAt" data-format="_printDate">{{_l.blog.created}}</th>
+          <th data-name="updatedAt" data-format="_printDate">{{_l.blog.modified}}</th>
+          <th data-name="active" data-format="_isActive">{{_l.blog.active}}</th>
         </tr>
         </thead>
       </table>
       <script type="text/javascript">
         $(document).ready(function(){
-          let table = $('#table').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-              'copyHtml5',
-              'excelHtml5',
-              'pdfHtml5',
-              'csvHtml5',
-              'print',
-              {
-                text: 'Remove',
-                className: 'btn-danger',
-                action: function ( e, dt, node, config ) {
-                  let rowCount = table.rows('.selected').data().length;
-                  let confMsg = 'Are you sure you want to remove ' +
-                    rowCount + ' rows?';
-                  let removeUri = $('#table').attr('data-remove-uri');
-                  let removeKey = $('#table').attr('data-remove')
-                  let ids = $.map(table.rows('.selected').data(), function (item) {
-                    return item.id
-                  });
-                  let removeUrl = removeUri + '?' + removeKey + '=' + ids
-                  if(confirm(confMsg)){
-                    window.location.href =  removeUrl
-                  } else {
-                    return e.preventDefault()
-                  }
-                }
-              }
-            ],
-            select: 'mutli',
-            processing: true,
-            serverSide: true,
-            ajax: window.location.href,
-            columns: function(){
-              let cols = []
-              $('#table th').each(function(i){
-                let that = this
-                let dataName = $(that).attr('data-name')
-                if(!dataName) return
-                cols.push({
-                  name: $(that).text(),
-                  data: dataName,
-                  targets: i,
-                  render: function(data,type,row){
-                    let dataLink = $(that).attr('data-link')
-                    let dataUri = $(that).attr('data-uri')
-                    if(!dataLink) return data
-                    return '<a href="' + dataUri + '?' + dataLink + '=' +
-                      row[dataLink] +'">' + data +'</a>'
-                  }
-                })
-              })
-              return cols
-            }()
-          });
+          $('#table').DataTable(DataTableConfig());
         })
       </script>
     </div>

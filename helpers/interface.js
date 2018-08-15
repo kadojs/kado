@@ -94,11 +94,15 @@ exports.worker = function(K,interfaceName,interfaceRoot){
       return K.printDate(new Date(render(text)))
     }
   }
-  app.locals._isActive = function(){
+  app.locals._is = function(){
     return function(text,render){
       let parts = render(text).split(',')
-      if(parts.length !== 3) throw new Error('Failed parsing isActive')
-      return !!parts[0] ? parts[1] : parts[2]
+      if(parts.length !== 3) throw new Error('Failed parsing _is')
+      let cond = true
+      if('' === parts[0] || 'false' === parts[0] || false === parts[0]){
+        cond = false
+      }
+      return cond ? parts[1] : parts[2]
     }
   }
   app.locals._prettyBytes = require('pretty-bytes')

@@ -20,7 +20,8 @@ toWindow('jQuery',$)
 require('bootstrap')
 require('bootstrap-select')
 require('chart.js')
-require('jquery-ui');
+require('jquery-ui')
+toWindow('moment',require('moment'))
 
 //datatables)
 toWindow('pdfmake',require('pdfmake/build/pdfmake.min.js'));
@@ -48,7 +49,8 @@ toWindow('querystring',require('qs'))
 //jquery plugins
 require('../../../helpers/js/jqueryAnimateNumber.min')
 
-//staff space
+//panel plugins
 require('../../../helpers/js/dashboard')
 require('../../../helpers/js/sidebar')
 require('../../../helpers/js/table')
+require('../../../helpers/js/util')
