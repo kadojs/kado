@@ -1,31 +1,9 @@
 'use strict';
 
-
-/**
- * Identify that we are a Kado module
- * @type {boolean}
- */
+//module properties
 exports.kado = true
-
-
-/**
- * Module Name
- * @type {string}
- */
 exports.name = 'blog'
-
-
-/**
- * Module title for display purposes
- * @type {string}
- */
 exports.title = 'Blog'
-
-
-/**
- * Module description
- * @type {string}
- */
 exports.description = 'Manage and publish blog entries'
 
 
@@ -65,28 +43,16 @@ exports.admin = function(K,app){
     res.redirect(301,'/blog/list')
   })
   app.get('/blog/list',admin.list)
+  app.get('/blog/find',admin.find)
+  app.get('/blog/findAll',admin.findAll)
   app.get('/blog/create',admin.create)
   app.get('/blog/edit',admin.edit)
   app.post('/blog/save',admin.save)
-  app.post('/blog/list',admin.listAction)
+  app.post('/blog/remove',admin.remove)
   //register navigation
   app.nav.addGroup('/blog','Blog','book')
   app.nav.addItem('Blog','/blog/list','List','list')
   app.nav.addItem('Blog','/blog/create','Create','plus')
-}
-
-
-/**
- * Register in the API Interface
- * @param {K} K Master Kado Object
- * @param {object} app
- */
-exports.api = function(K,app){
-  let api = require('./api')
-  app.post('/blog/findAll',api.findAll)
-  app.post('/blog/find',api.find)
-  app.post('/blog/save',api.save)
-  app.post('/blog/remove',api.remove)
 }
 
 
@@ -115,4 +81,3 @@ exports.cli = function(K,args){
   process.argv = args
   require('./bin/blog')
 }
-

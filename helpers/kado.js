@@ -475,8 +475,8 @@ exports.init = function(cb){
     }
   }
   let dbGlob = process.env.KADO_ROOT + '/db/*.js'
-  let sysGlob = process.env.KADO_MODULES + '/**/kado.json'
-  let userGlob = process.env.KADO_USER_MODULES + '/**/kado.json'
+  let sysGlob = process.env.KADO_MODULES + '/**/kado.js'
+  let userGlob = process.env.KADO_USER_MODULES + '/**/kado.js'
   let doScan = function(pattern,handler){
     return new P(function(resolve){
       glob(pattern,function(err,files){
@@ -507,7 +507,8 @@ exports.init = function(cb){
           if(exports.modules.hasOwnProperty(modKey)){
             let modConf = exports.modules[modKey]
             if(true === modConf.enabled){
-              let mod = require(modConf.root)
+              let modFile = modConf.root + '/kado.js'
+              let mod = require(modFile)
               if('function' === typeof mod.db){
                 mod.db(exports,exports.db)
               }

@@ -56,23 +56,6 @@ exports.list = function(req,res){
 
 
 /**
- * Process list actions
- * @param {object} req
- * @param {object} res
- */
-exports.listAction = function(req,res){
-  list.remove(Blog,req.body.remove)
-    .then(function(){
-      req.flash('success','Blog(s) removed successfully')
-      res.redirect('/blog/list')
-    })
-    .catch(function(err){
-      res.render('error',{error: err})
-    })
-}
-
-
-/**
  * Create entry
  * @param {object} req
  * @param {object} res
@@ -128,5 +111,71 @@ exports.save = function(req,res){
     })
     .catch(function(err){
       res.render('error',{error: err})
+    })
+}
+
+
+/**
+ * Find blogs
+ * @param {object} req
+ * @param {object} res
+ */
+exports.findAll = function(req,res){
+  let limit = +req.query.limit || req.body.limit || 20
+  let start = +req.query.start || req.body.start || 0
+  let search = req.query.search || req.body.search || ''
+  if(start < 0) start = 0
+  Blog.findAndCountAll({
+    where: sequelize.or(
+      {title: {like: '%' + search + '%'}}
+    ),
+    offset: start,
+    limit: limit,
+    order: ['title']
+  })
+    .then(function(result){
+      res.json(result)
+    })
+    .catch(function(err){
+      res.render('error',{error: err})
+    })
+}
+
+
+/**
+ * Find a blog
+ * @param {object} req
+ * @param {object} res
+ */
+exports.find = function(req,res){
+  let search = req.query.search || req.body.search || ''
+  Blog.find({
+    where: sequelize.or(
+      {title: {like: '%' + search + '%'}}
+    ),
+    order: ['title']
+  })
+    .then(function(result){
+      res.json(result)
+    })
+    .catch(function(err){
+      res.render('error',{error: err})
+    })
+}
+
+
+/**
+ * Process list actions
+ * @param {object} req
+ * @param {object} res
+ */
+exports.remove = function(req,res){
+  if(!(req.body.remove instanceof Array)) req.body.remove = [req.body.remove]
+  list.remove(Blog,req.body.remove)
+    .then(function(){
+      res.json({success: 'Blog removed successfully'})
+    })
+    .catch(function(err){
+      res.json({error: err.message || 'Blog removal error'})
     })
 }

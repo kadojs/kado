@@ -242,7 +242,8 @@ exports.worker = function(K,interfaceName,interfaceRoot){
       Object.keys(K.modules).forEach(function(modName){
         let mod = K.modules[modName]
         if(mod.enabled){
-          let module = require(mod.root)
+          let modFile = mod.root + '/kado.js'
+          let module = require(modFile)
           if('function' === typeof module[interfaceName]){
             module[interfaceName](K,app)
           }
