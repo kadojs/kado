@@ -10,5 +10,6 @@ module.exports = {
   'title': 'Title',
   'created': 'Created',
   'modified': 'Modified',
-  'active': 'Active'
+  'active': 'Active',
+  'action': 'Action'
 }

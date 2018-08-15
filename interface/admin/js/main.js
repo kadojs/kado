@@ -6,22 +6,26 @@
  * @param {string} name
  * @param {*} val
  */
-var toWindow = function(name,val){
+let toWindow = function(name,val){
   window[name] = val
 }
 
 //jquery
-var jQuery = require('jquery')
+let $ = require('jquery')
 
-toWindow('$',jQuery)
-toWindow('jQuery',jQuery)
+toWindow('$',$)
+toWindow('jQuery',$)
 
 //headless dependencies
 require('bootstrap')
 require('bootstrap-select')
 require('chart.js')
 require('jquery-ui')
-require('datatables.net')(window,jQuery)
+require('datatables.net')(window,$)
+require('datatables.net-bs')(window,$)
+require('datatables.net-select-bs')(window,$)
+require('datatables.net-buttons')(window,$)
+require('datatables.net-buttons-bs')(window,$)
 
 //global dependencies
 toWindow('bootbox',require('bootbox'))

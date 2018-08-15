@@ -112,7 +112,6 @@ module.exports.scan = function(){
     for(let key in pack){
       if(pack.hasOwnProperty(key)){
         that.pack[name][module][key] = pack[key]
-        console.log(name,module,key,pack[key])
       }
     }
     K.log.debug(pack._module_name + ' language pack loaded')

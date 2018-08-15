@@ -64,7 +64,7 @@ process.env.KADO_LANG = path.resolve(process.env.KADO_ROOT + '/lang')
  * Kado Plugins Path
  * @type {string}
  */
-process.env.KADO_MODULES = path.resolve(process.env.KADO_ROOT + '/kado')
+process.env.KADO_MODULES = path.resolve(process.env.KADO_ROOT + '/modules')
 
 
 /**
@@ -72,7 +72,7 @@ process.env.KADO_MODULES = path.resolve(process.env.KADO_ROOT + '/kado')
  * @type {string}
  */
 process.env.KADO_USER_MODULES = path.resolve(
-  path.dirname(path.dirname(process.env.KADO_ROOT)) + '/kado')
+  path.dirname(path.dirname(process.env.KADO_ROOT)) + '/modules')
 
 
 /**
@@ -124,23 +124,6 @@ config.$load({
       port: 3000,
       host: null,
       baseUrl: 'http://localhost:3000',
-      workers: {
-        count: 1,
-        maxConnections: 10000
-      },
-      cookie: {
-        secret: '',
-        maxAge: 2592000000 //30 days
-      }
-    },
-    api: {
-      enabled: false,
-      title: 'Kado API',
-      transport: ['http'],
-      path: path.resolve(process.env.KADO_INTERFACES + '/api'),
-      port: 3001,
-      host: null,
-      baseUrl: 'http://localhost:3001',
       workers: {
         count: 1,
         maxConnections: 10000

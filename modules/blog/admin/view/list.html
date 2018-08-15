@@ -1,0 +1,71 @@
+{{>header}}
+    <div class="container-fluid">
+      <div>
+        {{#tableCreateUri}}
+          <div class="pull-right">
+            <span>&nbsp;</span>
+            <a class="btn btn-success" href="{{{tableCreateUri}}}">
+              <span class="glyphicon glyphicon-plus">&nbsp;</span>
+              <span>{{tableCreateLabel}}</span>
+            </a>
+          </div>
+        {{/tableCreateUri}}
+        <h1>{{_l.blog.blog_list}}</h1>
+      </div>
+      <table id="table" class="table table-bordered">
+        <thead>
+        <tr>
+          <th data-name="title" data-uri="/blog/edit" data-link="id">{{_l.blog.title}}</th>
+          <th data-name="createdAt">{{_l.blog.created}}</th>
+          <th data-name="updatedAt">{{_l.blog.modified}}</th>
+          <th data-name="active">{{_l.blog.active}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#list}}
+        <tr>
+          <td><a href="/blog/edit?id={{id}}">{{title}}</a></td>
+          <td>{{#_toDateString}}{{createdAt}}{{/_toDateString}}</td>
+          <td>{{#_toDateString}}{{updatedAt}}{{/_toDateString}}</td>
+          <td>
+            <span class="glyphicon glyphicon-{{#_isActive}}{{active}},check,remove{{/_isActive}}">&nbsp;</span>
+          </td>
+        </tr>
+        {{/list}}
+        </tbody>
+      </table>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $('#table').DataTable({
+            dom: 'Bfrtip',
+            buttons: ['copy','excel','pdf','csv'],
+            select: true,
+            processing: true,
+            serverSide: true,
+            ajax: window.location.href,
+            columns: function(){
+              let cols = []
+              $('#table th').each(function(i){
+                let that = this
+                let dataName = $(that).attr('data-name')
+                if(!dataName) return
+                cols.push({
+                  name: $(that).text(),
+                  data: dataName,
+                  targets: i,
+                  render: function(data,type,row,meta){
+                    let dataLink = $(that).attr('data-link')
+                    let dataUri = $(that).attr('data-uri')
+                    if(!dataLink) return data
+                    return '<a href="' + dataUri + '?' + dataLink + '=' +
+                      row[dataLink] +'">' + data +'</a>'
+                  }
+                })
+              })
+              return cols
+            }()
+          });
+        })
+      </script>
+    </div>
+{{>footer}}

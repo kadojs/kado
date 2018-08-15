@@ -11,23 +11,5 @@ $('#tableDelete').click(function(){
 $(document).ready(function(){
   $('[rel=tooltip]').tooltip()
 })
-$(document).ready(function(){
-  $('#table').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: window.location.href,
-    columns: function(){
-      let cols = []
-      $('#table th').each(function(i){
-        cols.push({
-          name: $(this).text(),
-          data: $(this).attr('data-name'),
-          target: i
-        })
-      })
-      console.log(cols)
-      return cols
-    }()
-  });
-})
+
 
