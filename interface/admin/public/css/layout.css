@@ -46,3 +46,7 @@ h1 {
   width: 49%;
 }
 
+.dataTables_length {
+  float: left;
+  padding-right: 10px;
+}

@@ -1,4 +1,6 @@
-var checkboxToggle = true
+'use strict';
+
+let checkboxToggle = true
 $('#toggle').click(function(){
   $('table.table td input').prop('checked',checkboxToggle)
   checkboxToggle = !checkboxToggle
@@ -14,12 +16,13 @@ $(document).ready(function(){
 
 window.DataTableConfig = function(tableName){
   if(!tableName) tableName = 'table'
-  let removeClass = $('#' + tableName).attr('data-remove-class')
-  let removeText = $('#' + tableName).attr('data-remove-text')
-  let dataSrc = $('#' + tableName).attr('data-src')
+  let tableEl = $('#' + tableName)
+  let removeClass = tableEl.attr('data-remove-class')
+  let removeText = tableEl.attr('data-remove-text')
+  let dataSrc = tableEl.attr('data-src')
   let serverSide = dataSrc !== 'local'
   let dtCfg = {
-    dom: 'Bfrtip',
+    dom: 'lBfrt<<"pull-right"p>i>',
     buttons: [
       'copyHtml5',
       'excelHtml5',
@@ -36,8 +39,8 @@ window.DataTableConfig = function(tableName){
           let rowCount = ids.length;
           let confMsg = 'Are you sure you want to remove ' +
             rowCount + ' rows?';
-          let removeUri = $('#' + tableName).attr('data-remove-uri');
-          let removeKey = $('#' + tableName).attr('data-remove')
+          let removeUri = tableEl.attr('data-remove-uri');
+          let removeKey = tableEl.attr('data-remove')
 
           let removeUrl = removeUri + '?' + removeKey + '=' + ids
           if(confirm(confMsg)){
@@ -50,8 +53,11 @@ window.DataTableConfig = function(tableName){
       }
     ],
     select: 'mutli',
-    processing: serverSide,
+    processing: true,
     serverSide: serverSide,
+    stateSave: true,
+    pageLength: 10,
+    lengthMenu: [ [10, 20, 50, 100, 250, -1], [10 ,20, 50, 100, 250, 'All'] ],
     columns: (function(){
       let cols = []
       $('#table th').each(function(i){

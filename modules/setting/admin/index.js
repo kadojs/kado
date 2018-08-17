@@ -25,26 +25,18 @@ let queryConfig = function(search,start,limit){
   let db = {rows: [], count: 0}
   paths.forEach(function(path){
     let parts = path.split('.')
-    let lpad = parts.length * 20
     let isMod = config.$get(path) === config.$get('originalConfig.' + path)
     //add a one line search filter :)
     if(search && parts.indexOf(search) < 0) return
     //dont show internals
     if(path.match(/^\$/) || path.match(/^originalConfig/)) return
     //dont show objects as they are containers
-    if('object' === typeof(config.$get(path))){
-      db.rows.push({
-        path: path,
-        parts: parts,
-        lpad: lpad,
-        group: parts[parts.length - 1]
-      })
-    } else {
+    if('object' !== typeof(config.$get(path))){
+      if(path.match(/password/i)) return
       if(definitions[path]){
         db.rows.push({
           path: path,
           parts: parts,
-          lpad: lpad,
           className: isMod ? 'btn-warn' : '',
           type: definitions[path].type,
           name: definitions[path].name,
@@ -56,7 +48,6 @@ let queryConfig = function(search,start,limit){
         db.rows.push({
           path: path,
           parts: parts,
-          lpad: lpad,
           className: isMod ? 'btn-warn' : '',
           type: typeof(config.$get(path)),
           name: parts[parts.length - 1],
