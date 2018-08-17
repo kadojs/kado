@@ -4,5 +4,12 @@
 module.exports = {
   '_module_name': 'blog',
   '_module_title': 'Blog',
-  '_module_lang': 'spa'
+  '_module_lang': 'spa',
+  'create_blog': 'Blog creativo',
+  'blog_list': 'Lista de blogs',
+  'title': 'Título',
+  'created': 'Creado',
+  'modified': 'Modificado',
+  'active': 'Activo',
+  'action': 'Acción'
 }
