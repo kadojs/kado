@@ -148,6 +148,12 @@ This format is somewhat self explanatory. However in detail:
   * Drop kado.json and move config entries into main module follow
   * Rename module entry point from `index.js` to `kado.js`
   * Kado now scans for `kado.js` files as modules and has no path expectations
+* Implement Bootstrap 4 styling
+* TODO: Implement permission system from auth provider
+* TODO: Implement navigation breadcrumb system
+* TODO: Implement language switcher
+* TODO: Implement default theme
+* TODO: Fix tests
 
 ### 2.1.0
 * Add module generator
