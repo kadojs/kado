@@ -75,10 +75,14 @@ exports.worker = function(K,interfaceName,interfaceRoot){
   P.promisifyAll(server)
   //navigation system
   app.nav = new Nav()
+  //------------------------------------
+  //TEMPLATE GLOBALS AND FUNCTIONS
+  // make sure and prefix these with _
   /**
    * Global template vars
    * @type {*}
    */
+  //------------------------------------
   app.locals._basedir = app.get('views')
   app.locals._S = require('string')
   app.locals._moment = require('moment')
@@ -89,10 +93,21 @@ exports.worker = function(K,interfaceName,interfaceRoot){
       'en-US',{timeZoneName:'short'}
     ).split(' ').pop()
   )
-  app.locals._toDateString = function(){
+  app.locals._printDate = function(){
     return function(text,render){
       return K.printDate(new Date(render(text)))
     }
+  }
+  app.locals._toDateString = app.locals._printDate
+  app.locals._escapeAndTruncate = function(text,render){
+    let rv = render(text)
+    let parts = rv.split(',')
+    if(!parts || 2 !== parts.length){
+      throw new Error('Cannot parse escapeAndTruncate')
+    }
+    let len = parts[0], tpl = parts[1]
+    tpl = tpl.replace(/<(?:.|\n)*?>/gm, '') //remove html
+    return tpl.substring(0,len) //shorten
   }
   app.locals._is = function(){
     return function(text,render){

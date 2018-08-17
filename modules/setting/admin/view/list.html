@@ -1,0 +1,52 @@
+{{>header}}
+<div class="container-fluid">
+  <div>
+    <h1>{{_l.blog.blog_list}}</h1>
+  </div>
+  <table id="table" data-src="local" class="table table-bordered" data-remove-class="btn-warning" data-remove-text="Clear Overrides" data-remove-uri="/setting/list" data-remove="path">
+    <thead>
+    <tr>
+      <th data-name="name" data-format="_printSetting" data-uri="/setting/edit" data-link="path">Setting</th>
+      <th data-name="type">Type</th>
+      <th data-name="defaultValue">Default</th>
+      <th data-name="value">Current Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#list}}
+      {{#group}}
+        <tr class="info">
+          <td style="padding-left: 20px;">
+            <strong>{{group}}</strong>
+          </td>
+          <div class="text-muted">
+            <small><span>{{path}}</span></small>
+          </div>
+        </tr>
+      {{/group}}
+      {{^group}}
+        <tr>
+          <td style="padding-left: 20px">
+            <a href="/setting/edit?path={{{path}}}">{{name}}</a>
+            <div class="text-muted">
+              <small><span>{{path}}</small>
+            </div>
+          </td>
+          {{#description}}
+            <td><p>{{description}}</p></td>
+          {{/description}}
+          <td>{{type}}</td>
+          <td>{{defaultValue}}</td>
+          <td>{{value}}</td>
+        </tr>
+      {{/group}}
+    {{/list}}
+    </tbody>
+  </table>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#table').DataTable(DataTableConfig());
+    })
+  </script>
+</div>
+{{>footer}}

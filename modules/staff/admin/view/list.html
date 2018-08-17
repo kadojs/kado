@@ -1,0 +1,34 @@
+{{>header}}
+<div class="container-fluid">
+  <div>
+    <div class="pull-right">
+      <span>&nbsp;</span>
+      <a class="btn btn-success" href="/staff/create">
+        <span class="glyphicon glyphicon-plus">&nbsp;</span>
+        <span>{{_l.staff.create_staff}}</span>
+      </a>
+    </div>
+    <h1>{{_l.staff.staff_list}}</h1>
+  </div>
+  <table id="table" class="table table-bordered" data-remove="id" data-remove-uri="/staff/remove">
+    <thead>
+    <tr>
+      <th data-name="email" data-uri="/staff/edit" data-link="id">{{_l.staff.email}}</th>
+      <th data-name="name">{{_l.staff.name}}</th>
+      <th data-name="dateSeen" data-format="_printDate">{{_l.staff.last_login}}</th>
+      <th data-name="loginCount">{{_l.staff.login_count}}</th>
+      <th data-name="dateFail" data-format="_printDate">{{_l.staff.last_failed_login}}</th>
+      <th data-name="loginFailCount">{{_l.staff.failed_login_count}}</th>
+      <th data-name="createdAt" data-format="_printDate">{{_l.blog.created}}</th>
+      <th data-name="updatedAt" data-format="_printDate">{{_l.blog.modified}}</th>
+      <th data-name="active" data-format="_isActive">{{_l.blog.active}}</th>
+    </tr>
+    </thead>
+  </table>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#table').DataTable(DataTableConfig());
+    })
+  </script>
+</div>
+{{>footer}}
