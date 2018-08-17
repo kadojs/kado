@@ -25,7 +25,7 @@ let queryConfig = function(search,start,limit){
   let db = {rows: [], count: 0}
   paths.forEach(function(path){
     let parts = path.split('.')
-    let isMod = config.$get(path) === config.$get('originalConfig.' + path)
+    let isMod = config.$get(path) !== config.$get('originalConfig.' + path)
     //add a one line search filter :)
     if(search && parts.indexOf(search) < 0) return
     //dont show internals
@@ -37,7 +37,7 @@ let queryConfig = function(search,start,limit){
         db.rows.push({
           path: path,
           parts: parts,
-          className: isMod ? 'btn-warn' : '',
+          className: isMod ? 'alert-warning' : '',
           type: definitions[path].type,
           name: definitions[path].name,
           description: definitions[path].description,
@@ -48,7 +48,7 @@ let queryConfig = function(search,start,limit){
         db.rows.push({
           path: path,
           parts: parts,
-          className: isMod ? 'btn-warn' : '',
+          className: isMod ? 'alert-warning' : '',
           type: typeof(config.$get(path)),
           name: parts[parts.length - 1],
           description: null,
