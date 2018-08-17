@@ -22,7 +22,7 @@ window.DataTableConfig = function(tableName){
   let dataSrc = tableEl.attr('data-src')
   let serverSide = dataSrc !== 'local'
   let dtCfg = {
-    dom: 'lBfrt<<"pull-right"p>i>',
+    dom: 'lBfrt<<"float-right"p>i>',
     buttons: [
       'copyHtml5',
       'excelHtml5',

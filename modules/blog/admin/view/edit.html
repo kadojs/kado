@@ -1,6 +1,6 @@
 {{>header}}
-    <div class="container">
-      <h1>Update Entry</h1>
+    <div class="container-fluid">
+      <h1>{{_l.blog.update_blog}}</h1>
       <form class="form form-horizontal" action="/blog/save" method="post" role="form">
         <input type="hidden" name="id" value="{{blog.id}}" />
         <div class="form-group">
@@ -10,9 +10,9 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="content" class="control-label col-sm-2">Markdown</label>
+          <label for="blogContent" class="control-label col-sm-2">Markdown</label>
           <div class="col-sm-10">
-            <textarea class="form-control" rows="10" id="content" name="content">{{{blog.content}}}</textarea>
+            <textarea class="form-control" rows="10" id="blogContent" name="content">{{{blog.content}}}</textarea>
           </div>
         </div>
         <div class="form-group">

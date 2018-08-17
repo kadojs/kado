@@ -7,6 +7,7 @@ module.exports = {
   '_module_lang': 'eng',
   'create_blog': 'Create Blog',
   'blog_list': 'Blog List',
+  'update_blog': 'Update Blog',
   'title': 'Title',
   'created': 'Created',
   'modified': 'Modified',

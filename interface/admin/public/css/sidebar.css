@@ -1,32 +1,6 @@
-body,html{
-    height: 100%;
-}
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
-/* remove outer padding */
-.main .row{
-    padding: 0px;
-    margin: 0px;
-}
-
-/*Remove rounded coners*/
-
-nav.sidebar.navbar {
-    border-radius: 0px;
-}
-
-nav.sidebar, .main{
-    -webkit-transition: margin 200ms ease-out;
-    -moz-transition: margin 200ms ease-out;
-    -o-transition: margin 200ms ease-out;
-    transition: margin 200ms ease-out;
-}
-
-.sidebar .navbar-nav {
-    width: 199px;
-}
-
-.sidebar-copyright {
-    display: none;
+#sidebar-copyright {
     position: absolute;
     bottom: 10px;
     left: 5px;
@@ -34,140 +8,125 @@ nav.sidebar, .main{
     font-size: 10px;
 }
 
-/* .....NavBar: Icon only with coloring/layout.....*/
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
 
-/*small/medium side display*/
-@media (min-width: 768px) {
-
-    /*Allow main to be next to Nav*/
-    .main{
-        position: absolute;
-        width: calc(100% - 40px); /*keeps 100% minus nav size*/
-        margin-left: 40px;
-        float: right;
-    }
-
-    /*lets nav bar to be showed on mouseover*/
-    nav.sidebar:hover + .main{
-        margin-left: 200px;
-    }
-
-    /*Center Brand*/
-    nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
-        margin-left: 0px;
-    }
-    /*Center Brand*/
-    nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
-        text-align: center;
-        width: 100%;
-        margin-left: 0px;
-    }
-
-    /*Center Icons*/
-    nav.sidebar a{
-        padding-right: 13px;
-    }
-
-    /*adds border top to first nav box */
-    nav.sidebar .navbar-nav > li:first-child{
-        border-top: 1px #e5e5e5 solid;
-    }
-
-    /*adds border to bottom nav boxes*/
-    nav.sidebar .navbar-nav > li{
-        border-bottom: 1px #e5e5e5 solid;
-    }
-
-    /* Colors/style dropdown box*/
-    nav.sidebar .navbar-nav .open .dropdown-menu {
-        position: static;
-        float: none;
-        width: auto;
-        margin-top: 0;
-        background-color: transparent;
-        border: 0;
-        -webkit-box-shadow: none;
-        box-shadow: none;
-    }
-
-    /*allows nav box to use 100% width*/
-    nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
-        padding: 0 0px 0 0px;
-    }
-
-    /*colors dropdown box text */
-    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
-        color: #777;
-    }
-
-    /*gives sidebar width/height*/
-    nav.sidebar{
-        width: 200px;
-        height: 100%;
-        margin-left: -160px;
-        float: left;
-        z-index: 8000;
-        margin-bottom: 0px;
-    }
-
-    /*give sidebar 100% width;*/
-    nav.sidebar li {
-        width: 100%;
-    }
-
-    /* Move nav to full on mouse over*/
-    nav.sidebar:hover{
-        margin-left: 0px;
-    }
-    /*for hiden things when navbar hidden*/
-    .forAnimate{
-        opacity: 0;
-    }
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
 }
 
-/* .....NavBar: Fully showing nav bar..... */
+#sidebar {
+    min-width: 199px;
+    max-width: 199px;
+    background: #292929;
+    color: #fff;
+    transition: all 0.3s;
+}
 
-@media (min-width: 1100px) {
+#sidebar.active {
+    margin-left: -199px;
+}
 
-    .sidebar-copyright {
-        display: block;
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #282828;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #999;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    color: #fff;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #333;
+    background: #fff;
+}
+
+#sidebar ul li.active>a,
+#sidebar a[aria-expanded="true"] {
+    color: #fff;
+    background: #444;
+}
+
+#sidebar a[data-toggle="collapse"] {
+    position: relative;
+}
+
+#sidebar .dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+#sidebar ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #444;
+}
+
+#sidebar ul.CTAs {
+    padding: 20px;
+}
+
+#sidebar ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+#sidebar a.download {
+    background: #fff;
+    color: #7386D5;
+}
+
+#sidebar a.article,
+#sidebar a.article:hover {
+    background: #555 !important;
+    color: #fff !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: 100%;
+    padding: 0px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
     }
-
-    /*Allow main to be next to Nav*/
-    .main{
-        width: calc(100% - 200px); /*keeps 100% minus nav size*/
-        margin-left: 200px;
+    #sidebar.active {
+        margin-left: 0;
     }
-
-    /*Show all nav*/
-    nav.sidebar{
-        margin-left: 0px;
-        float: left;
+    #sidebarCollapse span {
+        display: none;
     }
-    /*Show hidden items on nav*/
-    nav.sidebar .forAnimate{
-        opacity: 1;
-    }
-}
-
-nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
-    color: #CCC;
-    background-color: transparent;
-}
-
-nav:hover .forAnimate{
-    opacity: 1;
-}
-section{
-    padding-left: 15px;
-}
-
-.sidebar .dropdown-menu>.active>a{
-  background-color: #fff;
-  color: #000;
-}
-
-nav.sidebar .navbar-nav .open .dropdown-menu>li.active>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li.active>a:focus {
-  background-color: #fff;
-  color: #000;
 }

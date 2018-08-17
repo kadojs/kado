@@ -1,61 +1,50 @@
-<nav class="navbar navbar-inverse sidebar" role="navigation">
-  <div class="sidebar-copyright">
+<nav id="sidebar">
+  <div id="sidebar-copyright">
     &copy; {{_currentYear}} <a href="https://www.kado.org" style="color: white;">{{_l.kado}}.</a> {{_l.version}} {{_version}}
   </div>
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
-        <span class="sr-only">{{_l.toggle_sidebar}}</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand">{{_l.navigation}}</a>
-    </div>
-    <div class="navbar-collapse collapse" id="bs-sidebar-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        {{#_nav.group}}
-          {{#nav.length}}
-          <li class="dropdown {{#checkActive}}{{{uri}}},{{{currentUri}}}{{/checkActive}}">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="{{{uri}}}">
-              {{#icon}}
-                <b class="caret"></b>
-                <span>{{name}}</span>
-                <span class="pull-right hidden-xs showopacity glyphicon glyphicon-{{icon}}">&nbsp;</span>
-              {{/icon}}
-              {{^icon}}
-                <span>{{name}}</span>
-              {{/icon}}
-            </a>
-            <ul class="dropdown-menu">
-              {{#nav}}
-              <li class="{{#checkActive}}{{{uri}}},{{{currentUri}}}{{/checkActive}}">
-                <a href="{{{uri}}}">
-                  <span>{{name}}</span>
-                  {{#icon}}
-                    <span class="pull-right hidden-xs showopacity glyphicon glyphicon-{{icon}}">&nbsp;</span>
-                  {{/icon}}
-                </a>
-              </li>
-              {{/nav}}
-            </ul>
-          </li>
-          {{/nav.length}}
-          {{^nav.length}}
+  <div class="sidebar-header">
+    <h3>{{_l.navigation}}</h3>
+  </div>
+  <ul class="list-unstyled components">
+    {{#_nav.group}}
+      {{#nav.length}}
+      <li class="{{#checkActive}}{{{uri}}},{{{currentUri}}}{{/checkActive}}">
+        <a class="dropdown-toggle" data-toggle="collapse" aria-expanded="false" href="#nav{{name}}dropdown">
+          {{#icon}}
+            <span class="fa fa-{{icon}}">&nbsp;</span>
+            <span>{{name}}</span>
+          {{/icon}}
+          {{^icon}}
+            <span>{{name}}</span>
+          {{/icon}}
+        </a>
+        <ul class="collapse list-unstyled" id="nav{{name}}dropdown">
+          {{#nav}}
           <li class="{{#checkActive}}{{{uri}}},{{{currentUri}}}{{/checkActive}}">
             <a href="{{{uri}}}">
               {{#icon}}
-                <span>{{name}}</span>
-                <span class="pull-right hidden-xs showopacity glyphicon glyphicon-{{icon}}">&nbsp;</span>
+                <span class="fa fa-{{icon}}">&nbsp;</span>
               {{/icon}}
-              {{^icon}}
-                <span>{{name}}</span>
-              {{/icon}}
+              <span>{{name}}</span>
             </a>
           </li>
-          {{/nav.length}}
-        {{/_nav.group}}
-      </ul>
-    </div>
-  </div>
+          {{/nav}}
+        </ul>
+      </li>
+      {{/nav.length}}
+      {{^nav.length}}
+      <li class="{{#checkActive}}{{{uri}}},{{{currentUri}}}{{/checkActive}}">
+        <a href="{{{uri}}}">
+          {{#icon}}
+            <span class="fa fa-{{icon}}">&nbsp;</span>
+            <span>{{name}}</span>
+          {{/icon}}
+          {{^icon}}
+            <span>{{name}}</span>
+          {{/icon}}
+        </a>
+      </li>
+      {{/nav.length}}
+    {{/_nav.group}}
+  </ul>
 </nav>

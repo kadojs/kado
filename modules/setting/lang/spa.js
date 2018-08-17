@@ -8,6 +8,8 @@ module.exports = {
   'setting_list': 'Lista de ajustes',
   'setting': 'Ajuste',
   'default': 'Defecto',
+  'name': 'Nombre',
+  'path': 'Camino',
   'value': 'Valor',
   'edit_setting': 'Editar la configuración',
   'changes_wont_take_affect_until_restart': 'Los cambios no tendrán efecto ' +

@@ -7,6 +7,7 @@ module.exports = {
   '_module_lang': 'spa',
   'create_blog': 'Blog creativo',
   'blog_list': 'Lista de blogs',
+  'update_blog': 'Actualizar blog',
   'title': 'Título',
   'created': 'Creado',
   'modified': 'Modificado',

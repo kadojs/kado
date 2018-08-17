@@ -1,3 +1,7 @@
+html, body{
+  font-family: Helvetica Neue, Helvetica, Arial, serif;
+}
+
 .kado-toolbar {
   background: #eee;
   padding: 0 20px 0 5px;

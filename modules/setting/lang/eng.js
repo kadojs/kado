@@ -8,6 +8,8 @@ module.exports = {
   'setting_list': 'Setting List',
   'setting': 'Setting',
   'default': 'Default',
+  'name': 'Name',
+  'path': 'Path',
   'value': 'Value',
   'edit_setting': 'Edit Setting',
   'changes_wont_take_affect_until_restart': 'Changes wont take affect until ' +
