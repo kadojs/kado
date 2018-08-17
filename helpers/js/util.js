@@ -12,6 +12,6 @@ window._printSetting = function _printSetting(text,type,row){
 }
 
 window._isActive = function _isActive(text){
-  let icon = ('true' === text || true === text) ? 'check' : 'remove'
+  let icon = ('true' === text || true === text) ? 'check' : 'times'
   return '<span class="fa fa-' + icon + '">&nbsp;</span>'
 }
