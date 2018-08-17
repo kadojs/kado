@@ -4,35 +4,25 @@
     <form class="form form-horizontal" action="/setting/save" method="post" role="form">
       <input type="hidden" name="path" value="{{setting.path}}" />
       <div class="form-group">
-        <label class="control-label col-sm-2">{{_l.setting.name}}</label>
-        <div class="col-sm-10">
-          <div class="form-control-static">{{setting.name}}</div>
-        </div>
+        <label>{{_l.setting.name}}</label>
+        <div class="form-control-static">{{setting.name}}</div>
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-2">{{_l.setting.path}}</label>
-        <div class="col-sm-10">
-          <div class="form-control-static">{{setting.path}}</div>
-        </div>
+        <label>{{_l.setting.path}}</label>
+        <div class="form-control-static">{{setting.path}}</div>
       </div>
       {{#setting.defaultValue}}
         <div class="form-group">
-          <label class="control-label col-sm-2">{{_l.setting.default}}</label>
-          <div class="col-sm-10">
-            <div class="form-control-static">{{setting.defaultValue}}</div>
-          </div>
+          <label>{{_l.setting.default}}</label>
+          <div class="form-control-static">{{setting.defaultValue}}</div>
         </div>
       {{/setting.defaultValue}}
       <div class="form-group">
-        <label class="control-label col-sm-2">{{_l.setting.value}}</label>
-        <div class="col-sm-10">
-          <input class="form-control" type="text" placeholder="{{setting.defaultValue}}" value="{{setting.value}}" />
-        </div>
+        <label>{{_l.setting.value}}</label>
+        <input class="form-control" type="text" placeholder="{{setting.defaultValue}}" value="{{setting.value}}" />
       </div>
       <div class="form-group">
-        <div class="colsm-offset-2 col-sm-10">
-          <button class="btn btn-success" type="submit">{{_l.save}}</button>
-        </div>
+        <button class="btn btn-success" type="submit">{{_l.save}}</button>
       </div>
       <div class="alert alert-warning">
         {{_l.setting.changes_wont_take_affect_until_restart}}

@@ -17,45 +17,31 @@
     <form class="form form-horizontal" action="/staff/save" method="post" role="form">
       <input type="hidden" name="id" value="{{staff.id}}" />
       <div class="form-group">
-        <label class="control-label col-sm-2">{{_l.staff.name}}</label>
-        <div class="col-sm-10">
-          <input class="form-control" type="text" name="staffName" value="{{staff.name}}" placeholder="{{_l.staff.name}}" />
-        </div>
+        <label>{{_l.staff.name}}</label>
+        <input class="form-control" type="text" name="staffName" value="{{staff.name}}" placeholder="{{_l.staff.name}}" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-2">{{_l.staff.email}}</label>
-        <div class="col-sm-10">
-          <input class="form-control" type="text" name="staffEmail" value="{{staff.email}}" placeholder="{{_l.staff.email}}" />
-        </div>
+        <label>{{_l.staff.email}}</label>
+        <input class="form-control" type="text" name="staffEmail" value="{{staff.email}}" placeholder="{{_l.staff.email}}" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-2">Last Password Change {{timezone}}</label>
-        <div class="col-sm-10 mono">
-          <div class="form-control-static">{{#_printDate}}{{staff.datePassword}}{{/_printDate}}</div>
-        </div>
+        <label>Last Password Change {{timezone}}</label>
+        <div class="form-control-static">{{#_printDate}}{{staff.datePassword}}{{/_printDate}}</div>
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-2">{{_l.staff.password}}</label>
-        <div class="col-sm-10">
-          <input class="form-control" type="password" name="staffPassword" placeholder="{{_l.staff.password}}" />
-        </div>
+        <label>{{_l.staff.password}}</label>
+        <input class="form-control" type="password" name="staffPassword" placeholder="{{_l.staff.password}}" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-2">{{_l.staff.confirm_password}}</label>
-        <div class="col-sm-10">
-          <input class="form-control" type="password" name="staffPasswordConfirm" placeholder="{{_l.staff.confirm_password}}" />
-        </div>
+        <label>{{_l.staff.confirm_password}}</label>
+        <input class="form-control" type="password" name="staffPasswordConfirm" placeholder="{{_l.staff.confirm_password}}" />
       </div>
       <div class="form-group">
-        <label for="staffActive" class="control-label col-sm-2">{{_l.active}}</label>
-        <div class="col-sm-10">
-          <input id="staffActive" type="checkbox" name="staffActive" {{#_is}}{{staff.active}},checked="checked",{{/_is}} />
-        </div>
+        <label for="staffActive">{{_l.active}}</label>
+        <input id="staffActive" type="checkbox" name="staffActive" {{#_is}}{{staff.active}},checked="checked",{{/_is}} />
       </div>
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button class="btn btn-success" type="submit">{{_l.save}}</button>
-        </div>
+        <button class="btn btn-success" type="submit">{{_l.save}}</button>
       </div>
     </form>
   </div>
