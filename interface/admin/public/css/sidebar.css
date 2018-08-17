@@ -31,22 +31,22 @@
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
+    padding: 7px;
     background: #282828;
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
+    padding: 7px 0;
     border-bottom: 1px solid #999;
 }
 
 #sidebar ul p {
     color: #fff;
-    padding: 10px;
+    padding: 7px;
 }
 
 #sidebar ul li a {
-    padding: 10px;
+    padding: 7px;
     color: #fff;
     font-size: 1.1em;
     display: block;
@@ -77,7 +77,7 @@
 
 #sidebar ul ul a {
     font-size: 0.9em !important;
-    padding-left: 30px !important;
+    padding-left: 20px !important;
     background: #444;
 }
 
