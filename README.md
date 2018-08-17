@@ -143,6 +143,7 @@ This format is somewhat self explanatory. However in detail:
 * Implement Language Packs! And add the following languages:
   * English
   * Spanish
+* Implement datatables.net for displaying data
 * Adjust module format in the following ways
   * Drop kado.json and move config entries into main module follow
   * Rename module entry point from `index.js` to `kado.js`
