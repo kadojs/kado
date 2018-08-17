@@ -66,7 +66,7 @@ exports.admin = function(K,app){
   })
   app.get('/{{moduleName}}/list',admin.list)
   app.get('/{{moduleName}}/create',admin.create)
-  app.get('/blog/edit',admin.edit)
+  app.get('/{{moduleName}}/edit',admin.edit)
   app.post('/{{moduleName}}/save',admin.save)
   app.post('/{{moduleName}}/list',admin.listAction)
   //register navigation
