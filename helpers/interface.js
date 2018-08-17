@@ -84,7 +84,6 @@ exports.worker = function(K,interfaceName,interfaceRoot){
    */
   //------------------------------------
   app.locals._basedir = app.get('views')
-  app.locals._S = require('string')
   app.locals._moment = require('moment')
   app.locals._printDate = K.printDate
   //moment no longer supports any method of getting the short timezone

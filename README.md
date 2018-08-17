@@ -137,7 +137,7 @@ This format is somewhat self explanatory. However in detail:
 
 ## Changelog
 
-### 2.2.0
+### 3.0.0
 * Drop pug
 * Implement mustache templates
 * Implement Language Packs! And add the following languages:
