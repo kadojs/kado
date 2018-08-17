@@ -603,7 +603,7 @@ exports.cli = function(args){
       Object.keys(exports.modules).forEach(function(modName){
         let mod = exports.modules[modName]
         if(mod.name === args[2]){
-          let module = require(mod.root)
+          let module = require(mod.root + '/kado.js')
           module.cli(exports,args)
         }
       })
