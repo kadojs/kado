@@ -1,7 +1,7 @@
 {{>header}}
 <div class="container-fluid">
   <div>
-    <h1>{{_l.blog.blog_list}}</h1>
+    <h1>{{_l.setting.setting_list}}</h1>
   </div>
   <table id="table" data-src="local" class="table table-bordered" data-remove-class="btn-warning" data-remove-text="Clear Overrides" data-remove-uri="/setting/list" data-remove="path">
     <thead>
@@ -16,17 +16,17 @@
     {{#list}}
       {{#group}}
         <tr class="info">
-          <td style="padding-left: 20px;">
+          <td style="padding-left: {{lpad}}px;" colspan="5">
             <strong>{{group}}</strong>
+            <div class="text-muted">
+              <small><span>{{path}}</span></small>
+            </div>
           </td>
-          <div class="text-muted">
-            <small><span>{{path}}</span></small>
-          </div>
         </tr>
       {{/group}}
       {{^group}}
-        <tr>
-          <td style="padding-left: 20px">
+        <tr class="{{className}}">
+          <td style="padding-left: {{lpad}}px">
             <a href="/setting/edit?path={{{path}}}">{{name}}</a>
             <div class="text-muted">
               <small><span>{{path}}</small>
@@ -44,9 +44,9 @@
     </tbody>
   </table>
   <script type="text/javascript">
-    $(document).ready(function(){
-      $('#table').DataTable(DataTableConfig());
-    })
+    //$(document).ready(function(){
+    //  $('#table').DataTable(DataTableConfig());
+    //})
   </script>
 </div>
 {{>footer}}

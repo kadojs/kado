@@ -140,6 +140,10 @@ This format is somewhat self explanatory. However in detail:
 ### 2.2.0
 * Drop pug
 * Implement mustache templates
+* Adjust module format in the following ways
+  * Drop kado.json and move config entries into main module follow
+  * Rename module entry point from `index.js` to `kado.js`
+  * Kado now scans for `kado.js` files as modules and has no path expectations
 
 ### 2.1.0
 * Add module generator

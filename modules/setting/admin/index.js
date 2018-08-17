@@ -3,7 +3,6 @@ const K = require('../../../index')
 const P = K.bluebird
 const config = K.config
 const fs = require('graceful-fs')
-const list = K.list
 const ObjectManage = K.ObjectManage
 let definitions = {}
 
@@ -26,6 +25,8 @@ let queryConfig = function(search,start,limit){
   let db = {rows: [], count: 0}
   paths.forEach(function(path){
     let parts = path.split('.')
+    let lpad = parts.length * 20
+    let isMod = config.$get(path) === config.$get('originalConfig.' + path)
     //add a one line search filter :)
     if(search && parts.indexOf(search) < 0) return
     //dont show internals
@@ -35,6 +36,7 @@ let queryConfig = function(search,start,limit){
       db.rows.push({
         path: path,
         parts: parts,
+        lpad: lpad,
         group: parts[parts.length - 1]
       })
     } else {
@@ -42,6 +44,8 @@ let queryConfig = function(search,start,limit){
         db.rows.push({
           path: path,
           parts: parts,
+          lpad: lpad,
+          className: isMod ? 'btn-warn' : '',
           type: definitions[path].type,
           name: definitions[path].name,
           description: definitions[path].description,
@@ -52,6 +56,8 @@ let queryConfig = function(search,start,limit){
         db.rows.push({
           path: path,
           parts: parts,
+          lpad: lpad,
+          className: isMod ? 'btn-warn' : '',
           type: typeof(config.$get(path)),
           name: parts[parts.length - 1],
           description: null,
@@ -91,18 +97,14 @@ let findConfig = function(path){
  * @param {object} res
  */
 exports.list = function(req,res){
-  let limit = +req.query.limit || 20
-  let start = +req.query.start || 0
-  let search = req.query.search || ''
-  if(start < 0) start = 0
-  let result = queryConfig(search,start,limit)
-  res.render(__dirname + '/view/list',{
-    page: list.pagination(start,result.count,limit),
-    count: result.count,
-    search: search,
-    limit: limit,
-    list: result.rows
-  })
+  let result = queryConfig(null,0,10000)
+  if(!result || !result.rows){
+    res.render('error',{error: 'No settings exist?'})
+  } else {
+    res.render(__dirname + '/view/list',{
+      list: result.rows
+    })
+  }
 }
 
 
