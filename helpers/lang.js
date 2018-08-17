@@ -111,6 +111,9 @@ module.exports.scan = function(){
     if(!that.pack[name][module]) that.pack[name][module] = {}
     for(let key in pack){
       if(pack.hasOwnProperty(key)){
+        if(!(that.pack[name][module] instanceof Object)){
+          that.pack[name][module] = {}
+        }
         that.pack[name][module][key] = pack[key]
       }
     }
