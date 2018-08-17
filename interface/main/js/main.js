@@ -44,6 +44,5 @@ require('datatables.net-rowreorder-bs4')(window,$);
 require('datatables.net-select-bs4')(window,$);
 
 //userspace
-require('../../../helpers/js/dashboard')
 require('../../../helpers/js/table')
 require('../../../helpers/js/util')

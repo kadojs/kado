@@ -45,7 +45,6 @@ toWindow('prettyBytes',require('pretty-bytes'))
 toWindow('querystring',require('qs'))
 
 //panel plugins
-require('../../../helpers/js/dashboard')
 require('../../../helpers/js/sidebar')
 require('../../../helpers/js/table')
 require('../../../helpers/js/util')
