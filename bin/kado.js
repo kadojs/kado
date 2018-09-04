@@ -23,7 +23,7 @@ program.command('dbsetup')
   .option('--dbsport <string>','Set the sequelize database port')
   .option('--dbsuser <string>','Set the sequelize database user')
   .option('--dbspassword <string>','Set the sequelize database password')
-  .action(function(cmd){
+  .action((cmd) => {
     if(cmd.dbsequelize){
       K.configure({
         db: {
@@ -41,20 +41,20 @@ program.command('dbsetup')
     log.info('Beginning database setup')
     log.info('Connecting to database')
     K.init()
-      .then(function(){
+      .then(() => {
         if(cmd.dbsequelize){
           log.info('Connecting to sequelize')
           return K.db.sequelize.doConnect()
         }
       })
-      .then(function(){
+      .then(() => {
         log.info('Database connected, initializing...')
       })
-      .catch(function(err){
+      .catch((err) => {
         log.error(err)
         process.exit(1)
       })
-      .finally(function(){
+      .finally(() => {
         log.info('Database setup complete, run this again any time')
         K.db.sequelize.close()
         process.exit()
@@ -66,7 +66,7 @@ program.command('generate')
   .option('--app <string>','Name of this application')
   .option('--modconf <string>','Module config JSON file')
   .option('--stomp','Remove the destination directory if it exists, DANGEROUS!')
-  .action(function(cmd){
+  .action((cmd) => {
     let folder = process.cwd()
     let modconfFile = folder + '/' + cmd.modconf
     if(!modconfFile || !fs.existsSync(modconfFile)){
@@ -78,7 +78,7 @@ program.command('generate')
     let templateFolder = path.resolve(__dirname + '/../kado/_template')
     let fileCount = 0
     if(!cmd.app) cmd.app = 'myapp'
-    K.bluebird.try(function(){
+    K.bluebird.try(() => {
       let folderExists = fs.existsSync(moduleFolder)
       if(folderExists && !cmd.stomp){
         log.error('Module folder already exits')
@@ -90,24 +90,24 @@ program.command('generate')
         log.info('Creating module folder')
       }
     })
-      .then(function(){
+      .then(() => {
         return readdir(templateFolder)
       })
-      .each(function(file){
+      .each((file) => {
         let relativePath = file.replace(templateFolder,'')
         let template = fs.readFileSync(file,{encoding: 'utf-8'})
         log.info('Rendering ' + modconf.moduleName + relativePath)
         let result = Mustache.render(template,modconf)
         let modulePath = path.resolve(moduleFolder + '/' + relativePath)
         return mkdirp(path.dirname(modulePath))
-          .then(function(){
+          .then(() => {
             return fs.writeFileAsync(modulePath,result)
           })
-          .then(function(){
+          .then(() => {
             fileCount++
           })
       })
-      .then(function(){
+      .then(() => {
         log.info('Created ' + fileCount + ' new files!')
         log.info('Module generation complete! Please check: ' + moduleFolder)
         process.exit()
@@ -129,7 +129,7 @@ program.command('bootstrap')
   .option('--dbsport <string>','Set the sequelize database port')
   .option('--dbsuser <string>','Set the sequelize database user')
   .option('--dbspassword <string>','Set the sequelize database password')
-  .action(function(cmd){
+  .action((cmd) => {
     let folder = process.cwd()
     let appFile = path.resolve(folder + '/app.js')
     if(fs.existsSync(appFile)){
@@ -150,7 +150,7 @@ program.command('bootstrap')
     }
     if(cmd.enableBlog) cmd.enableMain = true
     let dbConfig = ''
-    let enableDB = function(name,flag){
+    let enableDB = (name,flag) => {
       if(flag){
         let isFirst = false
         if(!dbConfig){
@@ -177,7 +177,7 @@ program.command('bootstrap')
     }
     enableDB('sequelize',cmd.dbsequelize)
     let interfaceConfig = ''
-    let enableInterface = function(name,flag){
+    let enableInterface = (name,flag) => {
       if(flag){
         let isFirst = false
         if(!interfaceConfig){
@@ -193,7 +193,7 @@ program.command('bootstrap')
     enableInterface('main',cmd.enableMain)
     if(interfaceConfig) interfaceConfig = interfaceConfig + '\n  }'
     let moduleConfig = ''
-    let enableModule = function(name,flag){
+    let enableModule = (name,flag) => {
       if(flag){
         let isFirst = false
         if(!moduleConfig){

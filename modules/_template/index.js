@@ -33,7 +33,7 @@ exports.description = 'Manage and publish {{moduleName}} entries'
  * Export config structure
  * @param {object} config
  */
-exports.config = function(config){
+exports.config = (config) => {
   config.$load({
     {{moduleName}}: {
       title: 'Kado {{moduleTitle}}'
@@ -47,7 +47,7 @@ exports.config = function(config){
  * @param {K} K Master Kado Object
  * @param {K.db} db
  */
-exports.db = function(K,db){
+exports.db = (K,db) => {
   db.sequelize.enabled = true
   db.sequelize.import(__dirname + '/models/{{moduleModelName}}.js')
 }
@@ -58,10 +58,10 @@ exports.db = function(K,db){
  * @param {K} K Master Kado Object
  * @param {object} app
  */
-exports.admin = function(K,app){
+exports.admin = (K,app) => {
   let admin = require('./admin')
   //register routes
-  app.get('/{{moduleName}}',function(req,res){
+  app.get('/{{moduleName}}',(req,res) => {
     res.redirect(301,'/{{moduleName}}/list')
   })
   app.get('/{{moduleName}}/list',admin.list)
@@ -81,7 +81,7 @@ exports.admin = function(K,app){
  * @param {K} K Master Kado Object
  * @param {object} app
  */
-exports.api = function(K,app){
+exports.api = (K,app) => {
   let api = require('./api')
   app.post('/{{moduleName}}/findAll',api.findAll)
   app.post('/{{moduleName}}/find',api.find)
@@ -95,7 +95,7 @@ exports.api = function(K,app){
  * @param {K} K Master Kado Object
  * @param {object} app
  */
-exports.main = function(K,app){
+exports.main = (K,app) => {
   let main = require('./main')
   //register routes
   app.get('/{{moduleName}}',main.index)
@@ -110,7 +110,7 @@ exports.main = function(K,app){
  * @param {K} K Master Kado Object
  * @param {Array} args
  */
-exports.cli = function(K,args){
+exports.cli = (K,args) => {
   args.splice(2,1)
   process.argv = args
   require('./bin/{{moduleName}}')

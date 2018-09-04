@@ -14,10 +14,10 @@ exports._kado ={
  * @param {K} K Master Kado Object
  * @param {object} app
  */
-exports.admin = function(K,app){
+exports.admin = (K,app) => {
   let admin = require('./admin')
   //register routes
-  app.get('/setting',function(req,res){
+  app.get('/setting',(req,res) => {
     res.redirect(301,'/setting/list')
   })
   app.get('/setting/list',admin.list)

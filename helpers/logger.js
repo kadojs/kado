@@ -9,7 +9,7 @@ const moment = require('moment')
  * @param {string} dateFormat
  * @return {winston.Logger}
  */
-exports.setupLogger = function(name,dateFormat){
+exports.setupLogger = (name,dateFormat) => {
   if(!name) name = 'kado'
   name = name.toUpperCase()
   if(!dateFormat) dateFormat = 'YYYY-MM-DD HH:mm:ss.SSS'

@@ -10,14 +10,14 @@ const {{moduleModelName}} = sequelize.models.{{moduleModelName}}
  * @param {object} req
  * @param {object} res
  */
-exports.index = function(req,res){
+exports.index = (req,res) => {
   {{moduleModelName}}.findAll({where: {active: true}, order: [['datePosted','DESC']]})
-    .then(function(results){
+    .then((results) => {
       res.render(__dirname + '/view/list',{
         list: results
       })
     })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }
@@ -28,14 +28,14 @@ exports.index = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.entry = function(req,res){
+exports.entry = (req,res) => {
   {{moduleModelName}}.findOne({where: {uri: req.params.uri}})
-    .then(function(result){
+    .then((result) => {
       res.render(__dirname + '/entry',{
         item: result
       })
     })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }

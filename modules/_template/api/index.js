@@ -11,7 +11,7 @@ const {{moduleModelName}} = sequelize.models.{{moduleModelName}}
  * @param {object} req
  * @param {object} res
  */
-exports.findAll = function(req,res){
+exports.findAll = (req,res) => {
   let limit = +req.query.limit || req.body.limit || 20
   let start = +req.query.start || req.body.start || 0
   let search = req.query.search || req.body.search || ''
@@ -24,10 +24,10 @@ exports.findAll = function(req,res){
     limit: limit,
     order: ['{{moduleTitleField}}']
   })
-    .then(function(result){
+    .then((result) => {
       res.json(result)
     })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }
@@ -38,7 +38,7 @@ exports.findAll = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.find = function(req,res){
+exports.find = (req,res) => {
   let search = req.query.search || req.body.search || ''
   {{moduleModelName}}.find({
     where: sequelize.or({
@@ -46,10 +46,10 @@ exports.find = function(req,res){
     }),
     order: ['{{moduleTitleField}}']
   })
-    .then(function(result){
+    .then((result) => {
       res.json(result)
     })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }
@@ -60,10 +60,10 @@ exports.find = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.save = function(req,res){
+exports.save = (req,res) => {
   let data = req.body
   {{moduleModelName}}.findOne({where: {id: data.id}})
-    .then(function(result){
+    .then((result) => {
       if(!result) result = {{moduleModelName}}.build()
       {{#moduleFields}}
       if(data.{{fieldName}}) result.{{fieldName}} = data.{{fieldName}}
@@ -72,10 +72,10 @@ exports.save = function(req,res){
       if(data.active) result.active = true
       return result.save()
     })
-    .then(function(result){
+    .then((result) => {
       res.json(result)
     })
-    .catch(function(err){
+    .catch((err) => {
       res.json({error: err.message || '{{moduleTitle}} save error'})
     })
 }
@@ -86,13 +86,13 @@ exports.save = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.remove = function(req,res){
+exports.remove = (req,res) => {
   if(!(req.body.remove instanceof Array)) req.body.remove = [req.body.remove]
   list.remove({{moduleModelName}},req.body.remove)
-    .then(function(){
+    .then(() => {
       res.json({success: '{{moduleTitle}} removed successfully'})
     })
-    .catch(function(err){
+    .catch((err) => {
       res.json({error: err.message || '{{moduleTitle}} removal error'})
     })
 }

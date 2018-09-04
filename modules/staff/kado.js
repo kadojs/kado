@@ -17,7 +17,7 @@ exports._kado = {
  * @param {K} K Master Kado Object
  * @param {K.db} db
  */
-exports.db = function(K,db){
+exports.db = (K,db) => {
   db.sequelize.enabled = true
   db.sequelize.import(__dirname + '/model/Staff.js')
 }
@@ -30,16 +30,16 @@ exports.db = function(K,db){
  * @param {string} password
  * @param {function} done
  */
-exports.authenticate = function(K,username,password,done){
+exports.authenticate = (K,username,password,done) => {
   let admin = require('./admin')
-  let userLogin = function(email,password){
+  let userLogin = (email,password) => {
     return admin.doLogin(email,password)
   }
   userLogin(username,password)
-    .then(function(user){
+    .then((user) => {
       done(null,true,user.dataValues)
     })
-    .catch(function(e){
+    .catch((e) => {
       done(e,false)
     })
 }
@@ -50,10 +50,10 @@ exports.authenticate = function(K,username,password,done){
  * @param {K} K Master Kado Object
  * @param {object} app
  */
-exports.admin = function(K,app){
+exports.admin = (K,app) => {
   let admin = require('./admin')
   //staff routes
-  app.get('/staff',function(req,res){
+  app.get('/staff',(req,res) => {
     res.redirect(301,'/staff/list')
   })
   app.get('/staff/list',admin.list)
@@ -70,7 +70,7 @@ exports.admin = function(K,app){
  * @param {K} K Master Kado Object
  * @param {Array} args
  */
-exports.cli = function(K,args){
+exports.cli = (K,args) => {
   args.splice(2,1)
   process.argv = args
   require('./bin/staff')

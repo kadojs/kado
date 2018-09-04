@@ -6,7 +6,7 @@
  * @param {string} name
  * @param {*} val
  */
-let toWindow = function(name,val){
+let toWindow = (name,val) => {
   window[name] = val
 }
 

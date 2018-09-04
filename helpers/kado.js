@@ -197,7 +197,7 @@ exports.infant = infant
  * @param {object} req
  * @return {bool}
  */
-exports.isClientJSON = function(req){
+exports.isClientJSON = (req) => {
   return (req.query.json || req.get('accept').match('application/json'))
 }
 
@@ -220,9 +220,9 @@ exports.datatable = require('sequelize-datatable')
  * Remove from model by array of ids
  * @type {object}
  */
-exports.modelRemoveById = function(Model,items){
+exports.modelRemoveById = (Model,items) => {
   const validator = require('validator')
-  return P.try(function(){
+  return P.try(() => {
     if(!(items instanceof Array))
       throw new Error('Invalid data passed for record removal')
     let promises = []
@@ -251,7 +251,7 @@ exports.ObjectManage = ObjectManage
  * @param {string} emptyString
  * @return {string}
  */
-exports.printDate = function(d,emptyString){
+exports.printDate = (d,emptyString) => {
   return (
     d ? moment(d).format('YYYY-MM-DD hh:mm:ssA')
       : ('string' === typeof emptyString) ? emptyString : 'Never'
@@ -271,7 +271,7 @@ exports.config = config
  * @param {object} conf
  * @return {ObjectManage}
  */
-exports.configure = function(conf){
+exports.configure = (conf) => {
   exports.config.$load(conf)
   return exports.config
 }
@@ -281,7 +281,7 @@ exports.configure = function(conf){
  * Get application root
  * @return {string}
  */
-exports.root = function(){
+exports.root = () => {
   return path.resolve(config.root || path.dirname(__dirname))
 }
 
@@ -290,7 +290,7 @@ exports.root = function(){
  * Get the kado folder
  * @return {string}
  */
-exports.dir = function(){
+exports.dir = () => {
   return path.resolve(path.dirname(__dirname))
 }
 
@@ -300,7 +300,7 @@ exports.dir = function(){
  * @param {string} part
  * @return {string}
  */
-exports.path = function(part){
+exports.path = (part) => {
   if(part) return path.resolve(exports.dir() + '/' + part)
   else return exports.dir()
 }
@@ -311,7 +311,7 @@ exports.path = function(part){
  * @param {string} path
  * @return {string}
  */
-exports.tailFile = function(path){
+exports.tailFile = (path) => {
   let log = ''
   if(fs.existsSync(path)){
     let fd = new LineByLine(path)
@@ -331,7 +331,7 @@ exports.tailFile = function(path){
  * @param {string} data
  * @return {string}
  */
-exports.appendFile = function(path,data){
+exports.appendFile = (path,data) => {
   fs.appendFileSync(path,data)
   return data
 }
@@ -343,7 +343,7 @@ exports.appendFile = function(path,data){
  * @param {string} emptyString
  * @return {string}
  */
-exports.printDate = function(d,emptyString){
+exports.printDate = (d,emptyString) => {
   return (
     d ? moment(d).format('YYYY-MM-DD hh:mm:ssA')
       : ('string' === typeof emptyString) ? emptyString : 'Never'
@@ -357,7 +357,7 @@ exports.printDate = function(d,emptyString){
  * @param {object} opts
  * @return {string} output
  */
-exports.execSync = function(cmd,opts){
+exports.execSync = (cmd,opts) => {
   let out = exports.printDate(new Date()) + ' [INFO]: ' + cmd + '\n'
   try {
     out = out + execSync(cmd,opts)
@@ -373,7 +373,7 @@ exports.execSync = function(cmd,opts){
  * @param {string} p
  * @return {string}
  */
-exports.modulePath = function(p){
+exports.modulePath = (p) => {
   process.env.KADO_USER_MODULES = path.resolve(p)
   return process.env.KADO_USER_MODULES
 }
@@ -426,7 +426,7 @@ exports.initComplete = false
  * @type {function} cb
  * @return {P}
  */
-exports.init = function(cb){
+exports.init = (cb) => {
   if('function' !== typeof cb) cb = ()=>{}
   //load any config left in the env for us
   if(process.env.KADO_CONFIG_STRING){
@@ -444,20 +444,20 @@ exports.init = function(cb){
     config.log.dateFormat
   )
   //setup lifecycle logging
-  lifecycle.on('start',function(item){
+  lifecycle.on('start',(item) => {
     exports.log.info('Starting ' + item.title)
   })
-  lifecycle.on('stop',function(item){
+  lifecycle.on('stop',(item) => {
     exports.log.info('Stopping ' + item.title)
   })
-  lifecycle.on('online',function(){
+  lifecycle.on('online',() => {
     exports.log.info('Startup complete')
   })
-  lifecycle.on('offline',function(){
+  lifecycle.on('offline',() => {
     exports.log.info('Shutdown complete')
   })
   exports.log.debug('Beginning startup')
-  let loadConnector = function(file){
+  let loadConnector = (file) => {
     let name = path.basename(file,'.js')
     //check if the connector is registered and enabled
     if(config.db[name] && config.db[name].load){
@@ -465,7 +465,7 @@ exports.init = function(cb){
       exports.db[name] = require(file)()
     }
   }
-  let loadModule = function(file){
+  let loadModule = (file) => {
     let module = new ObjectManage(require(file)._kado)
     if(!module.name) module.name = path.basename(file,'.json')
     module.root = path.dirname(file)
@@ -484,33 +484,33 @@ exports.init = function(cb){
   let dbGlob = process.env.KADO_ROOT + '/db/*.js'
   let sysGlob = process.env.KADO_MODULES + '/**/kado.js'
   let userGlob = process.env.KADO_USER_MODULES + '/**/kado.js'
-  let doScan = function(pattern,handler){
-    return new P(function(resolve){
-      glob(pattern,function(err,files){
+  let doScan = (pattern,handler) => {
+    return new P((resolve) => {
+      glob(pattern,(err,files) => {
         files.forEach(handler)
         resolve()
       })
     })
   }
-  return new P(function(resolve){
+  return new P((resolve) => {
     //scan db connectors
     exports.log.debug('Scanning connectors')
     doScan(dbGlob,loadConnector)
-      .then(function(){
+      .then(() => {
         //scan system modules
         exports.log.debug('Scanning system modules')
         return doScan(sysGlob,loadModule)
       })
-      .then(function(){
+      .then(() => {
         //scan extra modules
         exports.log.debug('Scanning extra modules')
         return doScan(userGlob,loadModule)
       })
-      .then(function(){
+      .then(() => {
         exports.log.debug('Found ' + Object.keys(exports.modules).length +
           ' module(s)')
         exports.log.debug('Setting up data storage access')
-        Object.keys(exports.modules).forEach(function(modKey){
+        Object.keys(exports.modules).forEach((modKey) => {
           if(exports.modules.hasOwnProperty(modKey)){
             let modConf = exports.modules[modKey]
             if(true === modConf.enabled){
@@ -523,7 +523,7 @@ exports.init = function(cb){
           }
         })
         let dbEnabled = 0
-        Object.keys(exports.db).forEach(function(dbKey){
+        Object.keys(exports.db).forEach((dbKey) => {
           if(exports.db.hasOwnProperty(dbKey)){
             let db = exports.db[dbKey]
             if(db.enabled){
@@ -535,7 +535,7 @@ exports.init = function(cb){
         exports.log.debug('Found ' + dbEnabled + ' database connectors')
         exports.log.debug('Connecting to found database connectors')
         let dbConnected = 0
-        Object.keys(exports.db).forEach(function(dbKey){
+        Object.keys(exports.db).forEach((dbKey) => {
           if(exports.db.hasOwnProperty(dbKey)){
             let db = exports.db[dbKey]
             if(db.enabled){
@@ -550,7 +550,7 @@ exports.init = function(cb){
         exports.log.debug(dbConnected + ' connected database connectors')
         exports.log.debug('Scanning interfaces')
         //register interfaces for startup
-        let addInterface = function(name){
+        let addInterface = (name) => {
           exports.interfaces[name] = infant.parent(
             config.interface[name].path,
             {
@@ -563,15 +563,15 @@ exports.init = function(cb){
             })
           lifecycle.add(
             name,
-            function(done){
+            (done) => {
               exports.interfaces[name].start(done)
             },
-            function(done){
+            (done) => {
               exports.interfaces[name].stop(done)
             }
           )
         }
-        Object.keys(config.interface).forEach(function(name){
+        Object.keys(config.interface).forEach((name) => {
           //web panel
           if(
             true === config.$get(['interface',name,'enabled']) &&
@@ -597,10 +597,10 @@ exports.init = function(cb){
  * CLI Access to modules
  * @param {Array} args
  */
-exports.cli = function(args){
+exports.cli = (args) => {
   exports.init()
-    .then(function(){
-      Object.keys(exports.modules).forEach(function(modName){
+    .then(() => {
+      Object.keys(exports.modules).forEach((modName) => {
         let mod = exports.modules[modName]
         if(mod.name === args[2]){
           let module = require(mod.root + '/kado.js')
@@ -615,11 +615,11 @@ exports.cli = function(args){
  * Start master
  * @param {function} done
  */
-exports.start = function(done){
-  if(!done) done = function(){}
+exports.start = (done) => {
+  if(!done) done = () => {}
   exports.init()
-    .then(function(){
-      lifecycle.start(function(err){
+    .then(() => {
+      lifecycle.start((err) => {
         if(err) throw err
         done()
       })
@@ -631,12 +631,12 @@ exports.start = function(done){
  * Stop master
  * @param {function} done
  */
-exports.stop = function(done){
-  return new P(function(resolve){
-    if(!done) done = function(){}
+exports.stop = (done) => {
+  return new P((resolve) => {
+    if(!done) done = () => {}
     //start the shutdown process
     exports.log.info('Beginning shutdown')
-    lifecycle.stop(function(err){
+    lifecycle.stop((err) => {
       if(err) throw err
       done()
       resolve()
@@ -650,13 +650,13 @@ exports.stop = function(done){
  * Rapidly start Kado
  * @param {string} name - name of app
  */
-exports.go = function(name){
-  return new P(function(resolve){
+exports.go = (name) => {
+  return new P((resolve) => {
     if(process.argv.length <= 2){
       exports.infant.child(
         name,
-        function(done){
-          exports.start(function(err){
+        (done) => {
+          exports.start((err) => {
             if(err) return done(err)
             exports.log.info(name.toUpperCase() + ' started!')
             done()
@@ -664,8 +664,8 @@ exports.go = function(name){
 
           })
         },
-        function(done){
-          exports.stop(function(err){
+        (done) => {
+          exports.stop((err) => {
             if(err) return done(err)
             exports.log.info(name.toUpperCase() + ' stopped!')
             done()

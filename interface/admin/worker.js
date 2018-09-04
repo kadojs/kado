@@ -3,20 +3,20 @@ const K = require('../../index')
 const interfaceRoot = __dirname
 const interfaceName = 'admin'
 let worker = K.iface.worker(K,interfaceName,interfaceRoot)
-worker.enableSession(function(app){
+worker.enableSession((app) => {
   let flash = require('connect-flash')
   app.use(flash())
-  app.use(function(req,res,next){
+  app.use((req,res,next) => {
     res.locals.flash = worker.flashHandler(req)
     next()
   })
 })
-worker.setupLang(function(){
+worker.setupLang(() => {
   //activate lang pack
   K.log.debug(Object.keys(K.lang.pack).length +
     ' ' + interfaceName + ' language packs activated')
 })
-worker.enableHtml(function(app){
+worker.enableHtml((app) => {
   const mustacheExpress = require('mustache-express')
   const serveStatic = require('serve-static')
   const path = require('path')
@@ -50,17 +50,17 @@ worker.enableHtml(function(app){
   //static files
   app.use(serveStatic(interfaceRoot + '/public'))
 })
-worker.setup(function(app){
+worker.setup((app) => {
   //login
-  app.post('/login',function(req,res){
+  app.post('/login',(req,res) => {
     let promises = []
     let authTried = 0
     let invalidLoginError = new Error('Invalid login')
-    Object.keys(K.modules).forEach(function(modName){
+    Object.keys(K.modules).forEach((modName) => {
       if(K.modules.hasOwnProperty(modName)){
         let modConf = K.modules[modName]
         if(modConf.admin && true === modConf.admin.providesAuthentication){
-          promises.push(new K.bluebird(function(resolve,reject){
+          promises.push(new K.bluebird((resolve,reject) => {
             let mod = require(modConf.root + '/kado.js')
             if('function' === typeof mod.authenticate){
               authTried++
@@ -68,7 +68,7 @@ worker.setup(function(app){
                 K,
                 req.body.email,
                 req.body.password,
-                function(err,authValid,sessionValues){
+                (err,authValid,sessionValues) => {
                   if(err){
                     return reject(err)
                   }
@@ -89,7 +89,7 @@ worker.setup(function(app){
       }
     })
     K.bluebird.all(promises)
-      .then(function(){
+      .then(() => {
         if(0 === authTried){
           K.log.warn('No authentication provider modules enabled')
           throw invalidLoginError
@@ -97,23 +97,23 @@ worker.setup(function(app){
         req.flash('success','Login success')
         res.redirect('/')
       })
-      .catch(function(err){
+      .catch((err) => {
         req.flash('error',err.message || 'Invalid login')
         res.redirect('/login')
       })
   })
-  app.get('/login',function(req,res){
+  app.get('/login',(req,res) => {
     res.render('login')
   })
-  app.get('/logout',function(req,res){
+  app.get('/logout',(req,res) => {
     req.session.destroy()
     delete res.locals._staff
     res.redirect(301,'/login')
   })
   //auth protection
-  app.use(function(req,res,next){
+  app.use((req,res,next) => {
     //private
-    if(!req.session._staff && req.url.indexOf('/login') < 0){
+    if((!req.ssession || !req.session._staff) && req.url.indexOf('/login') < 0){
       res.redirect('/login')
     } else if(req.session._staff){
       res.locals._staff = req.session._staff
@@ -125,7 +125,7 @@ worker.setup(function(app){
     }
   })
   //home page
-  app.get('/',function(req,res){
+  app.get('/',(req,res) => {
     res.render('home')
   })
   //add default navbar entries
@@ -136,10 +136,10 @@ if(require.main === module){
   K.infant.worker(
     worker.server,
     K.config.name + ':' + interfaceName + ':worker',
-    function(done){
+    (done) => {
       worker.start(done)
     },
-    function(done){
+    (done) => {
       worker.stop(done)
     }
   )

@@ -13,7 +13,7 @@ exports._kado = {
  * Export config structure
  * @param {object} config
  */
-exports.config = function(config){
+exports.config = (config) => {
   config.$load({
     blog: {
       title: 'Kado Blog'
@@ -27,7 +27,7 @@ exports.config = function(config){
  * @param {K} K Master Kado Object
  * @param {K.db} db
  */
-exports.db = function(K,db){
+exports.db = (K,db) => {
   db.sequelize.enabled = true
   db.sequelize.import(__dirname + '/models/Blog.js')
 }
@@ -38,10 +38,10 @@ exports.db = function(K,db){
  * @param {K} K Master Kado Object
  * @param {object} app
  */
-exports.admin = function(K,app){
+exports.admin = (K,app) => {
   let admin = require('./admin')
   //register routes
-  app.get('/blog',function(req,res){
+  app.get('/blog',(req,res) => {
     res.redirect(301,'/blog/list')
   })
   app.get('/blog/list',admin.list)
@@ -62,7 +62,7 @@ exports.admin = function(K,app){
  * @param {K} K Master Kado Object
  * @param {object} app
  */
-exports.main = function(K,app){
+exports.main = (K,app) => {
   let main = require('./main')
   //register routes
   app.get('/blog',main.index)
@@ -77,7 +77,7 @@ exports.main = function(K,app){
  * @param {K} K Master Kado Object
  * @param {Array} args
  */
-exports.cli = function(K,args){
+exports.cli = (K,args) => {
   args.splice(2,1)
   process.argv = args
   require('./bin/blog')

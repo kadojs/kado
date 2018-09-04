@@ -10,15 +10,15 @@ const Blog = sequelize.models.Blog
  * @param {object} req
  * @param {object} res
  */
-exports.list = function(req,res){
+exports.list = (req,res) => {
   if(!req.query.length){
     res.render(__dirname + '/view/list')
   } else {
     K.datatable(Blog,req.query)
-      .then(function(result){
+      .then((result) => {
         res.json(result)
       })
-      .catch(function(err){
+      .catch((err) => {
         res.json({error: err.message})
       })
   }
@@ -30,7 +30,7 @@ exports.list = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.create = function(req,res){
+exports.create = (req,res) => {
   res.render(__dirname + '/view/create')
 }
 
@@ -40,13 +40,13 @@ exports.create = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.edit = function(req,res){
+exports.edit = (req,res) => {
   Blog.findOne({where: {id: req.query.id}})
-    .then(function(blog){
+    .then((blog) => {
       if(!blog) throw new Error('Blog entry not found')
       res.render(__dirname + '/view/edit',{blog: blog})
     })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }
@@ -57,12 +57,12 @@ exports.edit = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.save = function(req,res){
+exports.save = (req,res) => {
   let data = req.body
   let isNew = false
   let json = K.isClientJSON(req)
   Blog.findOne({where: {id: data.id}})
-    .then(function(blog){
+    .then((blog) => {
       if(!blog){
         isNew = true
         blog = Blog.build()
@@ -73,7 +73,7 @@ exports.save = function(req,res){
       if(data.active) blog.active = true
       return blog.save()
     })
-    .then(function(blog){
+    .then((blog) => {
       if(json){
         res.json({blog: blog})
       } else {
@@ -85,7 +85,7 @@ exports.save = function(req,res){
         res.redirect('/blog/list')
       }
     })
-    .catch(function(err){
+    .catch((err) => {
       if(json){
         res.json({error: err.message})
       } else {
@@ -100,12 +100,12 @@ exports.save = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.remove = function(req,res){
+exports.remove = (req,res) => {
   let json = K.isClientJSON(req)
   if(req.query.id) req.body.remove = req.query.id.split(',')
   if(!(req.body.remove instanceof Array)) req.body.remove = [req.body.remove]
   K.modelRemoveById(Blog,req.body.remove)
-    .then(function(){
+    .then(() => {
       if(json){
         res.json({success: 'Blog removed'})
       } else {
@@ -113,7 +113,7 @@ exports.remove = function(req,res){
         res.redirect('/blog/list')
       }
     })
-    .catch(function(err){
+    .catch((err) => {
       if(json){
         res.json({error: err.message || 'Blog removal error'})
       } else {

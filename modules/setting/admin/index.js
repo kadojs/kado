@@ -20,10 +20,10 @@ P.promisifyAll(fs)
  * @param {number} limit
  * @return {{rows: Array, count: number}}
  */
-let queryConfig = function(search,start,limit){
+let queryConfig = (search,start,limit) => {
   let paths = config.$getPaths()
   let db = {rows: [], count: 0}
-  paths.forEach(function(path){
+  paths.forEach((path) => {
     let parts = path.split('.')
     let isMod = config.$get(path) !== config.$get('originalConfig.' + path)
     //add a one line search filter :)
@@ -72,10 +72,10 @@ let queryConfig = function(search,start,limit){
  * @param {string} path
  * @return {object}
  */
-let findConfig = function(path){
+let findConfig = (path) => {
   let result = queryConfig()
   let entry = {}
-  result.rows.forEach(function(item){
+  result.rows.forEach((item) => {
     if(item.path === path) entry = item
   })
   return entry
@@ -87,7 +87,7 @@ let findConfig = function(path){
  * @param {object} req
  * @param {object} res
  */
-exports.list = function(req,res){
+exports.list = (req,res) => {
   let result = queryConfig(null,0,10000)
   if(!result || !result.rows){
     res.render('error',{error: 'No settings exist?'})
@@ -104,18 +104,18 @@ exports.list = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.listAction = function(req,res){
+exports.listAction = (req,res) => {
   let data = req.body
   let settingsFile = process.env.KADO_ROOT + '/settings.json'
-  P.try(function(){
+  P.try(() => {
     //load settings overrides
     if(!fs.existsSync(settingsFile)){
       return fs.writeFileAsync(settingsFile,JSON.stringify({}))
     }
   })
-    .then(function(){
+    .then(() => {
       let settings = new ObjectManage(require(settingsFile))
-      data.remove.forEach(function(path){
+      data.remove.forEach((path) => {
         //remove boot config
         settings.$remove(path)
         //revert running config
@@ -124,11 +124,11 @@ exports.listAction = function(req,res){
       //write changes
       return fs.writeFileAsync(settingsFile,JSON.stringify(settings.$strip()))
     })
-    .then(function(){
+    .then(() => {
       req.flash('success','Setting overrides cleared')
       res.redirect('/setting/list')
     })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }
@@ -139,13 +139,13 @@ exports.listAction = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.edit = function(req,res){
-  P.try(function(){
+exports.edit = (req,res) => {
+  P.try(() => {
     let setting = findConfig(req.query.path)
     if(!setting) throw new Error('Setting not found')
     res.render(__dirname + '/view/edit',{setting: setting})
   })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }
@@ -156,16 +156,16 @@ exports.edit = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.save = function(req,res){
+exports.save = (req,res) => {
   let data = req.body
   let settingsFile = process.env.KADO_ROOT + '/settings.json'
-  P.try(function(){
+  P.try(() => {
     //load settings overrides
     if(!fs.existsSync(settingsFile)){
       return fs.writeFileAsync(settingsFile,JSON.stringify({}))
     }
   })
-    .then(function(){
+    .then(() => {
       let settings = new ObjectManage(require(settingsFile))
       //save for restart
       settings.$set(data.path,data.value)
@@ -174,11 +174,11 @@ exports.save = function(req,res){
       //write changes
       return fs.writeFileAsync(settingsFile,JSON.stringify(settings.$strip()))
     })
-    .then(function(){
+    .then(() => {
       req.flash('success','Settings saved')
       res.redirect('/setting/edit?path=' + data.path)
     })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }

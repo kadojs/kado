@@ -23,8 +23,8 @@ program
   .option('-p, --password <s>','Password')
   .option('-n, --name <s>','Name')
   .description('Create new staff member')
-  .action(function(opts){
-    P.try(function(){
+  .action((opts) => {
+    P.try(() => {
       log.log('info','Creating staff member')
       if(!opts.email || !opts.password)
         throw new Error('Email and password are required')
@@ -37,11 +37,11 @@ program
       }
       return Staff.create(doc)
     })
-      .then(function(){
+      .then(() => {
         log.log('info','Staff member created!')
         process.exit()
       })
-      .catch(function(err){
+      .catch((err) => {
         log.log('error', 'Error: Failed to create staff member: ' + err)
         process.exit()
       })
@@ -54,10 +54,10 @@ program
   .option('-p, --password <s>','Password')
   .option('-n, --name <s>','Name')
   .description('Update existing staff member')
-  .action(function(opts){
+  .action((opts) => {
     if(!opts.email) throw new Error('Email is required')
     Staff.find({where: {email: opts.email}})
-      .then(function(result){
+      .then((result) => {
         let doc = result
         if(opts.newEmail) doc.email = opts.newEmail
         if(opts.password){
@@ -68,11 +68,11 @@ program
         if(opts.name) doc.name = opts.name
         return doc.save()
       })
-      .then(function(){
+      .then(() => {
         log.log('info','Staff member updated successfully!')
         process.exit()
       })
-      .catch(function(err){
+      .catch((err) => {
         if(err) throw new Error('Could not save staff member: ' + err)
       })
   })
@@ -81,14 +81,14 @@ program
   .command('remove')
   .option('-e, --email <s>','Email of staff member to remove')
   .description('Remove staff member')
-  .action(function(opts){
+  .action((opts) => {
     if(!opts.email) throw new Error('Email is required... exiting')
     Staff.destroy({where: {email: opts.email}})
-      .then(function(){
+      .then(() => {
         log.log('info','Staff member removed successfully!')
         process.exit()
       })
-      .catch(function(err){
+      .catch((err) => {
         log.log('error', 'Error: Could not remove staff member: ' + err)
       })
   })
@@ -96,22 +96,22 @@ program
 program
   .command('list')
   .description('List staff members')
-  .action(function(){
+  .action(() => {
     let table = new Table({
       head: ['Id','Email','Name','Active']
     })
     let staffCount = 0
     Staff.findAll()
-      .each(function(row){
+      .each((row) => {
         staffCount++
         table.push([row.id,row.email,row.name,row.active ? 'Yes' : 'No'])
       })
-      .then(function(){
+      .then(() => {
         if(!staffCount) table.push(['No staff members'])
         console.log(table.toString())
         process.exit()
       })
-      .catch(function(err){
+      .catch((err) => {
         log.log('error', 'Error: Could not list staff members ' +
           err.stack)
         process.exit()

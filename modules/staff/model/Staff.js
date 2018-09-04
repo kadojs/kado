@@ -12,7 +12,7 @@ P.promisifyAll(bcrypt)
  * @param {object} DataTypes
  * @return {object}
  */
-module.exports = function(sequelize,DataTypes) {
+module.exports = (sequelize,DataTypes) => {
   return sequelize.define('Staff',{
       email: {
         type: DataTypes.STRING(191),
@@ -22,7 +22,7 @@ module.exports = function(sequelize,DataTypes) {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-        set: function(v){
+        set: (v) => {
           //dont re-encrypt crypted passwords
           if(v.match(/^\$2[abxy]\$12\$/)) return this.setDataValue('password',v)
           return this.setDataValue(

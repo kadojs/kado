@@ -10,12 +10,12 @@ const validator = require('validator')
  * @param {object} DataTypes
  * @return {object}
  */
-module.exports = function(sequelize,DataTypes) {
+module.exports = (sequelize,DataTypes) => {
   return sequelize.define('Blog',{
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      set: function(v){
+      set: (v) => {
         this.setDataValue('uri',uriname(v))
         this.setDataValue('title',v)
       }
@@ -27,7 +27,7 @@ module.exports = function(sequelize,DataTypes) {
     content: {
       type: DataTypes.TEXT,
       allowNull: true,
-      set: function(value){
+      set: (value) => {
         value = validator.trim(value)
         value = validator.escape(value)
         let html = markdown.toHTML(value)

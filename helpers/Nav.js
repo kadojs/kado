@@ -1,7 +1,7 @@
 'use strict';
 
-let checkActive = function(){
-  return function(text,render){
+let checkActive = () => {
+  return (text,render) => {
     let val = render(text)
     let parts = val.split(',')
     return parts.length > 1 && parts[0] === parts[1] ? 'active' : ''
@@ -13,7 +13,7 @@ let checkActive = function(){
  * Nav constructor
  * @constructor
  */
-let Nav = function(){
+let Nav = () => {
   this.nav = {}
   this.group = []
 }
@@ -25,7 +25,7 @@ let Nav = function(){
  * @param {string} name
  * @param {string} icon
  */
-Nav.prototype.addGroup = function(uri,name,icon){
+Nav.prototype.addGroup = (uri,name,icon) => {
   this.nav[name] = []
   this.group.push({
     uri: uri,
@@ -44,7 +44,7 @@ Nav.prototype.addGroup = function(uri,name,icon){
  * @param {string} name
  * @param {string} icon
  */
-Nav.prototype.addItem = function(group,uri,name,icon){
+Nav.prototype.addItem = (group,uri,name,icon) => {
   if(!this.nav[group]) this.addGroup(group)
   this.nav[group].push({
     uri: uri,

@@ -66,12 +66,12 @@ The properties of this object that Kado requires are:
 * `name` - (string) Name of the module
 * `title` - (string) Title of the module
 * `description` - (string) Description of the module
-* `db` - (function(K,db)) function to setup db requirements and key maps
+* `db` - ((K,db)=>{}) function to setup db requirements and key maps
 * `authenticate` - (function(K,username,password,done)) function to authenticate system users, optional, rare
 * `admin` - (function(K,app)) Register for use in the admin interface setup routes
-* `api` - (function(K,app)) Register for use in the API interface setup routes
-* `main` - (function(K,app)) Register for use in the main interface setup routes
-* `cli` - (function(K,app)) Register for use in the cli routing engine hand off to module script
+* `api` - ((K,app)=>{}) Register for use in the API interface setup routes
+* `main` - ((K,app)=>{}) Register for use in the main interface setup routes
+* `cli` - ((K,app)=>{}) Register for use in the cli routing engine hand off to module script
 
 Below is an abbreviated module
 
@@ -80,20 +80,20 @@ exports.kado = true
 exports.name = 'mymod'
 exports.title = 'MyMod'
 exports.description = 'My module'
-exports.db = function(K,db){
+exports.db = (K,db) => {
   db.sequelize.enabled = true
   db.sequelize.import(__dirname + '/model/MyModel.js')
 }
-exports.authenticate = function(K,username,password,done){
+exports.authenticate = (K,username,password,done) => {
   //everyone wins
   done(null,true)
 }
-exports.admin = function(K,app){
+exports.admin = (K,app) => {
   let admin = require('./admin')
   app.get('/mymod/list',admin.list)
   app.post('/mymod/save',admin.save)
 }
-exports.cli = function(K,args){
+exports.cli = (K,args) => {
   args.splice(2,1)
   process.argv = args
   require('./bin/mymod')

@@ -9,10 +9,10 @@ const request = require('request')
 //make some promises
 K.bluebird.promisifyAll(request)
 
-describe('kado',function(){
+describe('kado',() => {
   this.timeout(20000)
   //start servers and create a staff
-  before(function(){
+  before(() => {
     K.configure({
       root: __dirname,
       db: {
@@ -36,99 +36,99 @@ describe('kado',function(){
     return K.go('test')
   })
   //remove staff and stop services
-  after(function(){
+  after(() => {
     return K.stop()
   })
   //test interfaces
-  describe('generator',function(){
-    it('should create app.js',function(){
+  describe('generator',() => {
+    it('should create app.js',() => {
       if(fs.existsSync('app.js.bak')) fs.unlinkSync('app.js.bak')
       if(fs.existsSync('app.js')) fs.renameSync('app.js','app.js.bak')
       return exec(
         'node bin/kado bootstrap --app Test ' +
         '--enable-all --dbsequelize --dbsuser kado --dbspassword kado'
       )
-        .then(function(){
+        .then(() => {
           expect(fs.existsSync('app.js')).to.equal(true)
         })
     })
   })
-  describe('interfaces',function(){
-    describe('admin',function(){
+  describe('interfaces',() => {
+    describe('admin',() => {
       const baseUrl = 'http://127.0.0.1:3000'
-      it('should be up',function(){
+      it('should be up',() => {
         return request.getAsync({
           url: baseUrl
         })
-          .then(function(res){
+          .then((res) => {
             expect(res.statusCode).to.equal(200)
             expect(res.body).to.match(/<html>/)
           })
       })
-      it('should have a login page',function(){
+      it('should have a login page',() => {
         return request.getAsync({
           url: baseUrl + '/login'
         })
-          .then(function(res){
+          .then((res) => {
             expect(res.statusCode).to.equal(200)
             expect(res.body).to.match(/login/i)
           })
       })
-      describe('staff cli',function(){
-        it('should allow staff sanitizing from cli',function(){
+      describe('staff cli',() => {
+        it('should allow staff sanitizing from cli',() => {
           return exec('node app staff remove -e test@test.com')
-            .then(function(result){
+            .then((result) => {
               expect(result).to.match(/Staff member removed successfully!/i)
             })
         })
-        it('should allow staff creation from cli',function(){
+        it('should allow staff creation from cli',() => {
           return exec('node app staff create -e test@test.com -p test -n test')
-            .then(function(result){
+            .then((result) => {
               expect(result).to.match(/Staff member created!/i)
             })
         })
-        it('should allow staff password change from cli',function(){
+        it('should allow staff password change from cli',() => {
           return exec('node app staff update -e test@test.com -p test2 -n test')
-            .then(function(result){
+            .then((result) => {
               expect(result).to.match(/Staff member updated successfully!/i)
             })
         })
-        it('should allow staff deletion from cli',function(){
+        it('should allow staff deletion from cli',() => {
           return exec('node app staff remove -e test@test.com')
-            .then(function(result){
+            .then((result) => {
               expect(result).to.match(/Staff member removed successfully!/i)
             })
         })
       })
-      describe('blog cli',function(){
+      describe('blog cli',() => {
         let blogId = null
-        after(function(){
+        after(() => {
           if(blogId) return exec('node app blog remove -i ' + blogId)
         })
-        it('should allow blog creation from cli',function(){
+        it('should allow blog creation from cli',() => {
           return exec('node app blog create -t test -c test')
-            .then(function(result){
+            .then((result) => {
               expect(result).to.match(/Blog entry created: \d+/)
               blogId = result.match(/Blog entry created: (\d+)/)[1]
             })
         })
-        it('should allow blog change from cli',function(){
+        it('should allow blog change from cli',() => {
           return exec('node app blog update -i ' + blogId + ' -t test2 -c test')
-            .then(function(result){
+            .then((result) => {
               expect(result).to.match(/Blog entry updated successfully!/i)
             })
         })
-        it('should allow blog deletion from cli',function(){
+        it('should allow blog deletion from cli',() => {
           return exec('node app blog remove -i ' + blogId)
-            .then(function(result){
+            .then((result) => {
               expect(result).to.match(/Blog entry removed successfully!/i)
               blogId = null
             })
         })
       })
-      describe('routes',function(){
+      describe('routes',() => {
         let cookieJar = null
-        let doLogin = function(){
+        let doLogin = () => {
           cookieJar = request.jar()
           return request.postAsync({
             url: baseUrl + '/login',
@@ -138,47 +138,47 @@ describe('kado',function(){
               password: 'test'
             }
           })
-            .then(function(res){
+            .then((res) => {
               expect(res.body).to.match(/Found. Redirecting to \//)
             })
         }
-        let doLogout = function(){
+        let doLogout = () => {
           return request.getAsync({
             url: baseUrl + '/logout',
             jar: cookieJar
           })
-            .then(function(res){
+            .then((res) => {
               expect(res.body).to.match(/<h2>Login<\/h2>/)
               cookieJar = null
             })
         }
-        before(function(){
+        before(() => {
           return exec('node app staff create -e test@test.com -p test -n test')
-            .then(function(result){
+            .then((result) => {
               expect(result).to.match(/Staff member created!/i)
             })
         })
-        after(function(){
-          return P.try(function(){
+        after(() => {
+          return P.try(() => {
             if(cookieJar){
               return doLogout()
             }
           })
-            .then(function(){
+            .then(() => {
               return exec('node app staff remove -e test@test.com')
             })
-            .then(function(result){
+            .then((result) => {
               expect(result).to.match(/Staff member removed successfully!/i)
             })
         })
-        describe('login',function(){
-          it('should login',function(){
+        describe('login',() => {
+          it('should login',() => {
             return doLogin()
           })
         })
-        describe('blog',function(){
+        describe('blog',() => {
           let blogId = null
-          let removeBlog = function(){
+          let removeBlog = () => {
             return request.postAsync({
               url: baseUrl + '/blog/list',
               jar: cookieJar,
@@ -186,36 +186,36 @@ describe('kado',function(){
                 remove: [blogId]
               }
             })
-              .then(function(res){
+              .then((res) => {
                 expect(res.body).to.match(/Found. Redirecting to \/blog\/list/)
                 blogId = null
               })
           }
-          before(function(){
+          before(() => {
             if(!cookieJar) return doLogin()
           })
-          after(function(){
+          after(() => {
             if(blogId) removeBlog()
           })
-          it('should list',function(){
+          it('should list',() => {
             return request.getAsync({
               url: baseUrl + '/blog/list',
               jar: cookieJar
             })
-              .then(function(res){
+              .then((res) => {
                 expect(res.body).to.match(/Blog/)
               })
           })
-          it('should show creation page',function(){
+          it('should show creation page',() => {
             return request.getAsync({
               url: baseUrl + '/blog/create',
               jar: cookieJar
             })
-              .then(function(res){
+              .then((res) => {
                 expect(res.body).to.match(/Create Entry/)
               })
           })
-          it('should allow creation',function(){
+          it('should allow creation',() => {
             return request.postAsync({
               url: baseUrl + '/blog/save',
               jar: cookieJar,
@@ -224,13 +224,13 @@ describe('kado',function(){
                 content: 'testing the blog'
               }
             })
-              .then(function(res){
+              .then((res) => {
                 expect(res.body).to.match(/Found. Redirecting to \/blog\/list/)
                 expect(+res.headers.blogid).to.be.a('number')
                 blogId = +res.headers.blogid
               })
           })
-          it('should allow modification',function(){
+          it('should allow modification',() => {
             return request.postAsync({
               url: baseUrl + '/blog/save',
               jar: cookieJar,
@@ -240,18 +240,18 @@ describe('kado',function(){
                 content: 'testing the blog 2'
               }
             })
-              .then(function(res){
+              .then((res) => {
                 expect(res.body).to.match(/Found. Redirecting to \/blog\/list/)
                 expect(+res.headers.blogid).to.equal(blogId)
               })
           })
-          it('should allow deletion',function(){
+          it('should allow deletion',() => {
             return removeBlog()
           })
         })
-        describe('staff',function(){
+        describe('staff',() => {
           let staffId = null
-          let removeStaff = function(){
+          let removeStaff = () => {
             return request.postAsync({
               url: baseUrl + '/staff/list',
               jar: cookieJar,
@@ -259,38 +259,38 @@ describe('kado',function(){
                 remove: [staffId]
               }
             })
-              .then(function(res){
+              .then((res) => {
                 expect(res.body).to.match(/Found. Redirecting to \/staff\/list/)
                 staffId = null
               })
           }
-          before(function(){
+          before(() => {
             if(!cookieJar) return doLogin()
           })
-          after(function(){
+          after(() => {
             if(staffId) return removeStaff()
           })
-          it('should list',function(){
+          it('should list',() => {
             return request.getAsync({
               url: baseUrl + '/staff/list',
               jar: cookieJar
             })
-              .then(function(res){
+              .then((res) => {
                 expect(res.body).to.match(/Staff/)
               })
           })
-          it('should show creation page',function(){
+          it('should show creation page',() => {
             return request.getAsync({
               url: baseUrl + '/staff/create',
               jar: cookieJar
             })
-              .then(function(res){
+              .then((res) => {
                 expect(res.body).to.match(/Create Staff/)
               })
           })
-          it('should allow creation',function(){
+          it('should allow creation',() => {
             return exec('node app staff remove -e testing@testing.com')
-              .then(function(){
+              .then(() => {
                 return request.postAsync({
                   url: baseUrl + '/staff/save',
                   jar: cookieJar,
@@ -302,13 +302,13 @@ describe('kado',function(){
                   }
                 })
               })
-              .then(function(res){
+              .then((res) => {
                 expect(res.body).to.match(/Found. Redirecting to \/staff\/list/)
                 expect(+res.headers.staffid).to.be.a('number')
                 staffId = +res.headers.staffid
               })
           })
-          it('should allow modification',function(){
+          it('should allow modification',() => {
             return request.postAsync({
               url: baseUrl + '/staff/save',
               jar: cookieJar,
@@ -320,67 +320,67 @@ describe('kado',function(){
                 staffPasswordConfirm: 'testing2'
               }
             })
-              .then(function(res){
+              .then((res) => {
                 expect(res.body).to.match(/Found. Redirecting to \/staff\/list/)
                 expect(+res.headers.staffid).to.equal(staffId)
               })
           })
-          it('should allow deletion',function(){
+          it('should allow deletion',() => {
             return removeStaff()
           })
         })
-        describe('logout',function(){
-          before(function(){
+        describe('logout',() => {
+          before(() => {
             if(!cookieJar) return doLogin()
           })
-          it('should logout',function(){
+          it('should logout',() => {
             return doLogout()
           })
         })
       })
     })
-    describe('main',function(){
+    describe('main',() => {
       const baseUrl = 'http://127.0.0.1:3002'
-      it('should be up',function(){
+      it('should be up',() => {
         return request.getAsync({
           url: baseUrl
         })
-          .then(function(res){
+          .then((res) => {
             expect(res.statusCode).to.equal(200)
             expect(res.body).to.match(/<html>/)
           })
       })
-      it('should have a home page',function(){
+      it('should have a home page',() => {
         return request.getAsync({
           url: baseUrl
         })
-          .then(function(res){
+          .then((res) => {
             expect(res.statusCode).to.equal(200)
             expect(res.body).to.match(/Welcome to Kado/)
           })
       })
-      describe('routes',function(){
-        describe('blog',function(){
+      describe('routes',() => {
+        describe('blog',() => {
           let blogId = null
-          before(function(){
+          before(() => {
             return exec('node app blog create -t test -c test')
-              .then(function(result){
+              .then((result) => {
                 expect(result).to.match(/Blog entry created: \d+/)
                 blogId = result.match(/Blog entry created: (\d+)/)[1]
               })
           })
-          after(function(){
+          after(() => {
             return exec('node app blog remove -i ' + blogId)
-              .then(function(result){
+              .then((result) => {
                 expect(result).to.match(/Blog entry removed successfully!/i)
                 blogId = null
               })
           })
-          it('should allow viewing',function(){
+          it('should allow viewing',() => {
             return request.getAsync({
               url: baseUrl + '/blog/test'
             })
-              .then(function(res){
+              .then((res) => {
                 expect(res.statusCode).to.equal(200)
                 expect(res.body).to.match(/test/)
               })

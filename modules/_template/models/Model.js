@@ -7,7 +7,7 @@
  * @param {object} DataTypes
  * @return {object}
  */
-module.exports = function(sequelize,DataTypes) {
+module.exports = (sequelize,DataTypes) => {
   return sequelize.define('{{moduleModelName}}',{
     {{#moduleFields}}
     {{fieldName}}: {

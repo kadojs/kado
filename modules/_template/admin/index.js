@@ -11,7 +11,7 @@ const {{moduleModelName}} = sequelize.models.{{moduleModelName}}
  * @param {object} req
  * @param {object} res
  */
-exports.list = function(req,res){
+exports.list = (req,res) => {
   let limit = +req.query.limit || 20
   let start = +req.query.start || 0
   let search = req.query.search || ''
@@ -24,7 +24,7 @@ exports.list = function(req,res){
     limit: limit,
     order: ['{{moduleTitleField}}']
   })
-    .then(function(result){
+    .then((result) => {
       res.render(__dirname + '/view/list',{
         page: list.pagination(start,result.count,limit),
         count: result.count,
@@ -33,7 +33,7 @@ exports.list = function(req,res){
         list: result.rows
       })
     })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }
@@ -44,13 +44,13 @@ exports.list = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.listAction = function(req,res){
+exports.listAction = (req,res) => {
   list.remove({{moduleModelName}},req.body.remove)
-    .then(function(){
+    .then(() => {
       req.flash('success','{{moduleTitle}}(s) removed successfully')
       res.redirect('/{{moduleName}}/list')
     })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }
@@ -61,7 +61,7 @@ exports.listAction = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.create = function(req,res){
+exports.create = (req,res) => {
   res.render(__dirname + '/view/create')
 }
 
@@ -71,13 +71,13 @@ exports.create = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.edit = function(req,res){
+exports.edit = (req,res) => {
   {{moduleModelName}}.findOne({where: {id: req.query.id}})
-    .then(function(result){
+    .then((result) => {
       if(!result) throw new Error('{{moduleTitle}} entry not found')
       res.render(__dirname + '/view/edit',{item: result})
     })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }
@@ -88,10 +88,10 @@ exports.edit = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.save = function(req,res){
+exports.save = (req,res) => {
   let data = req.body
   {{moduleModelName}}.findOne({where: {id: data.id}})
-    .then(function(result){
+    .then((result) => {
       if(!result) result = Blog.build()
       {{#moduleFields}}
       if(data.{{fieldName}}) result.{{fieldName}} = data.{{fieldName}}
@@ -100,7 +100,7 @@ exports.save = function(req,res){
       if(data.active) result.active = true
       return result.save()
     })
-    .then(function(result){
+    .then((result) => {
       let alert = {
         subject: '{{moduleTitle}} entry',
         href: '/{{moduleName}}/edit?id=' + result.id,
@@ -111,7 +111,7 @@ exports.save = function(req,res){
       res.setHeader('{{moduleName}}id',result.id)
       res.redirect('/{{moduleName}}/list')
     })
-    .catch(function(err){
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }

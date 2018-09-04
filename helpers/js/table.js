@@ -1,20 +1,6 @@
 'use strict';
 
-let checkboxToggle = true
-$('#toggle').click(function(){
-  $('table.table td input').prop('checked',checkboxToggle)
-  checkboxToggle = !checkboxToggle
-})
-$('#tableDelete').click(function(){
-  if(!confirm('Are you sure you want to delete these items?')){
-    return false
-  }
-})
-$(document).ready(function(){
-  $('[rel=tooltip]').tooltip()
-})
-
-window.DataTableConfig = function(tableName){
+window.DataTableConfig = (tableName) => {
   if(!tableName) tableName = 'table'
   let tableEl = $('#' + tableName)
   let removeClass = tableEl.attr('data-remove-class')
@@ -32,8 +18,8 @@ window.DataTableConfig = function(tableName){
       {
         text: removeText || 'Remove',
         className: removeClass || 'btn-danger',
-        action: function(e,dt,node,config){
-          let ids = $.map(dt.rows('.selected').data(),function(item){
+        action: (e,dt,node,config) => {
+          let ids = $.map(dt.rows('.selected').data(),(item) => {
             return item.id
           });
           let rowCount = ids.length;
@@ -58,9 +44,9 @@ window.DataTableConfig = function(tableName){
     stateSave: true,
     pageLength: 10,
     lengthMenu: [ [10, 20, 50, 100, 250, -1], [10 ,20, 50, 100, 250, 'All'] ],
-    columns: (function(){
+    columns: (() => {
       let cols = []
-      $('#table th').each(function(i){
+      $('#table th').each((i) => {
         let that = this
         let dataName = $(that).attr('data-name')
         let dataFormat = $(that).attr('data-format')
@@ -69,7 +55,7 @@ window.DataTableConfig = function(tableName){
           name: $(that).text(),
           data: dataName,
           targets: i,
-          render: function(data,type,row){
+          render: (data,type,row) => {
             let dataLink = $(that).attr('data-link')
             let dataUri = $(that).attr('data-uri')
             if(!dataLink && !dataFormat) return data
@@ -85,7 +71,7 @@ window.DataTableConfig = function(tableName){
         })
       })
       return cols
-    }())
+    })()
   }
   if(serverSide) dtCfg.ajax = window.location.href
   return dtCfg

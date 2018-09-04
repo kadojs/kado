@@ -1,7 +1,7 @@
-var height2;
-function htmlBodyHeightUpdate(){
-  var height3 = $(window).height();
-  var height1 = $('.nav').height()+50;
+let height2;
+htmlBodyHeightUpdate() => {
+  let height3 = $(window).height();
+  let height1 = $('.nav').height()+50;
   height2 = $('.main').height();
   if(height2 > height3){
     $('html').height(Math.max(height1,height3,height2)+10);
@@ -14,12 +14,10 @@ function htmlBodyHeightUpdate(){
   }
 
 }
-$(document).ready(function(){
+$(document).ready(() => {
   htmlBodyHeightUpdate()
-  $( window ).resize(function(){
-    htmlBodyHeightUpdate()
-  });
-  $( window ).scroll(function(){
+  $( window ).resize(() => {htmlBodyHeightUpdate()});
+  $( window ).scroll(() => {
     height2 = $('.main').height()
     htmlBodyHeightUpdate()
   });

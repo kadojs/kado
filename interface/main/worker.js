@@ -3,14 +3,14 @@ const K = require('../../helpers/kado')
 const interfaceRoot = __dirname
 const interfaceName = 'main'
 let worker = K.iface.worker(K,interfaceName,interfaceRoot)
-worker.enableSession(function(app){
+worker.enableSession((app) => {
   let flash = require('connect-flash')
   let compileFile = require('pug').compileFile
   app.use(flash())
   let viewFn = {}
-  app.use(function(req,res,next){
+  app.use((req,res,next) => {
     res.locals.flash = req.flash.bind(req)
-    req.flashPug = function(type,view,vars){
+    req.flashPug = (type,view,vars) => {
       if(type && view){
         if(-1 === Object.keys(viewFn).indexOf(view)){
           viewFn[view] =
@@ -26,7 +26,7 @@ worker.enableSession(function(app){
     next()
   })
 })
-worker.enableHtml(function(app){
+worker.enableHtml((app) => {
   const serveStatic = require('serve-static')
   const mustacheExpress = require('mustache-express')
   //setup view engine
@@ -38,9 +38,9 @@ worker.enableHtml(function(app){
   //static files
   app.use(serveStatic(interfaceRoot + '/public'))
 })
-worker.setup(function(app){
+worker.setup((app) => {
   //home page
-  app.get('/',function(req,res){
+  app.get('/',(req,res) => {
     res.render('home')
   })
   //add default navbar entries
@@ -51,10 +51,10 @@ if(require.main === module){
   K.infant.worker(
     worker.server,
     K.config.name + ':main',
-    function(done){
+    (done) => {
       worker.start(done)
     },
-    function(done){
+    (done) => {
       worker.stop(done)
     }
   )

@@ -22,8 +22,8 @@ program
   .option('-t, --title <s>','Blog Title')
   .option('-c, --content <s>','Blog Content')
   .description('Create new blog entry')
-  .action(function(opts){
-    P.try(function(){
+  .action((opts) => {
+    P.try(() => {
       log.log('info','Creating blog entry')
       if(!opts.title || !opts.content)
         throw new Error('Title and content are required')
@@ -34,11 +34,11 @@ program
       }
       return Blog.create(doc)
     })
-      .then(function(result){
+      .then((result) => {
         log.log('info','Blog entry created: ' + result.id)
         process.exit()
       })
-      .catch(function(err){
+      .catch((err) => {
         log.log('error', 'Error: Failed to create blog entry: ' + err)
         process.exit()
       })
@@ -50,20 +50,20 @@ program
   .option('-t, --title <s>','Blog Title')
   .option('-c, --content <s>','Blog Content')
   .description('Update existing blog entry')
-  .action(function(opts){
+  .action((opts) => {
     if(!opts.id) throw new Error('Blog id is required')
     Blog.find({where: {id: opts.id}})
-      .then(function(result){
+      .then((result) => {
         let doc = result
         if(opts.title) doc.title = opts.title
         if(opts.content) doc.content = opts.content
         return doc.save()
       })
-      .then(function(){
+      .then(() => {
         log.log('info','Blog entry updated successfully!')
         process.exit()
       })
-      .catch(function(err){
+      .catch((err) => {
         if(err) throw new Error('Could not save blog entry: ' + err)
       })
   })
@@ -72,14 +72,14 @@ program
   .command('remove')
   .option('-i, --id <s>','Blog Id to remove')
   .description('Remove blog entry')
-  .action(function(opts){
+  .action((opts) => {
     if(!opts.id) throw new Error('Blog Id is required... exiting')
     Blog.destroy({where: {id: opts.id}})
-      .then(function(){
+      .then(() => {
         log.log('info','Blog entry removed successfully!')
         process.exit()
       })
-      .catch(function(err){
+      .catch((err) => {
         log.log('error', 'Error: Could not remove blog entry: ' + err)
       })
   })
@@ -87,13 +87,13 @@ program
 program
   .command('list')
   .description('List blog entries')
-  .action(function(){
+  .action(() => {
     let table = new Table({
       head: ['Id','Title','Content','Active']
     })
     let blogCount = 0
     Blog.findAll()
-      .each(function(row){
+      .each((row) => {
         blogCount++
         table.push([
           row.id,
@@ -102,12 +102,12 @@ program
           row.active ? 'Yes' : 'No'
         ])
       })
-      .then(function(){
+      .then(() => {
         if(!blogCount) table.push(['No blog entries'])
         console.log(table.toString())
         process.exit()
       })
-      .catch(function(err){
+      .catch((err) => {
         log.log('error', 'Error: Could not list blog entries ' +
           err.stack)
         process.exit()

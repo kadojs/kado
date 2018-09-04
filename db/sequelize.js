@@ -11,7 +11,7 @@ let inst
  * Create the Sequelze instance
  * @return {Sequelize}
  */
-let createInst = function(){
+let createInst = () => {
   //configure the instance for connection
   let inst = new Sequelize(
     config.db.sequelize.name,
@@ -26,9 +26,9 @@ let createInst = function(){
     }
   )
   //finally connect to the database
-  inst.doConnect = function(){
+  inst.doConnect = () => {
     let that = this
-    return that.authenticate().then(function(){return that.sync()})
+    return that.authenticate().then(() => {return that.sync()})
   }
   return inst
 }
@@ -38,7 +38,7 @@ let createInst = function(){
  * Export the singleton
  * @return {Sequelize}
  */
-module.exports = function(){
+module.exports = () => {
   if(inst) return inst
   inst = createInst()
   return inst

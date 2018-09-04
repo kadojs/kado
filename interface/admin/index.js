@@ -12,10 +12,10 @@ let master = module.exports = K.iface.master(K,interfaceName,interfaceRoot)
 if(require.main === module){
   K.infant.child(
     K.config.name + ':' + interfaceName + ':master',
-    function(done){
+    (done) => {
       master.start(done)
     },
-    function(done){
+    (done) => {
       master.stop(done)
     }
   )

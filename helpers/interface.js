@@ -12,11 +12,11 @@ let fs = require('graceful-fs')
  * @param {string} interfaceRoot
  * @return {object}
  */
-exports.master = function(K,interfaceName,interfaceRoot){
+exports.master = (K,interfaceName,interfaceRoot) => {
   let config = K.config
   let cluster
   let that = this
-  that.start = function(done){
+  that.start = (done) => {
     cluster = clusterSetup(
       interfaceRoot + '/worker',
       {
@@ -29,13 +29,13 @@ exports.master = function(K,interfaceName,interfaceRoot){
         }
       }
     )
-    cluster.start(function(err){
+    cluster.start((err) => {
       done(err)
     })
   }
-  that.stop = function(done){
+  that.stop = (done) => {
     if(!cluster) return done()
-    cluster.stop(function(err){
+    cluster.stop((err) => {
       done(err)
     })
   }
@@ -51,7 +51,7 @@ exports.master = function(K,interfaceName,interfaceRoot){
  * @param {string} interfaceRoot
  * @return {object}
  */
-exports.worker = function(K,interfaceName,interfaceRoot){
+exports.worker = (K,interfaceName,interfaceRoot) => {
   const config = K.config
   if(!interfaceName) interfaceName = 'admin'
   if(!interfaceRoot) interfaceRoot = __dirname
@@ -92,13 +92,13 @@ exports.worker = function(K,interfaceName,interfaceRoot){
       'en-US',{timeZoneName:'short'}
     ).split(' ').pop()
   )
-  app.locals._printDate = function(){
-    return function(text,render){
+  app.locals._printDate = () => {
+    return (text,render) => {
       return K.printDate(new Date(render(text)))
     }
   }
   app.locals._toDateString = app.locals._printDate
-  app.locals._escapeAndTruncate = function(text,render){
+  app.locals._escapeAndTruncate = (text,render) => {
     let rv = render(text)
     let parts = rv.split(',')
     if(!parts || 2 !== parts.length){
@@ -108,8 +108,8 @@ exports.worker = function(K,interfaceName,interfaceRoot){
     tpl = tpl.replace(/<(?:.|\n)*?>/gm, '') //remove html
     return tpl.substring(0,len) //shorten
   }
-  app.locals._is = function(){
-    return function(text,render){
+  app.locals._is = () => {
+    return (text,render) => {
       let parts = render(text).split(',')
       if(parts.length !== 3) throw new Error('Failed parsing _is')
       let cond = true
@@ -130,15 +130,15 @@ exports.worker = function(K,interfaceName,interfaceRoot){
   app.use(bodyParser.urlencoded({extended: true}))
   app.use(bodyParser.json())
   //set the active nav
-  app.use(function(req,res,next){
+  app.use((req,res,next) => {
     res.locals.currentUri = req.originalUrl
     next()
   })
-  that.setupLang = function(cb){
+  that.setupLang = (cb) => {
     //setup language support
     K.lang.scan() //this happens sync no way around it
     app.use(locale(K.lang.getSupportedSC(),K.lang.defaultSC))
-    app.use(function(req,res,next){
+    app.use((req,res,next) => {
       if(req.query.lang){
         if(req.session) req.session.lang = req.query.lang
       }
@@ -150,7 +150,7 @@ exports.worker = function(K,interfaceName,interfaceRoot){
     if('function' === typeof(cb)) return cb(app)
   }
   // setup local js servers
-  that.setupScriptServer = function(name,scriptPath){
+  that.setupScriptServer = (name,scriptPath) => {
     if(!scriptPath) scriptPath = name
     //try for a local path first and then a system path as a backup
     let ourScriptPath = path.resolve(
@@ -166,15 +166,15 @@ exports.worker = function(K,interfaceName,interfaceRoot){
     app.use('/node_modules/' + name,serveStatic(ourScriptPath))
   }
   //flash handler
-  that.flashHandler = function(req){
-    return function(){
-      return function(text){
+  that.flashHandler = (req) => {
+    return () => {
+      return (text) => {
         let parts = text.split(',')
         if(parts.length > 2) throw new Error('Failure to parse alert template')
         let level = parts[0],tpl = parts[1],out = ''
         let messages = req.flash(level)
         if(messages && messages.length){
-          messages.forEach(function(message){
+          messages.forEach((message) => {
             if(message && message.message && message.href){
               message = message.message +
                 '&nbsp; [<a href="' + message.href + '">' +
@@ -193,8 +193,8 @@ exports.worker = function(K,interfaceName,interfaceRoot){
       }
     }
   }
-  that.enableHtml = function(callback){
-    if(!callback) callback = function(){}
+  that.enableHtml = (callback) => {
+    if(!callback) callback = () => {}
     //npm installed scripts
     //DEFINE external public script packages here, then access them by using
     // /script/<name> such as /script/bootstrap/dist/bootstrap.min.js
@@ -206,11 +206,11 @@ exports.worker = function(K,interfaceName,interfaceRoot){
    * Enable interface session handling
    * @param {function} callback
    */
-  that.enableSession = function(callback){
-    if(!callback) callback = function(){}
+  that.enableSession = (callback) => {
+    if(!callback) callback = () => {}
     app.use(cookieParser(config.interface[interfaceName].cookie.secret))
     //inject headers
-    app.use(function(req,res,next){
+    app.use((req,res,next) => {
       res.set('Cache-control','no-cache, no-store, must-revalidate')
       res.set('Pragma','no-cache')
       res.set('Expires','0')
@@ -234,8 +234,8 @@ exports.worker = function(K,interfaceName,interfaceRoot){
    * Circular callback to inject setup
    * @param {function} callback
    */
-  that.setup = function(callback){
-    if(!callback) callback = function(){}
+  that.setup = (callback) => {
+    if(!callback) callback = () => {}
     callback(app)
   }
 
@@ -244,8 +244,8 @@ exports.worker = function(K,interfaceName,interfaceRoot){
    * Start interface
    * @param {function} done
    */
-  that.start = function(done){
-    K.init(function(){
+  that.start = (done) => {
+    K.init(() => {
       //so here it is time to actually scan for modules and this is where i have
       //been on the fence about how to best go about scanning modules, should we
       //have a kado.json with a list of their names and folders or should i scan
@@ -257,7 +257,7 @@ exports.worker = function(K,interfaceName,interfaceRoot){
       //cli to turn them selves on which i suppose is acceptable
 
       //so now loop here and load modules that want to be loaded
-      Object.keys(K.modules).forEach(function(modName){
+      Object.keys(K.modules).forEach((modName) => {
         let mod = K.modules[modName]
         if(mod.enabled){
           let modFile = mod.root + '/kado.js'
@@ -268,16 +268,16 @@ exports.worker = function(K,interfaceName,interfaceRoot){
         }
       })
     })
-      .then(function(){
+      .then(() => {
         return server.listenAsync(
           +config.interface[interfaceName].port,
           config.interface[interfaceName].host
         )
       })
-      .then(function(){
+      .then(() => {
         done()
       })
-      .catch(function(err){
+      .catch((err) => {
         done(err)
       })
   }
@@ -287,7 +287,7 @@ exports.worker = function(K,interfaceName,interfaceRoot){
    * Stop admin
    * @param {function} done
    */
-  that.stop = function(done){
+  that.stop = (done) => {
     server.close()
     done()
   }

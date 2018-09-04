@@ -15,15 +15,15 @@ P.promisifyAll(bcrypt)
  * @param {object} req
  * @param {object} res
  */
-exports.list = function(req,res){
+exports.list = (req,res) => {
   if(!req.query.length){
     res.render(__dirname + '/view/list')
   } else {
     K.datatable(Staff,req.query)
-      .then(function(result){
+      .then((result) => {
         res.json(result)
       })
-      .catch(function(err){
+      .catch((err) => {
         res.json({error: err.message})
       })
   }
@@ -35,7 +35,7 @@ exports.list = function(req,res){
  * @param {object} req
  * @param {object} res
  */
-exports.create = (req,res)=>{
+exports.create = (req,res) => {
   res.render(__dirname + '/view/create')
 }
 
@@ -45,7 +45,7 @@ exports.create = (req,res)=>{
  * @param {object} req
  * @param {object} res
  */
-exports.edit = (req,res)=>{
+exports.edit = (req,res) => {
   let search = {}
   if(0 < req.query.id) search.id = +req.query.id
   if(req.query.email) search.email = req.query.email
@@ -70,18 +70,18 @@ exports.edit = (req,res)=>{
  * @param {object} req
  * @param {object} res
  */
-exports.save = (req,res)=>{
+exports.save = (req,res) => {
   let form = req.body
   let staffId = form.id || false
   let staffEmail = form.staffEmail
-  P.try(()=>{
+  P.try(() => {
     if(staffId){
       return Staff.find({where:{id:staffId}})
     } else {
       return Staff.build()
     }
   })
-    .then((result)=>{
+    .then((result) => {
       let doc = result
       let updated = false
       form.staffActive = ('on' === form.staffActive)
@@ -110,7 +110,7 @@ exports.save = (req,res)=>{
         return doc.save()
       }
     })
-    .then((updated)=>{
+    .then((updated) => {
       if(updated.dataValues){
         staffId = updated.dataValues.id
         staffEmail = updated.dataValues.email
@@ -131,7 +131,7 @@ exports.save = (req,res)=>{
       res.setHeader('staffid',staffId)
       res.redirect('/staff/list')
     })
-    .catch((err)=>{
+    .catch((err) => {
       res.render('error',{error: err})
     })
 }
@@ -142,26 +142,26 @@ exports.save = (req,res)=>{
  * @param {object} req
  * @param {object} res
  */
-exports.login = (req,res)=>{
+exports.login = (req,res) => {
   res.render('login')
 }
 
 
-exports.doLogin = function(email,password){
+exports.doLogin = (email,password) => {
   let staff = {}
   return Staff.find({where: {email: email}})
-    .then((result)=>{
+    .then((result) => {
       if(!result) throw new Error('Invalid login')
       staff = result
       if(!staff.password) throw new Error('Invalid login')
       return bcrypt.compareAsync(password,staff.password)
     })
-    .then((match)=>{
+    .then((match) => {
       if(!match){
         staff.dateFail = sequelize.fn('NOW')
         staff.loginFailCount =  (+staff.loginFailCount || 0) + 1
         return staff.save()
-          .then(()=>{
+          .then(() => {
             throw new Error('Invalid login')
           })
       }
@@ -177,14 +177,14 @@ exports.doLogin = function(email,password){
  * @param {object} req
  * @param {object} res
  */
-exports.loginAction = (req,res)=>{
+exports.loginAction = (req,res) => {
   exports.doLogin(req.body.email,req.body.password)
-    .then((staff)=>{
+    .then((staff) => {
       //otherwise we are valid start the session
       req.session.staff = staff.dataValues
       res.redirect('/')
     })
-    .catch((err)=>{
+    .catch((err) => {
       req.flash('error',err.message)
       res.redirect('/login')
     })
@@ -196,7 +196,7 @@ exports.loginAction = (req,res)=>{
  * @param {object} req
  * @param {object} res
  */
-exports.logout = (req,res)=>{
+exports.logout = (req,res) => {
   req.session.destroy()
   delete res.locals.staff
   res.redirect('/login')
@@ -208,12 +208,12 @@ exports.logout = (req,res)=>{
  * @param {object} req
  * @param {object} res
  */
-exports.remove = function(req,res){
+exports.remove = (req,res) => {
   let json = K.isClientJSON(req)
   if(req.query.id) req.body.remove = req.query.id.split(',')
   if(!(req.body.remove instanceof Array)) req.body.remove = [req.body.remove]
   K.modelRemoveById(Staff,req.body.remove)
-    .then(function(){
+    .then(() => {
       if(json){
         res.json({success: 'Staff removed'})
       } else {
@@ -221,7 +221,7 @@ exports.remove = function(req,res){
         res.redirect('/blog/list')
       }
     })
-    .catch(function(err){
+    .catch((err) => {
       if(json){
         res.json({error: err.message || 'Staff removal error'})
       } else {

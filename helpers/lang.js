@@ -20,7 +20,7 @@ module.exports.defaultSC = 'en'
  * Get supported ISO-659-1 codes
  * @returns {any[]}
  */
-module.exports.getSupportedSC = function(){
+module.exports.getSupportedSC = () => {
   return Object.keys(this.pack)
     .filter((v)=>{return v[0] !== '_'})
     .map((v)=>{
@@ -36,11 +36,11 @@ module.exports.getSupportedSC = function(){
  * @param {string} locale
  * @return {{}}
  */
-module.exports.getPack = function(locale){
+module.exports.getPack = (locale) => {
   const that = this
   let pack = {}
   //check for objects when falling through defaults
-  function isObject(val) {
+  let isObject = (val) => {
     if (val === null) { return false;}
     return ( (typeof val === 'function') || (typeof val === 'object') );
   }
@@ -83,7 +83,7 @@ module.exports.pack = {}
  * Scan language packs
  * @returns {*}
  */
-module.exports.scan = function(){
+module.exports.scan = () => {
   const that = this
   const glob = require('glob')
   const path = require('path')
@@ -91,7 +91,7 @@ module.exports.scan = function(){
   let defaultModuleLangGlob = process.env.KADO_MODULES + '/**/lang/*.js'
   let localModuleLangGlob = process.env.KADO_USER_MODULES + '/**/lang/*.js'
   let localLangGlob = process.env.KADO_USER_LANG + '/*.js'
-  let loadLanguage = function(file){
+  let loadLanguage = (file) => {
     let name = path.basename(file,'.js')
     let pack = require(file)
     if(!that.pack[name]) that.pack[name] = {}
@@ -103,7 +103,7 @@ module.exports.scan = function(){
     K.log.debug(that.pack[name]._pack_name +
       ' v' + that.pack[name]._pack_version + ' language pack loaded')
   }
-  let loadModuleLanguage = function(file){
+  let loadModuleLanguage = (file) => {
     let name = path.basename(file,'.js')
     let module = path.basename(path.dirname(path.dirname(file)))
     let pack = require(file)
@@ -119,7 +119,7 @@ module.exports.scan = function(){
     }
     K.log.debug(pack._module_name + ' language pack loaded')
   }
-  let doScan = function(pattern,handler){
+  let doScan = (pattern,handler) => {
     return glob.sync(pattern)
      .forEach(handler)
   }
