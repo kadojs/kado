@@ -2,7 +2,7 @@
 
 //module properties
 exports._kado = {
-  kado: true,
+  enabled: true,
   name: 'staff',
   title: 'Staff',
   description: 'Manage Kado Staff',
@@ -20,6 +20,7 @@ exports._kado = {
 exports.db = (K,db) => {
   db.sequelize.enabled = true
   db.sequelize.import(__dirname + '/model/Staff.js')
+  db.sequelize.import(__dirname + '/model/StaffSession.js')
 }
 
 

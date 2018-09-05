@@ -26,9 +26,13 @@ let createInst = () => {
     }
   )
   //finally connect to the database
-  inst.doConnect = () => {
+  inst.doConnect = function(opts){
+    if(!opts) opts = {}
+    if(!opts.sync) opts.sync = false
     let that = this
-    return that.authenticate().then(() => {return that.sync()})
+    return that.authenticate().then(() => {
+      if(opts.sync) return that.sync()
+    })
   }
   return inst
 }

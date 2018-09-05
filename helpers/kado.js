@@ -423,11 +423,9 @@ exports.initComplete = false
 
 /**
  * Init, scan modules and interfaces
- * @type {function} cb
  * @return {P}
  */
-exports.init = (cb) => {
-  if('function' !== typeof cb) cb = ()=>{}
+exports.init = () => {
   //load any config left in the env for us
   if(process.env.KADO_CONFIG_STRING){
     try {
@@ -467,7 +465,6 @@ exports.init = (cb) => {
   }
   let loadModule = (file) => {
     let module = new ObjectManage(require(file)._kado)
-    if(!module.name) module.name = path.basename(file,'.json')
     module.root = path.dirname(file)
     if(exports.config.module[module.name]){
       module.$load(exports.config.module[module.name])
@@ -540,7 +537,7 @@ exports.init = (cb) => {
             let db = exports.db[dbKey]
             if(db.enabled){
               if('function' === typeof exports.db[dbKey].doConnect){
-                exports.db[dbKey].doConnect()
+                exports.db[dbKey].doConnect({sync: false})
                 exports.log.debug(dbKey + ' connector connected')
                 dbConnected++
               }
@@ -586,7 +583,6 @@ exports.init = (cb) => {
           ' interface(s)')
         exports.initComplete = true
         exports.log.debug('Init complete')
-        cb()
         resolve()
       })
     })

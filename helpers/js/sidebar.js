@@ -1,5 +1,5 @@
 let height2;
-htmlBodyHeightUpdate() => {
+let htmlBodyHeightUpdate = () => {
   let height3 = $(window).height();
   let height1 = $('.nav').height()+50;
   height2 = $('.main').height();

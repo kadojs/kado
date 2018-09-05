@@ -46,7 +46,7 @@ window.DataTableConfig = (tableName) => {
     lengthMenu: [ [10, 20, 50, 100, 250, -1], [10 ,20, 50, 100, 250, 'All'] ],
     columns: (() => {
       let cols = []
-      $('#table th').each((i) => {
+      $('#table th').each(function(i){
         let that = this
         let dataName = $(that).attr('data-name')
         let dataFormat = $(that).attr('data-format')

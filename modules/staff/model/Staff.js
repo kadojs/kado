@@ -22,7 +22,7 @@ module.exports = (sequelize,DataTypes) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-        set: (v) => {
+        set: function(v){
           //dont re-encrypt crypted passwords
           if(v.match(/^\$2[abxy]\$12\$/)) return this.setDataValue('password',v)
           return this.setDataValue(

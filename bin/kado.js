@@ -18,34 +18,29 @@ program.version(K.config.version)
 
 
 program.command('dbsetup')
-  .option('--dbsequelize','Enable sequelize connector')
   .option('--dbshost <string>','Set the sequelize database host')
   .option('--dbsport <string>','Set the sequelize database port')
   .option('--dbsuser <string>','Set the sequelize database user')
   .option('--dbspassword <string>','Set the sequelize database password')
   .action((cmd) => {
-    if(cmd.dbsequelize){
-      K.configure({
-        db: {
-          sequelize: {
-            load: true,
-            enabled: true,
-            host: cmd.dbshost || 'localhost',
-            port: cmd.dbsport || 3306,
-            user: cmd.dbsuser || 'kado',
-            password: cmd.dbspassword || 'kado'
-          }
+    K.configure({
+      db: {
+        sequelize: {
+          load: true,
+          enabled: true,
+          host: cmd.dbshost || 'localhost',
+          port: cmd.dbsport || 3306,
+          user: cmd.dbsuser || 'kado',
+          password: cmd.dbspassword || 'kado'
         }
-      })
-    }
+      }
+    })
     log.info('Beginning database setup')
     log.info('Connecting to database')
     K.init()
       .then(() => {
-        if(cmd.dbsequelize){
-          log.info('Connecting to sequelize')
-          return K.db.sequelize.doConnect()
-        }
+        log.info('Connecting to sequelize')
+        return K.db.sequelize.doConnect({sync: true})
       })
       .then(() => {
         log.info('Database connected, initializing...')
