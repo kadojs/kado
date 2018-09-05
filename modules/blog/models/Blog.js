@@ -15,7 +15,7 @@ module.exports = (sequelize,DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      set: (v) => {
+      set: function(v){
         this.setDataValue('uri',uriname(v))
         this.setDataValue('title',v)
       }
@@ -27,11 +27,11 @@ module.exports = (sequelize,DataTypes) => {
     content: {
       type: DataTypes.TEXT,
       allowNull: true,
-      set: (value) => {
-        value = validator.trim(value)
-        value = validator.escape(value)
-        let html = markdown.toHTML(value)
-        this.setDataValue('content',value)
+      set: function(v){
+        v = validator.trim(v)
+        v = validator.escape(v)
+        let html = markdown.toHTML(v)
+        this.setDataValue('content',v)
         this.setDataValue('html',html)
       }
     },

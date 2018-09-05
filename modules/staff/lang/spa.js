@@ -19,5 +19,13 @@ module.exports = {
   'created': 'Creado',
   'modified': 'Modificado',
   'active': 'Activo',
-  'action': 'Acción'
+  'action': 'Acción',
+  'err_staff_not_found': 'Miembro del equipo no encontrado',
+  'err_no_permission_to_revoke': 'No se encontró permiso para revocar',
+  'permission_granted': 'Permiso otorgado con éxito',
+  'staff_removed': 'Personal eliminado',
+  'err_staff_removed': 'Error de eliminación de personal',
+  'staff_saved': 'Miembro del personal salvado',
+  'staff_unchanged': 'Miembro del personal sin cambios',
+  'missing_id_or_email': 'Falta la identificación o el correo electrónico'
 }

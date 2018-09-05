@@ -18,7 +18,7 @@ P.promisifyAll(bcrypt)
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(__dirname + '/view/list')
+    res.render(res.locals._view.get('staff/list'))
   } else {
     K.datatable(Staff,req.query)
       .then((result) => {
@@ -37,7 +37,7 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(__dirname + '/view/create')
+  res.render(res.locals._view.get('staff/create'))
 }
 
 
@@ -50,19 +50,111 @@ exports.edit = (req,res) => {
   let search = {}
   if(0 < req.query.id) search.id = +req.query.id
   if(req.query.email) search.email = req.query.email
-  if(0>=Object.keys(search).length){
-    res.render('error',{error: 'id? email?'})
-  } else
-    Staff.findOne({where:search})
-      .then((result)=>{
-        if(!result || !result.dataValues)
-          throw new Error('No staff found for given args ' +
+  if(0 >= Object.keys(search).length){
+    res.render('error',{error: K._l.staff.missing_id_or_email})
+  } else{
+    Staff.findOne({where: search,include: [StaffPermission]})
+      .then((result) => {
+        if(!result || !result.dataValues){
+          throw new Error(K._l.staff.no_staff_for_args +
             encodeURIComponent(JSON.stringify(search)))
-        res.render(__dirname + '/view/edit',{staff: result.dataValues})
+        }
+        let perm = []
+        res.locals._permission.all().forEach((p) => {
+          let allowed = false
+          result.StaffPermissions.forEach((sp) => {
+            if(sp.name === p.name) allowed = true
+          })
+          p.allowed = allowed
+          perm.push(p)
+        })
+        res.render(res.locals._view.get('staff/edit'),{
+          staff: result.dataValues,
+          perm: perm
+        })
       })
-      .catch((err)=>{
-        res.render('error',{error: err.message})
+      .catch((err) => {
+        res.render(res.locals._view.get('error'),{error: err.message})
       })
+  }
+}
+
+
+/**
+ * Grant permission to staff
+ * @param {object} req
+ * @param {object} res
+ */
+exports.grant = (req,res) => {
+  let id = req.query.id
+  let name = req.query.name
+  let json = K.isClientJSON(req)
+  Staff.find({where: {id: id}})
+    .then((result) => {
+      if(!result) throw new Error(K._l.staff.err_staff_not_found)
+      return StaffPermission.create({
+        name: name,
+        isAllowed: true,
+        StaffId: result.id
+      })
+        .catch(K.db.sequelize.UniqueConstraintError,()=>{})
+    })
+    .then(() => {
+      if(json){
+        res.json({success: K._l.staff.permission_granted})
+      } else {
+        req.flash('success',K._l.staff.permission_granted)
+        res.redirect(301,res.locals._uri.get('/staff/edit') + '?id=' + id)
+      }
+    })
+    .catch((err) => {
+      if(json){
+        res.json({error: err.message})
+      } else {
+        req.flash('warning',err.message)
+        res.redirect(301,res.locals._uri.get('/staff/edit') + '?id=' + id)
+      }
+    })
+}
+
+
+/**
+ * Revoke staff permission
+ * @param {object} req
+ * @param {object} res
+ */
+exports.revoke = (req,res) => {
+  let id = req.query.id
+  let name = req.query.name
+  let json = K.isClientJSON(req)
+  Staff.find({where: {id: id}})
+    .then((result) => {
+      if(!result) throw new Error(K._l.staff.err_staff_not_found)
+      return StaffPermission.find({where: {
+        name: name,
+        StaffId: result.id
+      }})
+    })
+    .then((result) =>{
+      if(!result) throw new Error(K._l.staff.err_no_permission_to_revoke)
+      return result.destroy()
+    })
+    .then(() => {
+      if(json){
+        res.json({success: K._l.staff.premission_revoked})
+      } else {
+        req.flash('success',K._l.staff.premission_revoked)
+        res.redirect(301,res.locals._uri.get('/staff/edit') + '?id=' + id)
+      }
+    })
+    .catch((err) => {
+      if(json){
+        res.json({error: err.message})
+      } else {
+        req.flash('warning',err.message)
+        res.redirect(301,res.locals._uri.get('/staff/edit') + '?id=' + id)
+      }
+    })
 }
 
 
@@ -118,22 +210,22 @@ exports.save = (req,res) => {
       }
       if(false !== updated){
         req.flash('success',{
-          message: 'Staff member saved',
-          href: '/staff/edit?id=' + staffId,
+          message: K._l.staff.staff_saved,
+          href: res.locals._uri.get('/staff/edit') + '?id=' + staffId,
           name: staffEmail
         })
       } else {
         req.flash('warning',{
-          message: 'Staff member unchanged',
-          href: '/staff/edit?id=' + staffId,
+          message: K._l.staff.staff_unchanged,
+          href: res.locals._uri.get('/staff/edit') + '?id=' + staffId,
           name: staffEmail
         })
       }
       res.setHeader('staffid',staffId)
-      res.redirect('/staff/list')
+      res.redirect(res.locals._uri.get('/staff/list'))
     })
     .catch((err) => {
-      res.render('error',{error: err})
+      res.render(res.locals._view.get('error'),{error: err})
     })
 }
 
@@ -144,7 +236,7 @@ exports.save = (req,res) => {
  * @param {object} res
  */
 exports.login = (req,res) => {
-  res.render('login')
+  res.render(res.locals._view.get('login'))
 }
 
 
@@ -152,9 +244,9 @@ exports.doLogin = (email,password) => {
   let staff = {}
   return Staff.find({where: {email: email}})
     .then((result) => {
-      if(!result) throw new Error('Invalid login')
+      if(!result) throw new Error(K._l.invalid_login)
       staff = result
-      if(!staff.password) throw new Error('Invalid login')
+      if(!staff.password) throw new Error(K._l.invalid_login)
       return bcrypt.compareAsync(password,staff.password)
     })
     .then((match) => {
@@ -163,7 +255,7 @@ exports.doLogin = (email,password) => {
         staff.loginFailCount =  (+staff.loginFailCount || 0) + 1
         return staff.save()
           .then(() => {
-            throw new Error('Invalid login')
+            throw new Error(K._l.invalid_login)
           })
       }
       staff.dateSeen = sequelize.fn('NOW')
@@ -206,7 +298,7 @@ exports.loginAction = (req,res) => {
     })
     .catch((err) => {
       req.flash('error',err.message)
-      res.redirect('/login')
+      res.redirect(res.locals._uri.get('/login'))
     })
 }
 
@@ -219,7 +311,7 @@ exports.loginAction = (req,res) => {
 exports.logout = (req,res) => {
   req.session.destroy()
   delete res.locals.staff
-  res.redirect('/login')
+  res.redirect(res.locals._uri.get('/login'))
 }
 
 
@@ -235,15 +327,15 @@ exports.remove = (req,res) => {
   K.modelRemoveById(Staff,req.body.remove)
     .then(() => {
       if(json){
-        res.json({success: 'Staff removed'})
+        res.json({success: K._l.staff_removed})
       } else {
-        req.flash('success','Staff removed')
-        res.redirect('/blog/list')
+        req.flash('success',K._l.staff_removed)
+        res.redirect(res.local._uri.get('/staff/list'))
       }
     })
     .catch((err) => {
       if(json){
-        res.json({error: err.message || 'Staff removal error'})
+        res.json({error: err.message || K._l.err_staff_removed})
       } else {
         res.render('error',{error: err.message})
       }

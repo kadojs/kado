@@ -19,5 +19,14 @@ module.exports = {
   'created': 'Created',
   'modified': 'Modified',
   'active': 'Active',
-  'action': 'Action'
+  'action': 'Action',
+  'err_staff_not_found': 'Staff member not found',
+  'err_no_permission_to_revoke': 'No permission found to revoke',
+  'permission_granted': 'Permission granted successfully',
+  'permission_revoked': 'Permission revoked successfully',
+  'staff_removed': 'Staff removed',
+  'err_staff_removed': 'Staff removal error',
+  'staff_saved': 'Staff member saved',
+  'staff_unchanged': 'Staff member unchanged',
+  'missing_id_or_email': 'Missing ID or Email'
 }

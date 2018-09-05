@@ -44,5 +44,31 @@
         <button class="btn btn-success" type="submit">{{_l.save}}</button>
       </div>
     </form>
+    <h3>Permissions</h3>
+    <table class="table table-striped table-sm">
+      <thead>
+      <tr>
+        <th>Permission</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{#perm}}
+        <tr>
+          <td>{{name}}</td>
+          <td>{{description}}</td>
+          <td>
+            {{#_is}}{{allowed}},<span class="fa fa-check"></span>,{{/_is}}
+          </td>
+          <td>
+            <a class="btn btn-sm btn-success" href="/staff/grant?id={{staff.id}}&name={{name}}">Grant</a>
+            <a class="btn btn-sm btn-danger" href="/staff/revoke?id={{staff.id}}&name={{name}}">Revoke</a>
+          </td>
+        </tr>
+      {{/perm}}
+      </tbody>
+    </table>
   </div>
 {{>footer}}

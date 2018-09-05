@@ -36,5 +36,7 @@ module.exports = {
   'title': 'Title',
   'save': 'Save',
   'Dashboard': 'Dashboard',
-  'permdenied': 'Permission Denied'
+  'permdenied': 'Permission Denied',
+  'invalid_login': 'Invalid login',
+  'no_staff_for_args': 'No staff found for given args '
 }

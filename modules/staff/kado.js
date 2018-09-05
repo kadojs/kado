@@ -59,16 +59,32 @@ exports.authenticate = (K,username,password,done) => {
  */
 exports.admin = (K,app) => {
   let admin = require('./admin')
+  //register permissions
+  app.permission.add('/staff/create','Create staff member')
+  app.permission.add('/staff/list','List staff members')
+  app.permission.add('/staff/edit','Edit staff member')
+  app.permission.add('/staff/save','Save staff member')
+  app.permission.add('/staff/remove','Remove staff member')
+  app.permission.add('/staff/grant','Grant staff member permission')
+  app.permission.add('/staff/revoke','Revoke staff member permission')
+  //register views
+  app.view.add('staff/create',__dirname + '/admin/view/create.html')
+  app.view.add('staff/edit',__dirname + '/admin/view/edit.html')
+  app.view.add('staff/list',__dirname + '/admin/view/list.html')
   //staff routes
-  app.get('/staff',(req,res) => {
-    res.redirect(301,'/staff/list')
+  app.uri.add('/login')
+  app.get(app.uri.add('/staff'),(req,res) => {
+    res.redirect(301,app.uri.add('/staff/list'))
   })
-  app.get('/staff/list',admin.list)
-  app.get('/staff/create',admin.create)
-  app.get('/staff/edit',admin.edit)
-  app.post('/staff/save',admin.save)
-  app.post('/staff/remove',admin.remove)
-  app.get('/staff/remove',admin.remove)
+
+  app.get(app.uri.add('/staff/list'),admin.list)
+  app.get(app.uri.add('/staff/create'),admin.create)
+  app.get(app.uri.add('/staff/edit'),admin.edit)
+
+  app.get(app.uri.add('/staff/grant'),admin.grant)
+  app.get(app.uri.add('/staff/revoke'),admin.revoke)
+  app.post(app.uri.add('/staff/remove'),admin.remove)
+  app.get(app.uri.add('/staff/remove'),admin.remove)
 }
 
 

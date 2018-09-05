@@ -148,6 +148,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     app.use(bodyParser.json())
     //set the active nav
     app.use((req,res,next) => {
+      res.locals._permission = app.permission
       res.locals._uri = app.uri
       res.locals._view = app.view
       res.locals.currentUri = req.originalUrl
@@ -156,9 +157,33 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     worker.setupPermission = (cb) => {
       app.use((req,res,next) => {
         let set
+        //when a permission set is available populate the proper allowed object
+        //otherwise populate the entire permission set
+        res.locals._p = {allowed: {}, available: []}
+        app.permission.all().forEach((s) => {
+          res.locals._p.available.push({
+            name: s.name, description: s.description
+          })
+        })
         if(req.session && req.session._staff && req.session._staff.permission){
           set = req.session._staff.permission
+          set.forEach((s) => {res.locals._p.allowed[s] = s})
+        } else {
+          app.permission.digest().forEach((s) => {res.locals._p.allowed[s] = s})
         }
+        //add a helper function for looking up permissions from views
+        res.locals._p.show = () => {return (text,render) => {
+          let parts = render(text).split(',')
+          if(parts.length !== 2){
+            throw new Error('Invalid argument for permission show function')
+          }
+          if(false === app.permission.allowed(parts[0],set)){
+            return ''
+          } else {
+            return parts[1]
+          }
+        }}
+        //decide whether or not to finish loading the current page
         if(false === app.permission.allowed(req.url,set)){
           res.render(res.locals._view.get('error'),{error: K._l.permdenied})
         } else {

@@ -71,6 +71,19 @@ class Permission {
   digest(){
     return Object.keys(this.perm)
   }
+  /**
+   * Return all perm entries
+   * @return {[]}
+   */
+  all(){
+    let all = []
+    for(let i in this.perm){
+      if(this.perm.hasOwnProperty(i)){
+        all.push(this.perm[i])
+      }
+    }
+    return all
+  }
 }
 
 

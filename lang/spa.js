@@ -36,5 +36,7 @@ module.exports = {
   'title': 'Título',
   'save': 'Salvar',
   'Dashboard': 'Tablero',
-  'permdenied': 'Permiso denegado'
+  'permdenied': 'Permiso denegado',
+  'invalid_login': 'Ingreso invalido',
+  'no_staff_for_args': 'No se encontró personal para argumentos dados'
 }
