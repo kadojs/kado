@@ -42,6 +42,8 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     worker.setupScriptServer('datatables.net-responsive-bs4')
     worker.setupScriptServer('datatables.net-select')
     worker.setupScriptServer('datatables.net-select-bs4')
+    //country flags
+    worker.setupScriptServer('flag-icon-css')
     //enable proxy senders
     app.set('trust proxy',true)
     //setup view engine
@@ -109,15 +111,15 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
             throw invalidLoginError
           }
           req.flash('success','Login success')
-          res.redirect('/')
+          res.redirect(301,req.session._loginReferrer || '/')
         })
         .catch((err) => {
           req.flash('error',err.message || 'Invalid login')
-          res.redirect('/login')
+          res.redirect(301,'/login')
         })
     })
     app.get('/login',(req,res) => {
-      res.render('login')
+      res.render(res.locals._view.get('login'))
     })
     app.get('/logout',(req,res) => {
       req.session.destroy()
@@ -131,7 +133,8 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
         (!req.session || !req.session._staff) &&
         req.url.indexOf('/login') < 0
       ){
-        res.redirect('/login')
+        req.session._loginReferrer = req.url
+        res.redirect(301,'/login')
       } else if(req.session._staff){
         res.locals._staff = req.session._staff
         if(res.locals && res.locals._staff) delete res.locals._staff.password

@@ -9,6 +9,7 @@ module.exports = {
   '_pack_module': 'none',
   '_pack_code': 'spa',
   '_pack_sc': 'es',
+  '_pack_flag': 'es',
   'admin_panel': 'Panel',
   'kado': 'Kado',
   'kado_description': 'Un asombroso sistema de módulos para la gestión Enterprise Grade.',

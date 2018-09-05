@@ -33,6 +33,26 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     const mustacheExpress = require('mustache-express')
     const serveStatic = require('serve-static')
     const path = require('path')
+    //bootstrap
+    worker.setupScriptServer('bootstrap')
+    worker.setupScriptServer('bootstrap-select')
+    //datatables
+    worker.setupScriptServer('jszip')
+    worker.setupScriptServer('pdfmake')
+    worker.setupScriptServer('datatables.net')
+    worker.setupScriptServer('datatables.net-bs4')
+    worker.setupScriptServer('datatables.net-buttons')
+    worker.setupScriptServer('datatables.net-buttons-bs4')
+    worker.setupScriptServer('datatables.net-buttons-dt')
+    worker.setupScriptServer('datatables.net-colreorder-bs4')
+    worker.setupScriptServer('datatables.net-fixedcolumns-bs4')
+    worker.setupScriptServer('datatables.net-fixedheader-bs4')
+    worker.setupScriptServer('datatables.net-keytable-bs4')
+    worker.setupScriptServer('datatables.net-responsive-bs4')
+    worker.setupScriptServer('datatables.net-select')
+    worker.setupScriptServer('datatables.net-select-bs4')
+    //country flags
+    worker.setupScriptServer('flag-icon-css')
     //setup view engine
     app.set('trust proxy',true)
     app.locals.basedir = path.resolve(interfaceRoot + '/view')

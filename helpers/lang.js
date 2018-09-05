@@ -60,7 +60,7 @@ module.exports.getPack = (locale) => {
         for(let key2 in ourPack){
           if(ourPack.hasOwnProperty(key2)){
             let subPack = ourPack[key2]
-            if(!pack[key][key2]) pack[key][key2] = subPack
+            if(pack[key] && !pack[key][key2]) pack[key][key2] = subPack
           }
         }
       } else if(!pack[key]){
@@ -73,6 +73,22 @@ module.exports.getPack = (locale) => {
     return pack[render(text)] || render(text)
   }}
   return pack
+}
+
+
+/**
+ * Return all packs
+ * @returns {Array}
+ */
+module.exports.all = () => {
+  const that = this
+  let a = []
+  Object.keys(that.pack).forEach((k) =>{
+    if(that.pack.hasOwnProperty(k)){
+      a.push(that.pack[k])
+    }
+  })
+  return a
 }
 
 

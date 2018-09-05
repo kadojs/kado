@@ -9,6 +9,7 @@ module.exports = {
   '_pack_module': 'none',
   '_pack_code': 'eng',
   '_pack_sc': 'en',
+  '_pack_flag': 'us',
   'admin_panel': 'Panel',
   'kado': 'Kado',
   'kado_description': 'An awesome module system for Enterprise Grade management.',

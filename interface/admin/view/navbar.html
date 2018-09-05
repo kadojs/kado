@@ -31,6 +31,21 @@
             <span>{{_l.settings}}</span>
           </a>
         </li>
+        <li class="nav-item">
+          <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="langMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="flag-icon flag-icon-{{_l._pack_flag}}"></span>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="langMenuButton">
+              {{#_l._packs}}
+                <a class="dropdown-item" href="/?lang={{_pack_code}}">
+                  <span class="flag-icon flag-icon-{{_pack_flag}}"></span>
+                  {{_pack_name}}
+                </a>
+              {{/_l._packs}}
+            </div>
+          </div>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="authDropdown" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
             <span class="fa fa-user"></span> {{_staff.email}}

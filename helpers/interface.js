@@ -221,10 +221,12 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       app.use((req,res,next) => {
         if(req.query.lang){
           if(req.session) req.session.lang = req.query.lang
+          return res.redirect(301,req.headers.referer)
         }
         if(req.session && req.session.lang) req.locale = req.session.lang
         //actually finally load the pack
         res.locals._l = K._l = K.lang.getPack(req.locale)
+        res.locals._l._packs = K.lang.all()
         next()
       })
       if('function' === typeof(cb)) return cb(app,K)
