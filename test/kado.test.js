@@ -9,7 +9,7 @@ const request = require('request')
 //make some promises
 K.bluebird.promisifyAll(request)
 
-describe('kado',() => {
+describe('kado',function(){
   this.timeout(20000)
   //start servers and create a staff
   before(() => {
@@ -62,7 +62,7 @@ describe('kado',() => {
         })
           .then((res) => {
             expect(res.statusCode).to.equal(200)
-            expect(res.body).to.match(/<html>/)
+            expect(res.body).to.match(/<html/)
           })
       })
       it('should have a login page',() => {
@@ -249,18 +249,17 @@ describe('kado',() => {
             return removeBlog()
           })
         })
-        describe('staff',() => {
+        describe.only('staff',() => {
           let staffId = null
           let removeStaff = () => {
-            return request.postAsync({
-              url: baseUrl + '/staff/list',
+            return request.getAsync({
+              url: baseUrl + '/staff/remove?id=' + staffId,
               jar: cookieJar,
-              form: {
-                remove: [staffId]
-              }
+              json: true
             })
               .then((res) => {
-                expect(res.body).to.match(/Found. Redirecting to \/staff\/list/)
+                console.log(res.body)
+                expect(res.body.success).to.match(/Staff removed successfully/)
                 staffId = null
               })
           }
@@ -347,7 +346,7 @@ describe('kado',() => {
         })
           .then((res) => {
             expect(res.statusCode).to.equal(200)
-            expect(res.body).to.match(/<html>/)
+            expect(res.body).to.match(/<html/)
           })
       })
       it('should have a home page',() => {
@@ -356,7 +355,8 @@ describe('kado',() => {
         })
           .then((res) => {
             expect(res.statusCode).to.equal(200)
-            expect(res.body).to.match(/Welcome to Kado/)
+            //expect(res.body).to.match(/Welcome to Kado/)
+            expect(res.body).to.match(/Kado Main/)
           })
       })
       describe('routes',() => {

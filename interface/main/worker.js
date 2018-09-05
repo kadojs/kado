@@ -30,16 +30,20 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     })
   })
   worker.enableHtml((app) =>{
-    const serveStatic = require('serve-static')
     const mustacheExpress = require('mustache-express')
+    const serveStatic = require('serve-static')
+    const path = require('path')
     //setup view engine
-    app.engine('mustache',mustacheExpress())
     app.set('trust proxy',true)
-    app.locals.basedir = interfaceRoot + '/view'
-    app.set('views',interfaceRoot + '/' + 'view')
-    app.set('view engine','mustache')
+    app.locals.basedir = path.resolve(interfaceRoot + '/view')
+    app.set('views',app.locals.basedir)
+    app.set('view engine','html')
+    app.set('partials',path.resolve(app.locals.basedir + '/partials'))
+    app.engine('html',mustacheExpress())
     //static files
     app.use(serveStatic(interfaceRoot + '/public'))
+  })
+  worker.setup((app) =>{
     //setup default views
     app.view.add('alert',__dirname + '/view/alert.html')
     app.view.add('error',__dirname + '/view/error.html')
@@ -47,11 +51,9 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     app.view.add('header',__dirname + '/view/header.html')
     app.view.add('home',__dirname + '/view/home.html')
     app.view.add('navbar',__dirname + '/view/navbar.html')
-  })
-  worker.setup((app) =>{
     //home page
     app.get('/',(req,res) =>{
-      res.render('home')
+      res.render(app.view.get('home'))
     })
     //add default navbar entries
     app.nav.addGroup('/','Dashboard','home')

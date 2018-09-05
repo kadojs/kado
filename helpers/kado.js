@@ -198,7 +198,8 @@ exports.infant = infant
  * @return {bool}
  */
 exports.isClientJSON = (req) => {
-  return (req.query.json || req.get('accept').match('application/json'))
+  let accept = req.get('accept') || ''
+  return (req.query.json || accept.match('application/json'))
 }
 
 
@@ -594,6 +595,7 @@ exports.init = () => {
           //web panel
           if(
             true === config.$get(['interface',name,'enabled']) &&
+            config.$exists(['interface',name,'transport']) &&
             -1 < config.$get(['interface',name,'transport']).indexOf('http')
           )
           {

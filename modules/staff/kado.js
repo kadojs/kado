@@ -76,11 +76,10 @@ exports.admin = (K,app) => {
   app.get(app.uri.add('/staff'),(req,res) => {
     res.redirect(301,app.uri.add('/staff/list'))
   })
-
+  app.post(app.uri.add('/staff/save'),admin.save)
   app.get(app.uri.add('/staff/list'),admin.list)
   app.get(app.uri.add('/staff/create'),admin.create)
   app.get(app.uri.add('/staff/edit'),admin.edit)
-
   app.get(app.uri.add('/staff/grant'),admin.grant)
   app.get(app.uri.add('/staff/revoke'),admin.revoke)
   app.post(app.uri.add('/staff/remove'),admin.remove)
