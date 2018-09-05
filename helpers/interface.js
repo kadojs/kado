@@ -13,33 +13,35 @@ let fs = require('graceful-fs')
  * @return {object}
  */
 exports.master = (K,interfaceName,interfaceRoot) => {
-  let config = K.config
-  let cluster
-  let that = this
-  that.start = (done) => {
-    cluster = clusterSetup(
-      interfaceRoot + '/worker',
-      {
-        enhanced: true,
-        count: config.interface.admin.workers.count,
-        maxConnections: config.interface.admin.workers.maxConnections,
-        env: {
-          NODE_DEBUG: process.env.NODE_DEBUG,
-          KADO_CONFIG: JSON.stringify(config.$strip())
+  return P.try(() => {
+    let config = K.config
+    let cluster
+    let master = {}
+    master.start = (done) => {
+      cluster = clusterSetup(
+        interfaceRoot + '/worker',
+        {
+          enhanced: true,
+          count: config.interface.admin.workers.count,
+          maxConnections: config.interface.admin.workers.maxConnections,
+          env: {
+            NODE_DEBUG: process.env.NODE_DEBUG,
+            KADO_CONFIG: JSON.stringify(config.$strip())
+          }
         }
-      }
-    )
-    cluster.start((err) => {
-      done(err)
-    })
-  }
-  that.stop = (done) => {
-    if(!cluster) return done()
-    cluster.stop((err) => {
-      done(err)
-    })
-  }
-  return that
+      )
+      cluster.start((err) => {
+        done(err)
+      })
+    }
+    master.stop = (done) => {
+      if(!cluster) return done()
+      cluster.stop((err) => {
+        done(err)
+      })
+    }
+    return master
+  })
 }
 
 
