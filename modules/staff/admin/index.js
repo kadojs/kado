@@ -167,6 +167,7 @@ exports.save = (req,res) => {
   let form = req.body
   let staffId = form.id || false
   let staffEmail = form.staffEmail
+  let json = K.isClientJSON(req)
   P.try(() => {
     if(staffId){
       return Staff.find({where:{id:staffId}})
@@ -208,21 +209,24 @@ exports.save = (req,res) => {
         staffId = updated.dataValues.id
         staffEmail = updated.dataValues.email
       }
-      if(false !== updated){
-        req.flash('success',{
-          message: K._l.staff.staff_saved,
-          href: res.locals._uri.get('/staff/edit') + '?id=' + staffId,
-          name: staffEmail
-        })
+      if(json){
+        res.json({staff: updated.dataValues})
       } else {
-        req.flash('warning',{
-          message: K._l.staff.staff_unchanged,
-          href: res.locals._uri.get('/staff/edit') + '?id=' + staffId,
-          name: staffEmail
-        })
+        if(false !== updated){
+          req.flash('success',{
+            message: K._l.staff.staff_saved,
+            href: res.locals._uri.get('/staff/edit') + '?id=' + staffId,
+            name: staffEmail
+          })
+        } else {
+          req.flash('warning',{
+            message: K._l.staff.staff_unchanged,
+            href: res.locals._uri.get('/staff/edit') + '?id=' + staffId,
+            name: staffEmail
+          })
+        }
+        res.redirect(res.locals._uri.get('/staff/list'))
       }
-      res.setHeader('staffid',staffId)
-      res.redirect(res.locals._uri.get('/staff/list'))
     })
     .catch((err) => {
       res.render(res.locals._view.get('error'),{error: err})
@@ -327,15 +331,15 @@ exports.remove = (req,res) => {
   K.modelRemoveById(Staff,req.body.remove)
     .then(() => {
       if(json){
-        res.json({success: K._l.staff_removed})
+        res.json({success: K._l.staff.staff_removed})
       } else {
-        req.flash('success',K._l.staff_removed)
+        req.flash('success',K._l.staff.staff_removed)
         res.redirect(res.local._uri.get('/staff/list'))
       }
     })
     .catch((err) => {
       if(json){
-        res.json({error: err.message || K._l.err_staff_removed})
+        res.json({error: err.message || K._l.staff.err_staff_removed})
       } else {
         res.render('error',{error: err.message})
       }

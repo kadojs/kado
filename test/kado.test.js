@@ -180,14 +180,12 @@ describe('kado',function(){
           let blogId = null
           let removeBlog = () => {
             return request.postAsync({
-              url: baseUrl + '/blog/list',
+              url: baseUrl + '/blog/remove?id=' + blogId,
               jar: cookieJar,
-              form: {
-                remove: [blogId]
-              }
+              json:true
             })
               .then((res) => {
-                expect(res.body).to.match(/Found. Redirecting to \/blog\/list/)
+                expect(res.body.success).to.match(/Blog\(s\) removed/)
                 blogId = null
               })
           }
@@ -219,47 +217,45 @@ describe('kado',function(){
             return request.postAsync({
               url: baseUrl + '/blog/save',
               jar: cookieJar,
-              form: {
+              json: {
                 title: 'Test Blog',
                 content: 'testing the blog'
               }
             })
               .then((res) => {
-                expect(res.body).to.match(/Found. Redirecting to \/blog\/list/)
-                expect(+res.headers.blogid).to.be.a('number')
-                blogId = +res.headers.blogid
+                expect(+res.body.blog.id).to.be.a('number')
+                blogId = +res.body.blog.id
               })
           })
           it('should allow modification',() => {
             return request.postAsync({
               url: baseUrl + '/blog/save',
               jar: cookieJar,
-              form: {
+              json: {
                 id: blogId,
                 title: 'Test blog 2',
                 content: 'testing the blog 2'
               }
             })
               .then((res) => {
-                expect(res.body).to.match(/Found. Redirecting to \/blog\/list/)
-                expect(+res.headers.blogid).to.equal(blogId)
+                expect(res.body.blog.id).to.be.a('number')
+                expect(+res.body.blog.id).to.equal(blogId)
               })
           })
           it('should allow deletion',() => {
             return removeBlog()
           })
         })
-        describe.only('staff',() => {
+        describe('staff',() => {
           let staffId = null
           let removeStaff = () => {
             return request.getAsync({
               url: baseUrl + '/staff/remove?id=' + staffId,
               jar: cookieJar,
-              json: true
+              json: {}
             })
               .then((res) => {
-                console.log(res.body)
-                expect(res.body.success).to.match(/Staff removed successfully/)
+                expect(res.body.success).to.match(/Staff removed/)
                 staffId = null
               })
           }
@@ -293,7 +289,7 @@ describe('kado',function(){
                 return request.postAsync({
                   url: baseUrl + '/staff/save',
                   jar: cookieJar,
-                  form: {
+                  json: {
                     staffName: 'Test Staff',
                     staffEmail: 'testing@testing.com',
                     staffPassword: 'testing',
@@ -302,16 +298,15 @@ describe('kado',function(){
                 })
               })
               .then((res) => {
-                expect(res.body).to.match(/Found. Redirecting to \/staff\/list/)
-                expect(+res.headers.staffid).to.be.a('number')
-                staffId = +res.headers.staffid
+                expect(res.body.staff.id).to.be.a('number')
+                staffId = +res.body.staff.id
               })
           })
           it('should allow modification',() => {
             return request.postAsync({
               url: baseUrl + '/staff/save',
               jar: cookieJar,
-              form: {
+              json: {
                 id: staffId,
                 staffName: 'Test Staff 2',
                 staffEmail: 'testing@testing.com',
@@ -320,8 +315,8 @@ describe('kado',function(){
               }
             })
               .then((res) => {
-                expect(res.body).to.match(/Found. Redirecting to \/staff\/list/)
-                expect(+res.headers.staffid).to.equal(staffId)
+                expect(res.body.staff.id).to.be.a('number')
+                expect(+res.body.staff.id).to.equal(staffId)
               })
           })
           it('should allow deletion',() => {

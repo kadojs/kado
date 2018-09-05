@@ -108,15 +108,15 @@ exports.remove = (req,res) => {
   K.modelRemoveById(Blog,req.body.remove)
     .then(() => {
       if(json){
-        res.json({success: K._l.blog_removed})
+        res.json({success: K._l.blog.blog_removed})
       } else {
-        req.flash('success',K._l.blog_removed)
+        req.flash('success',K._l.blog.blog_removed)
         res.redirect('/blog/list')
       }
     })
     .catch((err) => {
       if(json){
-        res.json({error: err.message || K._l.blog_removal_error})
+        res.json({error: err.message || K._l.blog.blog_removal_error})
       } else {
         res.render(res.locals._view.get('error'),{error: err.message})
       }
