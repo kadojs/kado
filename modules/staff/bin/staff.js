@@ -10,6 +10,7 @@ let log = K.log
 let sequelize = K.db.sequelize
 
 let Staff = sequelize.models.Staff
+let StaffPermission = sequelize.models.StaffPermission
 
 //make some promises
 P.promisifyAll(bcrypt)
@@ -25,7 +26,7 @@ program
   .description('Create new staff member')
   .action((opts) => {
     P.try(() => {
-      log.log('info','Creating staff member')
+      log.info('Creating staff member')
       if(!opts.email || !opts.password)
         throw new Error('Email and password are required')
       let doc = {
@@ -38,11 +39,11 @@ program
       return Staff.create(doc)
     })
       .then(() => {
-        log.log('info','Staff member created!')
+        log.info('Staff member created!')
         process.exit()
       })
       .catch((err) => {
-        log.log('error', 'Error: Failed to create staff member: ' + err)
+        log.error('Error: Failed to create staff member: ' + err)
         process.exit()
       })
   })
@@ -69,11 +70,12 @@ program
         return doc.save()
       })
       .then(() => {
-        log.log('info','Staff member updated successfully!')
+        log.info('Staff member updated successfully!')
         process.exit()
       })
       .catch((err) => {
-        if(err) throw new Error('Could not save staff member: ' + err)
+        log.error('Could not save staff member: ' + err)
+        process.exit()
       })
   })
 //remove
@@ -85,11 +87,66 @@ program
     if(!opts.email) throw new Error('Email is required... exiting')
     Staff.destroy({where: {email: opts.email}})
       .then(() => {
-        log.log('info','Staff member removed successfully!')
+        log.info('Staff member removed successfully!')
         process.exit()
       })
       .catch((err) => {
-        log.log('error', 'Error: Could not remove staff member: ' + err)
+        log.error('Error: Could not remove staff member: ' + err)
+      })
+  })
+//add permission
+program
+  .command('grantpermission')
+  .option('-e, --email <s>','Email of staff member to grant permission')
+  .option('-p, --perm <s>','Name of permission to grant, usually URI')
+  .description('Grant permission to staff member')
+  .action((opts) => {
+    if(!opts.email) throw new Error('Email is required... exiting')
+    if(!opts.perm) throw new Error('Permission is required... exiting')
+    Staff.find({where: {email: opts.email}})
+      .then((result) => {
+        if(!result) throw new Error('Staff member not found')
+        return StaffPermission.create({
+          name: opts.perm,
+          isAllowed: true,
+          StaffId: result.id
+        })
+      })
+      .then(() => {
+        log.info('Staff member permission granted!')
+        process.exit()
+      })
+      .catch((err) => {
+        log.error('Error: Could grant permission: ' + err)
+        process.exit()
+      })
+  })
+//remove permission
+program
+  .command('revokepermission')
+  .option('-e, --email <s>','Email of staff member to revoke permission')
+  .option('-p, --perm <s>','Name of permission to revoke, usually URI')
+  .description('Revoke permission to staff member')
+  .action((opts) => {
+    if(!opts.email) throw new Error('Email is required... exiting')
+    if(!opts.perm) throw new Error('Permission is required... exiting')
+    Staff.find({where: {email: opts.email}})
+      .then((result) => {
+        if(!result) throw new Error('Staff member not found')
+        return StaffPermission.find({
+          where: {name: opts.perm, StaffId: result.id}
+        })
+      })
+      .then((result) => {
+        return result.destroy()
+      })
+      .then(() => {
+        log.info('Staff member permission revoked!')
+        process.exit()
+      })
+      .catch((err) => {
+        log.error('Error: Could revoke permission: ' + err)
+        process.exit()
       })
   })
 //list
@@ -112,7 +169,7 @@ program
         process.exit()
       })
       .catch((err) => {
-        log.log('error', 'Error: Could not list staff members ' +
+        log.error('Error: Could not list staff members ' +
           err.stack)
         process.exit()
       })

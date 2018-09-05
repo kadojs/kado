@@ -40,6 +40,12 @@ exports.db = (K,db) => {
  */
 exports.admin = (K,app) => {
   let admin = require('./admin')
+  //register permissions
+  app.permission.add('/blog/create','Create blog')
+  app.permission.add('/blog/save','Save blog')
+  app.permission.add('/blog/list','List blog')
+  app.permission.add('/blog/edit','Edit blog')
+  app.permission.add('/blog/remove','Remove blog')
   //register views
   app.view.add('blog/create',__dirname + '/admin/view/create.html')
   app.view.add('blog/edit',__dirname + '/admin/view/edit.html')
@@ -47,18 +53,17 @@ exports.admin = (K,app) => {
   //register navigation
   app.nav.addGroup(app.uri.add('/blog'),'Blog','book')
   app.nav.addItem('Blog',app.uri.add('/blog/list'),'List','list')
-  app.nav.addItem('Blog',app.uri.get('/blog/list'),'Create','plus')
+  app.nav.addItem('Blog',app.uri.add('/blog/create'),'Create','plus')
   //register routes
   app.get(app.uri.get('/blog'),(req,res) => {
     res.redirect(301,app.uri.get('/blog/list'))
   })
   app.get(app.uri.get('/blog/list'),admin.list)
-  app.get(app.uri.add('/blog/create'),admin.create)
+  app.get(app.uri.get('/blog/create'),admin.create)
   app.get(app.uri.add('/blog/edit'),admin.edit)
   app.post(app.uri.add('/blog/save'),admin.save)
   app.post(app.uri.add('/blog/remove'),admin.remove)
   app.get(app.uri.get('/blog/remove'),admin.remove)
-
 }
 
 

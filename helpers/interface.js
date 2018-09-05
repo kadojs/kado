@@ -70,6 +70,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     const path = require('path')
     const serveStatic = require('serve-static')
     const Nav = require('../helpers/Nav')
+    const Permission = require('../helpers/Permission')
     const URI = require('../helpers/URI')
     const View = require('../helpers/View')
     const SequelizeStore = require('connect-session-sequelize')(
@@ -82,6 +83,8 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     P.promisifyAll(server)
     //navigation system
     app.nav = new Nav()
+    //permission system
+    app.permission = new Permission()
     //uri system
     app.uri = new URI()
     //view system
@@ -150,6 +153,20 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       res.locals.currentUri = req.originalUrl
       next()
     })
+    worker.setupPermission = (cb) => {
+      app.use((req,res,next) => {
+        let set
+        if(req.session && req.session._staff && req.session._staff.permission){
+          set = req.session._staff.permission
+        }
+        if(false === app.permission.allowed(req.url,set)){
+          res.render(res.locals._view.get('error'),{error: K._l.permdenied})
+        } else {
+          next()
+        }
+      })
+      if('function' === typeof(cb)) return cb(app,K)
+    }
     worker.setupLang = (cb) => {
       //setup language support
       K.lang.scan() //this happens sync no way around it
@@ -186,7 +203,9 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       return () => {
         return (text) => {
           let parts = text.split(',')
-          if(parts.length > 2) throw new Error('Failure to parse alert template')
+          if(parts.length > 2){
+            throw new Error('Failure to parse alert template')
+          }
           let level = parts[0],tpl = parts[1],out = ''
           let messages = req.flash(level)
           if(messages && messages.length){
@@ -264,18 +283,18 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
      * @param {function} done
      */
     worker.start = (done) => {
+      //so here it is time to actually scan for modules and this is where i have
+      //been on the fence about how to best go about scanning modules, should we
+      //have a kado.json with a list of their names and folders or should i scan
+      //and try to detect?
+
+      //maybe do some pros and cons. ease for the auto scan, however the auto
+      //scan is slower and less predictable, also less controllable. con of
+      //manual is that when modules are installed they will need to run the kado
+      //cli to turn them selves on which i suppose is acceptable
+
+      //so now loop here and load modules that want to be loaded
       P.try(() =>{
-        //so here it is time to actually scan for modules and this is where i have
-        //been on the fence about how to best go about scanning modules, should we
-        //have a kado.json with a list of their names and folders or should i scan
-        //and try to detect?
-
-        //maybe do some pros and cons. ease for the auto scan, however the auto
-        //scan is slower and less predictable, also less controllable. con of
-        //manual is that when modules are installed they will need to run the kado
-        //cli to turn them selves on which i suppose is acceptable
-
-        //so now loop here and load modules that want to be loaded
         Object.keys(K.modules).forEach((modName) =>{
           let mod = K.modules[modName]
           if(mod.enabled){

@@ -5,6 +5,7 @@ const K = require('../../../helpers/kado')
 
 let sequelize = K.db.sequelize
 let Staff = sequelize.models.Staff
+let StaffPermission = sequelize.models.StaffPermission
 
 //make some promises
 P.promisifyAll(bcrypt)
@@ -168,6 +169,25 @@ exports.doLogin = (email,password) => {
       staff.dateSeen = sequelize.fn('NOW')
       staff.loginCount = (+staff.loginCount || 0) + 1
       return staff.save()
+    })
+    .then(() => {
+      return Staff.find({where: {email: email}, include: [StaffPermission]})
+    })
+    .then((result) => {
+      //no permissions set makes the staff a super admin
+      if(!result.dataValues.StaffPermissions.length){
+        delete result.dataValues.StaffPermissions
+        result.dataValues.permission = false
+        return result
+      }
+      //otherwise apply permission profile
+      let permission = new K.Permission()
+      result.dataValues.StaffPermissions.forEach((perm) => {
+        if(perm.isAllowed) permission.add(perm.name)
+      })
+      delete result.dataValues.StaffPermissions
+      result.dataValues.permission = permission.digest()
+      return result
     })
 }
 

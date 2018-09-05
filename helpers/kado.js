@@ -243,6 +243,28 @@ exports.modelRemoveById = (Model,items) => {
  */
 exports.ObjectManage = ObjectManage
 
+
+/**
+ * Export ObjectManage object
+ * @type {*|ObjectManage}
+ */
+exports.Permission = require('./Permission')
+
+
+/**
+ * Export ObjectManage object
+ * @type {*|ObjectManage}
+ */
+exports.URI = require('./URI')
+
+
+/**
+ * Export ObjectManage object
+ * @type {*|ObjectManage}
+ */
+exports.View = require('./View')
+
+
 /**
  * Moment standard format
  *  extend moment().format() so that this one place changes everywhere

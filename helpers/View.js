@@ -53,6 +53,6 @@ class View {
 
 /**
  * Export class
- * @type {Nav}
+ * @type {View}
  */
 module.exports = View

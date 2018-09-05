@@ -52,6 +52,6 @@ class URI {
 
 /**
  * Export class
- * @type {Nav}
+ * @type {URI}
  */
 module.exports = URI

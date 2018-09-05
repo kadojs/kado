@@ -16,6 +16,10 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     K.log.debug(Object.keys(K.lang.pack).length +
       ' ' + interfaceName + ' language packs activated')
   })
+  worker.setupPermission(() => {
+    //activate lang pack
+    K.log.debug(interfaceName + ' permissions system activated')
+  })
   worker.enableHtml((app) => {
     const mustacheExpress = require('mustache-express')
     const serveStatic = require('serve-static')

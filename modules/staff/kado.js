@@ -18,9 +18,15 @@ exports._kado = {
  * @param {K.db} db
  */
 exports.db = (K,db) => {
-  db.sequelize.enabled = true
-  db.sequelize.import(__dirname + '/model/Staff.js')
-  db.sequelize.import(__dirname + '/model/StaffSession.js')
+  let s = db.sequelize
+  s.enabled = true
+  s.import(__dirname + '/model/Staff.js')
+  s.import(__dirname + '/model/StaffPermission.js')
+  s.import(__dirname + '/model/StaffSession.js')
+  let Staff = s.models.Staff
+  let StaffPermission = s.models.StaffPermission
+  Staff.hasMany(StaffPermission,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+  StaffPermission.belongsTo(Staff,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
 }
 
 
