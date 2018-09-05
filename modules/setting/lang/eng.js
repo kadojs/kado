@@ -13,5 +13,9 @@ module.exports = {
   'value': 'Value',
   'edit_setting': 'Edit Setting',
   'changes_wont_take_affect_until_restart': 'Changes wont take affect until ' +
-    'Kado is restarted.'
+    'Kado is restarted.',
+  'no_settings_exist': 'No settings exist?',
+  'overrides_cleared': 'Setting overrides cleared',
+  'setting_not_found': 'Setting not found',
+  'settings_saved': 'Settings saved'
 }

@@ -90,7 +90,7 @@ let findConfig = (path) => {
 exports.list = (req,res) => {
   let result = queryConfig(null,0,10000)
   if(!result || !result.rows){
-    res.render('error',{error: 'No settings exist?'})
+    res.render('error',{error: K._l.setting.no_settings_exist})
   } else {
     res.render(__dirname + '/view/list',{
       list: result.rows
@@ -125,7 +125,7 @@ exports.listAction = (req,res) => {
       return fs.writeFileAsync(settingsFile,JSON.stringify(settings.$strip()))
     })
     .then(() => {
-      req.flash('success','Setting overrides cleared')
+      req.flash('success',K._l.setting.overrides_cleared)
       res.redirect('/setting/list')
     })
     .catch((err) => {
@@ -142,7 +142,7 @@ exports.listAction = (req,res) => {
 exports.edit = (req,res) => {
   P.try(() => {
     let setting = findConfig(req.query.path)
-    if(!setting) throw new Error('Setting not found')
+    if(!setting) throw new Error(K._l.setting.setting_not_found)
     res.render(__dirname + '/view/edit',{setting: setting})
   })
     .catch((err) => {
@@ -175,7 +175,7 @@ exports.save = (req,res) => {
       return fs.writeFileAsync(settingsFile,JSON.stringify(settings.$strip()))
     })
     .then(() => {
-      req.flash('success','Settings saved')
+      req.flash('success',K._l.settings.setting_saved)
       res.redirect('/setting/edit?path=' + data.path)
     })
     .catch((err) => {

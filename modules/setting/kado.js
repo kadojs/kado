@@ -16,12 +16,16 @@ exports._kado ={
  */
 exports.admin = (K,app) => {
   let admin = require('./admin')
+  //register permissions
+  app.permission.add('/setting/list','List settings')
+  app.permission.add('/setting/edit','Edit etting')
+  app.permission.add('/setting/save','Save etting')
   //register routes
-  app.get('/setting',(req,res) => {
-    res.redirect(301,'/setting/list')
+  app.get(app.uri.add('/setting'),(req,res) => {
+    res.redirect(301,app.uri.add('/setting/list'))
   })
-  app.get('/setting/list',admin.list)
-  app.get('/setting/edit',admin.edit)
-  app.post('/setting/list',admin.listAction)
-  app.post('/setting/save',admin.save)
+  app.get(app.uri.add('/setting/list'),admin.list)
+  app.get(app.uri.add('/setting/edit'),admin.edit)
+  app.post(app.uri.add('/setting/list'),admin.listAction)
+  app.post(app.uri.add('/setting/save'),admin.save)
 }
