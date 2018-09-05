@@ -37,10 +37,10 @@
         <a href="{{{uri}}}">
           {{#icon}}
             <span class="fa fa-{{icon}}">&nbsp;</span>
-            <span>{{name}}</span>
+            <span>{{#_l._get}}{{name}}{{/_l._get}}</span>
           {{/icon}}
           {{^icon}}
-            <span>{{name}}</span>
+            <span>{{#_l._get}}{{name}}{{/_l._get}}</span>
           {{/icon}}
         </a>
       </li>

@@ -1,7 +1,6 @@
 'use strict';
 const K = require('../../../index')
 
-const bcrypt = require('bcrypt')
 const P = require('bluebird')
 const Table = require('cli-table')
 const program = require('commander')
@@ -10,9 +9,6 @@ let log = K.log
 let sequelize = K.db.sequelize
 
 let Blog = sequelize.models.Blog
-
-//make some promises
-P.promisifyAll(bcrypt)
 
 let config = K.config
 

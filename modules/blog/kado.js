@@ -40,20 +40,25 @@ exports.db = (K,db) => {
  */
 exports.admin = (K,app) => {
   let admin = require('./admin')
-  //register routes
-  app.get('/blog',(req,res) => {
-    res.redirect(301,'/blog/list')
-  })
-  app.get('/blog/list',admin.list)
-  app.get('/blog/create',admin.create)
-  app.get('/blog/edit',admin.edit)
-  app.post('/blog/save',admin.save)
-  app.post('/blog/remove',admin.remove)
-  app.get('/blog/remove',admin.remove)
+  //register views
+  app.view.add('blog/create',__dirname + '/admin/view/create.html')
+  app.view.add('blog/edit',__dirname + '/admin/view/edit.html')
+  app.view.add('blog/list',__dirname + '/admin/view/list.html')
   //register navigation
-  app.nav.addGroup('/blog','Blog','book')
-  app.nav.addItem('Blog','/blog/list','List','list')
-  app.nav.addItem('Blog','/blog/create','Create','plus')
+  app.nav.addGroup(app.uri.add('/blog'),'Blog','book')
+  app.nav.addItem('Blog',app.uri.add('/blog/list'),'List','list')
+  app.nav.addItem('Blog',app.uri.get('/blog/list'),'Create','plus')
+  //register routes
+  app.get(app.uri.get('/blog'),(req,res) => {
+    res.redirect(301,app.uri.get('/blog/list'))
+  })
+  app.get(app.uri.get('/blog/list'),admin.list)
+  app.get(app.uri.add('/blog/create'),admin.create)
+  app.get(app.uri.add('/blog/edit'),admin.edit)
+  app.post(app.uri.add('/blog/save'),admin.save)
+  app.post(app.uri.add('/blog/remove'),admin.remove)
+  app.get(app.uri.get('/blog/remove'),admin.remove)
+
 }
 
 
@@ -65,10 +70,10 @@ exports.admin = (K,app) => {
 exports.main = (K,app) => {
   let main = require('./main')
   //register routes
-  app.get('/blog',main.index)
-  app.get('/blog/:blogUri',main.entry)
+  app.get(app.uri.add('/blog'),main.index)
+  app.get(app.uri.add('/blog/:blogUri'),main.entry)
   //register navigation
-  app.nav.addGroup('/blog','Blog','book')
+  app.nav.addGroup(app.uri.get('/blog'),'Blog','book')
 }
 
 

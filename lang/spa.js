@@ -19,10 +19,13 @@ module.exports = {
   'login': 'Iniciar sesión',
   'sign_in': 'Registrarse',
   'toggle_nav': 'Alternar navegación',
+  'home': 'Casa',
   'list': 'Lista',
   'staff_title': 'Personal',
   'action': 'Acción',
   'active': 'Activo',
+  'created': 'Creado',
+  'saved': 'Salvado',
   'list_staff': 'Lista de personal',
   'create_staff': 'Crear personal',
   'settings': 'Configuraciones',
@@ -31,5 +34,6 @@ module.exports = {
   'navigation': 'Alternar barra lateral',
   'create_entry': 'Crear entrada',
   'title': 'Título',
-  'save': 'Salvar'
+  'save': 'Salvar',
+  'Dashboard': 'Tablero'
 }

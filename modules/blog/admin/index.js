@@ -11,8 +11,9 @@ const Blog = sequelize.models.Blog
  * @param {object} res
  */
 exports.list = (req,res) => {
+  //K.nav.breadcrumb([K.nav.bcHome,K.nav.bc(K._l.list,'/blog/list')])
   if(!req.query.length){
-    res.render(__dirname + '/view/list')
+    res.render(res.locals._view.get('blog/list'))
   } else {
     K.datatable(Blog,req.query)
       .then((result) => {
@@ -31,7 +32,7 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(__dirname + '/view/create')
+  res.render(res.locals._view.get('blog/create'))
 }
 
 
@@ -43,11 +44,11 @@ exports.create = (req,res) => {
 exports.edit = (req,res) => {
   Blog.findOne({where: {id: req.query.id}})
     .then((blog) => {
-      if(!blog) throw new Error('Blog entry not found')
-      res.render(__dirname + '/view/edit',{blog: blog})
+      if(!blog) throw new Error(K._l.blog_entry_not_found)
+      res.render(res.locals._view.get('blog/edit'),{blog: blog})
     })
     .catch((err) => {
-      res.render('error',{error: err})
+      res.render(res.locals._view.get('error'),{error: err})
     })
 }
 
@@ -78,7 +79,7 @@ exports.save = (req,res) => {
         res.json({blog: blog})
       } else {
         req.flash('success',{
-          message: 'Blog entry ' + (isNew ? 'created' : 'saved'),
+          message: K._l.blog_entry + ' ' + (isNew ? K._l.created : K._l.saved),
           href: '/blog/edit?id=' + blog.id,
           name: blog.id
         })
@@ -89,7 +90,7 @@ exports.save = (req,res) => {
       if(json){
         res.json({error: err.message})
       } else {
-        res.render('error',{error: err})
+        res.render(res.locals._view.get('error'),{error: err})
       }
     })
 }
@@ -107,17 +108,17 @@ exports.remove = (req,res) => {
   K.modelRemoveById(Blog,req.body.remove)
     .then(() => {
       if(json){
-        res.json({success: 'Blog removed'})
+        res.json({success: K._l.blog_removed})
       } else {
-        req.flash('success','Blog(s) removed')
+        req.flash('success',K._l.blog_removed)
         res.redirect('/blog/list')
       }
     })
     .catch((err) => {
       if(json){
-        res.json({error: err.message || 'Blog removal error'})
+        res.json({error: err.message || K._l.blog_removal_error})
       } else {
-        res.render('error',{error: err.message})
+        res.render(res.locals._view.get('error'),{error: err.message})
       }
     })
 }

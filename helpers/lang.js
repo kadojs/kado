@@ -68,6 +68,10 @@ module.exports.getPack = (locale) => {
       }
     }
   }
+  //function to return lang pack tags dynamically
+  pack._get = () => {return (text,render) => {
+    return pack[render(text)] || render(text)
+  }}
   return pack
 }
 
@@ -96,9 +100,7 @@ module.exports.scan = () => {
     let pack = require(file)
     if(!that.pack[name]) that.pack[name] = {}
     for(let key in pack){
-      if(pack.hasOwnProperty(key)){
-        that.pack[name][key] = pack[key]
-      }
+      if(pack.hasOwnProperty(key)){that.pack[name][key] = pack[key]}
     }
     K.log.debug(that.pack[name]._pack_name +
       ' v' + that.pack[name]._pack_version + ' language pack loaded')
@@ -119,16 +121,12 @@ module.exports.scan = () => {
     }
     K.log.debug(pack._module_name + ' language pack loaded')
   }
-  let doScan = (pattern,handler) => {
-    return glob.sync(pattern)
-     .forEach(handler)
-  }
+  let doScan = (pattern,handler) => {return glob.sync(pattern).forEach(handler)}
   //scan lang packs
   K.log.debug('Scanning language packs')
   doScan(defaultLangGlob,loadLanguage)
   doScan(defaultModuleLangGlob,loadModuleLanguage)
   doScan(localModuleLangGlob,loadModuleLanguage)
   doScan(localLangGlob,loadLanguage)
-  K.log.debug('Found ' + Object.keys(that.pack).length +
-    ' language(s)')
+  K.log.debug('Found ' + Object.keys(that.pack).length + ' language(s)')
 }

@@ -19,10 +19,13 @@ module.exports = {
   'login': 'Login',
   'sign_in': 'Sign In',
   'toggle_nav': 'Toggle Nav',
+  'home': 'Home',
   'list': 'List',
   'staff_title': 'Staff',
   'action': 'Action',
   'active': 'Active',
+  'created': 'Created',
+  'saved': 'Saved',
   'list_staff': 'List Staff',
   'create_staff': 'Create Staff',
   'settings': 'Settings',
@@ -31,5 +34,6 @@ module.exports = {
   'navigation': 'Navigation',
   'create_entry': 'Create Entry',
   'title': 'Title',
-  'save': 'Save'
+  'save': 'Save',
+  'Dashboard': 'Dashboard'
 }

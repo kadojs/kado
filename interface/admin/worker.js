@@ -49,6 +49,16 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     app.engine('html',mustacheExpress())
     //static files
     app.use(serveStatic(interfaceRoot + '/public'))
+    //setup default views
+    app.view.add('alert',__dirname + '/view/alert.html')
+    app.view.add('breadcrumb',__dirname + '/view/breadcrumb.html')
+    app.view.add('error',__dirname + '/view/error.html')
+    app.view.add('footer',__dirname + '/view/footer.html')
+    app.view.add('header',__dirname + '/view/header.html')
+    app.view.add('home',__dirname + '/view/home.html')
+    app.view.add('login',__dirname + '/view/login.html')
+    app.view.add('navbar',__dirname + '/view/navbar.html')
+    app.view.add('sidebar',__dirname + '/view/sidebar.html')
   })
   worker.setup((app) => {
     //login

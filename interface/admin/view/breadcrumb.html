@@ -1,3 +1,14 @@
-{{#_nav.group}}
-
-{{/_nav.group}}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/"><span class="fa fa-home"></span> {{_l.home}}</a></li>
+  {{#_nav.group}}
+    {{#checkActive}}{{{uri}}},{{{currentUri}}}{{/checkActive}}
+    <li class="breadcrumb-item">
+      {{#icon}}
+        <a href="{{uri}}"><span class="fa fa-{{icon}}"></span> {{name}}</a>
+      {{/icon}}
+      {{^icon}}
+        <a href="{{uri}}">{{name}}</a>
+      {{/icon}}
+    </li>
+  {{/_nav.group}}
+</ol>

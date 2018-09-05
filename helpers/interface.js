@@ -70,6 +70,8 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     const path = require('path')
     const serveStatic = require('serve-static')
     const Nav = require('../helpers/Nav')
+    const URI = require('../helpers/URI')
+    const View = require('../helpers/View')
     const SequelizeStore = require('connect-session-sequelize')(
       expressSession.Store)
     //interface context
@@ -80,6 +82,10 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     P.promisifyAll(server)
     //navigation system
     app.nav = new Nav()
+    //uri system
+    app.uri = new URI()
+    //view system
+    app.view = new View()
     //------------------------------------
     //TEMPLATE GLOBALS AND FUNCTIONS
     // make sure and prefix these with _
@@ -129,13 +135,18 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     app.locals._appTitle = config.interface[interfaceName].title
     app.locals._version = config.version
     app.locals._currentYear = app.locals._moment().format('YYYY')
+    //expose translation systems
     app.locals._nav = app.nav
+    app.locals._uri = app.uri
+    app.locals._view = app.view
     //load middleware
     app.use(compress())
     app.use(bodyParser.urlencoded({extended: true}))
     app.use(bodyParser.json())
     //set the active nav
     app.use((req,res,next) => {
+      res.locals._uri = app.uri
+      res.locals._view = app.view
       res.locals.currentUri = req.originalUrl
       next()
     })
@@ -149,7 +160,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
         }
         if(req.session && req.session.lang) req.locale = req.session.lang
         //actually finally load the pack
-        res.locals._l = K.lang.getPack(req.locale)
+        res.locals._l = K._l = K.lang.getPack(req.locale)
         next()
       })
       if('function' === typeof(cb)) return cb(app,K)
