@@ -38,5 +38,6 @@ module.exports = {
   'Dashboard': 'Dashboard',
   'permdenied': 'Permission Denied',
   'invalid_login': 'Invalid login',
-  'no_staff_for_args': 'No staff found for given args '
+  'no_staff_for_args': 'No staff found for given args ',
+  'history': 'History'
 }

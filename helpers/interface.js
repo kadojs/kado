@@ -69,6 +69,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     const locale = require('locale')
     const path = require('path')
     const serveStatic = require('serve-static')
+    const Breadcrumb = require('../helpers/Breadcrumb')
     const Nav = require('../helpers/Nav')
     const Permission = require('../helpers/Permission')
     const URI = require('../helpers/URI')
@@ -81,6 +82,8 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     let server = worker.server = http.createServer(app)
     //make some promises
     P.promisifyAll(server)
+    //breadcrumb system
+    app.breadcrumb = new Breadcrumb()
     //navigation system
     app.nav = new Nav()
     //permission system
@@ -133,12 +136,27 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
         return cond ? parts[1] : parts[2]
       }
     }
+    app.locals._compare = () => {
+      return (text,render) => {
+        let parts = render(text).split(',')
+        if(parts.length !== 4) throw new Error('Failed parsing _compare')
+        let cond = true
+        if(parts[0] !== parts[1]){
+          cond = false
+        }
+        return cond ? parts[2] : parts[3]
+      }
+    }
+    app.locals._capitalize = (string) => {
+      return string.replace(/\b\w/g, l => l.toUpperCase())
+    }
     app.locals._prettyBytes = require('pretty-bytes')
     app.locals._appName = config.name
     app.locals._appTitle = config.interface[interfaceName].title
     app.locals._version = config.version
     app.locals._currentYear = app.locals._moment().format('YYYY')
     //expose translation systems
+    app.locals._breadcrumb = app.breadcrumb
     app.locals._nav = app.nav
     app.locals._uri = app.uri
     app.locals._view = app.view
@@ -146,12 +164,16 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     app.use(compress())
     app.use(bodyParser.urlencoded({extended: true}))
     app.use(bodyParser.json())
-    //set the active nav
+    //system middleware
     app.use((req,res,next) => {
+      //add breadcrumb links
+      app.breadcrumb.crumbs = app.breadcrumb.middleware(app,req)
+      //expose system vars
+      res.locals._breadcrumb = app.breadcrumb
       res.locals._permission = app.permission
       res.locals._uri = app.uri
       res.locals._view = app.view
-      res.locals.currentUri = req.originalUrl
+      res.locals._currentUri = req.originalUrl
       next()
     })
     worker.setupPermission = (cb) => {

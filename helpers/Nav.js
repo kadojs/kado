@@ -55,6 +55,14 @@ class Nav {
       checkActive: checkActive
     })
   }
+
+  /**
+   * Return built nav entries
+   * @returns {Array}
+   */
+  all(){
+    return this.group
+  }
 }
 
 
