@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-const K = require('../index')
+const K = require('../../../index')
 const program = require('commander')
 const fs = require('fs')
 const mkdirp = require('mkdirp-then')

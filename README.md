@@ -23,6 +23,9 @@ Please see the documentation for more https://kado.org/docs
 
 ## Changelog
 
+### 3.1.0
+* Minor fix to CLI suite, moves kado commands into setting module
+
 ### 3.0.0
 * Drop pug
 * Implement mustache templates

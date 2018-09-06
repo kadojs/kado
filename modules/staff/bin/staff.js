@@ -116,7 +116,7 @@ program
   })
 //add permission
 program
-  .command('grantpermission')
+  .command('grant')
   .option('-e, --email <s>','Email of staff member to grant permission')
   .option('-p, --perm <s>','Name of permission to grant, usually URI')
   .description('Grant permission to staff member')
@@ -143,7 +143,7 @@ program
   })
 //remove permission
 program
-  .command('revokepermission')
+  .command('revoke')
   .option('-e, --email <s>','Email of staff member to revoke permission')
   .option('-p, --perm <s>','Name of permission to revoke, usually URI')
   .description('Revoke permission to staff member')

@@ -132,11 +132,7 @@ exports.main = (K,app) => {
 
 /**
  * CLI Access
- * @param {K} K Master Kado Object
- * @param {Array} args
  */
-exports.cli = (K,args) => {
-  args.splice(2,1)
-  process.argv = args
+exports.cli = () => {
   require('./bin/blog')
 }
