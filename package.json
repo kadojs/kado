@@ -1,13 +1,13 @@
 {
-  "author": "Bryan Tong <bryan@nullivex.com>",
+  "author": "Kado <support@kado.org>",
   "name": "kado",
-  "description": "Modular App development system",
+  "description": "Module system for Enterprise Grade applications.",
   "version": "3.0.0",
-  "homepage": "https://www.kado.org",
+  "homepage": "https://kado.org",
   "license": "LGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nullivex/kado.git"
+    "url": "https://github.com/KadoOrg/kado.git"
   },
   "keywords": [
     "kado",
