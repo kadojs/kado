@@ -136,7 +136,9 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
             res.json({success: 'Login success'})
           } else {
             req.flash('success','Login success')
-            res.redirect(301,req.session._loginReferrer || '/')
+            let referrer = req.session._loginReferrer || '/'
+            if(referrer.match(/(js|jpg|ico|png|html|css)/i)) referrer = '/'
+            res.redirect(301,referrer)
           }
         })
         .catch((err) => {
