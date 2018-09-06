@@ -1,7 +1,7 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 #sidebar-copyright {
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     left: 5px;
     color: #fff;
@@ -110,7 +110,7 @@
 
 #content {
     width: 100%;
-    padding: 0px;
+    padding: 0;
     min-height: 100vh;
     transition: all 0.3s;
 }

@@ -1,10 +1,7 @@
 'use strict';
 
-window._printDate = function _printDate(d,emptyString){
-  return (
-    d ? moment(d).format('YYYY-MM-DD hh:mm:ssA')
-      : ('string' === typeof emptyString) ? emptyString : 'Never'
-  )
+window._printDate = function _printDate(d){
+  return d ? moment(d).format('YYYY-MM-DD hh:mm:ssA') :  'Never'
 }
 
 window._printSetting = function _printSetting(text,type,row){

@@ -111,7 +111,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     )
     app.locals._printDate = () => {
       return (text,render) => {
-        return K.printDate(new Date(render(text)))
+        return K.printDate(render(text),'Never')
       }
     }
     app.locals._toDateString = app.locals._printDate
