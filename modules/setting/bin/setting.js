@@ -134,7 +134,6 @@ program.command('bootstrap')
   .option('--app <string>','Name of this application')
   .option('--enable-admin','Enable the admin interface')
   .option('--enable-all','Enable all modules and interfaces')
-  .option('--enable-api','Enable api interface')
   .option('--enable-main','Enable main interface')
   .option('--enable-blog','Enable blog module')
   .option('--enable-setting','Enable setting module')
@@ -204,7 +203,6 @@ program.command('bootstrap')
       }
     }
     enableInterface('admin',cmd.enableAdmin)
-    enableInterface('api',cmd.enableApi)
     enableInterface('main',cmd.enableMain)
     if(interfaceConfig) interfaceConfig = interfaceConfig + '\n  }'
     let moduleConfig = ''
