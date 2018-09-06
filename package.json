@@ -18,8 +18,7 @@
   "engines": {
     "node": ">=4"
   },
-  "bin": "bin/kado.js",
-  "main": "./app.js",
+  "main": "./index.js",
   "dependencies": {
     "bcrypt": "^3.0.0",
     "bluebird": "^3.5.2",
