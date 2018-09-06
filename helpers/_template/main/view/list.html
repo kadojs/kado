@@ -1,11 +1,11 @@
 {{>header}}
     <div class="container">
-      <h1>{{_l.list}} {{moduleTitle}}</h1>
+      <h1>{{_l.list}} <%moduleTitle%></h1>
     </div>
     {{#list}}
       <div class="listEntry">
         <h3 style="margin-top: 5px;">
-          <a href="/{{moduleName}}}/view?id={{id}}">{{id}}</a>
+          <a href="/<%moduleName%>/view?id={{id}}">{{id}}</a>
         </h3>
         <p style="margin-top: -8px;">
           | Posted {{#_printDate}}{{createdAt}}{{/_printDate}}

@@ -49,11 +49,3 @@ exports.admin = (K,app) => {
   app.post(app.uri.add('/setting/list'),admin.listAction)
   app.post(app.uri.add('/setting/save'),admin.save)
 }
-
-
-/**
- * CLI Access
- */
-exports.cli = () => {
-  require('./bin/setting')
-}

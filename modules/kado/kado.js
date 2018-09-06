@@ -19,43 +19,19 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-const K = require('../../../index')
-const sequelize = K.db.sequelize
 
-const <%moduleModelName%> = sequelize.models.<%moduleModelName%>
-
-
-/**
- * List
- * @param {object} req
- * @param {object} res
- */
-exports.index = (req,res) => {
-  <%moduleModelName%>.findAll({order: [['createdAt','DESC']]})
-    .then((results) => {
-      res.render(res.locals._view.get('<%moduleName%>/list',{
-        list: results
-      }))
-    })
-    .catch((err) => {
-      res.render('error',{error: err})
-    })
+//module properties
+exports._kado ={
+  enabled: true,
+  name: 'kado',
+  title: 'Kado',
+  description: 'Reflect into Kado for generators and utilities'
 }
 
 
 /**
- * Entry
- * @param {object} req
- * @param {object} res
+ * CLI Access
  */
-exports.entry = (req,res) => {
-  <%moduleModelName%>.findOne({where: {id: req.query.id}})
-    .then((result) => {
-      res.render(res.locals._view.get('<%moduleName%>/entry',{
-        item: result
-      }))
-    })
-    .catch((err) => {
-      res.render('error',{error: err})
-    })
+exports.cli = () => {
+  require('./bin/util')
 }

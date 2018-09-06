@@ -26,6 +26,7 @@ const fs = require('fs')
 const mkdirp = require('mkdirp-then')
 const Mustache = require('mustache')
 const path = require('path')
+const readlineSync = require('readline-sync').question
 const readdir = require('recursive-readdir')
 const rmdir = require('rmdir-promise')
 
@@ -38,30 +39,9 @@ program.version(K.config.version)
 
 
 program.command('dbsetup')
-  .option('--dbshost <string>','Set the sequelize database host')
-  .option('--dbsport <string>','Set the sequelize database port')
-  .option('--dbsuser <string>','Set the sequelize database user')
-  .option('--dbspassword <string>','Set the sequelize database password')
-  .action((cmd) => {
-    K.configure({
-      db: {
-        sequelize: {
-          load: true,
-          enabled: true,
-          host: cmd.dbshost || 'localhost',
-          port: cmd.dbsport || 3306,
-          user: cmd.dbsuser || 'kado',
-          password: cmd.dbspassword || 'kado'
-        }
-      }
-    })
-    log.info('Beginning database setup')
-    log.info('Connecting to database')
-    K.init()
-      .then(() => {
-        log.info('Connecting to sequelize')
-        return K.db.sequelize.doConnect({sync: true})
-      })
+  .action(() => {
+    K.log.info('Connecting to sequelize')
+    K.db.sequelize.doConnect({sync: true})
       .then(() => {
         log.info('Database connected, initializing...')
       })
@@ -78,19 +58,55 @@ program.command('dbsetup')
 
 
 program.command('generate')
-  .option('--app <string>','Name of this application')
-  .option('--modconf <string>','Module config JSON file')
+  .option('--modconf <s>','Provide a JSON file containing a module definition' +
+    ', otherwise an interactive process will be used.')
+  .option('--saveconf','Save module configuration to a JSON file')
   .option('--stomp','Remove the destination directory if it exists, DANGEROUS!')
   .action((cmd) => {
+    //set our mustache tag usage here
+    Mustache.tags = ['<%','%>']
     let folder = process.cwd()
-    let modconfFile = folder + '/' + cmd.modconf
-    if(!modconfFile || !fs.existsSync(modconfFile)){
-      log.error('Must have module configuration JSON file, exiting')
-      process.exit(1)
+    let modconf = {moduleFields: []}
+    if(cmd.modconf){
+      let modconfFile = folder + '/' + cmd.modconf
+      if(!modconfFile || !fs.existsSync(modconfFile)){
+        log.error('Must have module configuration JSON file, exiting')
+        process.exit(1)
+      }
+      modconf = require(modconfFile)
+    } else {
+      //build the module conf using readline
+      log.info('Acquiring module info: Title, Name')
+      modconf.moduleTitle = readlineSync('Title of new module? ')
+      modconf.moduleName = readlineSync('Name of new module? ')
+      modconf.moduleModelName = readlineSync('Name of new module Model? ')
+      log.info('Collecting data definitions: ' +
+        'Title, Name, Type, AllowNull, Default')
+      if(readlineSync(
+        'Do you want to add module data fields? (y/n): '
+      ).match(/y/i)){
+        do {
+          let field = {}
+          field.fieldTitle = readlineSync('Field title? ')
+          field.fieldName = field.moduleField = readlineSync('Field name? ')
+          field.fieldType = readlineSync('Field type? ')
+          field.fieldAllowNull = !!readlineSync(
+            'Allow NULL? (y/n): ').match(/y/i)
+          field.fieldDefaultValue = readlineSync('Default value? ') || 'null'
+          modconf.moduleFields.push(field)
+        } while(readlineSync('Add another field? (y/n): ').match(/y/i))
+      }
+      //now write the module conf to a json file
+      if(cmd.saveconf){
+        log.info('Saving module config')
+        fs.writeFileSync(
+          folder + '/' + modconf.moduleName + '.json',
+          JSON.stringify(modconf)
+        )
+      }
     }
-    let modconf = require(modconfFile)
     let moduleFolder = path.resolve(folder + '/modules/' + modconf.moduleName)
-    let templateFolder = path.resolve(__dirname + '/../helpers/_template')
+    let templateFolder = path.resolve(__dirname + '/../../../helpers/_template')
     let fileCount = 0
     if(!cmd.app) cmd.app = 'myapp'
     K.bluebird.try(() => {
@@ -109,8 +125,23 @@ program.command('generate')
         return readdir(templateFolder)
       })
       .each((file) => {
-        let relativePath = file.replace(templateFolder,'')
         let template = fs.readFileSync(file,{encoding: 'utf-8'})
+        let relativePath = file.replace(templateFolder,'')
+        if(relativePath.match('Model.js')){
+          relativePath = relativePath.replace(
+            'Model.js',modconf.moduleModelName + '.js'
+          )
+        }
+        if(relativePath.match('cli.js')){
+          relativePath = relativePath.replace(
+            'cli.js',modconf.moduleModelName + '.js'
+          )
+        }
+        //upgrade data type fields
+        modconf.moduleFields.forEach((f) => {
+          f.allowNull = f.allowNull ? 'true' : 'false'
+          f.defaultValue = f.defaultValue ? f.defaultValue : 'null'
+        })
         log.info('Rendering ' + modconf.moduleName + relativePath)
         let result = Mustache.render(template,modconf)
         let modulePath = path.resolve(moduleFolder + '/' + relativePath)
@@ -132,17 +163,10 @@ program.command('generate')
 
 program.command('bootstrap')
   .option('--app <string>','Name of this application')
-  .option('--enable-admin','Enable the admin interface')
-  .option('--enable-all','Enable all modules and interfaces')
-  .option('--enable-main','Enable main interface')
-  .option('--enable-blog','Enable blog module')
-  .option('--enable-setting','Enable setting module')
-  .option('--enable-staff','Enable staff module')
-  .option('--dbsequelize','Enable sequelize connector')
-  .option('--dbshost <string>','Set the sequelize database host')
-  .option('--dbsport <string>','Set the sequelize database port')
-  .option('--dbsuser <string>','Set the sequelize database user')
-  .option('--dbspassword <string>','Set the sequelize database password')
+  .option('--dbhost <string>','Set the sequelize database host')
+  .option('--dbport <string>','Set the sequelize database port')
+  .option('--dbuser <string>','Set the sequelize database user')
+  .option('--dbpassword <string>','Set the sequelize database password')
   .action((cmd) => {
     let folder = process.cwd()
     let appFile = path.resolve(folder + '/app.js')
@@ -151,6 +175,7 @@ program.command('bootstrap')
       process.exit(1)
     }
     if(!cmd.app) cmd.app = 'myapp'
+    cmd.enableAll = true
     if(cmd.enableAll){
       cmd.enableAdmin = true
       cmd.enableApi = true
@@ -172,17 +197,17 @@ program.command('bootstrap')
           isFirst = true
         }
         let dbExtra = ''
-        if(cmd.dbshost){
-          dbExtra += '      host: \'' + cmd.dbshost + '\',\n'
+        if(cmd.dbhost){
+          dbExtra += '      host: \'' + cmd.dbhost + '\',\n'
         }
-        if(cmd.dbsport){
-          dbExtra += '      port: ' + cmd.dbsport + ',\n'
+        if(cmd.dbport){
+          dbExtra += '      port: ' + cmd.dbport + ',\n'
         }
-        if(cmd.dbsuser){
-          dbExtra += '      user: \'' + cmd.dbsuser + '\',\n'
+        if(cmd.dbuser){
+          dbExtra += '      user: \'' + cmd.dbuser + '\',\n'
         }
-        if(cmd.dbspassword){
-          dbExtra += '      password: \'' + cmd.dbspassword + '\',\n'
+        if(cmd.dbpassword){
+          dbExtra += '      password: \'' + cmd.dbpassword + '\',\n'
         }
         dbConfig = dbConfig +
           (isFirst ? '' : ',\n') + '    ' + name +

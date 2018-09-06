@@ -23,6 +23,13 @@ Please see the documentation for more https://kado.org/docs
 
 ## Changelog
 
+### 3.2.0
+* Move utility script to kado module so proper CLI look backs can happen.
+* Improve module generation to be interactive, save and use config files
+* Fix and test module generation to generate working code.
+* Improve bootstrap script to have less options and generate with simplicity
+* Expose utility cli through module globally for system usage
+
 ### 3.1.1
 * Login referrer now filters possible static files as a setup.
 

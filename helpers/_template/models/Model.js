@@ -28,18 +28,13 @@
  * @return {object}
  */
 module.exports = (sequelize,DataTypes) => {
-  return sequelize.define('{{moduleModelName}}',{
-    {{#moduleFields}}
-    {{fieldName}}: {
-      type: {{fieldType}},
-      allowNull: {{fieldAllowNull}},
-      defaultValue: {{fieldDefaultValue}}
+  return sequelize.define('<%moduleModelName%>',{
+    <%#moduleFields%>
+    <%fieldName%>: {
+      type: DataTypes.<%fieldType%>,
+      allowNull: <%fieldAllowNull%>,
+      defaultValue: <%fieldDefaultValue%>
     },
-    {{/moduleFields}}
-    active: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    }
+    <%/moduleFields%>
   })
 }

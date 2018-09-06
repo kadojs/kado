@@ -547,6 +547,8 @@ exports.init = () => {
         Object.keys(exports.modules).forEach((modKey) => {
           if(exports.modules.hasOwnProperty(modKey)){
             let modConf = exports.modules[modKey]
+            //enable the kado module regardless of configuration
+            if('kado' === modConf.name) modConf.enabled = true
             if(true === modConf.enabled){
               let modFile = modConf.root + '/kado.js'
               let mod = require(modFile)
@@ -634,11 +636,12 @@ exports.init = () => {
 exports.cli = (args) => {
   exports.init()
     .then(() => {
+      let moduleName = args[2]
+      args.splice(2,1)
+      process.argv = args
       Object.keys(exports.modules).forEach((modName) => {
         let mod = exports.modules[modName]
-        if(mod.name === args[2]){
-          args.splice(2,1)
-          process.argv = args
+        if(mod.name === moduleName){
           let module = require(mod.root + '/kado.js')
           module.cli(exports,args)
         }
@@ -709,6 +712,7 @@ exports.go = (name) => {
         }
       )
     } else {
+      exports.log.info('CLI Mode')
       exports.cli(process.argv)
       resolve()
     }

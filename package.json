@@ -2,7 +2,7 @@
   "author": "Kado <support@kado.org>",
   "name": "kado",
   "description": "Module system for Enterprise Grade applications.",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "homepage": "https://kado.org",
   "license": "LGPL-3.0",
   "repository": {
@@ -70,6 +70,7 @@
     "pretty-bytes": "^5.1.0",
     "pug": "^2.0.3",
     "qs": "^6.5.2",
+    "readline-sync": "^1.4.9",
     "recursive-readdir": "^2.2.2",
     "rmdir-promise": "^1.0.0",
     "sequelize": "^4.38.0",
