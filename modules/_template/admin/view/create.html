@@ -1,0 +1,16 @@
+{{>header}}
+    <div class="container-fluid">
+      <h1>{{_l.create}} {{moduleItemName}}</h1>
+      <form class="form form-horizontal" action="/{{moduleName}}/save" method="post" role="form">
+        {{#moduleFields}}
+          <div class="form-group">
+            <label for="title">{{fieldTitle}}</label>
+            <input class="form-control" type="text" id="{{fieldName}}" name="{{fieldName}}" placeholder="{{fieldTitle}}" />
+          </div>
+        {{/moduleFields}}
+        <div class="form-group">
+          <button class="btn btn-success">{{_l.save}}</button>
+        </div>
+      </form>
+    </div>
+{{>footer}}

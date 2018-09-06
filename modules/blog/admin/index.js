@@ -11,7 +11,6 @@ const Blog = sequelize.models.Blog
  * @param {object} res
  */
 exports.list = (req,res) => {
-  //K.nav.breadcrumb([K.nav.bcHome,K.nav.bc(K._l.list,'/blog/list')])
   if(!req.query.length){
     res.render(res.locals._view.get('blog/list'))
   } else {
@@ -76,7 +75,7 @@ exports.save = (req,res) => {
     })
     .then((blog) => {
       if(json){
-        res.json({blog: blog})
+        res.json({blog: blog.dataValues})
       } else {
         req.flash('success',{
           message: K._l.blog_entry + ' ' + (isNew ? K._l.created : K._l.saved),

@@ -23,7 +23,7 @@ program
   .description('Create new {{moduleName}} entry')
   .action((opts) => {
     P.try(() => {
-      log.log('info','Creating {{moduleName}} entry')
+      log.info('Creating {{moduleName}} entry')
       let doc = {
         {{#moduleFields}}
         {{fieldName}}: opts.{{fieldName}},
@@ -33,11 +33,11 @@ program
       return {{moduleModelName}}.create(doc)
     })
       .then((result) => {
-        log.log('info','{{moduleTitle}} entry created: ' + result.id)
+        log.info('{{moduleTitle}} entry created: ' + result.id)
         process.exit()
       })
       .catch((err) => {
-        log.log('error', 'Error: Failed to create {{moduleName}} entry: ' + err)
+        log.error('Error: Failed to create {{moduleName}} entry: ' + err)
         process.exit()
       })
   })
@@ -59,7 +59,7 @@ program
         return doc.save()
       })
       .then(() => {
-        log.log('info','{{moduleTitle}} entry updated successfully!')
+        log.info('{{moduleTitle}} entry updated successfully!')
         process.exit()
       })
       .catch((err) => {
@@ -75,11 +75,11 @@ program
     if(!opts.id) throw new Error('{{moduleTitle}} Id is required... exiting')
     {{moduleModelName}}.destroy({where: {id: opts.id}})
       .then(() => {
-        log.log('info','{{moduleTitle}} entry removed successfully!')
+        log.info('{{moduleTitle}} entry removed successfully!')
         process.exit()
       })
       .catch((err) => {
-        log.log('error', 'Error: Could not remove {{moduleName}} entry: ' + err)
+        log.error('Error: Could not remove {{moduleName}} entry: ' + err)
       })
   })
 //list
@@ -112,7 +112,7 @@ program
         process.exit()
       })
       .catch((err) => {
-        log.log('error', 'Error: Could not list blog entries ' +
+        log.error('Error: Could not list {{moduleName}} entries ' +
           err.stack)
         process.exit()
       })

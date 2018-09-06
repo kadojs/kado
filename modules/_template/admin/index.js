@@ -1,6 +1,5 @@
 'use strict';
 const K = require('../../../index')
-const list = K.list
 const sequelize = K.db.sequelize
 
 const {{moduleModelName}} = sequelize.models.{{moduleModelName}}
@@ -12,47 +11,17 @@ const {{moduleModelName}} = sequelize.models.{{moduleModelName}}
  * @param {object} res
  */
 exports.list = (req,res) => {
-  let limit = +req.query.limit || 20
-  let start = +req.query.start || 0
-  let search = req.query.search || ''
-  if(start < 0) start = 0
-  {{moduleModelName}}.findAndCountAll({
-    where: sequelize.or({
-      {{moduleTitleField}}: {like: '%' + search + '%'}
-    }),
-    offset: start,
-    limit: limit,
-    order: ['{{moduleTitleField}}']
-  })
-    .then((result) => {
-      res.render(__dirname + '/view/list',{
-        page: list.pagination(start,result.count,limit),
-        count: result.count,
-        search: search,
-        limit: limit,
-        list: result.rows
+  if(!req.query.length){
+    res.render(res.locals._view.get('{{moduleName}}/list'))
+  } else {
+    K.datatable({{moduleModelName}},req.query)
+      .then((result) => {
+        res.json(result)
       })
-    })
-    .catch((err) => {
-      res.render('error',{error: err})
-    })
-}
-
-
-/**
- * Process list actions
- * @param {object} req
- * @param {object} res
- */
-exports.listAction = (req,res) => {
-  list.remove({{moduleModelName}},req.body.remove)
-    .then(() => {
-      req.flash('success','{{moduleTitle}}(s) removed successfully')
-      res.redirect('/{{moduleName}}/list')
-    })
-    .catch((err) => {
-      res.render('error',{error: err})
-    })
+      .catch((err) => {
+        res.json({error: err.message})
+      })
+  }
 }
 
 
@@ -62,7 +31,7 @@ exports.listAction = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(__dirname + '/view/create')
+  res.render(res.locals._view.get('{{moduleName}}/create'))
 }
 
 
@@ -74,8 +43,8 @@ exports.create = (req,res) => {
 exports.edit = (req,res) => {
   {{moduleModelName}}.findOne({where: {id: req.query.id}})
     .then((result) => {
-      if(!result) throw new Error('{{moduleTitle}} entry not found')
-      res.render(__dirname + '/view/edit',{item: result})
+      if(!result) throw new Error(K._l.{{moduleName}}.entry_not_found)
+      res.render(res.locals._view.get('{{moduleName}}/edit'),{item: result})
     })
     .catch((err) => {
       res.render('error',{error: err})
@@ -90,9 +59,10 @@ exports.edit = (req,res) => {
  */
 exports.save = (req,res) => {
   let data = req.body
+  let json = K.isClientJSON((req)
   {{moduleModelName}}.findOne({where: {id: data.id}})
     .then((result) => {
-      if(!result) result = Blog.build()
+      if(!result) result = {{moduleModelName}}.build()
       {{#moduleFields}}
       if(data.{{fieldName}}) result.{{fieldName}} = data.{{fieldName}}
       {{/moduleFields}}
@@ -101,17 +71,46 @@ exports.save = (req,res) => {
       return result.save()
     })
     .then((result) => {
-      let alert = {
-        subject: '{{moduleTitle}} entry',
-        href: '/{{moduleName}}/edit?id=' + result.id,
-        id: result.id
+      if(json){
+        res.json({item: result.dataValues})
+      } else {
+        req.flash('success',{
+          message: K._l.{{moduleName}}.entry + ' ' + (isNew ? K._l.created : K._l.saved),
+          href: '/{{moduleName}}/edit?id=' + result.id,
+          name: result.id
+        })
+        res.redirect('/{{moduleName}}/list')
       }
-      alert.action = 'saved'
-      req.flashPug('success','subject-id-action',alert)
-      res.setHeader('{{moduleName}}id',result.id)
-      res.redirect('/{{moduleName}}/list')
     })
     .catch((err) => {
       res.render('error',{error: err})
+    })
+}
+
+
+/**
+ * Process removals
+ * @param {object} req
+ * @param {object} res
+ */
+exports.remove = (req,res) => {
+  let json = K.isClientJSON(req)
+  if(req.query.id) req.body.remove = req.query.id.split(',')
+  if(!(req.body.remove instanceof Array)) req.body.remove = [req.body.remove]
+  K.modelRemoveById({{moduleModelName}},req.body.remove)
+    .then(() => {
+      if(json){
+        res.json({success: K._l.{{moduleName}}.entry_removed})
+      } else {
+        req.flash('success',K._l.{{moduleName}}.entry_removed)
+        res.redirect('/{{moduleName}}/list')
+      }
+    })
+    .catch((err) => {
+      if(json){
+        res.json({error: err.message || K._l.{{moduleName}}.removal_error})
+      } else {
+        res.render(res.locals._view.get('error'),{error: err.message})
+      }
     })
 }

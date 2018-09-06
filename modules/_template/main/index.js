@@ -11,9 +11,9 @@ const {{moduleModelName}} = sequelize.models.{{moduleModelName}}
  * @param {object} res
  */
 exports.index = (req,res) => {
-  {{moduleModelName}}.findAll({where: {active: true}, order: [['datePosted','DESC']]})
+  {{moduleModelName}}.findAll({order: [['createdAt','DESC']]})
     .then((results) => {
-      res.render(__dirname + '/view/list',{
+      res.render(res.locals._view.get('{{moduleName}}/list',{
         list: results
       })
     })
@@ -29,9 +29,9 @@ exports.index = (req,res) => {
  * @param {object} res
  */
 exports.entry = (req,res) => {
-  {{moduleModelName}}.findOne({where: {uri: req.params.uri}})
+  {{moduleModelName}}.findOne({where: {id: req.query.id}})
     .then((result) => {
-      res.render(__dirname + '/entry',{
+      res.render(res.locals._view.get('{{moduleName}}/entry',{
         item: result
       })
     })
