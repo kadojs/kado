@@ -34,6 +34,27 @@ exports.db = (K,db) => {
 
 
 /**
+ * Provide search
+ * @param {K} K Master Kado Object
+ * @param {array} keywords
+ * @param {number} start
+ * @param {number} limit
+ * @return {Promise}
+ */
+exports.search = (K,keywords,start,limit) => {
+  let s = K.db.sequelize
+  let Blog = s.models.Blog
+  let where = {[s.Op.or]: []}
+  keywords.forEach((w) => {
+    where[s.Op.or].push({title: {[s.Op.like]: '%'+w+'%'}})
+    where[s.Op.or].push({uri: {[s.Op.like]: '%'+w+'%'}})
+    where[s.Op.or].push({content: {[s.Op.like]: '%'+w+'%'}})
+  })
+  return Blog.findAll({where: where, start: start, limit: limit})
+}
+
+
+/**
  * Register in Admin Interface
  * @param {K} K Master Kado Object
  * @param {object} app

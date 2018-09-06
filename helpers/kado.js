@@ -431,6 +431,16 @@ exports.lang = require('./lang')
 
 
 /**
+ * Search system
+ * @param {string} phrase
+ * @type {function}
+ */
+exports.search = (phrase) =>{
+  return require('./search')(exports,phrase)
+}
+
+
+/**
  * Initiate logger and then load over it with context
  * @type {winston.Logger}
  */

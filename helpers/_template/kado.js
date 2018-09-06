@@ -34,12 +34,32 @@ exports.db = (K,db) => {
 
 
 /**
+ * Provide search
+ * @param {K} K Master Kado Object
+ * @param {K.db} db
+ * @param {array} keywords
+ * @param {number} start
+ * @param {number} limit
+ * @return {Promise}
+ */
+exports.search = (K,db,keywords,start,limit) => {
+  let s = db.sequelize
+  let {{moduleModelName}} = s.models.{{moduleModelName}}
+  let where = {[s.Op.or]: []}
+  keywords.forEach((w) => {
+    where[s.Op.or].push({id: {[s.Op.like]: '%'+w+'%'}})
+  })
+  return {{moduleModelName}}.findAll({where: where, start: start, limit: limit})
+}
+
+
+/**
  * Register in Admin Interface
  * @param {K} K Master Kado Object
  * @param {object} app
  */
 exports.admin = (K,app) => {
-  let admin = require('./admin')
+  let admin = require('./admin/index')
   //register permissions
   app.permission.add('/{{moduleName}/create','Create {{moduleName}}')
   app.permission.add('/{{moduleName}/save','Save {{moduleName}}')
@@ -74,7 +94,7 @@ exports.admin = (K,app) => {
  * @param {object} app
  */
 exports.main = (K,app) => {
-  let main = require('./main')
+  let main = require('./main/index')
   //register routes
   app.get(app.uri.add('/{{moduleName}}'),main.index)
   app.get(app.uri.add('/{{moduleName}}/:uri'),main.entry)

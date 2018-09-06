@@ -66,6 +66,11 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     app.view.add('navbar',__dirname + '/view/navbar.html')
     app.view.add('sidebar',__dirname + '/view/sidebar.html')
   })
+  worker.enableSearch(() => {
+    //activate lang pack
+    K.log.debug(Object.keys(K.lang.pack).length +
+      ' ' + interfaceName + ' search system activated')
+  })
   worker.setup((app) => {
     //login
     app.post('/login',(req,res) => {

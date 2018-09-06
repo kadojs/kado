@@ -31,6 +31,26 @@ exports.db = (K,db) => {
 
 
 /**
+ * Provide search
+ * @param {K} K Master Kado Object
+ * @param {array} keywords
+ * @param {number} start
+ * @param {number} limit
+ * @return {Promise}
+ */
+exports.search = (K,keywords,start,limit) => {
+  let s = K.db.sequelize
+  let Staff = s.models.Staff
+  let where = {[s.Op.or]: []}
+  keywords.forEach((w) => {
+    where[s.Op.or].push({name: {[s.Op.like]: '%'+w+'%'}})
+    where[s.Op.or].push({email: {[s.Op.like]: '%'+w+'%'}})
+  })
+  return Staff.findAll({where: where, start: start, limit: limit})
+}
+
+
+/**
  * Authenticate requests
  * @param {K} K Master Kado Object
  * @param {string} username

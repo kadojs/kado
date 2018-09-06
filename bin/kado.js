@@ -69,8 +69,8 @@ program.command('generate')
       process.exit(1)
     }
     let modconf = require(modconfFile)
-    let moduleFolder = path.resolve(folder + '/kado/' + modconf.moduleName)
-    let templateFolder = path.resolve(__dirname + '/../kado/_template')
+    let moduleFolder = path.resolve(folder + '/modules/' + modconf.moduleName)
+    let templateFolder = path.resolve(__dirname + '/../helpers/_template')
     let fileCount = 0
     if(!cmd.app) cmd.app = 'myapp'
     K.bluebird.try(() => {

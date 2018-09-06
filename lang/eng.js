@@ -40,5 +40,6 @@ module.exports = {
   'permdenied': 'Permission Denied',
   'invalid_login': 'Invalid login',
   'no_staff_for_args': 'No staff found for given args ',
-  'history': 'History'
+  'history': 'History',
+  'search_results': 'Search Results'
 }

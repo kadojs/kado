@@ -40,5 +40,6 @@ module.exports = {
   'permdenied': 'Permiso denegado',
   'invalid_login': 'Ingreso invalido',
   'no_staff_for_args': 'No se encontró personal para argumentos dados',
-  'history': 'Historia'
+  'history': 'Historia',
+  'search_results': 'Resultados de la búsqueda'
 }

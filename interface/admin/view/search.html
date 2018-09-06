@@ -1,0 +1,13 @@
+{{>header}}
+<div class="container">
+  <h1>{{_l.search_results}}</h1>
+  {{#results}}
+    <h3>{{title}}</h3>
+    {{#results}}
+      <h5>{{title}}</h5>
+      <p>{{description}}</p>
+      <div><small>{{uri}}</small></div>
+    {{/results}}
+  {{/results}}
+</div>
+{{>footer}}

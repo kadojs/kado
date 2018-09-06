@@ -231,6 +231,15 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       })
       if('function' === typeof(cb)) return cb(app,K)
     }
+    worker.setupSearch = (cb) => {
+      app.get('/search',(req,res) => {
+        K.search(req.query.phrase)
+          .then((results) => {
+            res.render(res.locals._view.get('search'),{results: results})
+          })
+      })
+      if('function' === typeof(cb)) return cb(app,K)
+    }
     // setup local js servers
     worker.setupScriptServer = (name,scriptPath) => {
       if(!scriptPath) scriptPath = name
