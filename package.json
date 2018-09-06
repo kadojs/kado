@@ -18,6 +18,9 @@
   "engines": {
     "node": ">=4"
   },
+  "bin": {
+    "kado": "./index.js app kado"
+  },
   "main": "./index.js",
   "dependencies": {
     "bcrypt": "^3.0.0",
