@@ -21,6 +21,7 @@
  */
 
 window._printDate = function _printDate(d){
+  if(!(d instanceof Date)) d = new Date(d)
   return d ? moment(d).format('YYYY-MM-DD hh:mm:ssA') :  'Never'
 }
 

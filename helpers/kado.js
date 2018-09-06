@@ -287,22 +287,6 @@ exports.View = require('./View')
 
 
 /**
- * Moment standard format
- *  extend moment().format() so that this one place changes everywhere
- *  truthfulness is checked and a placeholder can be provided in emptyString
- * @param {Date} d
- * @param {string} emptyString
- * @return {string}
- */
-exports.printDate = (d,emptyString) => {
-  return (
-    d ? moment(d).format('YYYY-MM-DD hh:mm:ssA')
-      : ('string' === typeof emptyString) ? emptyString : 'Never'
-  )
-}
-
-
-/**
  * Assign config to global
  * @type {ObjectManage}
  */
@@ -388,6 +372,7 @@ exports.appendFile = (path,data) => {
  */
 exports.printDate = (d,emptyString) => {
   emptyString = ('string' === typeof emptyString) ? emptyString : 'Never'
+  if(!(d instanceof Date)) d = new Date(d)
   return d ? moment(d).format('YYYY-MM-DD hh:mm:ssA') : emptyString
 }
 
