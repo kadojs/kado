@@ -36,12 +36,13 @@ exports.db = (K,db) => {
 /**
  * Provide search
  * @param {K} K Master Kado Object
+ * @param {object} app
  * @param {array} keywords
  * @param {number} start
  * @param {number} limit
  * @return {Promise}
  */
-exports.search = (K,keywords,start,limit) => {
+exports.search = (K,app,keywords,start,limit) => {
   let s = K.db.sequelize
   let Blog = s.models.Blog
   let where = {[s.Op.or]: []}
@@ -51,6 +52,12 @@ exports.search = (K,keywords,start,limit) => {
     where[s.Op.or].push({content: {[s.Op.like]: '%'+w+'%'}})
   })
   return Blog.findAll({where: where, start: start, limit: limit})
+    .then((result) => {return result.map((r) => {return {
+      title: r.title,
+      description: r.content.substring(0,150),
+      uri: app.uri.get('/blog/edit') + '?id=' + r.id,
+      updatedAt: r.updatedAt
+    }})})
 }
 
 

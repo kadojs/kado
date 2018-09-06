@@ -4,15 +4,16 @@
 /**
  * Search modules
  * @param {K} K
+ * @param {object} app
  * @param {string} phrase
  * @param {number} start
  * @param {limit} limit
  * @return {Promise}
  */
-module.exports = (K,phrase,start,limit) => {
+module.exports = (K,app,phrase,start,limit) => {
   if(!start) start = 0
   if(!limit) limit = 5
-  let keywords = phrase.split(' ')
+  let keywords = (phrase || '').split(' ')
   let promises = []
   Object.keys(K.modules).forEach((modName) =>{
     let mod = K.modules[modName]
@@ -21,13 +22,13 @@ module.exports = (K,phrase,start,limit) => {
       let module = require(modFile)
       if('function' === typeof module.search){
         promises.push(
-          module.search(K,keywords,start,limit)
+          module.search(K,app,keywords,start,limit)
             .then((result) => {
               if(result.length){
                 return {
-                  name: mod.name,
-                  title: mod.title,
-                  results: result
+                  moduleName: mod.name,
+                  moduleTitle: mod.title,
+                  moduleResults: result
                 }
               }
             })
@@ -37,6 +38,21 @@ module.exports = (K,phrase,start,limit) => {
   })
   return K.bluebird.all(promises)
     .then((result) => {
-      return result.filter((a) => {return a.length > 0})
+      let resultCount = 0
+      let results = result.filter((a) => {
+        if(
+          a && a.moduleResults &&
+          a.moduleResults.length && a.moduleResults.length > 0
+        ){
+          resultCount = resultCount + a.moduleResults.length
+          return true
+        } else {
+          return false
+        }
+      })
+      return {
+        resultCount: resultCount,
+        results: results
+      }
     })
 }

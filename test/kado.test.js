@@ -133,13 +133,13 @@ describe('kado',function(){
           return request.postAsync({
             url: baseUrl + '/login',
             jar: cookieJar,
-            form: {
+            json: {
               email: 'test@test.com',
               password: 'test'
             }
           })
             .then((res) => {
-              expect(res.body).to.match(/Found. Redirecting to \//)
+              expect(res.body.success).to.match(/Login success/)
             })
         }
         let doLogout = () => {

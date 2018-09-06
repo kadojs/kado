@@ -432,11 +432,12 @@ exports.lang = require('./lang')
 
 /**
  * Search system
+ * @param {string} app
  * @param {string} phrase
  * @type {function}
  */
-exports.search = (phrase) =>{
-  return require('./search')(exports,phrase)
+exports.search = (app,phrase) =>{
+  return require('./search')(exports,app,phrase)
 }
 
 

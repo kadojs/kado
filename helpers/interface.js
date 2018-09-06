@@ -231,14 +231,17 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       })
       if('function' === typeof(cb)) return cb(app,K)
     }
-    worker.setupSearch = (cb) => {
-      app.get('/search',(req,res) => {
-        K.search(req.query.phrase)
-          .then((results) => {
-            res.render(res.locals._view.get('search'),{results: results})
-          })
+    worker.enableSearch = (app) => {
+      app.use((req,res,next) => {
+        res.locals._searchPhrase = req.query.searchPhrase || ''
+        next()
       })
-      if('function' === typeof(cb)) return cb(app,K)
+      return (req,res) => {
+        K.search(app,req.query.searchPhrase)
+          .then((result) => {
+            res.render(res.locals._view.get('search'),result)
+          })
+      }
     }
     // setup local js servers
     worker.setupScriptServer = (name,scriptPath) => {

@@ -50,6 +50,12 @@ exports.search = (K,db,keywords,start,limit) => {
     where[s.Op.or].push({id: {[s.Op.like]: '%'+w+'%'}})
   })
   return {{moduleModelName}}.findAll({where: where, start: start, limit: limit})
+    .then((result) => {return result.map((r) => {return {
+      title: r.id,
+      description: r.id,
+      uri: app.uri.get('/{{moduleName}}/edit') + '?id=' + r.id,
+      updatedAt: r.updatedAt
+    }})})
 }
 
 

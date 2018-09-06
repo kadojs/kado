@@ -64,16 +64,13 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     app.view.add('home',__dirname + '/view/home.html')
     app.view.add('login',__dirname + '/view/login.html')
     app.view.add('navbar',__dirname + '/view/navbar.html')
+    app.view.add('search',__dirname + '/view/search.html')
     app.view.add('sidebar',__dirname + '/view/sidebar.html')
-  })
-  worker.enableSearch(() => {
-    //activate lang pack
-    K.log.debug(Object.keys(K.lang.pack).length +
-      ' ' + interfaceName + ' search system activated')
   })
   worker.setup((app) => {
     //login
     app.post('/login',(req,res) => {
+      let json = K.isClientJSON(req)
       let promises = []
       let authTried = 0
       let invalidLoginError = new Error('Invalid login')
@@ -115,12 +112,20 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
             K.log.warn('No authentication provider modules enabled')
             throw invalidLoginError
           }
-          req.flash('success','Login success')
-          res.redirect(301,req.session._loginReferrer || '/')
+          if(json){
+            res.json({success: 'Login success'})
+          } else {
+            req.flash('success','Login success')
+            res.redirect(301,req.session._loginReferrer || '/')
+          }
         })
         .catch((err) => {
-          req.flash('error',err.message || 'Invalid login')
-          res.redirect(301,'/login')
+          if(json){
+            res.json({error: err.message})
+          } else {
+            req.flash('error',err.message || 'Invalid login')
+            res.redirect(301,'/login')
+          }
         })
     })
     app.get('/login',(req,res) => {
@@ -155,6 +160,9 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     })
     //add default navbar entries
     app.nav.addGroup('/','Dashboard','home')
+    app.get('/search',worker.enableSearch(app))
+    //add default permissions
+    app.permission.add('/search')
   })
 
   if(require.main === module){

@@ -38,7 +38,7 @@ exports.db = (K,db) => {
  * @param {number} limit
  * @return {Promise}
  */
-exports.search = (K,keywords,start,limit) => {
+exports.search = (K,app,keywords,start,limit) => {
   let s = K.db.sequelize
   let Staff = s.models.Staff
   let where = {[s.Op.or]: []}
@@ -47,6 +47,12 @@ exports.search = (K,keywords,start,limit) => {
     where[s.Op.or].push({email: {[s.Op.like]: '%'+w+'%'}})
   })
   return Staff.findAll({where: where, start: start, limit: limit})
+    .then((result) => {return result.map((r) => {return {
+      title: r.name || r.email,
+      description: r.email,
+      uri: app.uri.get('/staff/edit') + '?id=' + r.id,
+      updatedAt: r.updatedAt
+    }})})
 }
 
 
