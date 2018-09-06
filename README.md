@@ -39,6 +39,7 @@ Please see the documentation for more https://kado.org/docs
 * Implement navigation breadcrumb system
 * Implement language switcher
 * Implement default theme
+* Release under Lesser GNU Public Licenses 3.0
 
 ### 2.1.0
 * Add module generator
