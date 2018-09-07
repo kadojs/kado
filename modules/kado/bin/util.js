@@ -167,6 +167,7 @@ program.command('bootstrap')
   .option('--dbport <string>','Set the sequelize database port')
   .option('--dbuser <string>','Set the sequelize database user')
   .option('--dbpassword <string>','Set the sequelize database password')
+  .option('--dev','For generating an app.js to develop kado against NOT NORMAL')
   .action((cmd) => {
     let folder = process.cwd()
     let appFile = path.resolve(folder + '/app.js')
@@ -247,7 +248,7 @@ program.command('bootstrap')
     enableModule('staff',cmd.enableStaff)
     if(moduleConfig) moduleConfig = moduleConfig + '\n  }\n'
     let appRequire = '\'kado\''
-    if(!process.argv[1].match(/node_modules/i)) appRequire = '\'./index\''
+    if(cmd.dev) appRequire = '\'./index\''
     let appData = '\'use strict\';\n' +
       'let K = require(' + appRequire + ')\n' +
       'K.configure({\n' +
