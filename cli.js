@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict';
 /**
  * Kado - Awesome module system for Enterprise Grade applications.
