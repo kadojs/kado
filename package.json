@@ -19,7 +19,7 @@
     "node": ">=4"
   },
   "bin": {
-    "kado": "./index.js app kado"
+    "kado": "./cli.js"
   },
   "main": "./index.js",
   "dependencies": {
