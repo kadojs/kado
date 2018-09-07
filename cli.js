@@ -26,6 +26,8 @@
  * Cascade kado helper into main object
  * @type {object}
  */
-process.argv.push('app')
+let args = process.argv.splice(2,process.argv.length)
 process.argv.push('kado')
+process.argv = process.argv.concat(args)
 module.exports = exports = require('./helpers/kado')
+module.exports.go('cli')

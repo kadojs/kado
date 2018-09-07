@@ -462,7 +462,7 @@ exports.initComplete = false
  * Init, scan modules and interfaces
  * @return {P}
  */
-exports.init = () => {
+exports.init = (skipDb) => {
   //load any config left in the env for us
   if(process.env.KADO_CONFIG_STRING){
     try {
@@ -569,21 +569,23 @@ exports.init = () => {
           }
         })
         exports.log.debug('Found ' + dbEnabled + ' database connectors')
-        exports.log.debug('Connecting to found database connectors')
-        let dbConnected = 0
-        Object.keys(exports.db).forEach((dbKey) => {
-          if(exports.db.hasOwnProperty(dbKey)){
-            let db = exports.db[dbKey]
-            if(db.enabled){
-              if('function' === typeof exports.db[dbKey].doConnect){
-                exports.db[dbKey].doConnect({sync: false})
-                exports.log.debug(dbKey + ' connector connected')
-                dbConnected++
+        if(!skipDb){
+          exports.log.debug('Connecting to found database connectors')
+          let dbConnected = 0
+          Object.keys(exports.db).forEach((dbKey) => {
+            if(exports.db.hasOwnProperty(dbKey)){
+              let db = exports.db[dbKey]
+              if(db.enabled){
+                if('function' === typeof exports.db[dbKey].doConnect){
+                  exports.db[dbKey].doConnect({sync: false})
+                  exports.log.debug(dbKey + ' connector connected')
+                  dbConnected++
+                }
               }
             }
-          }
-        })
-        exports.log.debug(dbConnected + ' connected database connectors')
+          })
+          exports.log.debug(dbConnected + ' connected database connectors')
+        }
         exports.log.debug('Scanning interfaces')
         //register interfaces for startup
         let addInterface = (name) => {
@@ -632,9 +634,10 @@ exports.init = () => {
 /**
  * CLI Access to modules
  * @param {Array} args
+ * @param {boolean} skipDb skip connection to databases
  */
-exports.cli = (args) => {
-  exports.init()
+exports.cli = (args,skipDb) => {
+  exports.init(skipDb)
     .then(() => {
       let moduleName = args[2]
       args.splice(2,1)
@@ -712,8 +715,10 @@ exports.go = (name) => {
         }
       )
     } else {
-      exports.log.info('CLI Mode')
-      exports.cli(process.argv)
+      exports.log.debug('CLI Mode')
+      let skipDb = false
+      if('cli' === name) skipDb = true
+      exports.cli(process.argv,skipDb)
       resolve()
     }
   })
