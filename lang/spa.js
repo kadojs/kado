@@ -42,6 +42,7 @@ module.exports = {
   'toggle_nav': 'Alternar navegación',
   'home': 'Casa',
   'list': 'Lista',
+  'create': 'Crear',
   'staff_title': 'Personal',
   'action': 'Acción',
   'active': 'Activo',

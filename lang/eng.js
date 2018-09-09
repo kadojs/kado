@@ -42,6 +42,7 @@ module.exports = {
   'toggle_nav': 'Toggle Nav',
   'home': 'Home',
   'list': 'List',
+  'create': 'Create',
   'staff_title': 'Staff',
   'action': 'Action',
   'active': 'Active',

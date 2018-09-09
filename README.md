@@ -25,6 +25,7 @@ Please see the documentation for more https://kado.org/docs
 
 ### 3.3.2
 * Fix issues with module generation.
+* Add more missing lang pack entries.
 
 ### 3.3.1
 * Update license header.
