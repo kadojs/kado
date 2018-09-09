@@ -84,7 +84,7 @@ process.env.KADO_LANG = path.resolve(process.env.KADO_ROOT + '/lang')
  * Kado Plugins Path
  * @type {string}
  */
-process.env.KADO_MODULES = path.resolve(process.env.KADO_ROOT + '/modules')
+process.env.KADO_MODULES = path.resolve(process.env.KADO_ROOT + '/kado_modules')
 
 
 /**
@@ -92,7 +92,7 @@ process.env.KADO_MODULES = path.resolve(process.env.KADO_ROOT + '/modules')
  * @type {string}
  */
 process.env.KADO_USER_MODULES = path.resolve(
-  path.dirname(path.dirname(process.env.KADO_ROOT)) + '/modules')
+  path.dirname(path.dirname(process.env.KADO_ROOT)) + '/kado_modules')
 
 
 /**

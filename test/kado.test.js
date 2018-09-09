@@ -65,8 +65,8 @@ describe('kado',function(){
       if(fs.existsSync('app.js.bak')) fs.unlinkSync('app.js.bak')
       if(fs.existsSync('app.js')) fs.renameSync('app.js','app.js.bak')
       return exec(
-        'node bin/kado bootstrap --app Test ' +
-        '--enable-all --dbsequelize --dbsuser kado --dbspassword kado'
+        'node kado_modules/kado/bin/util bootstrap --app Test ' +
+        '--dev --dbuser kado --dbpassword kado'
       )
         .then(() => {
           expect(fs.existsSync('app.js')).to.equal(true)

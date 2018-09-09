@@ -23,6 +23,9 @@ Please see the documentation for more https://kado.org/docs
 
 ## Changelog
 
+### 3.3.0
+* Prefer `kado_modules` folder to contain Kado modules.
+
 ### 3.2.0
 * Move utility script to kado module so proper CLI look backs can happen.
 * Improve module generation to be interactive, save and use config files

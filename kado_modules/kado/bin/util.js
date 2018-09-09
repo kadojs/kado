@@ -105,7 +105,7 @@ program.command('generate')
         )
       }
     }
-    let moduleFolder = path.resolve(folder + '/modules/' + modconf.moduleName)
+    let moduleFolder = path.resolve(folder + '/kado_modules/' + modconf.moduleName)
     let templateFolder = path.resolve(__dirname + '/../../../helpers/_template')
     let fileCount = 0
     if(!cmd.app) cmd.app = 'myapp'
@@ -215,7 +215,7 @@ program.command('bootstrap')
           ': {\n      enabled: true,\n' + (dbExtra || '') + '    }\n  }'
       }
     }
-    enableDB('sequelize',cmd.dbsequelize)
+    enableDB('sequelize',cmd.enableAll)
     let interfaceConfig = ''
     let enableInterface = (name,flag) => {
       if(flag){
