@@ -87,11 +87,11 @@ exports.search = (K,app,keywords,start,limit) => {
 exports.admin = (K,app) => {
   let admin = require('./admin/index')
   //register permissions
-  app.permission.add('/<%moduleName%>/create','Create <%moduleName%>')
-  app.permission.add('/<%moduleName%>/save','Save <%moduleName%>')
-  app.permission.add('/<%moduleName%>/list','List <%moduleName%>')
-  app.permission.add('/<%moduleName%>/edit','Edit <%moduleName%>')
-  app.permission.add('/<%moduleName%>/remove','Remove <%moduleName%>')
+  app.permission.add('/<%moduleName%>/create','Create <%moduleTitle%>')
+  app.permission.add('/<%moduleName%>/save','Save <%moduleTitle%>')
+  app.permission.add('/<%moduleName%>/list','List <%moduleTitle%>')
+  app.permission.add('/<%moduleName%>/edit','Edit <%moduleTitle%>')
+  app.permission.add('/<%moduleName%>/remove','Remove <%moduleTitle%>')
   //register views
   app.view.add('<%moduleName%>/create',__dirname + '/admin/view/create.html')
   app.view.add('<%moduleName%>/edit',__dirname + '/admin/view/edit.html')

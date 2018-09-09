@@ -22,6 +22,13 @@
 
 
 /**
+ * Sanitize names for useful short names
+ * @type {RegExp}
+ */
+const sanitizeRegexp = new RegExp(/[^0-9a-z]+/i)
+
+
+/**
  * Check active nav item
  * @returns {function(*=, *): string}
  */
@@ -54,6 +61,7 @@ class Nav {
     this.group.push({
       uri: uri,
       name: name,
+      shortName: name.replace(sanitizeRegexp,''),
       icon: icon,
       checkActive: checkActive,
       nav: this.nav[name]
@@ -71,6 +79,7 @@ class Nav {
     this.nav[group].push({
       uri: uri,
       name: name,
+      shortName: name.replace(sanitizeRegexp,''),
       icon: icon,
       checkActive: checkActive
     })

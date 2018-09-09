@@ -9,7 +9,7 @@
     {{#_nav.group}}
       {{#nav.length}}
       <li class="{{#checkActive}}{{{uri}}},{{{_currentUri}}}{{/checkActive}}">
-        <a class="dropdown-toggle" data-toggle="collapse" aria-expanded="false" href="#nav{{name}}dropdown">
+        <a class="dropdown-toggle" data-toggle="collapse" aria-expanded="false" href="#nav{{shortName}}dropdown">
           {{#icon}}
             <span class="fa fa-{{icon}}">&nbsp;</span>
             <span>{{name}}</span>
@@ -18,7 +18,7 @@
             <span>{{name}}</span>
           {{/icon}}
         </a>
-        <ul class="collapse list-unstyled" id="nav{{name}}dropdown">
+        <ul class="collapse list-unstyled" id="nav{{shortName}}dropdown">
           {{#nav}}
           <li class="{{#checkActive}}{{{uri}}},{{{_currentUri}}}{{/checkActive}}">
             <a href="{{{uri}}}">
