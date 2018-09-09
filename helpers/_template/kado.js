@@ -108,7 +108,6 @@ exports.admin = (K,app) => {
   app.get(app.uri.get('/<%moduleName%>/create'),admin.create)
   app.get(app.uri.add('/<%moduleName%>/edit'),admin.edit)
   app.post(app.uri.add('/<%moduleName%>/save'),admin.save)
-  app.post(app.uri.get('/<%moduleName%>/list'),admin.listAction)
   app.post(app.uri.add('/<%moduleName%>/remove'),admin.remove)
   app.get(app.uri.get('/<%moduleName%>/remove'),admin.remove)
 }

@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-const K = require('../../../index')
+const K = require('kado')
 const sequelize = K.db.sequelize
 
 const <%moduleModelName%> = sequelize.models.<%moduleModelName%>

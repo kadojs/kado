@@ -2,7 +2,7 @@
   "author": "Kado <support@kado.org>",
   "name": "kado",
   "description": "Module system for Enterprise Grade applications.",
-  "version": "3.3.1",
+  "version": "3.3.2",
   "homepage": "https://kado.org",
   "license": "LGPL-3.0",
   "repository": {
