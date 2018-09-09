@@ -1,7 +1,7 @@
 #!/use/bin/env node
 'use strict';
 /**
- * Kado - Awesome module system for Enterprise Grade applications.
+ * Kado - Module system for Enterprise Grade applications.
  * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *

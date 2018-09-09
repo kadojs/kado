@@ -1,6 +1,6 @@
 # Kado [![Build Status](https://travis-ci.org/nullivex/kado.svg?branch=master)](https://travis-ci.org/nullivex/kado)
 
-Modular application development framework based on Node.js
+Module system for Enterprise Grade applications.
 
 ## Preface
 
@@ -22,6 +22,9 @@ remains consistent regardless of a changing environment.
 Please see the documentation for more https://kado.org/docs
 
 ## Changelog
+
+### 3.3.1
+* Update license header.
 
 ### 3.3.0
 * Prefer `kado_modules` folder to contain Kado modules.
