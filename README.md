@@ -25,6 +25,7 @@ Please see the documentation for more https://kado.org/docs
 
 ### 3.3.3 (staged)
 * Fix sidebar issue with items with spaces in the name
+* Fix missing lang pack issue with module generator
 
 ### 3.3.2
 * Fix issues with module generation.

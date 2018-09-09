@@ -26,7 +26,7 @@ const <%moduleModelName%> = sequelize.models.<%moduleModelName%>
 
 
 /**
- * List blogs
+ * List
  * @param {object} req
  * @param {object} res
  */
