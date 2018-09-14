@@ -251,6 +251,15 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       })
       if('function' === typeof(cb)) return cb(app,K)
     }
+    worker.setupUri = (cb) => {
+      //uri translation
+      app.use((req,res,next) => {
+        //actually finally load the uri
+        res.locals._u = app.uri.all()
+        next()
+      })
+      if('function' === typeof(cb)) return cb(app,K)
+    }
     worker.enableSearch = (app) => {
       app.use((req,res,next) => {
         res.locals._searchPhrase = req.query.searchPhrase || ''

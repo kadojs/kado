@@ -27,6 +27,8 @@ Please see the documentation for more https://kado.org/docs
 * Fix sidebar issue with items with spaces in the name
 * Fix missing lang pack issue with module generator
 * Fix module generator issue with list edit links
+* Add scriptServer config variable to interfaces and support in interface load
+* Use URI system to print URIs in templates and generator
 
 ### 3.3.2
 * Fix issues with module generation.

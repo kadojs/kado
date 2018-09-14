@@ -1,7 +1,7 @@
 {{>header}}
   <div class="container-fluid">
     <h1>{{_l.setting.edit_setting}}</h1>
-    <form class="form form-horizontal" action="/setting/save" method="post" role="form">
+    <form class="form form-horizontal" action="{{_u._setting_save}}" method="post" role="form">
       <input type="hidden" name="path" value="{{setting.path}}" />
       <div class="form-group">
         <label>{{_l.setting.name}}</label>

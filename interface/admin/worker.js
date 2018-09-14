@@ -36,6 +36,10 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     K.log.debug(Object.keys(K.lang.pack).length +
       ' ' + interfaceName + ' language packs activated')
   })
+  worker.setupUri(() => {
+    //activate uri system
+    K.log.debug(interfaceName + ' URI system activated')
+  })
   worker.setupPermission(() => {
     //activate lang pack
     K.log.debug(interfaceName + ' permissions system activated')
@@ -64,6 +68,14 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     worker.setupScriptServer('datatables.net-select-bs4')
     //country flags
     worker.setupScriptServer('flag-icon-css')
+    //user defined script server entries
+    if(K.config.interface[interfaceName] &&
+      K.config.interface[interfaceName].scriptServer
+    ){
+      K.config.interface[interfaceName].scriptServer.forEach((s) =>{
+        worker.setupScriptServer(s)
+      })
+    }
     //enable proxy senders
     app.set('trust proxy',true)
     //setup view engine

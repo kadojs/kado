@@ -144,6 +144,7 @@ config.$load({
       port: 3000,
       host: null,
       baseUrl: 'http://localhost:3000',
+      scriptServer: [],
       workers: {
         count: 1,
         maxConnections: 10000
@@ -167,6 +168,7 @@ config.$load({
       port: 3002,
       host: null,
       baseUrl: 'http://localhost:3002',
+      scriptServer: [],
       workers: {
         count: 1,
         maxConnections: 10000

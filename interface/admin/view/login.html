@@ -3,7 +3,7 @@
 <div class="container login-container">
   <h2>{{_l.login}}</h2>
   {{>alert}}
-  <form class="form form-login" action="/login" method="post" role="form">
+  <form class="form form-login" action="{{_u._login}}" method="post" role="form">
     <input type="hidden" name="referrer" value="{{referrer}}" />
     <input class="form-control" type="text" name="email" placeholder="Email Address" />
     <input class="form-control" type="password" name="password" placeholder="Password" />

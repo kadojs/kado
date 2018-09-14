@@ -49,6 +49,15 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
       next()
     })
   })
+  worker.setupLang(() => {
+    //activate lang pack
+    K.log.debug(Object.keys(K.lang.pack).length +
+      ' ' + interfaceName + ' language packs activated')
+  })
+  worker.setupUri(() => {
+    //activate uri system
+    K.log.debug(interfaceName + ' URI system activated')
+  })
   worker.enableHtml((app) =>{
     const mustacheExpress = require('mustache-express')
     const serveStatic = require('serve-static')
@@ -73,6 +82,14 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     worker.setupScriptServer('datatables.net-select-bs4')
     //country flags
     worker.setupScriptServer('flag-icon-css')
+    //user defined script server entries
+    if(K.config.interface[interfaceName] &&
+      K.config.interface[interfaceName].scriptServer
+    ){
+      K.config.interface[interfaceName].scriptServer.forEach((s) =>{
+        worker.setupScriptServer(s)
+      })
+    }
     //setup view engine
     app.set('trust proxy',true)
     app.locals.basedir = path.resolve(interfaceRoot + '/view')

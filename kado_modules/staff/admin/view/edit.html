@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <form class="form form-horizontal" action="/staff/save" method="post" role="form">
+    <form class="form form-horizontal" action="{{_u._staff_save}}" method="post" role="form">
       <input type="hidden" name="id" value="{{staff.id}}" />
       <div class="form-group">
         <label>{{_l.staff.name}}</label>
@@ -63,8 +63,8 @@
             {{#_is}}{{allowed}},<span class="fa fa-check"></span>,{{/_is}}
           </td>
           <td>
-            <a class="btn btn-sm btn-success" href="/staff/grant?id={{staff.id}}&name={{name}}">Grant</a>
-            <a class="btn btn-sm btn-danger" href="/staff/revoke?id={{staff.id}}&name={{name}}">Revoke</a>
+            <a class="btn btn-sm btn-success" href="{{_u._staff_grant}}?id={{staff.id}}&name={{name}}">Grant</a>
+            <a class="btn btn-sm btn-danger" href="{{_u._staff_revoke}}?id={{staff.id}}&name={{name}}">Revoke</a>
           </td>
         </tr>
       {{/perm}}

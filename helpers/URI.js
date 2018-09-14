@@ -67,6 +67,27 @@ class URI {
   get(name){
     return this.uri[name] || '/'
   }
+  /**
+   * Get all URIs for template use mashed into an object
+   * @param {boolean} replaceSlashes with underscores (default: true)
+   * @return {object}
+   */
+  all(replaceSlashes){
+    let that = this
+    if(undefined === replaceSlashes) replaceSlashes = true
+    if(replaceSlashes){
+      let obj = {}
+      for(let i in that.uri){
+        if(this.uri.hasOwnProperty(i)){
+          let e = i.replace(/[\/\\]+/g,'_')
+          obj[e] = that.uri[i]
+        }
+      }
+      return obj
+    } else {
+      return that.uri
+    }
+  }
 }
 
 

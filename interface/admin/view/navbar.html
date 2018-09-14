@@ -4,7 +4,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="navbar-collapse collapse" id="navcollapse1">
-      <form class="form-inline mr-auto" role="search" method="get" action="/search">
+      <form class="form-inline mr-auto" role="search" method="get" action="{{_u._search}}">
         <input class="form-control mr-sm-2" type="search" name="searchPhrase" placeholder="Search" value="{{_searchPhrase}}" />
         <button class="btn btn-default my-2 my-sm-0" type="submit">
           <span class="fa fa-search">&nbsp;</span>
@@ -17,16 +17,16 @@
             <span>{{_l.staff_title}}</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="staffDropdown">
-            <a class="dropdown-item" href="/staff/list">
+            <a class="dropdown-item" href="{{_u._staff_list}}">
               <span class="fa fa-list"></span> {{_l.list_staff}}
             </a>
-            <a class="dropdown-item" href="/staff/create">
+            <a class="dropdown-item" href="{{_u._staff_create}}">
               <span class="fa fa-plus"></span> {{_l.create_staff}}
             </a>
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/setting/list">
+          <a class="nav-link" href="{{_u._setting_list}}">
             <span class="fa fa-wrench">&nbsp;</span>
             <span>{{_l.settings}}</span>
           </a>
@@ -51,7 +51,7 @@
             <span class="fa fa-user"></span> {{_staff.email}}
           </a>
           <div class="dropdown-menu" aria-labelledby="authDropdown">
-            <a class="dropdown-item" href="/logout">
+            <a class="dropdown-item" href="{{_u._logout}}">
               <span class="fa fa-sign-out-alt"></span> {{_l.logout}}
             </a>
           </div>
