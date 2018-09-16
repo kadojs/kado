@@ -29,6 +29,12 @@ Please see the documentation for more https://kado.org/docs
 * Fix module generator issue with list edit links
 * Add scriptServer config variable to interfaces and support in interface load
 * Use URI system to print URIs in templates and generator
+* Add overrides system to help application configuration provide overrides for
+  * Language
+  * Navigation
+  * Permission
+  * URI
+* Add config to add more folders to serve static assets for interfaces
 
 ### 3.3.2
 * Fix issues with module generation.

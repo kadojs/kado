@@ -145,6 +145,14 @@ config.$load({
       host: null,
       baseUrl: 'http://localhost:3000',
       scriptServer: [],
+      staticRoot: [],
+      override: {
+        lang: {},
+        nav: {},
+        permission: {allowed: {}, available: []},
+        uri: {},
+        view: {}
+      },
       workers: {
         count: 1,
         maxConnections: 10000
@@ -169,6 +177,14 @@ config.$load({
       host: null,
       baseUrl: 'http://localhost:3002',
       scriptServer: [],
+      staticRoot: [],
+      override: {
+        lang: {},
+        nav: {},
+        permission: {allowed: {}, available: []},
+        uri: {},
+        view: {}
+      },
       workers: {
         count: 1,
         maxConnections: 10000

@@ -99,6 +99,11 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     app.engine('html',mustacheExpress())
     //static files
     app.use(serveStatic(interfaceRoot + '/public'))
+    //override static servers
+    let staticRoot = K.config[interfaceName].staticRoot
+    if(staticRoot){
+      staticRoot.forEach((r)=>{if(fs.existsSync(r)) app.use(serveStatic(r))})
+    }
   })
   worker.setup((app) =>{
     //setup default views
@@ -108,6 +113,13 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     app.view.add('header',__dirname + '/view/header.html')
     app.view.add('home',__dirname + '/view/home.html')
     app.view.add('navbar',__dirname + '/view/navbar.html')
+    //view overrides
+    let views = K.config[interfaceName].override.view
+    if(views){
+      for(let v in views){
+        if(views.hasOwnProperty(v)) app.view.update(v,views[v])
+      }
+    }
     //home page
     app.get('/',(req,res) =>{
       res.render(app.view.get('home'))

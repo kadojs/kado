@@ -184,6 +184,23 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     app.use(compress())
     app.use(bodyParser.urlencoded({extended: true}))
     app.use(bodyParser.json())
+    //nav overrides
+    console.log(K.config,interfaceName)
+    if(K.config[interfaceName].override.nav){
+      let nav = K.config[interfaceName].override.nav
+      if(nav){
+        for(let n in nav){
+          if(nav.hasOwnProperty(n)){
+            let i = nav[n]
+            if(i.group){
+              app.nav.addItem(i.group,i.uri,i.name,i.icon)
+            } else {
+              app.nav.addGroup(i.uri,i.name,i.icon)
+            }
+          }
+        }
+      }
+    }
     //system middleware
     app.use((req,res,next) => {
       //add breadcrumb links
@@ -197,11 +214,24 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       next()
     })
     worker.setupPermission = (cb) => {
+      //setup permissions object
+      app.locals._p = {allowed: {}, available: []}
+      //add a helper function for looking up permissions from views
+      app.locals._p.show = () => {return (text,render) => {
+        let parts = render(text).split(',')
+        if(parts.length !== 2){
+          throw new Error('Invalid argument for permission show function')
+        }
+        if(false === app.permission.allowed(parts[0],set)){
+          return ''
+        } else {
+          return parts[1]
+        }
+      }}
       app.use((req,res,next) => {
         let set
         //when a permission set is available populate the proper allowed object
         //otherwise populate the entire permission set
-        res.locals._p = {allowed: {}, available: []}
         app.permission.all().forEach((s) => {
           res.locals._p.available.push({
             name: s.name, description: s.description
@@ -213,18 +243,20 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
         } else {
           app.permission.digest().forEach((s) => {res.locals._p.allowed[s] = s})
         }
-        //add a helper function for looking up permissions from views
-        res.locals._p.show = () => {return (text,render) => {
-          let parts = render(text).split(',')
-          if(parts.length !== 2){
-            throw new Error('Invalid argument for permission show function')
+        //load overrides
+        let permission = K.config[interfaceName].override.permission
+        if(permission){
+          permission.available.forEach((a) => {
+            res.locals._p.available.push({
+              name: a.name, description: a.description
+            })
+          })
+          for(let a in permission.allowed){
+            if(permission.allowed.hasOwnProperty(a)){
+              res.locals._p.allowed[a] = a
+            }
           }
-          if(false === app.permission.allowed(parts[0],set)){
-            return ''
-          } else {
-            return parts[1]
-          }
-        }}
+        }
         //decide whether or not to finish loading the current page
         if(false === app.permission.allowed(req.url,set)){
           res.render(res.locals._view.get('error'),{error: K._l.permdenied})
@@ -232,6 +264,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
           next()
         }
       })
+      //call back
       if('function' === typeof(cb)) return cb(app,K)
     }
     worker.setupLang = (cb) => {
@@ -245,19 +278,30 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
         }
         if(req.session && req.session.lang) req.locale = req.session.lang
         //actually finally load the pack
-        res.locals._l = K._l = K.lang.getPack(req.locale)
+        res.locals._l = K._l = K.lang.getPack(
+          req.locale,K.config[interfaceName].override.lang)
         res.locals._l._packs = K.lang.all()
         next()
       })
       if('function' === typeof(cb)) return cb(app,K)
     }
     worker.setupUri = (cb) => {
+      //load uri overrides
+      if(K.config[interfaceName].override.uri){
+        let uri = K.config[interfaceName].override.uri || {}
+        for(let u in uri){
+          if(uri.hasOwnProperty(u)){
+            app.uri.update(u,uri[u])
+          }
+        }
+      }
       //uri translation
       app.use((req,res,next) => {
         //actually finally load the uri
         res.locals._u = app.uri.all()
         next()
       })
+      //callback
       if('function' === typeof(cb)) return cb(app,K)
     }
     worker.enableSearch = (app) => {

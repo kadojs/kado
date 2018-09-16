@@ -54,11 +54,13 @@ module.exports.getSupportedSC = () => {
  * this will always return a full pack, it may be default if there is no
  * requested pack
  * @param {string} locale
+ * @param {object} override
  * @return {{}}
  */
-module.exports.getPack = (locale) => {
+module.exports.getPack = (locale,override) => {
   const that = this
   let pack = {}
+  if(!override) override = {}
   //check for objects when falling through defaults
   let isObject = (val) => {
     if (val === null) { return false;}
@@ -81,10 +83,16 @@ module.exports.getPack = (locale) => {
           if(ourPack.hasOwnProperty(key2)){
             let subPack = ourPack[key2]
             if(pack[key] && !pack[key][key2]) pack[key][key2] = subPack
+            //apply overrides
+            if(pack[key] && override[key] && override[key][key2]){
+              pack[key][key2] = override[key][key2]
+            }
           }
         }
       } else if(!pack[key]){
         pack[key] = that.pack[that.default][key]
+        //apply overrides
+        if(override[key]) pack[key] = override[key]
       }
     }
   }
