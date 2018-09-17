@@ -100,9 +100,9 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     //static files
     app.use(serveStatic(interfaceRoot + '/public'))
     //override static servers
-    let staticRoot = K.config[interfaceName].staticRoot
+    let staticRoot = K.config.interface[interfaceName].staticRoot
     if(staticRoot){
-      staticRoot.forEach((r)=>{if(fs.existsSync(r)) app.use(serveStatic(r))})
+      staticRoot.forEach((r)=>{if(K.fs.existsSync(r)) app.use(serveStatic(r))})
     }
   })
   worker.setup((app) =>{
@@ -114,7 +114,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     app.view.add('home',__dirname + '/view/home.html')
     app.view.add('navbar',__dirname + '/view/navbar.html')
     //view overrides
-    let views = K.config[interfaceName].override.view
+    let views = K.config.interface[interfaceName].override.view
     if(views){
       for(let v in views){
         if(views.hasOwnProperty(v)) app.view.update(v,views[v])

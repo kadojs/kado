@@ -23,7 +23,7 @@ Please see the documentation for more https://kado.org/docs
 
 ## Changelog
 
-### 3.3.3 (staged)
+### 3.4.0 (staged)
 * Fix sidebar issue with items with spaces in the name
 * Fix missing lang pack issue with module generator
 * Fix module generator issue with list edit links
@@ -35,6 +35,8 @@ Please see the documentation for more https://kado.org/docs
   * Permission
   * URI
 * Add config to add more folders to serve static assets for interfaces
+* Update to latest dependencies including Mustache 3 and Debug 4
+* Working overrides system
 
 ### 3.3.2
 * Fix issues with module generation.

@@ -231,7 +231,7 @@ exports.infant = infant
 
 
 /**
- * Determine if an incoming reuqest is JSON
+ * Determine if an incoming request is JSON
  * @param {object} req
  * @return {bool}
  */
@@ -278,30 +278,37 @@ exports.modelRemoveById = (Model,items) => {
 
 /**
  * Export ObjectManage object
- * @type {*|ObjectManage}
+ * @type {Object}
  */
 exports.ObjectManage = ObjectManage
 
 
 /**
  * Export ObjectManage object
- * @type {*|ObjectManage}
+ * @type {Object}
  */
 exports.Permission = require('./Permission')
 
 
 /**
  * Export ObjectManage object
- * @type {*|ObjectManage}
+ * @type {Object}
  */
 exports.URI = require('./URI')
 
 
 /**
  * Export ObjectManage object
- * @type {*|ObjectManage}
+ * @type {Object}
  */
 exports.View = require('./View')
+
+
+/**
+ * Filesystem helper from Node core
+ * @type {Object}
+ */
+exports.fs = fs
 
 
 /**

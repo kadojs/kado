@@ -185,9 +185,8 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     app.use(bodyParser.urlencoded({extended: true}))
     app.use(bodyParser.json())
     //nav overrides
-    console.log(K.config,interfaceName)
-    if(K.config[interfaceName].override.nav){
-      let nav = K.config[interfaceName].override.nav
+    if(K.config.interface[interfaceName].override.nav){
+      let nav = K.config.interface[interfaceName].override.nav
       if(nav){
         for(let n in nav){
           if(nav.hasOwnProperty(n)){
@@ -214,22 +213,22 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       next()
     })
     worker.setupPermission = (cb) => {
-      //setup permissions object
-      app.locals._p = {allowed: {}, available: []}
-      //add a helper function for looking up permissions from views
-      app.locals._p.show = () => {return (text,render) => {
-        let parts = render(text).split(',')
-        if(parts.length !== 2){
-          throw new Error('Invalid argument for permission show function')
-        }
-        if(false === app.permission.allowed(parts[0],set)){
-          return ''
-        } else {
-          return parts[1]
-        }
-      }}
       app.use((req,res,next) => {
         let set
+        //setup permissions object
+        res.locals._p = {allowed: {}, available: []}
+        //add a helper function for looking up permissions from views
+        res.locals._p.show = () => {return (text,render) => {
+          let parts = render(text).split(',')
+          if(parts.length !== 2){
+            throw new Error('Invalid argument for permission show function')
+          }
+          if(false === app.permission.allowed(parts[0],set)){
+            return ''
+          } else {
+            return parts[1]
+          }
+        }}
         //when a permission set is available populate the proper allowed object
         //otherwise populate the entire permission set
         app.permission.all().forEach((s) => {
@@ -244,7 +243,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
           app.permission.digest().forEach((s) => {res.locals._p.allowed[s] = s})
         }
         //load overrides
-        let permission = K.config[interfaceName].override.permission
+        let permission = K.config.interface[interfaceName].override.permission
         if(permission){
           permission.available.forEach((a) => {
             res.locals._p.available.push({
@@ -279,7 +278,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
         if(req.session && req.session.lang) req.locale = req.session.lang
         //actually finally load the pack
         res.locals._l = K._l = K.lang.getPack(
-          req.locale,K.config[interfaceName].override.lang)
+          req.locale,K.config.interface[interfaceName].override.lang)
         res.locals._l._packs = K.lang.all()
         next()
       })
@@ -287,8 +286,8 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     }
     worker.setupUri = (cb) => {
       //load uri overrides
-      if(K.config[interfaceName].override.uri){
-        let uri = K.config[interfaceName].override.uri || {}
+      if(K.config.interface[interfaceName].override.uri){
+        let uri = K.config.interface[interfaceName].override.uri || {}
         for(let u in uri){
           if(uri.hasOwnProperty(u)){
             app.uri.update(u,uri[u])
