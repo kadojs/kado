@@ -305,6 +305,13 @@ exports.View = require('./View')
 
 
 /**
+ * Crypto helper from the Node core
+ * @type {"crypto"}
+ */
+exports.crypto = require('crypto')
+
+
+/**
  * Filesystem helper from Node core
  * @type {Object}
  */
