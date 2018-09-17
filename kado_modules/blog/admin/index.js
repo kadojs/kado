@@ -98,7 +98,8 @@ exports.save = (req,res) => {
         res.json({blog: blog.dataValues})
       } else {
         req.flash('success',{
-          message: K._l.blog_entry + ' ' + (isNew ? K._l.created : K._l.saved),
+          message: K._l.blog.blog_entry + ' ' +
+            (isNew ? K._l.created : K._l.saved),
           href: '/blog/edit?id=' + blog.id,
           name: blog.id
         })
