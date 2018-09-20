@@ -64,7 +64,7 @@
     "mkdirp-then": "^1.2.0",
     "moment": "^2.22.2",
     "mustache": "^3.0.0",
-    "mustache-express": "^1.2.7",
+    "mustache-express": "github:nullivex/node-mustache-express",
     "mysql2": "^1.6.1",
     "n-readlines": "^1.0.0",
     "object-manage": "^1.0.0",

@@ -80,10 +80,15 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     app.set('trust proxy',true)
     //setup view engine
     app.locals.basedir = path.resolve(interfaceRoot + '/view')
+    app.set('views',(partial,extension) => {
+      //see if we have a registered view
+      let fp = app.view.get(partial)
+      //otherwise use the system path
+      if(!fp) fp = path.join(app.locals.basedir,partial + extension)
+      return fp
+    })
     app.set('view engine','html')
-    app.set('views',app.locals.basedir)
-    app.set('partials',path.resolve(app.locals.basedir + '/partials'))
-    //app.enable('view cache')
+    if(K.config.interface[interfaceName].viewCache) app.enable('view cache')
     app.engine('html',mustacheExpress())
     //static files
     app.use(serveStatic(interfaceRoot + '/public'))

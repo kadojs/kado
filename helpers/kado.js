@@ -144,6 +144,7 @@ config.$load({
       port: 3000,
       host: null,
       baseUrl: 'http://localhost:3000',
+      viewCache: true,
       scriptServer: [],
       staticRoot: [],
       override: {
@@ -176,6 +177,7 @@ config.$load({
       port: 3001,
       host: null,
       baseUrl: 'http://localhost:3001',
+      viewCache: true,
       scriptServer: [],
       staticRoot: [],
       override: {
