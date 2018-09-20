@@ -23,29 +23,11 @@ const K = require('../../helpers/kado')
 const interfaceRoot = __dirname
 const interfaceName = 'main'
 K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
-  worker.enableSession((app) =>{
+  worker.enableSession((app) => {
     let flash = require('connect-flash')
-    let compileFile = require('pug').compileFile
     app.use(flash())
-    let viewFn = {}
-    app.use((req,res,next) =>{
-      res.locals.flash = req.flash.bind(req)
-      req.flashPug = (type,view,vars) =>{
-        if(type && view){
-          if(-1 === Object.keys(viewFn).indexOf(view)){
-            viewFn[view] =
-              compileFile(app.get('views') + '/_alerts/' + view + '.pug',{})
-          }
-          return req.flash(
-            type,viewFn[view](('object' === typeof vars) ? vars : {}))
-        }
-        else if(type){
-          return req.flash(type)
-        }
-        else{
-          return req.flash()
-        }
-      }
+    app.use((req,res,next) => {
+      res.locals.flash = worker.flashHandler(req)
       next()
     })
   })
