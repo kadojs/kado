@@ -173,9 +173,9 @@ config.$load({
       title: 'Kado Main',
       transport: ['http'],
       path: path.resolve(process.env.KADO_INTERFACES + '/main'),
-      port: 3002,
+      port: 3001,
       host: null,
-      baseUrl: 'http://localhost:3002',
+      baseUrl: 'http://localhost:3001',
       scriptServer: [],
       staticRoot: [],
       override: {
@@ -302,13 +302,6 @@ exports.URI = require('./URI')
  * @type {Object}
  */
 exports.View = require('./View')
-
-
-/**
- * Crypto helper from the Node core
- * @type {"crypto"}
- */
-exports.crypto = require('crypto')
 
 
 /**

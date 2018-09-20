@@ -37,7 +37,8 @@ Please see the documentation for more https://kado.org/docs
 * Add config to add more folders to serve static assets for interfaces
 * Update to latest dependencies including Mustache 3 and Debug 4
 * Working overrides system
-* Include fs and crypto modules with the main Kado object.
+* Include fs module with the main Kado object.
+* Change default port of main system to 3001 (which was previously API)
 
 ### 3.3.2
 * Fix issues with module generation.
