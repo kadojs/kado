@@ -354,7 +354,7 @@ describe('kado',function(){
       })
     })
     describe('main',() => {
-      const baseUrl = 'http://127.0.0.1:3002'
+      const baseUrl = 'http://127.0.0.1:3001'
       it('should be up',() => {
         return request.getAsync({
           url: baseUrl
