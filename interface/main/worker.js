@@ -75,7 +75,8 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     //setup view engine
     app.set('trust proxy',true)
     app.locals.basedir = path.resolve(interfaceRoot + '/view')
-    app.set('views',(partial,extension) => {
+    app.set('views',app.locals.basedir)
+    app.set('viewHelper',(partial,extension) => {
       //see if we have a registered view
       let fp = app.view.get(partial)
       //otherwise use the system path
