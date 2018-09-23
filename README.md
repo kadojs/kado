@@ -39,6 +39,17 @@ Please see the documentation for more https://kado.org/docs
 * Working overrides system
 * Include fs module with the main Kado object.
 * Change default port of main system to 3001 (which was previously API)
+* Fix signaling issue causing problems with system shutdown which stemmed
+from an issue with the `infant` package. In addition to the primary fix in
+the upstream package  The Kado shutdown procedures have been improved.
+* Fix an issue with environment variable propagation.
+* Add Content module to manage static pages for Main. Allowing the following
+content retrieval methods, the Content module will also provide a navigation system
+for the Main interface:
+  * TUI Editor to Providing Markdown -> HTML
+  * RAW Input to the database
+  * Local path to a HTML view file
+  * Remote URL to HTML file (for mirroring pages, will use an iframe)
 
 ### 3.3.2
 * Fix issues with module generation.

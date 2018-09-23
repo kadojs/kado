@@ -10,6 +10,10 @@
 @import url('/node_modules/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css');
 @import url('/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css');
 @import url('/node_modules/flag-icon-css/css/flag-icon.min.css');
+@import url(/node_modules/tui-editor/dist/tui-editor.css);
+@import url(/node_modules/tui-editor/dist/tui-editor-contents.css);
+@import url(/node_modules/codemirror/lib/codemirror.css);
+@import url(/node_modules/highlight.js/styles/github.css);
 @import url('https://use.fontawesome.com/releases/v5.2.0/css/all.css');
 @import url('/css/sidebar.css');
 @import url('/css/layout.css');

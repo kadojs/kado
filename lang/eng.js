@@ -57,6 +57,7 @@ module.exports = {
   'create_entry': 'Create Entry',
   'title': 'Title',
   'save': 'Save',
+  'uri': 'URI',
   'Dashboard': 'Dashboard',
   'permdenied': 'Permission Denied',
   'invalid_login': 'Invalid login',

@@ -4,7 +4,11 @@
       <form class="form form-horizontal" action="{{_u._blog_save}}" method="post" role="form">
         <div class="form-group">
           <label for="title">{{_l.title}}</label>
-          <input class="form-control" type="text" id="title" name="title" placeholder="Title" />
+          <input class="form-control" type="text" data-uri="blogUri" id="title" name="title" placeholder="Title" />
+        </div>
+        <div class="form-group">
+          <label for="blogUri">{{_l.title}}</label>
+          <input class="form-control" type="text" id="blogUri" name="uri" placeholder="Uri" />
         </div>
         <div class="form-group">
           <button class="btn btn-success">{{_l.save}}</button>

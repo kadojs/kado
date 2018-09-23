@@ -20,9 +20,12 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const K = require('../../../index')
+const crypto = require('crypto')
+
 const sequelize = K.db.sequelize
 
 const Blog = sequelize.models.Blog
+const BlogRevision = sequelize.models.BlogRevision
 
 
 /**
@@ -64,6 +67,7 @@ exports.edit = (req,res) => {
   Blog.findOne({where: {id: req.query.id}})
     .then((blog) => {
       if(!blog) throw new Error(K._l.blog_entry_not_found)
+      blog.content = encodeURIComponent(blog.content)
       res.render(res.locals._view.get('blog/edit'),{blog: blog})
     })
     .catch((err) => {
@@ -79,18 +83,53 @@ exports.edit = (req,res) => {
  */
 exports.save = (req,res) => {
   let data = req.body
+  let contentHash
+  let htmlHash
+  let blog
+  let isNewRevision = false
   let isNew = false
   let json = K.isClientJSON(req)
   Blog.findOne({where: {id: data.id}})
-    .then((blog) => {
+    .then((result) => {
+      blog = result
       if(!blog){
         isNew = true
-        blog = Blog.build()
+        blog = Blog.build({
+          content: '',
+          html: ''
+        })
       }
       if(data.title) blog.title = data.title
-      if(data.content) blog.content = data.content
       if('undefined' === typeof data.active) blog.active = false
       if(data.active) blog.active = true
+      //first hash them
+      let contentCipher = crypto.createHash('sha256')
+      let htmlCipher = crypto.createHash('sha256')
+      contentHash = contentCipher.update(data.content).digest('hex')
+      htmlHash = htmlCipher.update(data.html).digest('hex')
+      return BlogRevision.findOne({where: {
+          contentHash: contentHash, htmlHash: htmlHash, BlogId: blog.id}})
+    })
+    .then((result) => {
+      if(!result){
+        isNewRevision = true
+        let revParams = {
+          content: data.content,
+          contentHash: contentHash,
+          html: data.html,
+          htmlHash: htmlHash,
+          BlogId: blog.id
+        }
+        return BlogRevision.create(revParams)
+      } else {
+        return result
+      }
+    })
+    .then(() => {
+      if(isNewRevision){
+        blog.content = data.content
+        blog.html = data.html
+      }
       return blog.save()
     })
     .then((blog) => {

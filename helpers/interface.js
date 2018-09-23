@@ -20,7 +20,6 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 let P = require('bluebird')
-let clusterSetup = require('infant').cluster
 let fs = require('graceful-fs')
 
 
@@ -33,10 +32,13 @@ let fs = require('graceful-fs')
  * @return {object}
  */
 exports.master = (K,interfaceName,interfaceRoot) => {
+  let clusterSetup = require('infant').cluster
   return P.try(() => {
     let config = K.config
     let cluster
     let master = {}
+    let env = process.env
+    env.KADO_CONFIG = JSON.stringify(config.$strip())
     master.start = (done) => {
       cluster = clusterSetup(
         interfaceRoot + '/worker',
@@ -44,10 +46,7 @@ exports.master = (K,interfaceName,interfaceRoot) => {
           enhanced: true,
           count: config.interface.admin.workers.count,
           maxConnections: config.interface.admin.workers.maxConnections,
-          env: {
-            NODE_DEBUG: process.env.NODE_DEBUG,
-            KADO_CONFIG: JSON.stringify(config.$strip())
-          }
+          env: env
         }
       )
       cluster.start((err) => {

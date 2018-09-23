@@ -119,6 +119,7 @@ exports.admin = (K,app) => {
   app.view.add('staff/list',__dirname + '/admin/view/list.html')
   //staff routes
   app.uri.add('/login')
+  app.uri.add('/logout')
   app.get(app.uri.add('/staff'),(req,res) => {
     res.redirect(301,app.uri.add('/staff/list'))
   })

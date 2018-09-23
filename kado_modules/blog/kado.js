@@ -50,6 +50,11 @@ exports.config = (config) => {
 exports.db = (K,db) => {
   db.sequelize.enabled = true
   db.sequelize.import(__dirname + '/models/Blog.js')
+  db.sequelize.import(__dirname + '/models/BlogRevision.js')
+  let Blog = db.sequelize.models.Blog
+  let BlogRevision = db.sequelize.models.BlogRevision
+  Blog.hasMany(BlogRevision,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+  BlogRevision.belongsTo(Blog,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
 }
 
 

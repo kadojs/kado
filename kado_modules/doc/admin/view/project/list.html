@@ -1,0 +1,24 @@
+{{>header}}
+    <div class="container-fluid">
+      <div>
+        <div class="float-right">
+          <a class="btn btn-success" href="{{_u._doc_project_create}}">
+            <span class="fa fa-plus"></span> {{_l.create}} {{_l.doc.doc_project}}
+          </a>
+        </div>
+        <h1>{{_l.doc.doc_project}} {{_l.list}}</h1>
+      </div>
+      <table id="table" class="table table-bordered" data-remove="id" data-remove-uri="{{_u._doc_project_remove}}">
+        <thead>
+        <tr>
+            <th data-name="name" data-uri="{{_u._doc_project_edit}}" data-link="id">{{_l.doc.name}}</th>
+        </tr>
+        </thead>
+      </table>
+      <script type="text/javascript">
+        $(document).ready(() => {
+          $('#table').DataTable(DataTableConfig());
+        })
+      </script>
+    </div>
+{{>footer}}

@@ -182,13 +182,19 @@ program.command('bootstrap')
       cmd.enableApi = true
       cmd.enableMain = true
       cmd.enableBlog = true
+      cmd.enableContent = true
+      cmd.enableDoc = true
       cmd.enableSetting = true
       cmd.enableStaff = true
     }
-    if(cmd.enableBlog || cmd.enableSetting || cmd.enableStaff){
+    if(cmd.enableBlog || cmd.enableSetting ||
+      cmd.enableStaff || cmd.enableContent || cmd.enableDoc
+    ){
       cmd.enableAdmin = true
     }
-    if(cmd.enableBlog) cmd.enableMain = true
+    if(cmd.enableBlog || cmd.enableDoc || cmd.enableContent){
+      cmd.enableMain = true
+    }
     let dbConfig = ''
     let enableDB = (name,flag) => {
       if(flag){
@@ -244,6 +250,8 @@ program.command('bootstrap')
       }
     }
     enableModule('blog',cmd.enableBlog)
+    enableModule('content',cmd.enableContent)
+    enableModule('doc',cmd.enableDoc)
     enableModule('setting',cmd.enableSetting)
     enableModule('staff',cmd.enableStaff)
     if(moduleConfig) moduleConfig = moduleConfig + '\n  }\n'

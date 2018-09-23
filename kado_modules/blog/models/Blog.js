@@ -19,9 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-const markdown = require('markdown').markdown
-const uriname = require('uriname')
-const validator = require('validator')
 
 
 /**
@@ -34,11 +31,7 @@ module.exports = (sequelize,DataTypes) => {
   return sequelize.define('Blog',{
     title: {
       type: DataTypes.STRING,
-      allowNull: false,
-      set: function(v){
-        this.setDataValue('uri',uriname(v))
-        this.setDataValue('title',v)
-      }
+      allowNull: false
     },
     uri: {
       type: DataTypes.STRING,
@@ -46,14 +39,7 @@ module.exports = (sequelize,DataTypes) => {
     },
     content: {
       type: DataTypes.TEXT,
-      allowNull: true,
-      set: function(v){
-        v = validator.trim(v)
-        v = validator.escape(v)
-        let html = markdown.toHTML(v)
-        this.setDataValue('content',v)
-        this.setDataValue('html',html)
-      }
+      allowNull: true
     },
     html: {
       type: DataTypes.TEXT,

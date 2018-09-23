@@ -1,0 +1,47 @@
+{{>header}}
+    <div class="container-fluid">
+      <h1>{{_l.content.update_content}}</h1>
+      <form class="form form-horizontal" action="{{_u._content_save}}" method="post" role="form">
+        <input type="hidden" name="id" value="{{content.id}}" />
+        <input type="hidden" id="contentContentInput" name="content" />
+        <input type="hidden" id="contentHtmlInput" name="html" />
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input class="form-control" type="text" id="title" name="title" placeholder="Blog title" value="{{content.title}}" />
+        </div>
+        <div class="form-group">
+          <label for="blogContent">Markdown</label>
+          <textarea class="form-control" rows="10" id="blogContent" name="content">{{{content.content}}}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="contentContent">Content</label>
+          <div id="contentContent"></div>
+        </div>
+        <div class="form-group">
+          <label for="active">Active</label>
+          <input type="checkbox" id="active" name="active" {{#_is}}{{content.active}},checked="checked",{{/_is}} />
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success" type="submit">Save</button>
+        </div>
+      </form>
+      <script type="text/javascript">
+        $(document).ready(() => {
+          let editor = new TuiEditor({
+            el: document.querySelector('#contentContent'),
+            initialEditType: 'markdown',
+            previewStyle: 'vertical',
+            height: '400px',
+            codeBlockLanguages: ['ruby', 'PHP', 'javascript'],
+            initialValue: decodeURIComponent('{{content.content}}'),
+            events: {
+              change: () => {
+                $('#contentContentInput').val(editor.getMarkdown())
+                $('#contentHtmlInput').val(editor.getHtml())
+              }
+            }
+          })
+        })
+      </script>
+    </div>
+{{>footer}}

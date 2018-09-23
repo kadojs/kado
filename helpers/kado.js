@@ -199,6 +199,8 @@ config.$load({
   },
   module: {
     blog: {},
+    content: {},
+    kado: {},
     setting: {},
     staff: {}
   }
@@ -616,16 +618,10 @@ exports.init = (skipDb) => {
         exports.log.debug('Scanning interfaces')
         //register interfaces for startup
         let addInterface = (name) => {
-          exports.interfaces[name] = infant.parent(
-            config.interface[name].path,
-            {
-              fork: {
-                env: {
-                  NODE_DEBUG: process.env.NODE_DEBUG,
-                  KADO_CONFIG_STRING: JSON.stringify(config.$strip())
-                }
-              }
-            })
+          let env = process.env
+          let iface = config.interface[name].path
+          env.KADO_CONFIG_STRING = JSON.stringify(config.$strip())
+          exports.interfaces[name] = infant.parent(iface,{fork: {env: env}})
           lifecycle.add(
             name,
             (done) => {
@@ -704,6 +700,7 @@ exports.stop = (done) => {
   return new P((resolve) => {
     if(!done) done = () => {}
     //start the shutdown process
+    console.log('') //on purpose!
     exports.log.info('Beginning shutdown')
     lifecycle.stop((err) => {
       if(err) throw err

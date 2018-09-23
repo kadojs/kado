@@ -1,0 +1,27 @@
+{{>header}}
+    <div class="container-fluid">
+      <h1>{{_l.update}} {{_l.doc.doc_nav}}</h1>
+      <form class="form form-horizontal" action="{{_u._doc_nav_save}}" method="post" role="form">
+        <input type="hidden" name="id" value="{{item.id}}" />
+        <div class="form-group">
+          <label for="title">{{_l.doc.title}}</label>
+          <input class="form-control" type="text" data-uri="navUri" id="title" name="title" placeholder="Title" value="{{item.title}}" />
+        </div>
+        <div class="form-group">
+          <label for="title">{{_l.doc.uri}}</label>
+          <input class="form-control" type="text" id="navUri" name="uri" placeholder="URI" value="{{item.uri}}" />
+        </div>
+        <div class="form-group">
+          <label for="title">{{_l.doc.sort_num}}</label>
+          <input class="form-control" type="text" id="sortNum" name="sortNum" placeholder="Order of Nav Entry" value="{{item.sortNum}}" />
+        </div>
+        <div class="form-group">
+          <label for="active">{{_l.doc.group}}</label>
+          <input type="checkbox" id="isGroup" name="isGroup" {{#_is}}{{item.isGroup}},checked="checked",{{/_is}} />
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success" type="submit">{{_l.save}}</button>
+        </div>
+      </form>
+    </div>
+{{>footer}}

@@ -163,7 +163,6 @@ module.exports.scan = () => {
         that.pack[name][module][key] = pack[key]
       }
     }
-    K.log.debug(pack._module_name + ' language pack loaded')
   }
   let doScan = (pattern,handler) => {return glob.sync(pattern).forEach(handler)}
   //scan lang packs
