@@ -50,12 +50,10 @@ exports.config = (config) => {
 exports.db = (K,db) => {
   db.sequelize.enabled = true
   db.sequelize.import(__dirname + '/models/Doc.js')
-  db.sequelize.import(__dirname + '/models/DocNav.js')
   db.sequelize.import(__dirname + '/models/DocRevision.js')
   db.sequelize.import(__dirname + '/models/DocProject.js')
   db.sequelize.import(__dirname + '/models/DocProjectVersion.js')
   let Doc = db.sequelize.models.Doc
-  let DocNav = db.sequelize.models.DocNav
   let DocRevision = db.sequelize.models.DocRevision
   let DocProject = db.sequelize.models.DocProject
   let DocProjectVersion = db.sequelize.models.DocProjectVersion
@@ -66,8 +64,6 @@ exports.db = (K,db) => {
   DocProjectVersion.belongsTo(DocProject,
     {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   DocProjectVersion.hasMany(Doc,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
-  DocProjectVersion.hasMany(DocNav,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
-  DocNav.belongsTo(DocProjectVersion)
   Doc.belongsTo(DocProjectVersion,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
 }
 
@@ -122,12 +118,6 @@ exports.admin = (K,app) => {
   app.permission.add('/doc/list','List Doc')
   app.permission.add('/doc/edit','Edit Doc')
   app.permission.add('/doc/remove','Remove Doc')
-  //nav perms
-  app.permission.add('/doc/nav/create','Create Doc Nav')
-  app.permission.add('/doc/nav/save','Save Doc Nav')
-  app.permission.add('/doc/nav/list','List Doc Nav')
-  app.permission.add('/doc/nav/edit','Edit Doc Nav')
-  app.permission.add('/doc/nav/remove','Remove Doc Nav')
   //project perms
   app.permission.add('/doc/project/create','Create Doc Project')
   app.permission.add('/doc/project/save','Save Doc Project')
@@ -144,10 +134,6 @@ exports.admin = (K,app) => {
   app.view.add('doc/create',__dirname + '/admin/view/create.html')
   app.view.add('doc/edit',__dirname + '/admin/view/edit.html')
   app.view.add('doc/list',__dirname + '/admin/view/list.html')
-  //nav views
-  app.view.add('doc/nav/create',__dirname + '/admin/view/nav/create.html')
-  app.view.add('doc/nav/edit',__dirname + '/admin/view/nav/edit.html')
-  app.view.add('doc/nav/list',__dirname + '/admin/view/nav/list.html')
   //project views
   app.view.add('doc/project/create',__dirname +
     '/admin/view/project/create.html')
@@ -163,10 +149,6 @@ exports.admin = (K,app) => {
   app.nav.addItem('Doc',app.uri.add('/doc/create'),'Create','plus')
   app.nav.addItem('Doc',app.uri.add('/doc/project/list'),
     'List Projects','umbrella')
-  app.nav.addItem('Doc',app.uri.add('/doc/project/create'),
-    'Create Project','project-diagram')
-  app.nav.addItem('Doc',app.uri.add('/doc/nav/list'),
-    'Manage Nav','clipboard-list')
   //register routes
   //main doc routes
   app.get(app.uri.get('/doc'),(req,res) => {
@@ -178,16 +160,6 @@ exports.admin = (K,app) => {
   app.post(app.uri.add('/doc/save'),admin.save)
   app.post(app.uri.add('/doc/remove'),admin.remove)
   app.get(app.uri.get('/doc/remove'),admin.remove)
-  //nav routes
-  app.get(app.uri.get('/doc/nav',(req,res) => {
-    res.redirect(301,app.uri.get('/doc/nav/list'))
-  }))
-  app.get(app.uri.add('/doc/nav/list'),admin.nav.list)
-  app.get(app.uri.add('/doc/nav/create'),admin.nav.create)
-  app.get(app.uri.add('/doc/nav/edit'),admin.nav.edit)
-  app.post(app.uri.add('/doc/nav/save'),admin.nav.save)
-  app.post(app.uri.add('/dov/nav/remove'),admin.nav.remove)
-  app.get(app.uri.add('/doc/nav/remove'),admin.nav.remove)
   //project routes
   app.get(app.uri.add('/doc/project'),(req,res) => {
     res.redirect(301,app.uri.get('/doc/project/list'))

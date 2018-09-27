@@ -99,17 +99,31 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.entry = (req,res) => {
-  Doc.find({
-    where: {uri: req.params.uri},
-    include: [
-      {model: DocProjectVersion, where: {name: req.params.version}, include: [
+  let docList
+  Doc.findAll({include: [
+    {model: DocProjectVersion, where: {name: req.params.version}, include: [
         {model: DocProject, where: {uri: req.params.project}}
       ]}
-    ]
-  })
+  ], order: [['sortNum','ASC']]})
+    .then((result) => {
+      docList = result
+      return Doc.find({
+        where: {uri: req.params.uri},
+        include: [
+          {
+            model: DocProjectVersion,
+            where: {name: req.params.version},
+            include: [
+              {model: DocProject,where: {uri: req.params.project}}
+            ]
+          }
+        ]
+      })
+    })
     .then((result) => {
       res.render(res.locals._view.get('doc/entry'),{
-        doc: result
+        doc: result,
+        docList: docList
       })
     })
     .catch((err) => {

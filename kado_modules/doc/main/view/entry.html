@@ -1,9 +1,19 @@
 {{>header}}
   <main role="main" class="container">
-    <div class="blog-post">
-      <h2 class="blog-post-title">{{doc.title}}</h2>
-      <p class="blog-post-meta">{{#_printDate}}{{doc.createdAt}}{{/_printDate}}</p>
-      {{{doc.html}}}
-    </div><!-- /.document -->
+    <div class="row">
+      <div class="col-md-9 blog-main">
+        <div class="blog-post">
+          <h2 class="blog-post-title">{{doc.title}}</h2>
+          <p class="blog-post-meta">{{#_printDate}}{{doc.createdAt}}{{/_printDate}}</p>
+          {{{doc.html}}}
+        </div><!-- /.document -->
+      </div>
+      <aside class="col-md-3 blog-sidebar">
+        <h5>Index</h5>
+        {{#docList}}
+        <div><a href="{{_u._doc}}/{{project.uri}}/{{version.name}}/{{uri}}">{{title}}</a></div>
+        {{/docList}}
+      </aside>
+    </div>
   </main>
 {{>footer}}

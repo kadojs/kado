@@ -31,12 +31,6 @@ const DocProjectVersion = sequelize.models.DocProjectVersion
 
 
 /**
- * Chain load into nav manager
- */
-exports.nav = require('./nav')
-
-
-/**
  * Chain load into project manager
  */
 exports.project = require('./project')
