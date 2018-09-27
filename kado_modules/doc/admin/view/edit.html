@@ -15,6 +15,10 @@
           <input class="form-control" type="text" id="uri" name="uri" placeholder="{{_l.doc.uri}}" value="{{item.uri}}" />
         </div>
         <div class="form-group">
+          <label for="title">{{_l.doc.sort_num}}</label>
+          <input class="form-control" type="text" id="sortNum" name="sortNum" placeholder="Order of Doc in Table of Contents" value="{{item.sortNum}}" />
+        </div>
+        <div class="form-group">
           <label for="docContent">{{_l.doc.content}}</label>
           <div id="docContent"></div>
         </div>

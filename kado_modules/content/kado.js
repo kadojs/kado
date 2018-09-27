@@ -77,13 +77,23 @@ exports.search = (K,app,keywords,start,limit) => {
     where[s.Op.or].push({uri: {[s.Op.like]: '%'+w+'%'}})
     where[s.Op.or].push({content: {[s.Op.like]: '%'+w+'%'}})
   })
+  if('main' === app._interfaceName){
+    where.uri = {[s.Op.notLike]: 'partial_%'}
+    where.active = true
+  }
   return Content.findAll({where: where, start: start, limit: limit})
-    .then((result) => {return result.map((r) => {return {
-      title: r.title,
-      description: r.content.substring(0,150),
-      uri: app.uri.get('/content/edit') + '?id=' + r.id,
-      updatedAt: r.updatedAt
-    }})})
+    .then((result) => {return result.map((r) => {
+      let uri = app.uri.get('/content/edit') + '?id=' + r.id
+      if('main' === app._interfaceName){
+        uri = app.uri.get('/content') + '/' + r.uri
+      }
+      return {
+        title: r.title,
+        description: r.html,
+        uri: uri,
+        updatedAt: r.updatedAt
+      }
+    })})
 }
 
 
@@ -151,13 +161,9 @@ exports.admin = (K,app) => {
 exports.main = (K,app) => {
   let main = require('./main')
   //register routes
-  app.get(app.uri.add('/content'),main.index)
-  app.get(app.uri.add('/content/:contentUri'),(req,res) => {
-    res.redirect(301,'/c/' + req.params.contentUri)
-  })
-  app.get(app.uri.add('/c/:contentUri'),main.entry)
-  //register navigation
-  app.nav.addGroup(app.uri.get('/content'),'Content','file-alt')
+  app.get(app.uri.add('/content') + '/:contentUri',main.entry)
+  //register view
+  app.view.add('content/entry',__dirname + '/main/view/entry.html')
 }
 
 

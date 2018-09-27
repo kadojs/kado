@@ -1,14 +1,9 @@
 {{>header}}
-    <div class="conatiner">
-      <div class="content content-container" style="padding-top: 20px;">
-        <article class="markdown-body">
-          <h1>
-            <a href="{{_u._doc_view}}?id={{item.id}}">{{item.}}</a>
-          </h1>
-          <p style="margin-top: -5px;">
-            | Posted {{#_printDate}}{{item.createdAt}}{{/_printDate}}
-          </p>
-        </article>
-      </div>
-    </div>
+  <main role="main" class="container">
+    <div class="blog-post">
+      <h2 class="blog-post-title">{{doc.title}}</h2>
+      <p class="blog-post-meta">{{#_printDate}}{{doc.createdAt}}{{/_printDate}}</p>
+      {{{doc.html}}}
+    </div><!-- /.document -->
+  </main>
 {{>footer}}

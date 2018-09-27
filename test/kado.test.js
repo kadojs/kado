@@ -146,6 +146,32 @@ describe('kado',function(){
             })
         })
       })
+      describe('content cli',() => {
+        let contentId = null
+        after(() => {
+          if(contentId) return exec('node app content remove -i ' + contentId)
+        })
+        it('should allow content creation from cli',() => {
+          return exec('node app content create -t test -c test')
+            .then((result) => {
+              expect(result).to.match(/Content entry created: \d+/)
+              contentId = result.match(/Content entry created: (\d+)/)[1]
+            })
+        })
+        it('should allow content change from cli',() => {
+          return exec('node app content update -i ' + contentId + ' -t test2 -c test')
+            .then((result) => {
+              expect(result).to.match(/Content entry updated successfully!/i)
+            })
+        })
+        it('should allow content deletion from cli',() => {
+          return exec('node app content remove -i ' + contentId)
+            .then((result) => {
+              expect(result).to.match(/Content entry removed successfully!/i)
+              contentId = null
+            })
+        })
+      })
       describe('routes',() => {
         let cookieJar = null
         let doLogin = () => {
@@ -239,7 +265,9 @@ describe('kado',function(){
               jar: cookieJar,
               json: {
                 title: 'Test Blog',
-                content: 'testing the blog'
+                uri: 'test-blog',
+                content: 'testing the blog',
+                html: '<p>testing the blog</p>'
               }
             })
               .then((res) => {
@@ -254,7 +282,9 @@ describe('kado',function(){
               json: {
                 id: blogId,
                 title: 'Test blog 2',
-                content: 'testing the blog 2'
+                uri: 'test-blog-2',
+                content: 'testing the blog 2',
+                html: '<p>testing the blog 2</p>'
               }
             })
               .then((res) => {
@@ -264,6 +294,206 @@ describe('kado',function(){
           })
           it('should allow deletion',() => {
             return removeBlog()
+          })
+        })
+        describe('content',() => {
+          let contentId = null
+          let removeContent = () => {
+            return request.postAsync({
+              url: baseUrl + '/content/remove?id=' + contentId,
+              jar: cookieJar,
+              json:true
+            })
+              .then((res) => {
+                expect(res.body.success).to.match(/Content\(s\) removed/)
+                contentId = null
+              })
+          }
+          before(() => {
+            if(!cookieJar) return doLogin()
+          })
+          after(() => {
+            if(contentId) removeContent()
+          })
+          it('should list',() => {
+            return request.getAsync({
+              url: baseUrl + '/content/list',
+              jar: cookieJar
+            })
+              .then((res) => {
+                expect(res.body).to.match(/Content/)
+              })
+          })
+          it('should show creation page',() => {
+            return request.getAsync({
+              url: baseUrl + '/content/create',
+              jar: cookieJar
+            })
+              .then((res) => {
+                expect(res.body).to.match(/Create Entry/)
+              })
+          })
+          it('should allow creation',() => {
+            return request.postAsync({
+              url: baseUrl + '/content/save',
+              jar: cookieJar,
+              json: {
+                title: 'Test Blog',
+                uri: 'test-content',
+                content: 'testing the content',
+                html: '<p>testing the content</p>'
+              }
+            })
+              .then((res) => {
+                expect(+res.body.content.id).to.be.a('number')
+                contentId = +res.body.content.id
+              })
+          })
+          it('should allow modification',() => {
+            return request.postAsync({
+              url: baseUrl + '/content/save',
+              jar: cookieJar,
+              json: {
+                id: contentId,
+                title: 'Test content 2',
+                uri: 'test-content-2',
+                content: 'testing the content 2',
+                html: '<p>testing the content 2</p>'
+              }
+            })
+              .then((res) => {
+                expect(res.body.content.id).to.be.a('number')
+                expect(+res.body.content.id).to.equal(contentId)
+              })
+          })
+          it('should allow deletion',() => {
+            return removeContent()
+          })
+        })
+        describe('doc',() => {
+          let docId = null
+          let docProjectId = null
+          let docProjectVersionId = null
+          let removeDoc = () => {
+            return request.postAsync({
+              url: baseUrl + '/doc/remove?id=' + docId,
+              jar: cookieJar,
+              json:true
+            })
+              .then((res) => {
+                expect(res.body.success).to.match(/Doc\(s\) removed/)
+                docId = null
+                return request.postAsync({
+                  url: baseUrl + '/doc/version/remove?id=' +
+                    docProjectVersionId,
+                  jar: cookieJar,
+                  json: true
+                })
+              })
+              .then((res) => {
+                expect(res.body.success).to.match(/Doc Project Version removed/)
+                docProjectVersionId = null
+                return request.postAsync({
+                  url: baseUrl + '/doc/project/remove?id=' +
+                    docProjectId,
+                  jar: cookieJar,
+                  json: true
+                })
+              })
+              .then((res) => {
+                expect(res.body.success).to.match(/Doc Project removed/)
+                docProjectId = null
+              })
+          }
+          before(() => {
+            return P.try(() => {
+              if(!cookieJar) return doLogin()
+            })
+              .then(() => {
+                return request.postAsync({
+                  url: baseUrl + '/doc/project/save',
+                  jar: cookieJar,
+                  json: {
+                    name: 'Kado',
+                    uri: 'kado'
+                  }
+                })
+              })
+              .then((res) => {
+                expect(+res.body.item.id).to.be.a('number')
+                docProjectId = +res.body.item.id
+                return request.postAsync({
+                  url: baseUrl + '/doc/version/save',
+                  jar: cookieJar,
+                  json: {
+                    name: '3.x',
+                    DocProjectId: docProjectId
+                  }
+                })
+              })
+              .then((res) => {
+                expect(+res.body.item.id).to.be.a('number')
+                docProjectVersionId = +res.body.item.id
+              })
+          })
+          after(() => {
+            if(docId) removeDoc()
+          })
+          it('should list',() => {
+            return request.getAsync({
+              url: baseUrl + '/doc/list',
+              jar: cookieJar
+            })
+              .then((res) => {
+                expect(res.body).to.match(/Doc/)
+              })
+          })
+          it('should show creation page',() => {
+            return request.getAsync({
+              url: baseUrl + '/doc/create',
+              jar: cookieJar
+            })
+              .then((res) => {
+                expect(res.body).to.match(/DocProjectVersionId/)
+              })
+          })
+          it('should allow creation',() => {
+            return request.postAsync({
+              url: baseUrl + '/doc/save',
+              jar: cookieJar,
+              json: {
+                title: 'Test Doc',
+                uri: 'test-doc',
+                content: 'testing the doc',
+                html: '<p>testing the doc</p>',
+                DocProjectVersionId: docProjectVersionId
+              }
+            })
+              .then((res) => {
+                expect(+res.body.item.id).to.be.a('number')
+                docId = +res.body.item.id
+              })
+          })
+          it('should allow modification',() => {
+            return request.postAsync({
+              url: baseUrl + '/doc/save',
+              jar: cookieJar,
+              json: {
+                id: docId,
+                title: 'Test Doc 2',
+                uri: 'test-doc-2',
+                content: 'testing the doc 2',
+                html: '<p>testing the doc 2</p>',
+                DocProjectVersionId: docProjectVersionId
+              }
+            })
+              .then((res) => {
+                expect(res.body.item.id).to.be.a('number')
+                expect(+res.body.item.id).to.equal(docId)
+              })
+          })
+          it('should allow deletion',() => {
+            return removeDoc()
           })
         })
         describe('staff',() => {

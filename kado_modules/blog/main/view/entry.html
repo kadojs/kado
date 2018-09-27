@@ -1,0 +1,9 @@
+{{>header}}
+  <main role="main" class="container">
+    <div class="blog-post">
+      <h2 class="blog-post-title">{{blog.title}}</h2>
+      <p class="blog-post-meta">{{#_printDate}}{{blog.datePosted}}{{/_printDate}}</p>
+      {{{blog.html}}}
+    </div><!-- /.blog-post -->
+  </main>
+{{>footer}}

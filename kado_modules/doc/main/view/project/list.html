@@ -1,15 +1,9 @@
 {{>header}}
-    <div class="container">
-      <h1>{{_l.list}} Doc Project</h1>
-    </div>
-    {{#list}}
-      <div class="listEntry">
-        <h3 style="margin-top: 5px;">
-          <a href="{{_u._doc_project_view}}?id={{id}}">{{id}}</a>
-        </h3>
-        <p style="margin-top: -8px;">
-          | Posted {{#_printDate}}{{createdAt}}{{/_printDate}}
-        </p>
-      </div>
-    {{/list}}
+  <main role="main" class="container">
+    <h1>Welcome to our Documentation</h1>
+    <p>Please select from our current projects.</p>
+    {{#projectList}}
+      <h5><a href="{{_u._doc}}/{{uri}}">{{name}}</a></h5>
+    {{/projectList}}
+  </main>
 {{>footer}}

@@ -39,6 +39,7 @@ toWindow('jQuery',jQuery)
 require('bootstrap')
 require('bootstrap-select')
 require('chart.js')
+toWindow('Holder',require('holderjs'))
 require('jquery-ui')
 toWindow('moment',require('moment'))
 

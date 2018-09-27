@@ -53,12 +53,15 @@ exports.db = (K,db) => {
 /**
  * Provide search
  * @param {K} K Master Kado Object
+ * @param {object} app
  * @param {array} keywords
  * @param {number} start
  * @param {number} limit
  * @return {Promise}
  */
 exports.search = (K,app,keywords,start,limit) => {
+  //restrict searching staff from main
+  if('main' === app._interfaceName) return K.bluebird.try(() => {})
   let s = K.db.sequelize
   let Staff = s.models.Staff
   let where = {[s.Op.or]: []}

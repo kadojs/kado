@@ -57,6 +57,7 @@
     "glob": "^7.1.3",
     "graceful-fs": "^4.1.11",
     "highlight.js": "^9.12.0",
+    "holderjs": "^2.9.4",
     "infant": "^1.2.0",
     "jquery": "^3.3.1",
     "jquery-ui": "^1.12.1",

@@ -88,8 +88,7 @@ exports.edit = (req,res) => {
  */
 exports.save = (req,res) => {
   let data = req.body
-  let contentHash
-  let htmlHash
+  let hash
   let content
   let isNewRevision = false
   let isNew = false
@@ -109,21 +108,20 @@ exports.save = (req,res) => {
       if('undefined' === typeof data.active) content.active = false
       if(data.active) content.active = true
       //first hash them
-      let contentCipher = crypto.createHash('sha256')
-      let htmlCipher = crypto.createHash('sha256')
-      contentHash = contentCipher.update(data.content).digest('hex')
-      htmlHash = htmlCipher.update(data.html).digest('hex')
+      if(!data.content) data.content = ''
+      if(!data.html) data.html = ''
+      let cipher = crypto.createHash('sha256')
+      hash = cipher.update(data.content + data.html).digest('hex')
       return ContentRevision.findOne({where: {
-          contentHash: contentHash, htmlHash: htmlHash, ContentId: content.id}})
+          hash: hash, ContentId: content.id}})
     })
     .then((result) => {
       if(!result){
         isNewRevision = true
         let revParams = {
           content: data.content,
-          contentHash: contentHash,
           html: data.html,
-          htmlHash: htmlHash,
+          hash: hash,
           ContentId: content.id
         }
         return ContentRevision.create(revParams)
@@ -132,10 +130,8 @@ exports.save = (req,res) => {
       }
     })
     .then(() => {
-      if(isNewRevision){
-        content.content = data.content
-        content.html = data.html
-      }
+      content.content = data.content
+      content.html = data.html
       return content.save()
     })
     .then((content) => {
@@ -155,6 +151,7 @@ exports.save = (req,res) => {
       if(json){
         res.json({error: err.message})
       } else {
+        console.log(err)
         res.render(res.locals._view.get('error'),{error: err})
       }
     })

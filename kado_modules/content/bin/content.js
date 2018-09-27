@@ -36,6 +36,7 @@ let config = K.config
 program
   .command('create')
   .option('-t, --title <s>','Content Title')
+  .option('-u, --uri <s>','Content URI')
   .option('-c, --content <s>','Content Content')
   .description('Create new content entry')
   .action((opts) => {
@@ -45,7 +46,9 @@ program
         throw new Error('Title and content are required')
       let doc = {
         title: opts.title,
+        uri: opts.uri || opts.title.replace(/[\s]+/g,'-').toLowerCase(),
         content: opts.content,
+        html: opts.content,
         active: true
       }
       return Content.create(doc)
@@ -64,6 +67,7 @@ program
   .command('update')
   .option('-i, --id <s>','Content Id')
   .option('-t, --title <s>','Content Title')
+  .option('-u, --uri <s>','Content URI')
   .option('-c, --content <s>','Content Content')
   .description('Update existing content entry')
   .action((opts) => {
@@ -73,8 +77,10 @@ program
         let doc = result
         if(opts.title) doc.title = opts.title
         if(opts.uri) doc.uri = opts.uri
-        if(opts.content) doc.content = opts.content
-        if(opts.html) doc.html = opts.html
+        if(opts.content){
+          doc.content = opts.content
+          doc.html = opts.content
+        }
         return doc.save()
       })
       .then(() => {
@@ -116,6 +122,7 @@ program
         table.push([
           row.id,
           row.title,
+          row.uri,
           row.content.replace(/<(?:.|\n)*?>/gm, '').substring(0,50),
           row.active ? 'Yes' : 'No'
         ])

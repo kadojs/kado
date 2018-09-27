@@ -1,19 +1,17 @@
 {{>header}}
-    <div class="container">
-      <h1>{{_l.blog.blog_list}}</h1>
-    </div>
+  <main role="main" class="container">
+    <h1>{{_l.blog.blog_list}}</h1>
     {{#blogList}}
-      <div class="blogListEntry">
-        <h3 style="margin-top: 5px;">
-          <a href="{{_u._blog}}/{{{blog.uri}}}">{{blog.title}}</a>
-        </h3>
-        <p style="margin-top: -8px;">
-          | Posted {{#_printDate}}{{blog.datePosted}}{{/_printDate}}
-        </p>
-      </div>
-      <div style="margin: 15px 0 10px 0;">
-        <p>{{#_escapeAndTrucnate}}200,{{blog.content}}{{/_escapeAndTrucnate}}</p>
-        <a href="{{_u._blog}}/{{{blog.uri}}}">Read more...</a>
-      </div>
+    <div class="blog-post">
+      <h3 class="blog-post-title">{{title}}</h3>
+      <p class="blog-post-meta">{{#_printDate}}{{datePosted}}{{/_printDate}}</p>
+      <p>{{#_escapeAndTruncate}}200,{{{html}}}{{/_escapeAndTruncate}}</p>
+      <a href="{{_u._blog}}/{{{uri}}}">Read more...</a>
+    </div><!-- /.blog-post -->
     {{/blogList}}
+    <nav class="blog-pagination">
+      <a class="btn btn-outline-primary" href="{{_u.blog_list}}?start={{older}}">{{_l.older}}</a>
+      <a class="btn btn-outline-primary" href="{{_u.blog_list}}?start={{newer}}">{{_l.newer}}</a>
+    </nav>
+  </main>
 {{>footer}}

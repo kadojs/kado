@@ -101,6 +101,9 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     let server = worker.server = http.createServer(app)
     //make some promises
     P.promisifyAll(server)
+    //interface settings
+    app._interfaceName = interfaceName
+    app._interfaceRoot = interfaceRoot
     //breadcrumb system
     app.breadcrumb = new Breadcrumb()
     //navigation system
@@ -134,15 +137,17 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       }
     }
     app.locals._toDateString = app.locals._printDate
-    app.locals._escapeAndTruncate = (text,render) => {
-      let rv = render(text)
-      let parts = rv.split(',')
-      if(!parts || 2 !== parts.length){
-        throw new Error('Cannot parse escapeAndTruncate')
+    app.locals._escapeAndTruncate = () => {
+      return (text,render) => {
+        let parts = text.split(',')
+        if(!parts || 2 !== parts.length){
+          throw new Error('Cannot parse escapeAndTruncate')
+        }
+        let len = +parts[0]
+        let tpl = render(parts[1])
+        tpl = tpl.replace(/<(?:.|\n)*?>/gm,'') //remove html
+        return tpl.substring(0,len) //shorten
       }
-      let len = parts[0], tpl = parts[1]
-      tpl = tpl.replace(/<(?:.|\n)*?>/gm, '') //remove html
-      return tpl.substring(0,len) //shorten
     }
     app.locals._is = () => {
       return (text,render) => {
@@ -301,6 +306,32 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       })
       //callback
       if('function' === typeof(cb)) return cb(app,K)
+    }
+    worker.setupContent = (cb) => {
+      if(K.config.module.content.enabled){
+        app.use((req,res,next) => {
+          res.locals._c = {}
+          res.locals._localNav = new Nav()
+          K.db.sequelize.models.Content.findAll(
+            {where: {uri: {[K.db.sequelize.Op.like]: 'partial_%'}}}
+          )
+            .then((result) => {
+              result.forEach((row) => {
+                res.locals._c[row.uri.replace('partial_','')] = row.html
+              })
+              return K.db.sequelize.models.ContentNav.findAll({
+                order: [['sortNum','ASC']]
+              })
+            })
+            .then((result) => {
+              result.forEach((row) => {
+                res.locals._localNav.addGroup(row.uri,row.title,row.icon || '')
+              })
+              next()
+            })
+        })
+        cb()
+      }
     }
     worker.enableSearch = (app) => {
       app.use((req,res,next) => {

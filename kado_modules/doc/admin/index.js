@@ -110,8 +110,7 @@ exports.save = (req,res) => {
   let data = req.body
   let isNew = false
   let json = K.isClientJSON(req)
-  let contentHash
-  let htmlHash
+  let hash
   let doc
   let isNewRevision = false
   if(!data.DocProjectVersionId){
@@ -130,6 +129,7 @@ exports.save = (req,res) => {
       }
       if(data.title) doc.title = data.title
       if(data.uri) doc.uri = data.uri
+      if(data.sortNum) doc.sortNum = data.sortNum
       doc.DocProjectVersionId = data.DocProjectVersionId
       //Deal with the doc revision to save the content
       //here is how this is going to go, first we hash the content and the html
@@ -137,25 +137,20 @@ exports.save = (req,res) => {
       //revision record and then finally store the current content and html into
       //the main doc record as the revisions only support the doc not depend on
       //it
-      if(undefined === data.content || undefined === data.html){
-        throw new Error('Content must be defined')
-      }
+      if(!data.content) data.content = ''
+      if(!data.html) data.html = ''
       //first hash them
-      let contentCipher = crypto.createHash('sha256')
-      let htmlCipher = crypto.createHash('sha256')
-      contentHash = contentCipher.update(data.content).digest('hex')
-      htmlHash = htmlCipher.update(data.html).digest('hex')
-      return DocRevision.findOne({where: {
-        contentHash: contentHash, htmlHash: htmlHash, DocId: doc.id}})
+      let cipher = crypto.createHash('sha256')
+      hash = cipher.update(data.html + data.content).digest('hex')
+      return DocRevision.findOne({where: {hash: hash, DocId: doc.id}})
     })
     .then((result) => {
       if(!result){
         isNewRevision = true
         let revParams = {
           content: data.content,
-          contentHash: contentHash,
           html: data.html,
-          htmlHash: htmlHash,
+          hash: hash,
           DocId: doc.id
         }
         return DocRevision.create(revParams)
@@ -164,10 +159,8 @@ exports.save = (req,res) => {
       }
     })
     .then(() => {
-      if(isNewRevision){
-        doc.content = data.content
-        doc.html = data.html
-      }
+      doc.content = data.content
+      doc.html = data.html
       return doc.save()
     })
     .then(() => {

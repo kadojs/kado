@@ -221,7 +221,8 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     })
     //add default navbar entries
     app.nav.addGroup('/','Dashboard','home')
-    app.get('/search',worker.enableSearch(app))
+    //enable search
+    app.get(app.uri.add('/search'),worker.enableSearch(app))
     //add default permissions
     app.permission.add('/search')
   })

@@ -89,6 +89,7 @@ exports.save = (req,res) => {
         result = DocProject.build()
       }
       if(data.name) result.name = data.name
+      if(data.uri) result.uri = data.uri
       return result.save()
     })
     .then((result) => {

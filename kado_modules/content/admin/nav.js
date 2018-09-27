@@ -90,10 +90,6 @@ exports.save = (req,res) => {
       if(data.title) result.title = data.title
       if(data.uri) result.uri = data.uri
       if(data.sortNum) result.sortNum = data.sortNum
-      if('undefined' === typeof data.isTopbar) result.isTopbar = false
-      if(data.isTopbar) result.isTopbar = true
-      if('undefined' === typeof data.isGroup) result.isGroup = false
-      if(data.isGroup) result.isGroup = true
       return result.save()
     })
     .then((result) => {
@@ -101,7 +97,7 @@ exports.save = (req,res) => {
         res.json({item: result.dataValues})
       } else {
         req.flash('success',{
-          message: K._l.content.entry + ' ' +
+          message: K._l.content.content_entry + ' ' +
             (isNew ? K._l.created : K._l.saved),
           href: '/content/nav/edit?id=' + result.id,
           name: result.id

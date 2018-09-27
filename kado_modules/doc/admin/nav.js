@@ -107,7 +107,8 @@ exports.save = (req,res) => {
         res.json({item: result.dataValues})
       } else {
         req.flash('success',{
-          message: K._l.doc.entry + ' ' + (isNew ? K._l.created : K._l.saved),
+          message: K._l.doc.entry +
+            ' ' + (isNew ? K._l.created : K._l.saved),
           href: '/doc/nav/edit?id=' + result.id,
           name: result.id
         })

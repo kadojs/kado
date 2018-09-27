@@ -23,6 +23,8 @@ const K = require('../../../index')
 const sequelize = K.db.sequelize
 
 const Doc = sequelize.models.Doc
+const DocProject = sequelize.models.DocProject
+const DocProjectVersion = sequelize.models.DocProjectVersion
 
 
 /**
@@ -37,14 +39,56 @@ exports.project = require('./project')
  * @param {object} res
  */
 exports.index = (req,res) => {
-  Doc.findAll({order: [['createdAt','DESC']]})
-    .then((results) => {
-      res.render(res.locals._view.get('doc/list',{
-        list: results
-      }))
+  res.redirect('/doc/project')
+}
+
+/**
+ * Display versions available for particular project
+ * @param req
+ * @param res
+ */
+exports.versionList = (req,res) => {
+  DocProjectVersion.findAll({
+    include: [{model: DocProject, where: {uri: req.params.project}}]
+  })
+    .then((result) => {
+      if(!result || !result.length){
+        throw new Error('This project has no versions')
+      }
+      res.render(res.locals._view.get('doc/versionList'),{
+        project: result[0].DocProject,
+        versionList: result
+      })
     })
     .catch((err) => {
-      res.render('error',{error: err})
+      res.render(res.locals._view.get('error'),{error: err.message})
+    })
+}
+
+
+/**
+ * Display documents in order given a particular project version
+ * @param req
+ * @param res
+ */
+exports.list = (req,res) => {
+  Doc.findAll({include: [
+    {model: DocProjectVersion, where: {name: req.params.version}, include: [
+      {model: DocProject, where: {uri: req.params.project}}
+    ]}
+  ], order: [['sortNum','ASC']]})
+    .then((result) => {
+      if(!result || !result.length){
+        throw new Error('This project version has no documents.')
+      }
+      res.render(res.locals._view.get('doc/list'),{
+        project: result[0].DocProjectVersion.DocProject,
+        version: result[0].DocProjectVersion,
+        docList: result
+      })
+    })
+    .catch((err) => {
+      res.render(res.locals._view.get('error'),{error: err.message})
     })
 }
 
@@ -55,11 +99,18 @@ exports.index = (req,res) => {
  * @param {object} res
  */
 exports.entry = (req,res) => {
-  Doc.findOne({where: {id: req.query.id}})
+  Doc.find({
+    where: {uri: req.params.uri},
+    include: [
+      {model: DocProjectVersion, where: {name: req.params.version}, include: [
+        {model: DocProject, where: {uri: req.params.project}}
+      ]}
+    ]
+  })
     .then((result) => {
-      res.render(res.locals._view.get('doc/entry',{
-        item: result
-      }))
+      res.render(res.locals._view.get('doc/entry'),{
+        doc: result
+      })
     })
     .catch((err) => {
       res.render('error',{error: err})

@@ -40,6 +40,10 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     //activate uri system
     K.log.debug(interfaceName + ' URI system activated')
   })
+  worker.setupContent(() => {
+    //activate the content system
+    K.log.debug(interfaceName + ' Content system activated')
+  })
   worker.enableHtml((app) =>{
     const mustacheExpress = require('mustache-express')
     const serveStatic = require('serve-static')
@@ -102,6 +106,8 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     app.view.add('header',__dirname + '/view/header.html')
     app.view.add('home',__dirname + '/view/home.html')
     app.view.add('navbar',__dirname + '/view/navbar.html')
+    app.view.add('search',__dirname + '/view/search.html')
+    app.view.add('sidebar',__dirname + '/view/sidebar.html')
     //view overrides
     let views = K.config.interface[interfaceName].override.view
     if(views){
@@ -111,10 +117,21 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     }
     //home page
     app.get('/',(req,res) =>{
-      res.render(app.view.get('home'))
+      if(K.config.module.blog.enabled){
+       K.db.sequelize.models.Blog.findAll({
+         where: {active: true}, order: [['datePosted','DESC']], limit: 3
+       })
+         .then((result) => {
+           res.render(app.view.get('home'),{blogList: result})
+         })
+      } else {
+        res.render(app.view.get('home'))
+      }
     })
+    //enable searching
+    app.get(app.uri.add('/search'),worker.enableSearch(app))
     //add default navbar entries
-    app.nav.addGroup('/','Dashboard','home')
+    //app.nav.addGroup('/','Dashboard','home')
   })
 
   if(require.main === module){

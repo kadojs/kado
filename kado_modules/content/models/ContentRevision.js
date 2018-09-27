@@ -31,17 +31,13 @@ module.exports = (sequelize,DataTypes) => {
   return sequelize.define('ContentRevision',{
     content: {
       type: DataTypes.TEXT,
-      allowNull: false
-    },
-    contentHash: {
-      type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     html: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: true
     },
-    htmlHash: {
+    hash: {
       type: DataTypes.STRING,
       allowNull: false
     }

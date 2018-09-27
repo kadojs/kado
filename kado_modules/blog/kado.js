@@ -76,13 +76,20 @@ exports.search = (K,app,keywords,start,limit) => {
     where[s.Op.or].push({uri: {[s.Op.like]: '%'+w+'%'}})
     where[s.Op.or].push({content: {[s.Op.like]: '%'+w+'%'}})
   })
+  if('main' === app._interfaceName) where.active = true
   return Blog.findAll({where: where, start: start, limit: limit})
-    .then((result) => {return result.map((r) => {return {
-      title: r.title,
-      description: r.content.substring(0,150),
-      uri: app.uri.get('/blog/edit') + '?id=' + r.id,
-      updatedAt: r.updatedAt
-    }})})
+    .then((result) => {return result.map((r) => {
+      let uri = app.uri.get('/blog/edit') + '?id=' + r.id
+      if('main' === app._interfaceName){
+        uri = app.uri.get('/blog') + '/' + r.uri
+      }
+      return {
+        title: r.title,
+        description: r.content.substring(0,150),
+        uri: uri,
+        updatedAt: r.updatedAt
+      }
+    })})
 }
 
 
@@ -130,6 +137,9 @@ exports.main = (K,app) => {
   //register routes
   app.get(app.uri.add('/blog'),main.index)
   app.get(app.uri.add('/blog/:blogUri'),main.entry)
+  //register views
+  app.view.add('blog/entry',__dirname + '/main/view/entry.html')
+  app.view.add('blog/list',__dirname + '/main/view/list.html')
   //register navigation
   app.nav.addGroup(app.uri.get('/blog'),'Blog','book')
 }

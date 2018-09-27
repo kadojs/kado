@@ -46,6 +46,11 @@ module.exports = (sequelize,DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: true,
       defaultValue: null
+    },
+    sortNum: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+      defaultValue: 1
     }
   })
 }

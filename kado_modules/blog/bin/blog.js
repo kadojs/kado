@@ -36,6 +36,7 @@ let config = K.config
 program
   .command('create')
   .option('-t, --title <s>','Blog Title')
+  .option('-u, --uri <s>','Blog URI')
   .option('-c, --content <s>','Blog Content')
   .description('Create new blog entry')
   .action((opts) => {
@@ -45,7 +46,9 @@ program
         throw new Error('Title and content are required')
       let doc = {
         title: opts.title,
+        uri: opts.title.replace(/[\s]+/g,'-').toLowerCase(),
         content: opts.content,
+        html: opts.content,
         active: true
       }
       return Blog.create(doc)
@@ -64,6 +67,7 @@ program
   .command('update')
   .option('-i, --id <s>','Blog Id')
   .option('-t, --title <s>','Blog Title')
+  .option('-u, --uri <s>','Blog URI')
   .option('-c, --content <s>','Blog Content')
   .description('Update existing blog entry')
   .action((opts) => {
@@ -72,7 +76,11 @@ program
       .then((result) => {
         let doc = result
         if(opts.title) doc.title = opts.title
-        if(opts.content) doc.content = opts.content
+        if(opts.uri) doc.uri = opts.uri
+        if(opts.content){
+          doc.content = opts.content
+          doc.html = opts.html
+        }
         return doc.save()
       })
       .then(() => {
@@ -114,6 +122,7 @@ program
         table.push([
           row.id,
           row.title,
+          row.uri,
           row.content.replace(/<(?:.|\n)*?>/gm, '').substring(0,50),
           row.active ? 'Yes' : 'No'
         ])

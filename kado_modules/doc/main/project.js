@@ -31,11 +31,11 @@ const DocProject = sequelize.models.DocProject
  * @param {object} res
  */
 exports.index = (req,res) => {
-  DocProject.findAll({order: [['createdAt','DESC']]})
+  DocProject.findAll({order: [['name','ASC']]})
     .then((results) => {
-      res.render(res.locals._view.get('docproejct/list',{
-        list: results
-      }))
+      res.render(res.locals._view.get('doc/project/list'),{
+        projectList: results
+      })
     })
     .catch((err) => {
       res.render('error',{error: err})
@@ -51,9 +51,9 @@ exports.index = (req,res) => {
 exports.entry = (req,res) => {
   DocProject.findOne({where: {id: req.query.id}})
     .then((result) => {
-      res.render(res.locals._view.get('docproejct/entry',{
+      res.render(res.locals._view.get('doc/project/entry'),{
         item: result
-      }))
+      })
     })
     .catch((err) => {
       res.render('error',{error: err})

@@ -84,17 +84,27 @@ exports.db = (K,db) => {
 exports.search = (K,app,keywords,start,limit) => {
   let s = K.db.sequelize
   let Doc = s.models.Doc
+  let DocProject = s.models.DocProject
+  let DocProjectVersion = s.models.DocProjectVersion
   let where = {[s.Op.or]: []}
   keywords.forEach((w) => {
     where[s.Op.or].push({id: {[s.Op.like]: '%'+w+'%'}})
   })
-  return Doc.findAll({where: where, start: start, limit: limit})
-    .then((result) => {return result.map((r) => {return {
-      title: r.id,
-      description: r.id,
-      uri: app.uri.get('/doc/edit') + '?id=' + r.id,
-      updatedAt: r.updatedAt
-    }})})
+  return Doc.findAll({where: where, start: start, limit: limit, include: [
+    {model: DocProjectVersion, include: [DocProject]}
+  ]})
+    .then((result) => {return result.map((r) => {
+      let uri = app.uri.get('/doc/edit') + '?id=' + r.id
+      if('main' === app._interfaceName){
+        uri = app.uri.get('/doc') + '/' + r.uri
+      }
+      return {
+        title: r.id,
+        description: r.html,
+        uri: uri,
+        updatedAt: r.updatedAt
+      }
+    })})
 }
 
 
@@ -177,7 +187,7 @@ exports.admin = (K,app) => {
   app.get(app.uri.add('/doc/nav/edit'),admin.nav.edit)
   app.post(app.uri.add('/doc/nav/save'),admin.nav.save)
   app.post(app.uri.add('/dov/nav/remove'),admin.nav.remove)
-  app.get(app.uri.add('/dov/nav/remove'),admin.nav.remove)
+  app.get(app.uri.add('/doc/nav/remove'),admin.nav.remove)
   //project routes
   app.get(app.uri.add('/doc/project'),(req,res) => {
     res.redirect(301,app.uri.get('/doc/project/list'))
@@ -205,29 +215,18 @@ exports.admin = (K,app) => {
 exports.main = (K,app) => {
   let main = require('./main/index')
   //register routes
-  app.get(app.uri.add('/doc'),main.index)
-  app.get(app.uri.add('/doc/:uri'),main.entry)
-  //register navigation
-  app.nav.addGroup(app.uri.get('/doc'),'Doc','file-alt')
-  //register routes
   app.get(app.uri.add('/doc/project'),main.project.index)
   app.get(app.uri.add('/doc/project/:uri'),main.project.entry)
+  app.get(app.uri.add('/doc'),main.index)
+  app.get(app.uri.add('/doc/:project/:version/:uri'),main.entry)
+  app.get(app.uri.add('/doc/:project/:version'),main.list)
+  app.get(app.uri.add('/doc/:project'),main.versionList)
   //register navigation
-  app.nav.addGroup(app.uri.get('/doc/project'),'Doc Project','project-diagram')
-}
-
-
-/**
- * CLI Access
- * @param {K} K Master Kado Object
- * @param {Array} args
- */
-exports.cli = (K,args) => {
-  if('project' === args[1]){
-    args = args.splice(1,1)
-    process.argv = args
-    return ('./bin/DocProject')
-  } else {
-    require('./bin/doc')
-  }
+  app.nav.addGroup(app.uri.get('/doc'),'Documentation','file-alt')
+  //register views
+  app.view.add('doc/entry',__dirname + '/main/view/entry.html')
+  app.view.add('doc/versionList',__dirname + '/main/view/versionList.html')
+  app.view.add('doc/list',__dirname + '/main/view/list.html')
+  app.view.add('doc/project/entry',__dirname + '/main/view/project/entry.html')
+  app.view.add('doc/project/list',__dirname + '/main/view/project/list.html')
 }

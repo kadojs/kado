@@ -1,9 +1,10 @@
 {{>header}}
+  <main role="main" class="container">
     <div class="conatiner">
       <div class="content content-container" style="padding-top: 20px;">
         <article class="markdown-body">
           <h1>
-            <a href="{{_u._doc_project_view}}?id={{item.id}}">{{item.}}</a>
+            <a href="{{_u._doc_project_view}}?id={{item.id}}">{{item.name}}</a>
           </h1>
           <p style="margin-top: -5px;">
             | Posted {{#_printDate}}{{item.createdAt}}{{/_printDate}}
@@ -11,4 +12,5 @@
         </article>
       </div>
     </div>
+  </main>
 {{>footer}}

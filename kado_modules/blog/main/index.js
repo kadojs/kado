@@ -33,7 +33,7 @@ const Blog = sequelize.models.Blog
 exports.index = (req,res) => {
   Blog.findAll({where: {active: true}, order: [['datePosted','DESC']]})
     .then((results) => {
-      res.render(__dirname + '/view/list',{
+      res.render(res.locals._view.get('blog/list'),{
         blogList: results
       })
     })
@@ -51,7 +51,7 @@ exports.index = (req,res) => {
 exports.entry = (req,res) => {
   Blog.findOne({where: {uri: req.params.blogUri}})
     .then((result) => {
-      res.render(__dirname + '/view/blog',{
+      res.render(res.locals._view.get('blog/entry'),{
         blog: result
       })
     })

@@ -83,8 +83,7 @@ exports.edit = (req,res) => {
  */
 exports.save = (req,res) => {
   let data = req.body
-  let contentHash
-  let htmlHash
+  let hash
   let blog
   let isNewRevision = false
   let isNew = false
@@ -100,24 +99,23 @@ exports.save = (req,res) => {
         })
       }
       if(data.title) blog.title = data.title
+      if(data.uri) blog.uri = data.uri
       if('undefined' === typeof data.active) blog.active = false
       if(data.active) blog.active = true
       //first hash them
-      let contentCipher = crypto.createHash('sha256')
-      let htmlCipher = crypto.createHash('sha256')
-      contentHash = contentCipher.update(data.content).digest('hex')
-      htmlHash = htmlCipher.update(data.html).digest('hex')
-      return BlogRevision.findOne({where: {
-          contentHash: contentHash, htmlHash: htmlHash, BlogId: blog.id}})
+      if(!data.content) data.content = ''
+      if(!data.html) data.html = ''
+      let cipher = crypto.createHash('sha256')
+      hash = cipher.update(data.content + data.html).digest('hex')
+      return BlogRevision.findOne({where: {hash: hash, BlogId: blog.id}})
     })
     .then((result) => {
       if(!result){
         isNewRevision = true
         let revParams = {
           content: data.content,
-          contentHash: contentHash,
           html: data.html,
-          htmlHash: htmlHash,
+          hash: hash,
           BlogId: blog.id
         }
         return BlogRevision.create(revParams)
@@ -126,10 +124,8 @@ exports.save = (req,res) => {
       }
     })
     .then(() => {
-      if(isNewRevision){
-        blog.content = data.content
-        blog.html = data.html
-      }
+      blog.content = data.content
+      blog.html = data.html
       return blog.save()
     })
     .then((blog) => {

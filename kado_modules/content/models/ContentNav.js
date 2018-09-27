@@ -37,16 +37,6 @@ module.exports = (sequelize,DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    isTopbar: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    isGroup: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
     sortNum: {
       type: DataTypes.DOUBLE,
       allowNull: false,

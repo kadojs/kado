@@ -57,6 +57,43 @@ program.command('dbsetup')
   })
 
 
+program.command('insertsamples')
+  .action(() => {
+    K.log.info('Connecting to sequelize')
+    let sql
+    let statements = []
+    K.db.sequelize.doConnect({sync: true})
+      .then(() => {
+        log.info('Database connected, initializing...')
+      })
+      .then(() => {
+        log.info('Database setup complete, inserting samples')
+        sql = K.fs.readFileSync(
+          __dirname + '/../sql/sample.sql',{encoding: 'utf-8'})
+        statements = sql.split(/\n/)
+        statements = statements.filter((s) => {return !!s})
+        return statements
+      })
+      .each((s) => {
+        let table = s.substring(0,s.indexOf('('))
+          .replace('INSERT INTO `','').replace('` ','')
+        return K.db.sequelize.query(s,{raw: true,
+          type: K.db.sequelize.QueryTypes.INSERT
+        })
+          .then(() => {log.info(table + ' record inserted!')})
+      })
+      .catch((err) => {
+        log.error(err)
+        process.exit(1)
+      })
+      .finally(() => {
+        log.info('Sample insertion complete')
+        K.db.sequelize.close()
+        process.exit()
+      })
+  })
+
+
 program.command('generate')
   .option('--modconf <s>','Provide a JSON file containing a module definition' +
     ', otherwise an interactive process will be used.')

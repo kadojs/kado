@@ -24,38 +24,21 @@ const sequelize = K.db.sequelize
 
 const Content = sequelize.models.Content
 
-
-/**
- * List
- * @param {object} req
- * @param {object} res
- */
-exports.index = (req,res) => {
-  Content.findAll({where: {active: true}, order: [['updatedAt','DESC']]})
-    .then((results) => {
-      res.render(__dirname + '/view/list',{
-        list: results
-      })
-    })
-    .catch((err) => {
-      res.render('error',{error: err})
-    })
-}
-
-
 /**
  * Entry
  * @param {object} req
  * @param {object} res
  */
 exports.entry = (req,res) => {
-  Content.findOne({where: {uri: req.params.contentUri}})
+  Content.findOne({where: {uri: req.params.contentUri, active: true}})
     .then((result) => {
-      res.render(__dirname + '/view/content',{
+      if(!result) throw new Error('404 content not found')
+      res.render(res.locals._view.get('content/entry'),{
         content: result
       })
     })
     .catch((err) => {
+      if('Content not found' === err.message) res.status(404)
       res.render('error',{error: err})
     })
 }
