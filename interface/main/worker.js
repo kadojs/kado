@@ -109,12 +109,14 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     app.view.add('search',__dirname + '/view/search.html')
     app.view.add('sidebar',__dirname + '/view/sidebar.html')
     //view overrides
-    let views = K.config.interface[interfaceName].override.view
-    if(views){
-      for(let v in views){
-        if(views.hasOwnProperty(v)) app.view.update(v,views[v])
+    worker.beforeStart(() => {
+      let views = K.config.interface[interfaceName].override.view
+      if(views){
+        for(let v in views){
+          if(views.hasOwnProperty(v)) app.view.update(v,views[v])
+        }
       }
-    }
+    })
     //home page
     app.get('/',(req,res) =>{
       if(K.config.module.blog.enabled){

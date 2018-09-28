@@ -97,6 +97,12 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       expressSession.Store)
     //interface context
     let worker = {}
+    //setup late hooks early
+    worker._hookBeforeStart = []
+    worker.beforeStart = (cb) => {
+      worker._hookBeforeStart.push(cb)
+    }
+    //setup our app
     let app = worker.app = express()
     let server = worker.server = http.createServer(app)
     //make some promises
@@ -188,22 +194,24 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     app.use(compress())
     app.use(bodyParser.urlencoded({extended: true}))
     app.use(bodyParser.json())
-    //nav overrides
-    if(K.config.interface[interfaceName].override.nav){
-      let nav = K.config.interface[interfaceName].override.nav
-      if(nav){
-        for(let n in nav){
-          if(nav.hasOwnProperty(n)){
-            let i = nav[n]
-            if(i.group){
-              app.nav.addItem(i.group,i.uri,i.name,i.icon)
-            } else {
-              app.nav.addGroup(i.uri,i.name,i.icon)
+    worker.beforeStart(() => {
+      //nav overrides
+      if(K.config.interface[interfaceName].override.nav){
+        let nav = K.config.interface[interfaceName].override.nav
+        if(nav){
+          for(let n in nav){
+            if(nav.hasOwnProperty(n)){
+              let i = nav[n]
+              if(i.group){
+                app.nav.addItem(i.group,i.uri,i.name,i.icon)
+              } else {
+                app.nav.addGroup(i.uri,i.name,i.icon)
+              }
             }
           }
         }
       }
-    }
+    })
     //system middleware
     app.use((req,res,next) => {
       //add breadcrumb links
@@ -289,23 +297,25 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       if('function' === typeof(cb)) return cb(app,K)
     }
     worker.setupUri = (cb) => {
-      //load uri overrides
-      if(K.config.interface[interfaceName].override.uri){
-        let uri = K.config.interface[interfaceName].override.uri || {}
-        for(let u in uri){
-          if(uri.hasOwnProperty(u)){
-            app.uri.update(u,uri[u])
+      worker.beforeStart(() => {
+        //load uri overrides
+        if(K.config.interface[interfaceName].override.uri){
+          let uri = K.config.interface[interfaceName].override.uri || {}
+          for(let u in uri){
+            if(uri.hasOwnProperty(u)){
+              app.uri.update(u,uri[u])
+            }
           }
         }
-      }
-      //uri translation
-      app.use((req,res,next) => {
-        //actually finally load the uri
-        res.locals._u = app.uri.all()
-        next()
+        //uri translation
+        app.use((req,res,next) => {
+          //actually finally load the uri
+          res.locals._u = app.uri.all()
+          next()
+        })
+        //callback
+        if('function' === typeof(cb)) return cb(app,K)
       })
-      //callback
-      if('function' === typeof(cb)) return cb(app,K)
     }
     worker.setupContent = (cb) => {
       if(K.config.module.content.enabled){
@@ -468,6 +478,12 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
             }
           }
         })
+      })
+      .then(() => {
+        return worker._hookBeforeStart
+      })
+      .each((cb) => {
+        return P.try(() => {return cb()})
       })
       .then(() => {
         return server.listenAsync(
