@@ -297,6 +297,12 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       if('function' === typeof(cb)) return cb(app,K)
     }
     worker.setupUri = (cb) => {
+      //uri translation
+      app.use((req,res,next) => {
+        //actually finally load the uri
+        res.locals._u = app.uri.all()
+        next()
+      })
       worker.beforeStart(() => {
         //load uri overrides
         if(K.config.interface[interfaceName].override.uri){
@@ -307,12 +313,6 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
             }
           }
         }
-        //uri translation
-        app.use((req,res,next) => {
-          //actually finally load the uri
-          res.locals._u = app.uri.all()
-          next()
-        })
         //callback
         if('function' === typeof(cb)) return cb(app,K)
       })

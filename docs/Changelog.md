@@ -1,3 +1,7 @@
+### 3.4.2
+* URI population should happen during initial setupUri call and then overrides
+happen during the `worker.beforeStart` hook.
+
 ### 3.4.1
 * Add `worker.beforeStart()` hook which allows overrides to made after
 modules have been scanned.
