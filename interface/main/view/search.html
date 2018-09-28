@@ -34,7 +34,12 @@
   <link rel="stylesheet" type="text/css" href="/css/search.css" />
   <form class="form-search" method="get" action="{{_u._search}}">
     <h1 class="h3 mb-3 font-weight-normal">Search</h1>
-    <label for="search">What are you looking for?</label>
+    {{#_searchPhrase}}
+      <label class="text-danger" for="search">No results found, please try again!</label>
+    {{/_searchPhrase}}
+    {{^_searchPhrase}}
+      <label for="search">What are you looking for?</label>
+    {{/_searchPhrase}}
     <input type="text" id="search" class="form-control" name="searchPhrase" placeholder="Search" value="{{_searchPhrase}}" required autofocus>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
   </form>
