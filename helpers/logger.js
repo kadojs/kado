@@ -44,7 +44,7 @@ exports.setupLogger = (name,dateFormat) => {
     format: winston.format.combine(
       winston.format.label({ label: name }),
       winston.format.timestamp({
-        format: moment().format(dateFormat)
+        format: ()=>{moment().format(dateFormat)}
       }),
       formatLog
     ),
