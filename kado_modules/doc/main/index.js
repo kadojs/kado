@@ -124,6 +124,8 @@ exports.entry = (req,res) => {
     })
     .then((result) => {
       if(!result) throw new Error('Document not found')
+      result.content = K.base64js.fromByteArray(
+        new Buffer(result.content,'utf-8'))
       res.render(res.locals._view.get('doc/entry'),{
         doc: result,
         docList: docList,

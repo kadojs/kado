@@ -33,6 +33,8 @@ exports.entry = (req,res) => {
   Content.findOne({where: {uri: req.params.contentUri, active: true}})
     .then((result) => {
       if(!result) throw new Error('Content not found')
+      result.content = K.base64js.fromByteArray(
+        new Buffer(result.content,'utf-8'))
       res.render(res.locals._view.get('content/entry'),{
         content: result,
         _pageTitle: result.title
