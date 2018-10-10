@@ -34,7 +34,8 @@ exports.entry = (req,res) => {
     .then((result) => {
       if(!result) throw new Error('404 content not found')
       res.render(res.locals._view.get('content/entry'),{
-        content: result
+        content: result,
+        _pageTitle: result.title
       })
     })
     .catch((err) => {

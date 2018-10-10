@@ -1,5 +1,7 @@
 ### 3.4.3 (staged)
 * Tell the user when no search results are found in a nice subtle way.
+* Add dynamic `_pageTitle` to be used in `admin` and `main` interface.
+* Provide `_pageTitle` from `blog`, `content`, `doc`, `staff` modules.
 
 ### 3.4.2
 * URI population should happen during initial setupUri call and then overrides

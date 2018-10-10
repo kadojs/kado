@@ -34,7 +34,8 @@ exports.index = (req,res) => {
   DocProject.findAll({order: [['name','ASC']]})
     .then((results) => {
       res.render(res.locals._view.get('doc/project/list'),{
-        projectList: results
+        projectList: results,
+        _pageTitle: K._l.doc.doc_project + ' ' + K._l.list
       })
     })
     .catch((err) => {
@@ -52,7 +53,8 @@ exports.entry = (req,res) => {
   DocProject.findOne({where: {id: req.query.id}})
     .then((result) => {
       res.render(res.locals._view.get('doc/project/entry'),{
-        item: result
+        item: result,
+        _pageTitle: result.name
       })
     })
     .catch((err) => {

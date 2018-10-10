@@ -35,7 +35,8 @@ const BlogRevision = sequelize.models.BlogRevision
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('blog/list'))
+    res.render(res.locals._view.get('blog/list'),{
+      _pageTitle: K._l.blog.blog + ' ' + K._l.list})
   } else {
     K.datatable(Blog,req.query)
       .then((result) => {
@@ -54,7 +55,8 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(res.locals._view.get('blog/create'))
+  res.render(res.locals._view.get('blog/create'),{
+    _pageTitle: K._l.blog.blog + ' ' + K._l.create})
 }
 
 
@@ -68,7 +70,8 @@ exports.edit = (req,res) => {
     .then((blog) => {
       if(!blog) throw new Error(K._l.blog_entry_not_found)
       blog.content = encodeURIComponent(blog.content)
-      res.render(res.locals._view.get('blog/edit'),{blog: blog})
+      res.render(res.locals._view.get('blog/edit'),{
+        blog: blog, _pageTitle: K._l.edit + ' ' + K._l.blog.blog})
     })
     .catch((err) => {
       res.render(res.locals._view.get('error'),{error: err})

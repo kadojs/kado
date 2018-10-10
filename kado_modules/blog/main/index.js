@@ -34,7 +34,8 @@ exports.index = (req,res) => {
   Blog.findAll({where: {active: true}, order: [['datePosted','DESC']]})
     .then((results) => {
       res.render(res.locals._view.get('blog/list'),{
-        blogList: results
+        blogList: results,
+        _pageTitle: K._l.blog.blog + ' ' + K._l.list
       })
     })
     .catch((err) => {
@@ -52,7 +53,8 @@ exports.entry = (req,res) => {
   Blog.findOne({where: {uri: req.params.blogUri}})
     .then((result) => {
       res.render(res.locals._view.get('blog/entry'),{
-        blog: result
+        blog: result,
+        _pageTitle: result.title
       })
     })
     .catch((err) => {

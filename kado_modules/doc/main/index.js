@@ -57,7 +57,8 @@ exports.versionList = (req,res) => {
       }
       res.render(res.locals._view.get('doc/versionList'),{
         project: result[0].DocProject,
-        versionList: result
+        versionList: result,
+        _pageTitle: K._l.doc.doc_project_version + ' ' + K._l.list
       })
     })
     .catch((err) => {
@@ -84,7 +85,8 @@ exports.list = (req,res) => {
       res.render(res.locals._view.get('doc/list'),{
         project: result[0].DocProjectVersion.DocProject,
         version: result[0].DocProjectVersion,
-        docList: result
+        docList: result,
+        _pageTitle: K._l.doc.doc + ' ' + K._l.list
       })
     })
     .catch((err) => {
@@ -123,7 +125,8 @@ exports.entry = (req,res) => {
     .then((result) => {
       res.render(res.locals._view.get('doc/entry'),{
         doc: result,
-        docList: docList
+        docList: docList,
+        _pageTitle: result.title
       })
     })
     .catch((err) => {

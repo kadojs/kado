@@ -38,7 +38,8 @@ P.promisifyAll(bcrypt)
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('staff/list'))
+    res.render(res.locals._view.get('staff/list'),{
+      _pageTitle: K._l.staff.staff + ' ' + K._l.list})
   } else {
     K.datatable(Staff,req.query)
       .then((result) => {
@@ -57,7 +58,8 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(res.locals._view.get('staff/create'))
+  res.render(res.locals._view.get('staff/create'),{
+    _pageTitle: K._l.staff.staff + ' ' + K._l.create})
 }
 
 
@@ -90,7 +92,8 @@ exports.edit = (req,res) => {
         })
         res.render(res.locals._view.get('staff/edit'),{
           staff: result.dataValues,
-          perm: perm
+          perm: perm,
+          _pageTitle: K._l.staff.staff + ' ' + K._l.edit + ' ' + result.name
         })
       })
       .catch((err) => {

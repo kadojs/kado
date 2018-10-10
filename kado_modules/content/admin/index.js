@@ -40,7 +40,8 @@ exports.nav = require('./nav')
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('content/list'))
+    res.render(res.locals._view.get('content/list'),{
+      _pageTitle: K._l.content.content + ' ' + K._l.list})
   } else {
     K.datatable(Content,req.query)
       .then((result) => {
@@ -59,7 +60,8 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(res.locals._view.get('content/create'))
+  res.render(res.locals._view.get('content/create'),{
+    _pageTitle: K._l.content.content + ' ' + K._l.create})
 }
 
 
@@ -73,7 +75,10 @@ exports.edit = (req,res) => {
     .then((content) => {
       if(!content) throw new Error(K._l.content_entry_not_found)
       content.content = encodeURIComponent(content.content)
-      res.render(res.locals._view.get('content/edit'),{content: content})
+      res.render(res.locals._view.get('content/edit'),{
+        content: content,
+        _pageTitle: K._l.edit + ' ' + K._l.content.content + ' ' + content.title
+      })
     })
     .catch((err) => {
       res.render(res.locals._view.get('error'),{error: err})

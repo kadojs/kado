@@ -49,7 +49,8 @@ exports.version = require('./version')
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('doc/list'))
+    res.render(res.locals._view.get('doc/list'),{
+      _pageTitle: K._l.doc.doc + ' ' + K._l.list})
   } else {
     K.datatable(Doc,req.query,{
       include: [{model: DocProjectVersion, include: [DocProject]}]
@@ -72,7 +73,10 @@ exports.list = (req,res) => {
 exports.create = (req,res) => {
   DocProjectVersion.find({include: [DocProject]})
     .then((result) => {
-      res.render(res.locals._view.get('doc/create'),{projects: result})
+      res.render(res.locals._view.get('doc/create'),{
+        projects: result,
+        _pageTitle: K._l.doc.doc + ' ' + K._l.create
+      })
     })
 }
 
@@ -87,7 +91,10 @@ exports.edit = (req,res) => {
     .then((result) => {
       if(!result) throw new Error(K._l.doc.entry_not_found)
       result.content = encodeURIComponent(result.content)
-      res.render(res.locals._view.get('doc/edit'),{item: result})
+      res.render(res.locals._view.get('doc/edit'),{
+        item: result,
+        _pageTitle: K._l.edit + ' ' + K._l.doc.doc + ' ' + result.title
+      })
     })
     .catch((err) => {
       res.render('error',{error: err})

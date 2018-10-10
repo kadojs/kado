@@ -35,7 +35,8 @@ exports.create = (req,res) => {
     res.render(res.locals._view.get('error'),{error: 'Missing project id'})
   } else {
     res.render(res.locals._view.get('doc/version/create'),{
-      project: req.query.project
+      project: req.query.project,
+      _pageTitle: K._l.doc.doc_project_version + ' ' + K._l.list
     })
   }
 }
@@ -51,7 +52,11 @@ exports.edit = (req,res) => {
   DocProjectVersion.findOne({where: {id: req.query.id}, include: [DocProject]})
     .then((result) => {
       if(!result) throw new Error(K._l.doc.entry_not_found)
-      res.render(res.locals._view.get('doc/version/edit'),{item: result})
+      res.render(res.locals._view.get('doc/version/edit'),{
+        item: result,
+        _pageTitle: K._l.doc.doc_project_version + ' ' + K._l.list +
+          ' ' + result.name
+      })
     })
     .catch((err) => {
       res.render('error',{error: err})

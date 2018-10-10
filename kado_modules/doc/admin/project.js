@@ -33,7 +33,8 @@ const DocProjectVersion = sequelize.models.DocProjectVersion
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('doc/project/list'))
+    res.render(res.locals._view.get('doc/project/list'),{
+      _pageTitle: K._l.doc.doc_project + ' ' + K._l.list})
   } else {
     K.datatable(DocProject,req.query)
       .then((result) => {
@@ -52,7 +53,8 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(res.locals._view.get('doc/project/create'))
+  res.render(res.locals._view.get('doc/project/create'),{
+    _pageTitle: K._l.doc.doc_project + ' ' + K._l.create})
 }
 
 
@@ -65,7 +67,10 @@ exports.edit = (req,res) => {
   DocProject.findOne({where: {id: req.query.id}, include: [DocProjectVersion]})
     .then((result) => {
       if(!result) throw new Error(K._l.doc.entry_not_found)
-      res.render(res.locals._view.get('doc/project/edit'),{item: result})
+      res.render(res.locals._view.get('doc/project/edit'),{
+        item: result,
+        _pageTitle: K._l.doc.doc_project + ' ' + K._l.create + ' ' + result.name
+      })
     })
     .catch((err) => {
       res.render('error',{error: err})
