@@ -1,7 +1,7 @@
 {{>header}}
     <div class="container-fluid">
       <h1>{{_l.update}} {{_l.doc.doc_project_version}}</h1>
-      <form class="form form-horizontal" action="{{_u._doc_version_save}}" method="post" role="form">
+      <form class="form form-horizontal" action="{{{_baseUrl}}}{{{_u._doc_version_save}}}" method="post" role="form">
         <input type="hidden" name="id" value="{{item.id}}" />
         <input type="hidden" name="DocProjectId" value="{{item.DocProjectId}}" />
           <div class="form-group">

@@ -3,17 +3,17 @@
       <div>
         <div class="float-right">
           <span>&nbsp;</span>
-          <a class="btn btn-success" href="{{_u._content_create}}">
+          <a class="btn btn-success" href="{{{_baseUrl}}}{{{_u._content_create}}}">
             <span class="fa fa-plus"></span> {{_l.content.create_content}}
           </a>
         </div>
         <h1>{{_l.content.content_list}}</h1>
       </div>
-      <table id="table" class="table table-bordered" data-remove="id" data-remove-uri="/content/remove">
+      <table id="table" class="table table-bordered" data-remove="id" data-remove-uri="{{{_baseUrl}}}{{{_u._content_remove}}}">
         <thead>
         <tr>
-          <th data-name="title" data-uri="/content/edit" data-link="id">{{_l.content.title}}</th>
-          <th data-name="uri" data-uri="/content/edit" data-link="id">{{_l.uri}}</th>
+          <th data-name="title" data-uri="{{{_baseUrl}}}{{{_u._content_edit}}}" data-link="id">{{_l.content.title}}</th>
+          <th data-name="uri" data-uri="{{{_baseUrl}}}{{{_u._content_edit}}}" data-link="id">{{_l.uri}}</th>
           <th data-name="createdAt" data-format="_printDate">{{_l.content.created}}</th>
           <th data-name="updatedAt" data-format="_printDate">{{_l.content.modified}}</th>
           <th data-name="active" data-format="_isActive">{{_l.content.active}}</th>

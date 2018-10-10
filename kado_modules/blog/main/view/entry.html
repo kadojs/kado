@@ -3,7 +3,16 @@
     <div class="blog-post">
       <h2 class="blog-post-title">{{blog.title}}</h2>
       <p class="blog-post-meta">{{#_printDate}}{{blog.datePosted}}{{/_printDate}}</p>
-      {{{blog.html}}}
+      <div id="content"></div>
+      <script>
+        $(document).ready(() => {
+          var editor = new TuiViewer({
+            el: document.querySelector('#content'),
+            initialValue: new TextDecoder().decode(base64js.toByteArray('{{{blog.content}}}'))
+          })
+          editor.ok = true
+        })
+      </script>
     </div><!-- /.blog-post -->
   </main>
 {{>footer}}

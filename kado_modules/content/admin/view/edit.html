@@ -1,7 +1,7 @@
 {{>header}}
     <div class="container-fluid">
       <h1>{{_l.content.update_content}}</h1>
-      <form class="form form-horizontal" action="{{_u._content_save}}" method="post" role="form">
+      <form class="form form-horizontal" action="{{{_baseUrl}}}{{{_u._content_save}}}" method="post" role="form">
         <input type="hidden" name="id" value="{{content.id}}" />
         <input type="hidden" id="contentContentInput" name="content" />
         <input type="hidden" id="contentHtmlInput" name="html" />

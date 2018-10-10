@@ -3,7 +3,7 @@
     <h1>Welcome to {{project.name}} Documentation</h1>
     <p>Please select from our current documentation versions.</p>
     {{#versionList}}
-      <h5><a href="{{_u._doc}}/{{project.uri}}/{{name}}">{{name}}</a></h5>
+      <h5><a href="{{{_baseUrl}}}{{{_u._doc}}}/{{{project.uri}}}/{{{name}}}">{{name}}</a></h5>
     {{/versionList}}
   </main>
 {{>footer}}

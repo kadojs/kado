@@ -1,7 +1,7 @@
 {{>header}}
     <div class="container-fluid">
       <h1>{{_l.create}} {{_l.doc.doc}}</h1>
-      <form class="form form-horizontal" action="{{_u._doc_save}}" method="post" role="form">
+      <form class="form form-horizontal" action="{{{_baseUrl}}}{{{_u._doc_save}}}" method="post" role="form">
         <div class="form-group">
           <label for="docTitle">{{_l.doc.title}}</label>
           <input class="form-control" type="text" data-uri="docUri" id="docTitle" name="title" placeholder="{{_l.doc.title}}" />

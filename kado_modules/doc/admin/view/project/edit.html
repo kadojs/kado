@@ -1,7 +1,7 @@
 {{>header}}
     <div class="container-fluid">
       <h1>{{_l.update}} {{_l.doc.doc_project}}</h1>
-      <form class="form form-horizontal" action="{{_u._doc_project_save}}" method="post" role="form">
+      <form class="form form-horizontal" action="{{{_baseUrl}}}{{{_u._doc_project_save}}}" method="post" role="form">
         <input type="hidden" name="id" value="{{item.id}}" />
         <div class="form-group">
           <label for="title">{{_l.doc.name}}</label>
@@ -17,7 +17,7 @@
       </form>
       <div>
         <div class="float-right">
-          <a class="btn btn-info" href="{{_u._doc_version_create}}?project={{item.id}}">
+          <a class="btn btn-info" href="{{{_baseUrl}}}{{{_u._doc_version_create}}}?project={{item.id}}">
             <span class="fa fa-plus"></span> {{_l.create}} {{_l.doc.doc_project_version}}
           </a>
         </div>
@@ -38,8 +38,8 @@
             <td>{{#_printDate}}{{createdAt}}{{/_printDate}}</td>
             <td>{{#_printDate}}{{updatedAt}}{{/_printDate}}</td>
             <td>
-              <a href="{{_u._doc_version_edit}}?id={{id}}" class="btn btn-sm btn-primary">{{_l.doc.edit}}</a>
-              <a href="{{_u._doc_version_remove}}?id={{id}}&DocProjectId={{item.id}}" class="btn btn-sm btn-danger">{{_l.doc.remove}}</a>
+              <a href="{{{_baseUrl}}}{{{_u._doc_version_edit}}}?id={{id}}" class="btn btn-sm btn-primary">{{_l.doc.edit}}</a>
+              <a href="{{{_baseUrl}}}{{{_u._doc_version_remove}}}?id={{id}}&DocProjectId={{item.id}}" class="btn btn-sm btn-danger">{{_l.doc.remove}}</a>
             </td>
           </tr>
         {{/item.DocProjectVersions}}

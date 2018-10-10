@@ -1,7 +1,7 @@
 {{>header}}
     <div class="container-fluid">
       <h1>{{_l.create}} {{_l.doc.doc_project_version}}</h1>
-      <form class="form form-horizontal" action="{{_u._doc_version_save}}" method="post" role="form">
+      <form class="form form-horizontal" action="{{{_baseUrl}}}{{{_u._doc_version_save}}}" method="post" role="form">
         <input type="hidden" name="DocProjectId" value="{{project}}" />
         <div class="form-group">
           <label for="title">{{_l.doc.name}}</label>

@@ -3,16 +3,16 @@
   <div>
     <div class="float-right">
       <span>&nbsp;</span>
-      <a class="btn btn-success" href="{{_u._staff_create}}">
+      <a class="btn btn-success" href="{{{_baseUrl}}}{{{_u._staff_create}}}">
         <span class="fa fa-plus"></span> {{_l.staff.create_staff}}
       </a>
     </div>
     <h1>{{_l.staff.staff_list}}</h1>
   </div>
-  <table id="table" class="table table-bordered" data-remove="id" data-remove-uri="{{_u._staff_remove}}">
+  <table id="table" class="table table-bordered" data-remove="id" data-remove-uri="{{{_baseUrl}}}{{{_u._staff_remove}}}">
     <thead>
     <tr>
-      <th data-name="email" data-uri="{{_u._staff_edit}}" data-link="id">{{_l.staff.email}}</th>
+      <th data-name="email" data-uri="{{{_baseUrl}}}{{{_u._staff_edit}}}" data-link="id">{{_l.staff.email}}</th>
       <th data-name="name">{{_l.staff.name}}</th>
       <th data-name="dateSeen" data-format="_printDate">{{_l.staff.last_login}}</th>
       <th data-name="loginCount">{{_l.staff.login_count}}</th>

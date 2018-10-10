@@ -3,10 +3,10 @@
   <div>
     <h1>{{_l.setting.setting_list}}</h1>
   </div>
-  <table id="table" data-src="local" class="table table-bordered" data-remove-class="btn-warning" data-remove-text="Clear Overrides" data-remove-uri="{{_u._setting_list}}" data-remove="path">
+  <table id="table" data-src="local" class="table table-bordered" data-remove-class="btn-warning" data-remove-text="Clear Overrides" data-remove-uri="{{{_baseUrl}}}{{{_u._setting_list}}}" data-remove="path">
     <thead>
     <tr>
-      <th data-name="path" data-uri="{{_u._setting_edit}}" data-link="path">{{_l.setting.setting}}</th>
+      <th data-name="path" data-uri="{{{_baseUrl}}}{{{_u._setting_edit}}}" data-link="path">{{_l.setting.setting}}</th>
       <th data-name="type">{{_l.setting.type}}</th>
       <th data-name="defaultValue">{{_l.setting.default}}</th>
       <th data-name="value">{{_l.setting.value}}</th>

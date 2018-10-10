@@ -4,7 +4,7 @@
     <h3>Table of Contents</h3>
     <p>Please see the document list below.</p>
     {{#docList}}
-      <h5><a href="{{_u._doc}}/{{project.uri}}/{{version.name}}/{{uri}}">{{title}}</a></h5>
+      <h5><a href="{{{_baseUrl}}}{{{_u._doc}}}/{{{project.uri}}}/{{{version.name}}}/{{{uri}}}">{{title}}</a></h5>
     {{/docList}}
   </main>
 {{>footer}}

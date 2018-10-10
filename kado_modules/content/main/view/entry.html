@@ -1,5 +1,14 @@
 {{>header}}
   <main role="main" class="container">
-    {{{content.html}}}
+    <div id="content"></div>
+    <script>
+      $(document).ready(() => {
+        var editor = new TuiViewer({
+          el: document.querySelector('#content'),
+          initialValue: new TextDecoder().decode(base64js.toByteArray('{{{content.content}}}'))
+        })
+        editor.ok = true
+      })
+    </script>
   </main>
 {{>footer}}

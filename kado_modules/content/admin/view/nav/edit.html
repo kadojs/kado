@@ -1,7 +1,7 @@
 {{>header}}
     <div class="container-fluid">
       <h1>{{_l.update}} {{_l.content.content_nav}}</h1>
-      <form class="form form-horizontal" action="{{_u._content_nav_save}}" method="post" role="form">
+      <form class="form form-horizontal" action="{{{_baseUrl}}}{{{_u._content_nav_save}}}" method="post" role="form">
         <input type="hidden" name="id" value="{{item.id}}" />
         <div class="form-group">
           <label for="title">{{_l.content.title}}</label>

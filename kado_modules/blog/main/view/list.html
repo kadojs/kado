@@ -6,12 +6,12 @@
       <h3 class="blog-post-title">{{title}}</h3>
       <p class="blog-post-meta">{{#_printDate}}{{datePosted}}{{/_printDate}}</p>
       <p>{{#_escapeAndTruncate}}200,{{{html}}}{{/_escapeAndTruncate}}</p>
-      <a href="{{_u._blog}}/{{{uri}}}">Read more...</a>
+      <a href="{{{_baseUrl}}}{{{_u._blog}}}/{{{uri}}}">Read more...</a>
     </div><!-- /.blog-post -->
     {{/blogList}}
     <nav class="blog-pagination">
-      <a class="btn btn-outline-primary" href="{{_u.blog_list}}?start={{older}}">{{_l.older}}</a>
-      <a class="btn btn-outline-primary" href="{{_u.blog_list}}?start={{newer}}">{{_l.newer}}</a>
+      <a class="btn btn-outline-primary" href="{{{_baseUrl}}}{{{_u.blog_list}}}?start={{older}}">{{_l.older}}</a>
+      <a class="btn btn-outline-primary" href="{{{_baseUrl}}}{{{_u.blog_list}}}?start={{newer}}">{{_l.newer}}</a>
     </nav>
   </main>
 {{>footer}}
