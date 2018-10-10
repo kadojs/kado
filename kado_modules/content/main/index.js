@@ -40,6 +40,6 @@ exports.entry = (req,res) => {
     })
     .catch((err) => {
       if('Content not found' === err.message) res.status(404)
-      res.render('error',{error: err})
+      res.render(res.locals._view.get('error'),{error: err})
     })
 }

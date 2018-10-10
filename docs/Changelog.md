@@ -5,6 +5,7 @@
 * Add TUI resources to main interface to display content.
 * Add pageTitle configuration param to provide default `_pageTitle`.
 * Add middleware to expose default `_pageTitle` when set.
+* Use proper `error` view in all modules and interfaces.
 
 ### 3.4.2
 * URI population should happen during initial setupUri call and then overrides

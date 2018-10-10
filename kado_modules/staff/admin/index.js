@@ -73,7 +73,8 @@ exports.edit = (req,res) => {
   if(0 < req.query.id) search.id = +req.query.id
   if(req.query.email) search.email = req.query.email
   if(0 >= Object.keys(search).length){
-    res.render('error',{error: K._l.staff.missing_id_or_email})
+    res.render(res.locals._view.get('error'),{
+      error: K._l.staff.missing_id_or_email})
   } else{
     Staff.findOne({where: search,include: [StaffPermission]})
       .then((result) => {
@@ -365,7 +366,7 @@ exports.remove = (req,res) => {
       if(json){
         res.json({error: err.message || K._l.staff.err_staff_removed})
       } else {
-        res.render('error',{error: err.message})
+        res.render(res.locals._view.get('error'),{error: err.message})
       }
     })
 }

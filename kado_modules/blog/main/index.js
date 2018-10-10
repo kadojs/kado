@@ -39,7 +39,7 @@ exports.index = (req,res) => {
       })
     })
     .catch((err) => {
-      res.render('error',{error: err})
+      res.render(res.locals._view.get('error'),{error: err})
     })
 }
 
@@ -58,6 +58,6 @@ exports.entry = (req,res) => {
       })
     })
     .catch((err) => {
-      res.render('error',{error: err})
+      res.render(res.locals._view.get('error'),{error: err})
     })
 }

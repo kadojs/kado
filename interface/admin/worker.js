@@ -109,10 +109,15 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     }
   })
   worker.setup((app) => {
+    let errorView = __dirname + '/view/error.html'
+    //if there is an error view override load it early
+    if(K.config.interface[interfaceName].override.view.error){
+      errorView = K.config.interface[interfaceName].override.view.error
+    }
     //setup default views
     app.view.add('alert',__dirname + '/view/alert.html')
     app.view.add('breadcrumb',__dirname + '/view/breadcrumb.html')
-    app.view.add('error',__dirname + '/view/error.html')
+    app.view.add('error',errorView)
     app.view.add('footer',__dirname + '/view/footer.html')
     app.view.add('header',__dirname + '/view/header.html')
     app.view.add('home',__dirname + '/view/home.html')
@@ -219,7 +224,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     })
     //home page
     app.get('/',(req,res) => {
-      res.render('home')
+      res.render(app.view.get('home'))
     })
     //add default navbar entries
     app.nav.addGroup('/','Dashboard','home')

@@ -110,7 +110,8 @@ let findConfig = (path) => {
 exports.list = (req,res) => {
   let result = queryConfig(null,0,10000)
   if(!result || !result.rows){
-    res.render('error',{error: K._l.setting.no_settings_exist})
+    res.render(res.locals._view.get('error'),{
+      error: K._l.setting.no_settings_exist})
   } else {
     res.render(__dirname + '/view/list',{
       list: result.rows
@@ -149,7 +150,7 @@ exports.listAction = (req,res) => {
       res.redirect('/setting/list')
     })
     .catch((err) => {
-      res.render('error',{error: err})
+      res.render(res.locals._view.get('error'),{error: err})
     })
 }
 
@@ -166,7 +167,7 @@ exports.edit = (req,res) => {
     res.render(__dirname + '/view/edit',{setting: setting})
   })
     .catch((err) => {
-      res.render('error',{error: err})
+      res.render(res.locals._view.get('error'),{error: err})
     })
 }
 
@@ -199,6 +200,6 @@ exports.save = (req,res) => {
       res.redirect('/setting/edit?path=' + data.path)
     })
     .catch((err) => {
-      res.render('error',{error: err})
+      res.render(res.locals._view.get('error'),{error: err})
     })
 }

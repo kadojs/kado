@@ -67,7 +67,7 @@ exports.edit = (req,res) => {
       res.render(res.locals._view.get('content/nav/edit'),{item: result})
     })
     .catch((err) => {
-      res.render('error',{error: err})
+      res.render(res.locals._view.get('error'),{error: err})
     })
 }
 
@@ -106,7 +106,7 @@ exports.save = (req,res) => {
       }
     })
     .catch((err) => {
-      res.render('error',{error: err})
+      res.render(res.locals._view.get('error'),{error: err})
     })
 }
 
