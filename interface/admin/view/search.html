@@ -3,8 +3,8 @@
     <div class="container-fluid">
       <div id="search-header" class="mb20">
         <h1>{{_l.search_results}}</h1>
-        <form class="form-inline mr-auto" role="search" method="get" action="{{_u._search}}">
-          <input class="form-control mr-sm-2" type="search" name="searchPhrase" placeholder="Search" value="{{_searchPhrase}}" />
+        <form class="form-inline mr-auto" role="search" method="get" action="{{{_baseUrl}}}{{{_u._search}}}">
+          <input class="form-control mr-sm-2" type="search" name="searchPhrase" placeholder="Search" value="{{{_searchPhrase}}}" />
           <button class="btn btn-default my-2 my-sm-0" type="submit">
             <span class="fa fa-search">&nbsp;</span>
           </button>
@@ -16,7 +16,7 @@
           {{#moduleResults}}
             <article class="search-result row">
               <div class="col-xs-12 col-sm-12 col-md-12">
-                <h3><a href="{{uri}}" title="{{title}}">{{title}}</a></h3>
+                <h3><a href="{{{_baseUrl}}}{{{uri}}}" title="{{title}}">{{title}}</a></h3>
                 <div class="url"><small>{{uri}}</small></div>
                 <p>{{#_escapeAndTruncate}}200,{{{description}}}{{/_escapeAndTruncate}}</p>
                 <div class="meta-search">
@@ -31,8 +31,8 @@
     </div>
   {{/results.length}}
   {{^results.length}}
-    <link rel="stylesheet" type="text/css" href="/css/search.css" />
-    <form class="form-search" method="get" action="{{_u._search}}">
+    <link rel="stylesheet" type="text/css" href="{{{_baseUrl}}}/css/search.css" />
+    <form class="form-search" method="get" action="{{{_u._search}}}">
       <h1 class="h3 mb-3 font-weight-normal">Search</h1>
       {{#_searchPhrase}}
         <label class="text-danger" for="search">No results found, please try again!</label>
@@ -40,7 +40,7 @@
       {{^_searchPhrase}}
         <label for="search">What are you looking for?</label>
       {{/_searchPhrase}}
-      <input type="text" id="search" class="form-control" name="searchPhrase" placeholder="Search" value="{{_searchPhrase}}" required autofocus>
+      <input type="text" id="search" class="form-control" name="searchPhrase" placeholder="Search" value="{{{_searchPhrase}}}" required autofocus>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
     </form>
   {{/results.length}}

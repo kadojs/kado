@@ -12,7 +12,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink{{shortName}}">
             {{#nav}}
-              <a class="p-2 text-muted dropdown-item {{#checkActive}}{{{uri}}},{{{_currentUri}}}{{/checkActive}}" href="{{{uri}}}">
+              <a class="p-2 text-muted dropdown-item {{#checkActive}}{{{uri}}},{{{_currentUri}}}{{/checkActive}}" href="{{{_baseUrl}}}{{{uri}}}">
                 <span>{{name}}</span>
               </a>
             {{/nav}}
@@ -21,7 +21,7 @@
       {{/nav.length}}
       {{^nav.length}}
         <li class="nav-item">
-          <a href="{{{uri}}}" class="p-2 text-muted nav-link">
+          <a href="{{{_baseUrl}}}{{{uri}}}" class="p-2 text-muted nav-link">
             <span>{{#_l._get}}{{name}}{{/_l._get}}</span>
           </a>
         </li>

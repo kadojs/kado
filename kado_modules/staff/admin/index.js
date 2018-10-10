@@ -359,7 +359,7 @@ exports.remove = (req,res) => {
         res.json({success: K._l.staff.staff_removed})
       } else {
         req.flash('success',K._l.staff.staff_removed)
-        res.redirect(res.local._uri.get('/staff/list'))
+        res.redirect(res.locals._uri.get('/staff/list'))
       }
     })
     .catch((err) => {
