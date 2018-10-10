@@ -1,4 +1,8 @@
-### 3.4.3 (staged)
+### 3.5.0 (planned)
+
+### 3.4.4 (staged)
+
+### 3.4.3
 * Tell the user when no search results are found in a nice subtle way.
 * Add dynamic `_pageTitle` to be used in `admin` and `main` interface.
 * Provide `_pageTitle` from `blog`, `content`, `doc`, `staff` modules.
