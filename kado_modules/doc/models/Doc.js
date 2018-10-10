@@ -52,5 +52,19 @@ module.exports = (sequelize,DataTypes) => {
       allowNull: false,
       defaultValue: 1
     }
+  },
+  {
+    indexes: [
+      {
+        name: 'createdAt_index',
+        method: 'BTREE',
+        fields: ['createdAt']
+      },
+      {
+        name: 'updatedAt_index',
+        method: 'BTREE',
+        fields: ['updatedAt']
+      }
+    ]
   })
 }

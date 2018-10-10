@@ -16,6 +16,7 @@ by default.
 * URI usages should always use `{{{_u.name}}}` to avoid escaping issues.
 * Fix bug in `staff` module when deleting a staff member would fail to redirect.
 * Use TUI Viewer on content display pages.
+* Add missing indexes to date fields on models.
 
 ### 3.4.2
 * URI population should happen during initial setupUri call and then overrides

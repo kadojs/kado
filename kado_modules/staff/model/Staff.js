@@ -111,6 +111,16 @@ module.exports = (sequelize,DataTypes) => {
           name: 'datePassword_index',
           method: 'BTREE',
           fields: [{attribute: 'datePassword', order: 'DESC'}]
+        },
+        {
+          name: 'createdAt_index',
+          method: 'BTREE',
+          fields: ['createdAt']
+        },
+        {
+          name: 'updatedAt_index',
+          method: 'BTREE',
+          fields: ['updatedAt']
         }
       ]
     })

@@ -46,6 +46,16 @@ module.exports = function(sequelize,DataTypes) {
           name: 'expires_index',
           method: 'BTREE',
           fields: ['expires']
+        },
+        {
+          name: 'createdAt_index',
+          method: 'BTREE',
+          fields: ['createdAt']
+        },
+        {
+          name: 'updatedAt_index',
+          method: 'BTREE',
+          fields: ['updatedAt']
         }
       ]
     })
