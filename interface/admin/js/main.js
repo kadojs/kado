@@ -32,7 +32,6 @@ let toWindow = (name,val) => {
 
 //jquery
 let $ = require('jquery')
-
 toWindow('$',$)
 toWindow('jQuery',$)
 
@@ -40,8 +39,13 @@ toWindow('jQuery',$)
 require('bootstrap')
 require('bootstrap-select')
 require('chart.js')
+toWindow('Holder',require('holderjs'))
 require('jquery-ui')
 toWindow('moment',require('moment'))
+
+//global dependencies
+toWindow('prettyBytes',require('pretty-bytes'))
+toWindow('querystring',require('qs'))
 
 //datatables)
 toWindow('pdfmake',require('pdfmake/build/pdfmake.min.js'));
@@ -68,10 +72,6 @@ require('highlight.js/lib/highlight.js');
 require('squire-rte/build/squire-raw.js');
 require('tui-code-snippet/dist/tui-code-snippet');
 toWindow('TuiEditor',require('tui-editor/dist/tui-editor-Editor.js'));
-
-//global dependencies
-toWindow('prettyBytes',require('pretty-bytes'))
-toWindow('querystring',require('qs'))
 
 //panel plugins
 require('../../../helpers/js/formUri')

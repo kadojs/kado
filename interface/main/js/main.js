@@ -64,6 +64,15 @@ require('datatables.net-responsive-bs4')(window,$);
 require('datatables.net-rowreorder-bs4')(window,$);
 require('datatables.net-select-bs4')(window,$);
 
+//tui-editor
+require('markdown-it');
+require('to-mark/dist/to-mark');
+require('codemirror/lib/codemirror.js');
+require('highlight.js/lib/highlight.js');
+require('squire-rte/build/squire-raw.js');
+require('tui-code-snippet/dist/tui-code-snippet');
+toWindow('TuiViewer',require('tui-editor/dist/tui-editor-Viewer.js'));
+
 //userspace
 require('../../../helpers/js/table')
 require('../../../helpers/js/util')
