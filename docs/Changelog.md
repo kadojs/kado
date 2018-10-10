@@ -2,6 +2,7 @@
 * Tell the user when no search results are found in a nice subtle way.
 * Add dynamic `_pageTitle` to be used in `admin` and `main` interface.
 * Provide `_pageTitle` from `blog`, `content`, `doc`, `staff` modules.
+* Add TUI resources to main interface to display content.
 
 ### 3.4.2
 * URI population should happen during initial setupUri call and then overrides
