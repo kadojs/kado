@@ -66,6 +66,15 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     worker.setupScriptServer('datatables.net-responsive-bs4')
     worker.setupScriptServer('datatables.net-select')
     worker.setupScriptServer('datatables.net-select-bs4')
+    //tui-editor
+    worker.setupScriptServer('markdown-it')
+    worker.setupScriptServer('to-mark')
+    worker.setupScriptServer('codemirror')
+    worker.setupScriptServer('highlight.js')
+    worker.setupScriptServer('squire-rte')
+    worker.setupScriptServer('tui-code-snippet')
+    worker.setupScriptServer('tui-editor')
+    worker.setupScriptServer('to-mark')
     //country flags
     worker.setupScriptServer('flag-icon-css')
     //user defined script server entries
