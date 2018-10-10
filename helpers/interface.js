@@ -86,6 +86,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     const expressSession = require('express-session')
     const http = require('http')
     const locale = require('locale')
+    const mustache = require('mustache')
     const path = require('path')
     const serveStatic = require('serve-static')
     const Breadcrumb = require('../helpers/Breadcrumb')
@@ -222,6 +223,11 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       res.locals._uri = app.uri
       res.locals._view = app.view
       res.locals._currentUri = req.originalUrl
+      //set a default _pageTitle
+      if(config.interface[interfaceName].pageTitle){
+        res.locals._pageTitle = mustache.render(
+          config.interface[interfaceName].pageTitle,res.locals)
+      }
       next()
     })
     worker.setupPermission = (cb) => {

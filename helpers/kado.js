@@ -130,6 +130,7 @@ config.$load({
     admin: {
       enabled: false,
       title: 'Kado Admin',
+      pageTitle: 'Kado Admin',
       transport: ['http'],
       path: path.resolve(process.env.KADO_INTERFACES + '/admin'),
       port: 3000,
@@ -163,6 +164,7 @@ config.$load({
     main: {
       enabled: false,
       title: 'Kado Main',
+      pageTitle: 'Kado Main',
       transport: ['http'],
       path: path.resolve(process.env.KADO_INTERFACES + '/main'),
       port: 3001,
