@@ -67,11 +67,12 @@ exports.create = (req,res) => {
  */
 exports.edit = (req,res) => {
   Blog.findOne({where: {id: req.query.id}})
-    .then((blog) => {
-      if(!blog) throw new Error(K._l.blog_entry_not_found)
-      result.content = K.base64js.fromByteArray(result.content)
+    .then((result) => {
+      if(!result) throw new Error(K._l.blog_entry_not_found)
+      result.content = K.base64js.fromByteArray(
+        new Buffer(result.content,'utf-8'))
       res.render(res.locals._view.get('blog/edit'),{
-        blog: blog, _pageTitle: K._l.edit + ' ' + K._l.blog.blog})
+        blog: result, _pageTitle: K._l.edit + ' ' + K._l.blog.blog})
     })
     .catch((err) => {
       res.render(res.locals._view.get('error'),{error: err})
