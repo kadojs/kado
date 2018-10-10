@@ -8,7 +8,7 @@
         $(document).ready(() => {
           var editor = new TuiViewer({
             el: document.querySelector('#content'),
-            initialValue: new TextDecoder().decode(base64js.toByteArray('{{{blog.content}}}'))
+            initialValue: new TextDecoder().decode(b64.toByteArray('{{{blog.content}}}'))
           })
           editor.ok = true
         })

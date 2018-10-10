@@ -218,7 +218,7 @@ exports.iface = require('./interface')
  * Base64 helper
  * @type {Object}
  */
-exports.base64js = require('base64-js')
+exports.base64js = exports.b64 = require('base64-js')
 
 
 /**

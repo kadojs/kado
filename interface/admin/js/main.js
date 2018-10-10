@@ -45,6 +45,7 @@ toWindow('moment',require('moment'))
 
 //global dependencies
 toWindow('base64js',require('base64-js'))
+toWindow('b64',require('base64-js'))
 toWindow('prettyBytes',require('pretty-bytes'))
 toWindow('querystring',require('qs'))
 

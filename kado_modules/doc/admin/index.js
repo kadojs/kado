@@ -90,8 +90,7 @@ exports.edit = (req,res) => {
   Doc.find({where: {id: req.query.id}})
     .then((result) => {
       if(!result) throw new Error(K._l.doc.entry_not_found)
-      result.content = K.base64js.fromByteArray(
-        new Buffer(result.content,'utf-8'))
+      result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
       res.render(res.locals._view.get('doc/edit'),{
         item: result,
         _pageTitle: K._l.edit + ' ' + K._l.doc.doc + ' ' + result.title

@@ -53,8 +53,7 @@ exports.entry = (req,res) => {
   Blog.findOne({where: {uri: req.params.blogUri}})
     .then((result) => {
       if(!result) throw new Error('Blog not found')
-      result.content = K.base64js.fromByteArray(
-        new Buffer(result.content,'utf-8'))
+      result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
       res.render(res.locals._view.get('blog/entry'),{
         blog: result,
         _pageTitle: result.title
