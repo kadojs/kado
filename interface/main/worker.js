@@ -99,20 +99,20 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     }
   })
   worker.setup((app) =>{
+    let errorView = __dirname + '/view/error.html'
+    //if there is an error view override load it early
+    if(K.config.interface[interfaceName].override.view.error){
+      errorView = K.config.interface[interfaceName].override.view.error
+    }
     //setup default views
     app.view.add('alert',__dirname + '/view/alert.html')
-    app.view.add('error',__dirname + '/view/error.html')
+    app.view.add('error',errorView)
     app.view.add('footer',__dirname + '/view/footer.html')
     app.view.add('header',__dirname + '/view/header.html')
     app.view.add('home',__dirname + '/view/home.html')
     app.view.add('navbar',__dirname + '/view/navbar.html')
     app.view.add('search',__dirname + '/view/search.html')
     app.view.add('sidebar',__dirname + '/view/sidebar.html')
-    //if there is an error view override load it early
-    if(K.config.interface[interfaceName].override.view.error){
-      app.view.update('error',
-        K.config.interface[interfaceName].override.view.error)
-    }
     //view overrides
     worker.beforeStart(() => {
       let views = K.config.interface[interfaceName].override.view
