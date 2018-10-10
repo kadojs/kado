@@ -32,7 +32,7 @@ const Content = sequelize.models.Content
 exports.entry = (req,res) => {
   Content.findOne({where: {uri: req.params.contentUri, active: true}})
     .then((result) => {
-      if(!result) throw new Error('404 content not found')
+      if(!result) throw new Error('Content not found')
       res.render(res.locals._view.get('content/entry'),{
         content: result,
         _pageTitle: result.title

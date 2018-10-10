@@ -52,12 +52,14 @@ exports.index = (req,res) => {
 exports.entry = (req,res) => {
   Blog.findOne({where: {uri: req.params.blogUri}})
     .then((result) => {
+      if(!result) throw new Error('Blog not found')
       res.render(res.locals._view.get('blog/entry'),{
         blog: result,
         _pageTitle: result.title
       })
     })
     .catch((err) => {
+      if('Blog not found' === err.message) res.status(404)
       res.render(res.locals._view.get('error'),{error: err})
     })
 }

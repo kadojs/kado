@@ -123,6 +123,7 @@ exports.entry = (req,res) => {
       })
     })
     .then((result) => {
+      if(!result) throw new Error('Document not found')
       res.render(res.locals._view.get('doc/entry'),{
         doc: result,
         docList: docList,
@@ -130,6 +131,7 @@ exports.entry = (req,res) => {
       })
     })
     .catch((err) => {
+      if('Document not found' === err.message) res.status(404)
       res.render(res.locals._view.get('error'),{error: err})
     })
 }
