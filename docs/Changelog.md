@@ -6,6 +6,10 @@
 * Add pageTitle configuration param to provide default `_pageTitle`.
 * Add middleware to expose default `_pageTitle` when set.
 * Use proper `error` view in all modules and interfaces.
+* Include `base64-js` into the main `Kado` object to help make base64
+handling consistent. Includes `base64-js` into the browser bundle as well.
+* Update `blog`, `content`, and `doc` module to properly base64 encode
+content to be edited.
 
 ### 3.4.2
 * URI population should happen during initial setupUri call and then overrides

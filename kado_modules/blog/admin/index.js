@@ -69,7 +69,7 @@ exports.edit = (req,res) => {
   Blog.findOne({where: {id: req.query.id}})
     .then((blog) => {
       if(!blog) throw new Error(K._l.blog_entry_not_found)
-      blog.content = encodeURIComponent(blog.content)
+      result.content = K.base64js.fromByteArray(result.content)
       res.render(res.locals._view.get('blog/edit'),{
         blog: blog, _pageTitle: K._l.edit + ' ' + K._l.blog.blog})
     })

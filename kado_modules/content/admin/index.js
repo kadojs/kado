@@ -74,7 +74,7 @@ exports.edit = (req,res) => {
   Content.findOne({where: {id: req.query.id}})
     .then((content) => {
       if(!content) throw new Error(K._l.content_entry_not_found)
-      content.content = encodeURIComponent(content.content)
+      result.content = K.base64js.fromByteArray(result.content)
       res.render(res.locals._view.get('content/edit'),{
         content: content,
         _pageTitle: K._l.edit + ' ' + K._l.content.content + ' ' + content.title

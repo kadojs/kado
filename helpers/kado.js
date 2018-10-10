@@ -215,6 +215,13 @@ exports.iface = require('./interface')
 
 
 /**
+ * Base64 helper
+ * @type {Object}
+ */
+exports.base64js = require('base64-js')
+
+
+/**
  * Export bluebird for promise support
  * @type {P}
  */
