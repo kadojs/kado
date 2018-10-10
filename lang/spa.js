@@ -43,6 +43,7 @@ module.exports = {
   'home': 'Casa',
   'list': 'Lista',
   'create': 'Crear',
+  'edit': 'Editar',
   'staff_title': 'Personal',
   'action': 'Acción',
   'active': 'Activo',
