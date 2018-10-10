@@ -108,6 +108,11 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     app.view.add('navbar',__dirname + '/view/navbar.html')
     app.view.add('search',__dirname + '/view/search.html')
     app.view.add('sidebar',__dirname + '/view/sidebar.html')
+    //if there is an error view override load it early
+    if(K.config.interface[interfaceName].override.view.error){
+      app.view.update('error',
+        K.config.interface[interfaceName].override.view.error)
+    }
     //view overrides
     worker.beforeStart(() => {
       let views = K.config.interface[interfaceName].override.view
