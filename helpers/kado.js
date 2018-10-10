@@ -123,15 +123,6 @@ config.$load({
       password: '',
       logging: false,
       dialect: 'mysql'
-    },
-    redis: {
-      enabled: false,
-      load: false,
-      host: '127.0.0.1',
-      port: 6379,
-      db: 0,
-      prefix: 'kado',
-      options: {}
     }
   },
   //define interfaces
@@ -200,6 +191,7 @@ config.$load({
   module: {
     blog: {},
     content: {},
+    doc: {},
     kado: {},
     setting: {},
     staff: {}

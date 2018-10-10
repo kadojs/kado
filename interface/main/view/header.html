@@ -12,7 +12,12 @@
   <script src="/bundle/bundle.min.js"></script>
   <script src="/node_modules/jszip/dist/jszip.min.js"></script>
   <script src="/node_modules/pdfmake/build/vfs_fonts.js"></script>
-  <title>{{_appTitle}} - {{_l.kado}} {{_l.version}} {{_version}}</title>
+  {{#_pageTitle}}
+    <title>{{_pageTitle}}</title>
+  {{/_pageTitle}}
+  {{^_pageTitle}}
+    <title>{{_appTitle}} - {{_l.kado}} {{_l.version}} {{_version}}</title>
+  {{/_pageTitle}}
 </head>
 <body>
 <div class="container">
