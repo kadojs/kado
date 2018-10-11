@@ -1,6 +1,9 @@
 ### 3.5.0 (planned)
 
-### 3.4.6 (staged)
+### 3.4.7 (staged)
+
+### 3.4.6
+* Adjust static caching to improve performance over the wire.
 
 ### 3.4.5
 * Fix to remove headers that disable caching of resources.

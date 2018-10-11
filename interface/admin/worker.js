@@ -101,11 +101,15 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     if(K.config.interface[interfaceName].viewCache) app.enable('view cache')
     app.engine('html',mustacheExpress())
     //static files
-    app.use(serveStatic(interfaceRoot + '/public'))
+    app.use(serveStatic(interfaceRoot + '/public'),app.staticOptions)
     //override static servers
     let staticRoot = K.config.interface[interfaceName].staticRoot
     if(staticRoot){
-      staticRoot.forEach((r)=>{if(K.fs.existsSync(r)) app.use(serveStatic(r))})
+      staticRoot.forEach((r)=>{
+        if(K.fs.existsSync(r)){
+          app.use(serveStatic(r,app.staticOptions))
+        }
+      })
     }
   })
   worker.setup((app) => {

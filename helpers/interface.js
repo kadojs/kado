@@ -108,6 +108,13 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     let server = worker.server = http.createServer(app)
     //make some promises
     P.promisifyAll(server)
+    //configure static server
+    app.staticOptions = {
+      cacheControl: true,
+      immutable: true,
+      index: false,
+      maxAge: 14400
+    }
     //interface settings
     app._interfaceName = interfaceName
     app._interfaceRoot = interfaceRoot
@@ -375,7 +382,8 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       if(!fs.existsSync(ourScriptPath)){
         console.log('falling back2',ourScriptPath)
       }
-      app.use('/node_modules/' + name,serveStatic(ourScriptPath))
+      app.use('/node_modules/' + name,serveStatic(
+        ourScriptPath,app.staticOptions))
     }
     //flash handler
     worker.flashHandler = (req) => {
