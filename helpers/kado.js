@@ -56,13 +56,6 @@ process.env.KADO_ROOT = path.dirname(__dirname)
  * Kado Helpers
  * @type {string}
  */
-process.env.KADO_BIN = path.resolve(process.env.KADO_ROOT + '/bin')
-
-
-/**
- * Kado Helpers
- * @type {string}
- */
 process.env.KADO_HELPERS = path.resolve(process.env.KADO_ROOT + '/helpers')
 
 

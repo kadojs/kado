@@ -1,6 +1,7 @@
 ### 3.5.0 (planned)
 
 ### 3.4.4 (staged)
+* Remove unused environment variable `KADO_BIN` from `kado.js`
 
 ### 3.4.3
 * Tell the user when no search results are found in a nice subtle way.
