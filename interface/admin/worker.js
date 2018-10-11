@@ -101,7 +101,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     if(K.config.interface[interfaceName].viewCache) app.enable('view cache')
     app.engine('html',mustacheExpress())
     //static files
-    app.use(serveStatic(interfaceRoot + '/public'),app.staticOptions)
+    app.use(serveStatic(interfaceRoot + '/public',app.staticOptions))
     //override static servers
     let staticRoot = K.config.interface[interfaceName].staticRoot
     if(staticRoot){
