@@ -2,7 +2,7 @@
   "author": "Kado <support@kado.org>",
   "name": "kado",
   "description": "Module system for Enterprise Grade applications.",
-  "version": "3.4.4",
+  "version": "3.4.5",
   "homepage": "https://kado.org",
   "license": "LGPL-3.0",
   "repository": {
@@ -52,7 +52,7 @@
     "datatables.net-rowreorder-bs4": "^1.2.5",
     "datatables.net-select-bs4": "^1.2.7",
     "debug": "^4.1.0",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "express-session": "^1.15.6",
     "flag-icon-css": "^3.2.0",
     "glob": "^7.1.3",

@@ -423,13 +423,6 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     worker.enableSession = (callback) => {
       if(!callback) callback = () => {}
       app.use(cookieParser(config.interface[interfaceName].cookie.secret))
-      //inject headers
-      app.use((req,res,next) => {
-        res.set('Cache-control','no-cache, no-store, must-revalidate')
-        res.set('Pragma','no-cache')
-        res.set('Expires','0')
-        next()
-      })
       //session setup
       app.use(expressSession({
         cookie: {

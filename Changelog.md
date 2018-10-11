@@ -1,6 +1,9 @@
 ### 3.5.0 (planned)
 
-### 3.4.5 (staged)
+### 3.4.6 (staged)
+
+### 3.4.5
+* Fix to remove headers that disable caching of resources.
 
 ### 3.4.4
 * Remove unused environment variable `KADO_BIN` from `kado.js`
