@@ -1,7 +1,10 @@
 ### 3.5.0 (planned)
 
-### 3.4.4 (staged)
+### 3.4.5 (staged)
+
+### 3.4.4
 * Remove unused environment variable `KADO_BIN` from `kado.js`
+* Fix issue with `package.json` repository URL.
 
 ### 3.4.3
 * Tell the user when no search results are found in a nice subtle way.

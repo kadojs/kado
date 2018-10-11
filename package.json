@@ -2,12 +2,12 @@
   "author": "Kado <support@kado.org>",
   "name": "kado",
   "description": "Module system for Enterprise Grade applications.",
-  "version": "3.4.3",
+  "version": "3.4.4",
   "homepage": "https://kado.org",
   "license": "LGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bramey/kado.git"
+    "url": "https://github.com/KadoOrg/kado.git"
   },
   "keywords": [
     "kado",
