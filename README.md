@@ -21,7 +21,7 @@ already develop web applications. See the
 
 ## Usage
 
-Please see the documentation for more https://kado.org
+Please [see the documentation](https://kado.org/doc/kado/3.x) for more
 
 
 ## Bugs or Issues
