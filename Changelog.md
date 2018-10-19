@@ -1,6 +1,11 @@
 ### 3.5.0 (planned)
 
-### 3.4.7 (staged)
+### 3.4.8 (staged)
+
+### 3.4.7
+* Adjust `robots.txt` on Main interface to allow robots.
+* Allow override of `robots.txt` and other default assets by moving the
+load order of staticOverrides above application assets.
 
 ### 3.4.6
 * Adjust static caching to improve performance over the wire.

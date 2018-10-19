@@ -99,8 +99,6 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     app.set('view engine','html')
     if(K.config.interface[interfaceName].viewCache) app.enable('view cache')
     app.engine('html',mustacheExpress())
-    //static files
-    app.use(serveStatic(interfaceRoot + '/public',app.staticOptions))
     //override static servers
     let staticRoot = K.config.interface[interfaceName].staticRoot
     if(staticRoot){
@@ -110,6 +108,8 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
         }
       })
     }
+    //static files
+    app.use(serveStatic(interfaceRoot + '/public',app.staticOptions))
   })
   worker.setup((app) =>{
     let errorView = __dirname + '/view/error.html'
