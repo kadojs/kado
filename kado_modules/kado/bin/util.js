@@ -140,6 +140,11 @@ program.command('generate')
           field.fieldAllowNull = !!readlineSync(
             'Allow NULL? (y/n): ',{defaultInput: 'n'}).match(/y/i)
           field.fieldDefaultValue = readlineSync('Default value? ') || 'null'
+          if(field.fieldAllowNull &&
+            (!field.fieldDefaultValue || 'NULL' === field.fieldDefaultValue)
+          ){
+            field.fieldDefaultValue = null
+          }
           modconf.moduleFields.push(field)
         } while(readlineSync('Add another field? (y/n): ',{
           defaultInput: 'y'

@@ -194,7 +194,7 @@ exports.save = (req,res) => {
   let json = K.isClientJSON(req)
   P.try(() => {
     if(staffId){
-      return Staff.find({where:{id:staffId}})
+      return Staff.findOne({where: {id: staffId}})
     } else {
       return Staff.build()
     }
@@ -270,7 +270,7 @@ exports.login = (req,res) => {
 
 exports.doLogin = (email,password) => {
   let staff = {}
-  return Staff.find({where: {email: email}})
+  return Staff.findOne({where: {email: email}})
     .then((result) => {
       if(!result) throw new Error(K._l.invalid_login)
       staff = result
@@ -291,7 +291,7 @@ exports.doLogin = (email,password) => {
       return staff.save()
     })
     .then(() => {
-      return Staff.find({where: {email: email}, include: [StaffPermission]})
+      return Staff.findOne({where: {email: email}, include: [StaffPermission]})
     })
     .then((result) => {
       //no permissions set makes the staff a super admin

@@ -71,7 +71,7 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  DocProjectVersion.find({include: [DocProject]})
+  DocProjectVersion.findAll({include: [DocProject]})
     .then((result) => {
       res.render(res.locals._view.get('doc/create'),{
         projects: result,

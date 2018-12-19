@@ -33,9 +33,9 @@ const <%moduleModelName%> = sequelize.models.<%moduleModelName%>
 exports.index = (req,res) => {
   <%moduleModelName%>.findAll({order: [['createdAt','DESC']]})
     .then((results) => {
-      res.render(res.locals._view.get('<%moduleName%>/list',{
+      res.render(res.locals._view.get('<%moduleName%>/list'),{
         list: results
-      }))
+      })
     })
     .catch((err) => {
       res.render(res.locals._view.get('error'),{error: err})
@@ -51,9 +51,9 @@ exports.index = (req,res) => {
 exports.entry = (req,res) => {
   <%moduleModelName%>.findOne({where: {id: req.query.id}})
     .then((result) => {
-      res.render(res.locals._view.get('<%moduleName%>/entry',{
+      res.render(res.locals._view.get('<%moduleName%>/entry'),{
         item: result
-      }))
+      })
     })
     .catch((err) => {
       res.render(res.locals._view.get('error'),{error: err})

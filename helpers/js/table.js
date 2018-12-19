@@ -58,7 +58,7 @@ window.DataTableConfig = (tableName) => {
         }
       }
     ],
-    select: 'mutli',
+    select: 'multi',
     processing: true,
     serverSide: serverSide,
     stateSave: true,

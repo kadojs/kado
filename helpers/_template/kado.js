@@ -136,6 +136,6 @@ exports.main = (K,app) => {
 exports.cli = (K,args) => {
   args.splice(2,1)
   process.argv = args
-  require('./bin/<%moduleName%>')
+  require('./bin/<%moduleModelName%>')
 }
 
