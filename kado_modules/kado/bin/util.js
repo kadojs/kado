@@ -115,23 +115,35 @@ program.command('generate')
       //build the module conf using readline
       log.info('Acquiring module info: Title, Name')
       modconf.moduleTitle = readlineSync('Title of new module? ')
-      modconf.moduleName = readlineSync('Name of new module? ')
-      modconf.moduleModelName = readlineSync('Name of new module Model? ')
+      let modname = modconf.moduleTitle.toLowerCase()
+      modconf.moduleName = readlineSync('Name of new module? ',{
+        defaultInput: modname})
+      modconf.moduleModelName = readlineSync('Name of new module Model? ',{
+        defaultInput: modconf.moduleTitle
+      })
       log.info('Collecting data definitions: ' +
         'Title, Name, Type, AllowNull, Default')
       if(readlineSync(
-        'Do you want to add module data fields? (y/n): '
+        'Do you want to add module data fields? (y/n): ',
+        {defaultInput: 'y'}
       ).match(/y/i)){
         do {
           let field = {}
           field.fieldTitle = readlineSync('Field title? ')
-          field.fieldName = field.moduleField = readlineSync('Field name? ')
-          field.fieldType = readlineSync('Field type? ')
+          let fieldName = modconf.moduleTitle.toLowerCase()
+          field.fieldName = field.moduleField = readlineSync('Field name? ',{
+            defaultInput: fieldName
+          })
+          field.fieldType = readlineSync('Field type? ',{
+            defaultInput: 'STRING'
+          })
           field.fieldAllowNull = !!readlineSync(
-            'Allow NULL? (y/n): ').match(/y/i)
+            'Allow NULL? (y/n): ',{defaultInput: 'n'}).match(/y/i)
           field.fieldDefaultValue = readlineSync('Default value? ') || 'null'
           modconf.moduleFields.push(field)
-        } while(readlineSync('Add another field? (y/n): ').match(/y/i))
+        } while(readlineSync('Add another field? (y/n): ',{
+          defaultInput: 'y'
+        }).match(/y/i))
       }
       //now write the module conf to a json file
       if(cmd.saveconf){
