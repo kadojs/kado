@@ -1,6 +1,19 @@
 ### 3.5.0 (planned)
 
-### 3.4.8 (staged)
+### 3.4.10 (staged)
+* Typo fix in staff variable name in default admin footer
+
+### 3.4.9
+* Fixes #261 CLI access on Module creation points to the wrong title/name
+* Fixes #262 Parenthesis placed is wrong place on main route generation
+* Fixes #263 Generator needs to handle null value correctly on default fields
+* Fixes #236 Module generator should automatically fill name based on title
+* Fixes #238 Use of deprecated sequelize method
+* Fixes #278 Typo in multi enable on table.js
+
+### 3.4.8
+* Better defaults for module generation.
+* Fixes #235 Update dependencies to avoid a security vulnerability in dependency.
 
 ### 3.4.7
 * Adjust `robots.txt` on Main interface to allow robots.
