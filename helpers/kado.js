@@ -89,6 +89,14 @@ process.env.KADO_USER_MODULES = path.resolve(
 
 
 /**
+ * Kado User Helpers Path
+ * @type {string}
+ */
+process.env.KADO_USER_HELPERS = path.resolve(
+  path.dirname(path.dirname(process.env.KADO_ROOT)) + '/helpers')
+
+
+/**
  * Kado User Lang Path
  * @type {string}
  */
@@ -353,6 +361,22 @@ exports.dir = () => {
 exports.path = (part) => {
   if(part) return path.resolve(exports.dir() + '/' + part)
   else return exports.dir()
+}
+
+
+/**
+ * Shortcut to get a helper location.
+ * @param name
+ * @returns {string}
+ */
+exports.helper = (name) => {
+  if(!name) throw new Error('Helper required without a name')
+  let userHelper = path.resolve(process.env.KADO_USER_HELPERS +
+    '/' + name + '.js')
+  let kadoHelper = path.resolve(process.env.KADO_HELPERS +
+    '/' + name + '.js')
+  if(!fs.existsSync(userHelper) && fs.existsSync(kadoHelper)) return kadoHelper
+  return userHelper
 }
 
 

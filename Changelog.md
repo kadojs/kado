@@ -1,7 +1,14 @@
 ### 3.5.0 (planned)
 
-### 3.4.10 (staged)
-* Typo fix in staff variable name in default admin footer
+### 3.4.11 (staged)
+
+### 3.4.10
+* Typo fix in staff variable name in default admin footer.
+* Added `process.env.KADO_USER_HELPERS` environment variable to point
+at the project helper locations.
+* Added `K.helper()` method to find and return helper locations.
+* Update to Infant 1.2.2: Added signal handler to properly handle graceful shutdowns through nodemon.
+This should prevent stuck processes during development.
 
 ### 3.4.9
 * Fixes #261 CLI access on Module creation points to the wrong title/name
