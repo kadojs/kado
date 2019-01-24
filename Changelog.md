@@ -1,6 +1,34 @@
-### 3.5.0 (planned)
+### 3.5.1 (staged)
 
-### 3.4.11 (staged)
+### 3.5.0
+* Implement Profiler sub system to track queries and timing on page loads.
+* Add `config.dev = true` which will enable development and print page profiling
+ in the default interfaces through the template variables provided by the
+ profiler.
+* BREAKING: The render function has now been overloaded with an improved Kado
+ provided function `render`. Backwards compatibility will be provided by using
+ the existing functions. However, `res.render('blog/list',{var1: 'something'})`
+ will automatically resolve the view and will inject the profiler object which
+ needs to be finalized. This adds timers before and after the rendering as well
+ as query timers for enhanced profiling. `res._r` contains the original render
+ function if it is needed. The usage definition is not changed.
+* Template variables now available. `_pageProfile` this is a result of the
+ `Profiler` system. It contains an array of steps with times and messages that
+ can be print used to build statistic footers. EG: 
+ `<span>Page Generated in {{_pageProfile.totalTimeSeconds}} seconds, using {{_pageProfile.totalQueries}}</span>`.
+ Finally, `{{{_pageProfile.HTML}}}` is a new variable that contains an HTML
+ formatted printout of the profile for use below the footer of the page.
+* To make the query profiler work properly per page, there has to be a setting
+ added to the queries in use in the controllers. EG: 
+ `SomeModel.findByPk(someId,{logging: req.locals._profiler.addQuery})`.
+ To shorten this you can use: `SomeModel.findByPk(someId,res.Q)` where
+ `Q` stands for Query Options. Using this is optional.
+* System level query profiling is also now in effect. In `config.dev = true` all
+ queries will be logged to console unless they are passed to the page profiler.
+* The profiling system can be activated by using the environment variable
+ `NODE_DEBUG=kado`, this will enable the profiler and DEBUG logging. However, if
+  you want permanent control over dev mode and the profiler setting the
+  `config.dev` setting to `true` or `false` will override the environment.
 
 ### 3.4.10
 * Typo fix in staff variable name in default admin footer.

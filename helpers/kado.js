@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -26,6 +26,7 @@ const glob = require('glob')
 const infant = require('infant')
 const LineByLine = require('n-readlines')
 const moment = require('moment')
+const mustache = require('mustache')
 const ObjectManage = require('object-manage')
 const path = require('path')
 const pkg = require('../package.json')
@@ -106,6 +107,7 @@ process.env.KADO_USER_LANG = path.resolve(
 
 //dist config schema
 config.$load({
+  dev: null,
   title: 'Kado',
   name: 'kado',
   version: pkg.version,
@@ -123,6 +125,9 @@ config.$load({
       user: '',
       password: '',
       logging: false,
+      skipLoggingTable: ['StaffSessions'],
+      benchmark: false,
+      slowQueryTime: 10000,
       dialect: 'mysql'
     }
   },
@@ -201,6 +206,11 @@ config.$load({
   }
 })
 
+//set dev mode if debug is turned on and the dev option is null
+if(null === config.dev && process.env.NODE_DEBUG === 'kado'){
+  config.dev = true
+}
+
 
 /**
  * clone the original config for looking back
@@ -227,6 +237,13 @@ exports.base64js = exports.b64 = require('base64-js')
  * @type {P}
  */
 exports.bluebird = P
+
+
+/**
+ * Mustache templating engine
+ * @type {Object}
+ */
+exports.mustache = mustache
 
 
 /**

@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -30,7 +30,9 @@ const Content = sequelize.models.Content
  * @param {object} res
  */
 exports.entry = (req,res) => {
-  Content.findOne({where: {uri: req.params.contentUri, active: true}})
+  let q = res.Q
+  q.where = {uri: req.params.contentUri, active: true}
+  Content.findOne(q)
     .then((result) => {
       if(!result) throw new Error('Content not found')
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))

@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -76,7 +76,10 @@ exports.edit = (req,res) => {
     res.render(res.locals._view.get('error'),{
       error: K._l.staff.missing_id_or_email})
   } else{
-    Staff.findOne({where: search,include: [StaffPermission]})
+    let q = res.Q
+    q.where = search
+    q.include = [StaffPermission]
+    Staff.findOne(q)
       .then((result) => {
         if(!result || !result.dataValues){
           throw new Error(K._l.staff.no_staff_for_args +
@@ -113,7 +116,7 @@ exports.grant = (req,res) => {
   let id = req.query.id
   let name = req.query.name
   let json = K.isClientJSON(req)
-  Staff.find({where: {id: id}})
+  Staff.findByPk(id,res.Q)
     .then((result) => {
       if(!result) throw new Error(K._l.staff.err_staff_not_found)
       return StaffPermission.create({
@@ -151,7 +154,7 @@ exports.revoke = (req,res) => {
   let id = req.query.id
   let name = req.query.name
   let json = K.isClientJSON(req)
-  Staff.find({where: {id: id}})
+  Staff.findByPk(id)
     .then((result) => {
       if(!result) throw new Error(K._l.staff.err_staff_not_found)
       return StaffPermission.find({where: {
@@ -194,7 +197,7 @@ exports.save = (req,res) => {
   let json = K.isClientJSON(req)
   P.try(() => {
     if(staffId){
-      return Staff.findOne({where: {id: staffId}})
+      return Staff.findByPk(staffId)
     } else {
       return Staff.build()
     }

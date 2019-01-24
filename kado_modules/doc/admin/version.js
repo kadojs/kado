@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -49,7 +49,9 @@ exports.create = (req,res) => {
  */
 exports.edit = (req,res) => {
   if(req.query.DocProjectVersionId) req.query.id = req.query.DocProjectVersionId
-  DocProjectVersion.findOne({where: {id: req.query.id}, include: [DocProject]})
+  let o = res.Q
+  o.include = [DocProject]
+  DocProjectVersion.findByPk(req.query.id,o)
     .then((result) => {
       if(!result) throw new Error(K._l.doc.entry_not_found)
       res.render(res.locals._view.get('doc/version/edit'),{
@@ -81,7 +83,7 @@ exports.save = (req,res) => {
       return res.render(res.locals._view.get('error'),errParams)
     }
   }
-  DocProjectVersion.findOne({where: {id: data.id}})
+  DocProjectVersion.findByPk(data.id)
     .then((result) => {
       if(!result){
         isNew = true

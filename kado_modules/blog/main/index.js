@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -31,7 +31,10 @@ const Blog = sequelize.models.Blog
  * @param {object} res
  */
 exports.index = (req,res) => {
-  Blog.findAll({where: {active: true}, order: [['datePosted','DESC']]})
+  let q = res.Q
+  q.where = {active: true}
+  q.order = [['datePosted','DESC']]
+  Blog.findAll(q)
     .then((results) => {
       res.render(res.locals._view.get('blog/list'),{
         blogList: results,
@@ -50,7 +53,9 @@ exports.index = (req,res) => {
  * @param {object} res
  */
 exports.entry = (req,res) => {
-  Blog.findOne({where: {uri: req.params.blogUri}})
+  let q = res.Q
+  q.where = {uri: req.params.blogUri}
+  Blog.findOne(q)
     .then((result) => {
       if(!result) throw new Error('Blog not found')
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))

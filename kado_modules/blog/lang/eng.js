@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -26,6 +26,7 @@ module.exports = {
   '_module_title': 'Blog',
   '_module_lang': 'eng',
   'create_blog': 'Create Blog',
+  'blog': 'Blog',
   'blog_list': 'Blog List',
   'update_blog': 'Update Blog',
   'blog_entry_not_found': 'Blog entry not found',

@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -31,7 +31,9 @@ const DocProject = sequelize.models.DocProject
  * @param {object} res
  */
 exports.index = (req,res) => {
-  DocProject.findAll({order: [['name','ASC']]})
+  let q = res.Q
+  q.order = [['name','ASC']]
+  DocProject.findAll(q)
     .then((results) => {
       res.render(res.locals._view.get('doc/project/list'),{
         projectList: results,
@@ -50,7 +52,7 @@ exports.index = (req,res) => {
  * @param {object} res
  */
 exports.entry = (req,res) => {
-  DocProject.findOne({where: {id: req.query.id}})
+  DocProject.findByPk(req.query.id,res.Q)
     .then((result) => {
       res.render(res.locals._view.get('doc/project/entry'),{
         item: result,

@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -38,7 +38,7 @@ exports.list = (req,res) => {
     res.render(res.locals._view.get('blog/list'),{
       _pageTitle: K._l.blog.blog + ' ' + K._l.list})
   } else {
-    K.datatable(Blog,req.query)
+    K.datatable(Blog,req.query,res.Q)
       .then((result) => {
         res.json(result)
       })
@@ -66,7 +66,7 @@ exports.create = (req,res) => {
  * @param {object} res
  */
 exports.edit = (req,res) => {
-  Blog.findOne({where: {id: req.query.id}})
+  Blog.findByPk(req.query.id,res.Q)
     .then((result) => {
       if(!result) throw new Error(K._l.blog_entry_not_found)
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
@@ -91,7 +91,7 @@ exports.save = (req,res) => {
   let isNewRevision = false
   let isNew = false
   let json = K.isClientJSON(req)
-  Blog.findOne({where: {id: data.id}})
+  Blog.findByPk(data.id)
     .then((result) => {
       blog = result
       if(!blog){

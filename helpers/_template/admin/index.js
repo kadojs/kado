@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -61,7 +61,7 @@ exports.create = (req,res) => {
  * @param {object} res
  */
 exports.edit = (req,res) => {
-  <%moduleModelName%>.findOne({where: {id: req.query.id}})
+  <%moduleModelName%>.findByPk(req.query.id,res.Q)
     .then((result) => {
       if(!result) throw new Error(K._l.<%moduleName%>.entry_not_found)
       res.render(res.locals._view.get('<%moduleName%>/edit'),{item: result})
@@ -81,7 +81,7 @@ exports.save = (req,res) => {
   let data = req.body
   let isNew = false
   let json = K.isClientJSON(req)
-  <%moduleModelName%>.findOne({where: {id: data.id}})
+  <%moduleModelName%>.findByPk(data.id)
     .then((result) => {
       if(!result){
         isNew = true

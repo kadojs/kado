@@ -55,3 +55,6 @@ h1 {
 .search-result .url {margin: 0; color: #006621; font-size: 1em;}
 .search-result .meta-search {color: #555; font-size: 0.75em; line-height: 25px;}
 .search-result .meta-search span {margin-right: 10px;}
+
+#kado-profiler {padding: 20px; max-width: 1400px;}
+.kado-profiler-query {padding: 10px; border: 1px solid #f1f1f1; margin: 5px;}

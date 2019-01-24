@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -33,6 +33,13 @@ let inst
  */
 let createInst = () => {
   //configure the instance for connection
+  let benchmark = config.db.sequelize.benchmark || false
+  let slowQueryTime = config.db.sequelize.slowQueryTime || 10000
+  let skipTable = config.db.sequelize.skipLoggingTable || []
+  if(config.dev){
+    benchmark = true
+    slowQueryTime = 1000
+  }
   let inst = new Sequelize(
     config.db.sequelize.name,
     config.db.sequelize.user,
@@ -42,7 +49,36 @@ let createInst = () => {
       port: config.db.sequelize.port,
       dialect: config.db.sequelize.dialect || 'mysql',
       operatorsAliases: Sequelize.Op,
-      logging: config.db.sequelize.logging || false
+      benchmark: benchmark,
+      logging: (sql,time,info) => {
+        //if the user setup their own function just use that
+        if('function' === typeof config.db.sequelize.logging){
+          config.db.sequelize.logging(sql,time)
+        } else if(true === config.dev) {
+          if(time instanceof Object){
+            info = time
+            time = 'n/a '
+          }
+          if(!info) info = {}
+          //skip session queries
+          let skip = false
+          if(info.tableNames){
+            info.tableNames.forEach((t)=>{
+              if(-1 < skipTable.indexOf(t)) skip = true
+            })
+          }
+          if(!info.tableNames && info.instance &&
+            -1 < skipTable.indexOf(info.instance._modelOptions.name.plural)){
+            skip = true
+          }
+          //skip logging query if needed
+          if(skip) return
+          //log query
+          K.log.debug('SQL Query took ' + time + 'ms: ' + sql)
+        } else if(!(time instanceof Object) && slowQueryTime > time){
+          K.log.warn('SLOW QUERY took ' + time + 'ms: ' + sql)
+        }
+      }
     }
   )
   //finally connect to the database

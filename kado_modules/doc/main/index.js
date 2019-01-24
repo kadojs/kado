@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -48,9 +48,9 @@ exports.index = (req,res) => {
  * @param res
  */
 exports.versionList = (req,res) => {
-  DocProjectVersion.findAll({
-    include: [{model: DocProject, where: {uri: req.params.project}}]
-  })
+  let q = res.Q
+  q.include = [{model: DocProject, where: {uri: req.params.project}}]
+  DocProjectVersion.findAll(q)
     .then((result) => {
       if(!result || !result.length){
         throw new Error('This project has no versions')
@@ -73,11 +73,14 @@ exports.versionList = (req,res) => {
  * @param res
  */
 exports.list = (req,res) => {
-  Doc.findAll({include: [
+  let q = res.Q
+  q.include = [
     {model: DocProjectVersion, where: {name: req.params.version}, include: [
-      {model: DocProject, where: {uri: req.params.project}}
-    ]}
-  ], order: [['sortNum','ASC']]})
+        {model: DocProject, where: {uri: req.params.project}}
+      ]}
+  ]
+  q.order = [['sortNum','ASC']]
+  Doc.findAll(q)
     .then((result) => {
       if(!result || !result.length){
         throw new Error('This project version has no documents.')
@@ -102,11 +105,14 @@ exports.list = (req,res) => {
  */
 exports.entry = (req,res) => {
   let docList
-  Doc.findAll({include: [
+  let q = res.Q
+  q.include = [
     {model: DocProjectVersion, where: {name: req.params.version}, include: [
         {model: DocProject, where: {uri: req.params.project}}
       ]}
-  ], order: [['sortNum','ASC']]})
+  ]
+  q.order = [['sortNum','ASC']]
+  Doc.findAll(q)
     .then((result) => {
       docList = result
       return Doc.find({

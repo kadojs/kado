@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2018 NULLIVEX LLC. All rights reserved.
+ * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
  * This file is part of Kado.
@@ -92,6 +92,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     const Breadcrumb = require('../helpers/Breadcrumb')
     const Nav = require('../helpers/Nav')
     const Permission = require('../helpers/Permission')
+    const Profiler = require('../helpers/Profiler')
     const URI = require('../helpers/URI')
     const View = require('../helpers/View')
     const SequelizeStore = require('connect-session-sequelize')(
@@ -195,9 +196,60 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     app.locals._currentYear = app.locals._moment().format('YYYY')
     //expose translation systems
     app.locals._breadcrumb = app.breadcrumb
+    app.locals._dev = config.dev
     app.locals._nav = app.nav
     app.locals._uri = app.uri
     app.locals._view = app.view
+    //load profiler
+    app.use((req,res,next)=>{
+      //start the profiler and track the page conception time
+      res._r = res.render
+      res.locals._profiler = new Profiler()
+      if(config.dev === true){
+        res.Q = {
+          benchmark: true,
+          logging: (sql,time) => {
+            res.locals._profiler.addQuery(sql,time)
+          }
+        }
+        /**
+         * Define our own render function to handle view lookups
+         *  as well as profiling
+         * @param {string} tpl Such as blog/list when absolute ignores lookup
+         * @param {object} options Same object passed to normal render
+         * @param {function} cb Optional callback which will be called instead
+         *  of sending the data automatically
+         */
+        res.render = (tpl,options,cb) => {
+          //start the rendering timer
+          res.locals._profiler.startRender()
+          //check if we should try and lookup the view
+          if(!(tpl[0] === '/' || tpl[0] === '\\')){
+            tpl = app.view.get(tpl)
+          }
+          if(!options) options = {}
+          res._r(tpl,options,(err,output)=>{
+            output = K.mustache.render(output,{
+              _pageProfile: res.locals._profiler.build()
+            },null,['<%','%>'])
+            if(cb){
+              return cb(err,output)
+            }
+            if(err){
+              K.logger.warn('Failed to render: ' + err.message)
+              res.status(500)
+            }
+            res.send(output)
+          })
+        }
+      } else {
+        res.Q = {
+          benchmark: false,
+          logging: false
+        }
+      }
+      next()
+    })
     //load middleware
     app.use(compress())
     app.use(bodyParser.urlencoded({extended: true}))

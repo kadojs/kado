@@ -2,7 +2,7 @@
   "author": "Kado <support@kado.org>",
   "name": "kado",
   "description": "Module system for Enterprise Grade applications.",
-  "version": "3.4.10",
+  "version": "3.5.0",
   "homepage": "https://kado.org",
   "license": "LGPL-3.0",
   "repository": {
@@ -33,7 +33,7 @@
     "browserify": "^16.2.3",
     "chart.js": "^2.7.3",
     "cli-table": "^0.3.1",
-    "codemirror": "^5.42.2",
+    "codemirror": "^5.43.0",
     "commander": "^2.19.0",
     "compression": "^1.7.3",
     "connect-flash": "^0.1.1",
@@ -66,7 +66,7 @@
     "locale": "^0.1.0",
     "markdown-it": "^8.4.2",
     "mkdirp-then": "^1.2.0",
-    "moment": "^2.23.0",
+    "moment": "^2.24.0",
     "mustache": "^3.0.1",
     "mustache-express": "github:nullivex/node-mustache-express",
     "mysql2": "^1.6.4",
@@ -89,7 +89,7 @@
     "tui-editor": "^1.3.0",
     "uglify-es": "^3.3.9",
     "uriname": "^0.1.1",
-    "validator": "^10.10.0",
+    "validator": "^10.11.0",
     "winston": "^3.1.0"
   },
   "scripts": {
