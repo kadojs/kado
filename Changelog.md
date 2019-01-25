@@ -22,7 +22,7 @@
 * Template variables now available. `_pageProfile` this is a result of the
  `Profiler` system. It contains an array of steps with times and messages that
  can be print used to build statistic footers. EG: 
- `<span>Page Generated in {{_pageProfile.totalTimeSeconds}} seconds, using {{_pageProfile.totalQueries}}</span>`.
+ `<span>Page Generated in {{_pageProfile.totalTime}}ms, using {{_pageProfile.queryCount}}</span>`.
  Finally, `{{{_pageProfile.HTML}}}` is a new variable that contains an HTML
  formatted printout of the profile for use below the footer of the page.
 * To make the query profiler work properly per page, there has to be a setting
