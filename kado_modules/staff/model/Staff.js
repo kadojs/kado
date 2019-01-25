@@ -94,8 +94,8 @@ module.exports = (sequelize,DataTypes) => {
       },
       {
         name: 'name_index',
-        method: 'name',
-        fields: ['loginCount']
+        method: 'BTREE',
+        fields: ['name']
       },
       {
         name: 'loginCount_index',
