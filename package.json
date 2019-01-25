@@ -2,7 +2,7 @@
   "author": "Kado <support@kado.org>",
   "name": "kado",
   "description": "Module system for Enterprise Grade applications.",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "homepage": "https://kado.org",
   "license": "LGPL-3.0",
   "repository": {
@@ -16,7 +16,7 @@
     "client"
   ],
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "bin": {
     "kado": "./cli.js"
@@ -67,6 +67,7 @@
     "markdown-it": "^8.4.2",
     "mkdirp-then": "^1.2.0",
     "moment": "^2.24.0",
+    "morgan": "^1.9.1",
     "mustache": "^3.0.1",
     "mustache-express": "github:nullivex/node-mustache-express",
     "mysql2": "^1.6.4",

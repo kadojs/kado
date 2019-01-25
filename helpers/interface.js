@@ -250,6 +250,10 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       }
       next()
     })
+    //log request in devs
+    if(config.dev){
+      app.use(require('morgan')('dev'))
+    }
     //load middleware
     app.use(compress())
     app.use(bodyParser.urlencoded({extended: true}))

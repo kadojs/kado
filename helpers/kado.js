@@ -207,7 +207,10 @@ config.$load({
 })
 
 //set dev mode if debug is turned on and the dev option is null
-if(null === config.dev && process.env.NODE_DEBUG === 'kado'){
+if(null === config.dev &&
+  (process.env.NODE_DEBUG === 'kado' || process.env.DEV === 'kado')
+){
+  process.env.NODE_DEBUG = 'kado'
   config.dev = true
 }
 

@@ -1,4 +1,8 @@
-### 3.5.2 (staged)
+### 3.5.3 (staged)
+
+### 3.5.2
+* Add morgan to log requests when in development mode.
+* Accept `DEV=kado` to enable development mode.
 
 ### 3.5.1
 * Improve filtering on Query profiling to negate skipTables.
