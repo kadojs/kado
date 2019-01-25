@@ -36,7 +36,7 @@ exports.index = (req,res) => {
   q.order = [['datePosted','DESC']]
   Blog.findAll(q)
     .then((results) => {
-      res.render(res.locals._view.get('blog/list'),{
+      res.render('blog/list',{
         blogList: results,
         _pageTitle: K._l.blog.blog + ' ' + K._l.list
       })
@@ -59,13 +59,13 @@ exports.entry = (req,res) => {
     .then((result) => {
       if(!result) throw new Error('Blog not found')
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
-      res.render(res.locals._view.get('blog/entry'),{
+      res.render('blog/entry',{
         blog: result,
         _pageTitle: result.title
       })
     })
     .catch((err) => {
       if('Blog not found' === err.message) res.status(404)
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }

@@ -49,7 +49,7 @@ exports.version = require('./version')
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('doc/list'),{
+    res.render('doc/list',{
       _pageTitle: K._l.doc.doc + ' ' + K._l.list})
   } else {
     K.datatable(Doc,req.query,{
@@ -75,7 +75,7 @@ exports.create = (req,res) => {
   q.include = [DocProject]
   DocProjectVersion.findAll(q)
     .then((result) => {
-      res.render(res.locals._view.get('doc/create'),{
+      res.render('doc/create',{
         projects: result,
         _pageTitle: K._l.doc.doc + ' ' + K._l.create
       })
@@ -93,13 +93,13 @@ exports.edit = (req,res) => {
     .then((result) => {
       if(!result) throw new Error(K._l.doc.entry_not_found)
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
-      res.render(res.locals._view.get('doc/edit'),{
+      res.render('doc/edit',{
         item: result,
         _pageTitle: K._l.edit + ' ' + K._l.doc.doc + ' ' + result.title
       })
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -179,7 +179,7 @@ exports.save = (req,res) => {
       }
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -206,7 +206,7 @@ exports.remove = (req,res) => {
       if(json){
         res.json({error: err.message || K._l.doc.removal_error})
       } else {
-        res.render(res.locals._view.get('error'),{error: err.message})
+        res.render('error',{error: err.message})
       }
     })
 }

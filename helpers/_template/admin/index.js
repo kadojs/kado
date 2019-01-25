@@ -32,7 +32,7 @@ const <%moduleModelName%> = sequelize.models.<%moduleModelName%>
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('<%moduleName%>/list'))
+    res.render('<%moduleName%>/list')
   } else {
     K.datatable(<%moduleModelName%>,req.query)
       .then((result) => {
@@ -51,7 +51,7 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(res.locals._view.get('<%moduleName%>/create'))
+  res.render('<%moduleName%>/create')
 }
 
 
@@ -64,10 +64,10 @@ exports.edit = (req,res) => {
   <%moduleModelName%>.findByPk(req.query.id,res.Q)
     .then((result) => {
       if(!result) throw new Error(K._l.<%moduleName%>.entry_not_found)
-      res.render(res.locals._view.get('<%moduleName%>/edit'),{item: result})
+      res.render('<%moduleName%>/edit',{item: result})
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -107,7 +107,7 @@ exports.save = (req,res) => {
       }
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -134,7 +134,7 @@ exports.remove = (req,res) => {
       if(json){
         res.json({error: err.message || K._l.<%moduleName%>.removal_error})
       } else {
-        res.render(res.locals._view.get('error'),{error: err.message})
+        res.render('error',{error: err.message})
       }
     })
 }

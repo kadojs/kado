@@ -35,12 +35,12 @@ exports.index = (req,res) => {
   q.order = [['createdAt','DESC']]
   <%moduleModelName%>.findAll(q)
     .then((results) => {
-      res.render(res.locals._view.get('<%moduleName%>/list'),{
+      res.render('<%moduleName%>/list',{
         list: results
       })
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -53,11 +53,11 @@ exports.index = (req,res) => {
 exports.entry = (req,res) => {
   <%moduleModelName%>.findByPk(req.query.id,res.Q)
     .then((result) => {
-      res.render(res.locals._view.get('<%moduleName%>/entry'),{
+      res.render('<%moduleName%>/entry',{
         item: result
       })
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }

@@ -36,13 +36,13 @@ exports.entry = (req,res) => {
     .then((result) => {
       if(!result) throw new Error('Content not found')
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
-      res.render(res.locals._view.get('content/entry'),{
+      res.render('content/entry',{
         content: result,
         _pageTitle: result.title
       })
     })
     .catch((err) => {
       if('Content not found' === err.message) res.status(404)
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }

@@ -38,7 +38,7 @@ P.promisifyAll(bcrypt)
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('staff/list'),{
+    res.render('staff/list',{
       _pageTitle: K._l.staff.staff + ' ' + K._l.list})
   } else {
     K.datatable(Staff,req.query)
@@ -58,7 +58,7 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(res.locals._view.get('staff/create'),{
+  res.render('staff/create',{
     _pageTitle: K._l.staff.staff + ' ' + K._l.create})
 }
 
@@ -101,7 +101,7 @@ exports.edit = (req,res) => {
         })
       })
       .catch((err) => {
-        res.render(res.locals._view.get('error'),{error: err.message})
+        res.render('error',{error: err.message})
       })
   }
 }
@@ -256,7 +256,7 @@ exports.save = (req,res) => {
       }
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -267,7 +267,7 @@ exports.save = (req,res) => {
  * @param {object} res
  */
 exports.login = (req,res) => {
-  res.render(res.locals._view.get('login'))
+  res.render('login')
 }
 
 
@@ -369,7 +369,7 @@ exports.remove = (req,res) => {
       if(json){
         res.json({error: err.message || K._l.staff.err_staff_removed})
       } else {
-        res.render(res.locals._view.get('error'),{error: err.message})
+        res.render('error',{error: err.message})
       }
     })
 }

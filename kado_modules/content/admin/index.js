@@ -40,7 +40,7 @@ exports.nav = require('./nav')
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('content/list'),{
+    res.render('content/list',{
       _pageTitle: K._l.content.content + ' ' + K._l.list})
   } else {
     K.datatable(Content,req.query)
@@ -60,7 +60,7 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(res.locals._view.get('content/create'),{
+  res.render('content/create',{
     _pageTitle: K._l.content.content + ' ' + K._l.create})
 }
 
@@ -75,13 +75,13 @@ exports.edit = (req,res) => {
     .then((result) => {
       if(!result) throw new Error(K._l.content_entry_not_found)
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
-      res.render(res.locals._view.get('content/edit'),{
+      res.render('content/edit',{
         content: result,
         _pageTitle: K._l.edit + ' ' + K._l.content.content + ' ' + result.title
       })
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -157,7 +157,7 @@ exports.save = (req,res) => {
         res.json({error: err.message})
       } else {
         console.log(err)
-        res.render(res.locals._view.get('error'),{error: err})
+        res.render('error',{error: err})
       }
     })
 }
@@ -185,7 +185,7 @@ exports.remove = (req,res) => {
       if(json){
         res.json({error: err.message || K._l.content.content_removal_error})
       } else {
-        res.render(res.locals._view.get('error'),{error: err.message})
+        res.render('error',{error: err.message})
       }
     })
 }

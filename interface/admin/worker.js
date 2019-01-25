@@ -201,7 +201,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
         })
     })
     app.get('/login',(req,res) => {
-      res.render(res.locals._view.get('login'))
+      res.render('login')
     })
     app.get('/logout',(req,res) => {
       req.session.destroy()

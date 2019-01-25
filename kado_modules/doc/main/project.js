@@ -35,13 +35,13 @@ exports.index = (req,res) => {
   q.order = [['name','ASC']]
   DocProject.findAll(q)
     .then((results) => {
-      res.render(res.locals._view.get('doc/project/list'),{
+      res.render('doc/project/list',{
         projectList: results,
         _pageTitle: K._l.doc.doc_project + ' ' + K._l.list
       })
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -54,12 +54,12 @@ exports.index = (req,res) => {
 exports.entry = (req,res) => {
   DocProject.findByPk(req.query.id,res.Q)
     .then((result) => {
-      res.render(res.locals._view.get('doc/project/entry'),{
+      res.render('doc/project/entry',{
         item: result,
         _pageTitle: result.name
       })
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }

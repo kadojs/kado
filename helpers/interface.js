@@ -212,41 +212,41 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
             res.locals._profiler.addQuery(sql,time)
           }
         }
-        /**
-         * Define our own render function to handle view lookups
-         *  as well as profiling
-         * @param {string} tpl Such as blog/list when absolute ignores lookup
-         * @param {object} options Same object passed to normal render
-         * @param {function} cb Optional callback which will be called instead
-         *  of sending the data automatically
-         */
-        res.render = (tpl,options,cb) => {
-          //start the rendering timer
-          res.locals._profiler.startRender()
-          //check if we should try and lookup the view
-          if(!(tpl[0] === '/' || tpl[0] === '\\')){
-            tpl = app.view.get(tpl)
-          }
-          if(!options) options = {}
-          res._r(tpl,options,(err,output)=>{
-            output = K.mustache.render(output,{
-              _pageProfile: res.locals._profiler.build()
-            },null,['<%','%>'])
-            if(cb){
-              return cb(err,output)
-            }
-            if(err){
-              K.logger.warn('Failed to render: ' + err.message)
-              res.status(500)
-            }
-            res.send(output)
-          })
-        }
       } else {
         res.Q = {
           benchmark: false,
           logging: false
         }
+      }
+      /**
+       * Define our own render function to handle view lookups
+       *  as well as profiling
+       * @param {string} tpl Such as blog/list when absolute ignores lookup
+       * @param {object} options Same object passed to normal render
+       * @param {function} cb Optional callback which will be called instead
+       *  of sending the data automatically
+       */
+      res.render = (tpl,options,cb) => {
+        //start the rendering timer
+        res.locals._profiler.startRender()
+        //check if we should try and lookup the view
+        if(!(tpl[0] === '/' || tpl[0] === '\\')){
+          tpl = res.locals._view.get(tpl)
+        }
+        if(!options) options = {}
+        res._r(tpl,options,(err,output)=>{
+          output = K.mustache.render(output,{
+            _pageProfile: res.locals._profiler.build()
+          },null,['<%','%>'])
+          if(cb){
+            return cb(err,output)
+          }
+          if(err){
+            K.logger.warn('Failed to render: ' + err.message)
+            res.status(500)
+          }
+          res.send(output)
+        })
       }
       next()
     })

@@ -33,7 +33,7 @@ const DocProjectVersion = sequelize.models.DocProjectVersion
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('doc/project/list'),{
+    res.render('doc/project/list',{
       _pageTitle: K._l.doc.doc_project + ' ' + K._l.list})
   } else {
     K.datatable(DocProject,req.query)
@@ -53,7 +53,7 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(res.locals._view.get('doc/project/create'),{
+  res.render('doc/project/create',{
     _pageTitle: K._l.doc.doc_project + ' ' + K._l.create})
 }
 
@@ -69,13 +69,13 @@ exports.edit = (req,res) => {
   DocProject.findByPk(req.query.id,o)
     .then((result) => {
       if(!result) throw new Error(K._l.doc.entry_not_found)
-      res.render(res.locals._view.get('doc/project/edit'),{
+      res.render('doc/project/edit',{
         item: result,
         _pageTitle: K._l.doc.doc_project + ' ' + K._l.create + ' ' + result.name
       })
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -112,7 +112,7 @@ exports.save = (req,res) => {
       }
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -139,7 +139,7 @@ exports.remove = (req,res) => {
       if(json){
         res.json({error: err.message || K._l.doc.removal_error})
       } else {
-        res.render(res.locals._view.get('error'),{error: err.message})
+        res.render('error',{error: err.message})
       }
     })
 }

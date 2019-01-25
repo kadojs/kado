@@ -6,6 +6,7 @@
 * Move worker.setupContent below static declarations to reduce query load.
 * Add missing indexes to core module models.
 * Add profiling output to the main interface.
+* Correct calls to render function in core modules to use new function.
 
 ### 3.5.0
 * Implement Profiler sub system to track queries and timing on page loads.

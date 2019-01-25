@@ -35,8 +35,7 @@ const BlogRevision = sequelize.models.BlogRevision
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('blog/list'),{
-      _pageTitle: K._l.blog.blog + ' ' + K._l.list})
+    res.render('blog/list',{_pageTitle: K._l.blog.blog + ' ' + K._l.list})
   } else {
     K.datatable(Blog,req.query,res.Q)
       .then((result) => {
@@ -55,8 +54,7 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(res.locals._view.get('blog/create'),{
-    _pageTitle: K._l.blog.blog + ' ' + K._l.create})
+  res.render('blog/create',{_pageTitle: K._l.blog.blog + ' ' + K._l.create})
 }
 
 
@@ -70,11 +68,11 @@ exports.edit = (req,res) => {
     .then((result) => {
       if(!result) throw new Error(K._l.blog_entry_not_found)
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
-      res.render(res.locals._view.get('blog/edit'),{
+      res.render('blog/edit',{
         blog: result, _pageTitle: K._l.edit + ' ' + K._l.blog.blog})
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -148,7 +146,7 @@ exports.save = (req,res) => {
       if(json){
         res.json({error: err.message})
       } else {
-        res.render(res.locals._view.get('error'),{error: err})
+        res.render('error',{error: err})
       }
     })
 }
@@ -176,7 +174,7 @@ exports.remove = (req,res) => {
       if(json){
         res.json({error: err.message || K._l.blog.blog_removal_error})
       } else {
-        res.render(res.locals._view.get('error'),{error: err.message})
+        res.render('error',{error: err.message})
       }
     })
 }

@@ -32,7 +32,7 @@ const ContentNav = sequelize.models.ContentNav
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.render(res.locals._view.get('content/nav/list'))
+    res.render('content/nav/list')
   } else {
     K.datatable(ContentNav,req.query)
       .then((result) => {
@@ -51,7 +51,7 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.create = (req,res) => {
-  res.render(res.locals._view.get('content/nav/create'))
+  res.render('content/nav/create')
 }
 
 
@@ -67,7 +67,7 @@ exports.edit = (req,res) => {
       res.render(res.locals._view.get('content/nav/edit'),{item: result})
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -106,7 +106,7 @@ exports.save = (req,res) => {
       }
     })
     .catch((err) => {
-      res.render(res.locals._view.get('error'),{error: err})
+      res.render('error',{error: err})
     })
 }
 
@@ -133,7 +133,7 @@ exports.remove = (req,res) => {
       if(json){
         res.json({error: err.message || K._l.doc.removal_error})
       } else {
-        res.render(res.locals._view.get('error'),{error: err.message})
+        res.render('error',{error: err.message})
       }
     })
 }
