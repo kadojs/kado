@@ -1,4 +1,11 @@
-### 3.5.1 (staged)
+### 3.5.2 (staged)
+
+### 3.5.1
+* Improve filtering on Query profiling to negate skipTables.
+* Move session setup below static content declarations to reduce query count.
+* Move worker.setupContent below static declarations to reduce query load.
+* Add missing indexes to core module models.
+* Add profiling output to the main interface.
 
 ### 3.5.0
 * Implement Profiler sub system to track queries and timing on page loads.

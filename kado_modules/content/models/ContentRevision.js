@@ -45,6 +45,11 @@ module.exports = (sequelize,DataTypes) => {
   {
     indexes: [
       {
+        name: 'hash_index',
+        method: 'BTREE',
+        fields: ['hash']
+      },
+      {
         name: 'createdAt_index',
         method: 'BTREE',
         fields: ['createdAt']

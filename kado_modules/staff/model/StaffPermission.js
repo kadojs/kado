@@ -47,6 +47,11 @@ module.exports = function(sequelize,DataTypes) {
           fields: ['name']
         },
         {
+          name: 'isAllowed_index',
+          method: 'BTREE',
+          fields: ['isAllowed']
+        },
+        {
           name: 'createdAt_index',
           method: 'BTREE',
           fields: ['createdAt']

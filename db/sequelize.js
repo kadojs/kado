@@ -71,6 +71,11 @@ let createInst = () => {
             -1 < skipTable.indexOf(info.instance._modelOptions.name.plural)){
             skip = true
           }
+          if(!info.tableNames && !info.instance && info.type === 'BULKDELETE'){
+            skipTable.forEach((t)=>{
+              if(-1 < sql.indexOf(t)) skip = true
+            })
+          }
           //skip logging query if needed
           if(skip) return
           //log query

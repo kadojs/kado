@@ -23,14 +23,6 @@ const K = require('../../index')
 const interfaceRoot = __dirname
 const interfaceName = 'admin'
 K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
-  worker.enableSession((app) => {
-    let flash = require('connect-flash')
-    app.use(flash())
-    app.use((req,res,next) => {
-      res.locals.flash = worker.flashHandler(req)
-      next()
-    })
-  })
   worker.setupLang(() => {
     //activate lang pack
     K.log.debug(Object.keys(K.lang.pack).length +
@@ -111,6 +103,14 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     }
     //static files
     app.use(serveStatic(interfaceRoot + '/public',app.staticOptions))
+  })
+  worker.enableSession((app) => {
+    let flash = require('connect-flash')
+    app.use(flash())
+    app.use((req,res,next) => {
+      res.locals.flash = worker.flashHandler(req)
+      next()
+    })
   })
   worker.setup((app) => {
     let errorView = __dirname + '/view/error.html'

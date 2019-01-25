@@ -23,14 +23,6 @@ const K = require('../../helpers/kado')
 const interfaceRoot = __dirname
 const interfaceName = 'main'
 K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
-  worker.enableSession((app) => {
-    let flash = require('connect-flash')
-    app.use(flash())
-    app.use((req,res,next) => {
-      res.locals.flash = worker.flashHandler(req)
-      next()
-    })
-  })
   worker.setupLang(() => {
     //activate lang pack
     K.log.debug(Object.keys(K.lang.pack).length +
@@ -39,10 +31,6 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
   worker.setupUri(() => {
     //activate uri system
     K.log.debug(interfaceName + ' URI system activated')
-  })
-  worker.setupContent(() => {
-    //activate the content system
-    K.log.debug(interfaceName + ' Content system activated')
   })
   worker.enableHtml((app) =>{
     const mustacheExpress = require('mustache-express')
@@ -110,6 +98,18 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     }
     //static files
     app.use(serveStatic(interfaceRoot + '/public',app.staticOptions))
+  })
+  worker.enableSession((app) => {
+    let flash = require('connect-flash')
+    app.use(flash())
+    app.use((req,res,next) => {
+      res.locals.flash = worker.flashHandler(req)
+      next()
+    })
+  })
+  worker.setupContent(() => {
+    //activate the content system
+    K.log.debug(interfaceName + ' Content system activated')
   })
   worker.setup((app) =>{
     let errorView = __dirname + '/view/error.html'
