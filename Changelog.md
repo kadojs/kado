@@ -1,4 +1,8 @@
-### 3.5.4 (staged)
+### 3.5.5 (staged)
+
+### 3.5.4
+* Use new version of Infant.
+* Change nodemon profile to use `SIGINT` signal.
 
 ### 3.5.3
 * Fix issue with login redirect being sent as a 301.

@@ -1,5 +1,6 @@
 {
   "verbose": true,
+  "signal": "SIGINT",
   "execMap": {
     "js": "node --harmony"
   },
