@@ -188,7 +188,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
             req.flash('success','Login success')
             let referrer = req.session._loginReferrer || '/'
             if(referrer.match(/\.(js|jpg|ico|png|html|css)/i)) referrer = '/'
-            res.redirect(301,referrer)
+            res.redirect(302,referrer)
           }
         })
         .catch((err) => {
@@ -196,7 +196,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
             res.json({error: err.message})
           } else {
             req.flash('error',err.message || 'Invalid login')
-            res.redirect(301,'/login')
+            res.redirect(302,'/login')
           }
         })
     })
@@ -206,7 +206,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     app.get('/logout',(req,res) => {
       req.session.destroy()
       delete res.locals._staff
-      res.redirect(301,'/login')
+      res.redirect(302,'/login')
     })
     //auth protection
     app.use((req,res,next) => {
@@ -216,7 +216,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
         req.url.indexOf('/login') < 0
       ){
         req.session._loginReferrer = req.url
-        res.redirect(301,'/login')
+        res.redirect(302,'/login?c=' + (+new Date()))
       } else if(req.session._staff){
         res.locals._staff = req.session._staff
         if(res.locals && res.locals._staff) delete res.locals._staff.password

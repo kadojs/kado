@@ -1,4 +1,7 @@
-### 3.5.3 (staged)
+### 3.5.4 (staged)
+
+### 3.5.3
+* Fix issue with login redirect being sent as a 301.
 
 ### 3.5.2
 * Add morgan to log requests when in development mode.
