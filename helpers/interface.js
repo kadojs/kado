@@ -230,7 +230,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
         //start the rendering timer
         res.locals._profiler.startRender()
         //check if we should try and lookup the view
-        if(!(tpl[0] === '/' || tpl[0] === '\\')){
+        if(!(tpl[0] === '/' || tpl[2] === '\\')){
           tpl = res.locals._view.get(tpl)
         }
         if(!options) options = {}

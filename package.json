@@ -2,7 +2,7 @@
   "author": "Kado <support@kado.org>",
   "name": "kado",
   "description": "Module system for Enterprise Grade applications.",
-  "version": "3.5.4",
+  "version": "3.5.5",
   "homepage": "https://kado.org",
   "license": "LGPL-3.0",
   "repository": {
@@ -74,7 +74,7 @@
     "n-readlines": "^1.0.0",
     "nodemon": "^1.18.9",
     "object-manage": "^1.1.0",
-    "pdfmake": "^0.1.40",
+    "pdfmake": "^0.1.41",
     "popper.js": "^1.14.6",
     "pretty-bytes": "^5.1.0",
     "pug": "^2.0.3",
@@ -91,7 +91,7 @@
     "uglify-es": "^3.3.9",
     "uriname": "^0.1.1",
     "validator": "^10.11.0",
-    "winston": "^3.1.0"
+    "winston": "^3.2.0"
   },
   "scripts": {
     "postinstall": "browserify interface/admin/js/main.js -o interface/admin/public/bundle/bundle.js && uglifyjs interface/admin/public/bundle/bundle.js --source-map -o interface/admin/public/bundle/bundle.min.js && browserify interface/main/js/main.js -o interface/main/public/bundle/bundle.js && uglifyjs interface/main/public/bundle/bundle.js --source-map -o interface/main/public/bundle/bundle.min.js",

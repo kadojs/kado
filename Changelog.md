@@ -1,4 +1,9 @@
-### 3.5.5 (staged)
+### 3.6.0 (planned)
+
+### 3.5.6 (staged)
+
+### 3.5.5
+* Fix issue with template loading in Windows. Path detection failure.
 
 ### 3.5.4
 * Use new version of Infant.
