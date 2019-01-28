@@ -1,6 +1,9 @@
 ### 3.6.0 (planned)
 
-### 3.5.7 (staged)
+### 3.5.8 (staged)
+
+### 3.5.7
+* Print date will now print the current time when no date is provided.
 
 ### 3.5.6
 * Fix tests, and push latest package-lock.json

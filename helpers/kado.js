@@ -438,6 +438,7 @@ exports.appendFile = (path,data) => {
  * @return {string}
  */
 exports.printDate = (d,emptyString) => {
+  if(d === undefined || d === null) d = new Date()
   emptyString = ('string' === typeof emptyString) ? emptyString : 'Never'
   if(!(d instanceof Date)) d = new Date(d)
   return d ? moment(d).format('YYYY-MM-DD hh:mm:ssA') : emptyString
