@@ -1,6 +1,9 @@
 ### 3.6.0 (planned)
 
-### 3.5.6 (staged)
+### 3.5.7 (staged)
+
+### 3.5.6
+* Fix tests, and push latest package-lock.json
 
 ### 3.5.5
 * Fix issue with template loading in Windows. Path detection failure.
