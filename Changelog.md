@@ -1,6 +1,9 @@
 ### 3.7.0 (planned)
 
-### 3.6.3 (staged)
+### 3.6.4 (staged)
+
+### 3.6.3
+* Move testing requirements into named dependencies so projects can utilize them.
 
 ### 3.6.2
 * Fix mocha call from node app test to exit after completion.
