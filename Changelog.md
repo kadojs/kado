@@ -1,6 +1,9 @@
 ### 3.7.0 (planned)
 
-### 3.6.2 (staged)
+### 3.6.3 (staged)
+
+### 3.6.2
+* Fix mocha call from node app test to exit after completion.
 
 ### 3.6.1
 * Fix path to test file in applications.

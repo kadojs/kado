@@ -746,6 +746,7 @@ exports.test = (filter) => {
   let args = [
     './node_modules/mocha/bin/mocha',
     '-c',
+    '--exit',
     '--delay'
   ]
   if(filter){
