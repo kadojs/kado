@@ -715,7 +715,7 @@ exports.cli = (args,skipDb) => {
   K.init(skipDb)
     .then(() => {
       let moduleName = args[2]
-      let module = {}
+      let module = false
       args.splice(2,1)
       process.argv = args
       Object.keys(K.modules).forEach((m) => {
