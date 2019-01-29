@@ -136,6 +136,13 @@ exports.main = (K,app) => {
 exports.cli = (K,args) => {
   args.splice(2,1)
   process.argv = args
-  require('./bin/<%moduleModelName%>')
+  require('./cli/<%moduleModelName%>')
 }
 
+
+/**
+ * Test Access
+ */
+exports.test = () => {
+  return require('./test/' + exports._kado.name + '.test.js')
+}

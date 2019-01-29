@@ -1,6 +1,17 @@
-### 3.6.0 (planned)
+### 3.7.0 (planned)
 
-### 3.5.8 (staged)
+### 3.6.1 (staged)
+
+### 3.6.0
+* Introduce modular testing!
+* Kado will now provide the test suite capabilities through the 2 following commands:
+  * `node app test` Assuming you have `app.js` this will test your entire application.
+  * `node app test somemodule` Again, `app.js` except this will only test 
+    `somemodule` EG: `blog`
+* The tests are now contained within the module and registered via the
+  `exports.test` method of `kado.js` module file.
+* The `bin` folder in modules has been renamed to the `cli` folder by default.
+* Tests have been added to the module generator.
 
 ### 3.5.7
 * Print date will now print the current time when no date is provided.

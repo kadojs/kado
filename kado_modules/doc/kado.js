@@ -202,3 +202,11 @@ exports.main = (K,app) => {
   app.view.add('doc/project/entry',__dirname + '/main/view/project/entry.html')
   app.view.add('doc/project/list',__dirname + '/main/view/project/list.html')
 }
+
+
+/**
+ * Test Access
+ */
+exports.test = () => {
+  return require('./test/' + exports._kado.name + '.test.js')
+}

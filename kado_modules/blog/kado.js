@@ -149,5 +149,13 @@ exports.main = (K,app) => {
  * CLI Access
  */
 exports.cli = () => {
-  require('./bin/blog')
+  require('./cli/blog')
+}
+
+
+/**
+ * Test Access
+ */
+exports.test = () => {
+  return require('./test/' + exports._kado.name + '.test.js')
 }

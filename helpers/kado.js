@@ -525,6 +525,52 @@ exports.log = logger.setupLogger()
  */
 exports.initComplete = false
 
+let doScan = (pattern,handler) => {
+  return new P((resolve) => {
+    glob(pattern,(err,files) => {
+      files.forEach(handler)
+      resolve()
+    })
+  })
+}
+
+
+/**
+ * Scan for modules and populate Kado object
+ * @return {P}
+ */
+exports.scanModules = () => {
+  let sysGlob = process.env.KADO_MODULES + '/**/kado.js'
+  let userGlob = process.env.KADO_USER_MODULES + '/**/kado.js'
+  let loadModule = (file) => {
+    let module = new ObjectManage(require(file)._kado)
+    module.root = path.dirname(file)
+    if(exports.config.module[module.name]){
+      module.$load(exports.config.module[module.name])
+    }
+    if(module.enabled){
+      if(exports.modules[module.name]){
+        exports.log.debug('WARN: Duplicate module registration attempted ' +
+          module.name)
+      } else {
+        exports.modules[module.name] = module.$strip()
+      }
+    }
+  }
+  //scan system modules
+  exports.log.debug('Scanning system modules')
+  return doScan(sysGlob,loadModule)
+    .then(() => {
+      //scan extra modules
+      exports.log.debug('Scanning extra modules')
+      return doScan(userGlob,loadModule)
+    })
+    .then(() => {
+      exports.log.debug('Found ' + Object.keys(exports.modules).length +
+        ' module(s)')
+    })
+}
+
 
 /**
  * Init, scan modules and interfaces
@@ -568,49 +614,15 @@ exports.init = (skipDb) => {
       exports.db[name] = require(file)()
     }
   }
-  let loadModule = (file) => {
-    let module = new ObjectManage(require(file)._kado)
-    module.root = path.dirname(file)
-    if(exports.config.module[module.name]){
-      module.$load(exports.config.module[module.name])
-    }
-    if(module.enabled){
-      if(exports.modules[module.name]){
-        exports.log.debug('WARN: Duplicate module registration attempted ' +
-          module.name)
-      } else {
-        exports.modules[module.name] = module.$strip()
-      }
-    }
-  }
   let dbGlob = process.env.KADO_ROOT + '/db/*.js'
-  let sysGlob = process.env.KADO_MODULES + '/**/kado.js'
-  let userGlob = process.env.KADO_USER_MODULES + '/**/kado.js'
-  let doScan = (pattern,handler) => {
-    return new P((resolve) => {
-      glob(pattern,(err,files) => {
-        files.forEach(handler)
-        resolve()
-      })
-    })
-  }
   return new P((resolve) => {
     //scan db connectors
     exports.log.debug('Scanning connectors')
-    doScan(dbGlob,loadConnector)
+    exports.scanModules()
       .then(() => {
-        //scan system modules
-        exports.log.debug('Scanning system modules')
-        return doScan(sysGlob,loadModule)
+        return doScan(dbGlob,loadConnector)
       })
       .then(() => {
-        //scan extra modules
-        exports.log.debug('Scanning extra modules')
-        return doScan(userGlob,loadModule)
-      })
-      .then(() => {
-        exports.log.debug('Found ' + Object.keys(exports.modules).length +
-          ' module(s)')
         exports.log.debug('Setting up data storage access')
         Object.keys(exports.modules).forEach((modKey) => {
           if(exports.modules.hasOwnProperty(modKey)){
@@ -699,19 +711,70 @@ exports.init = (skipDb) => {
  * @param {boolean} skipDb skip connection to databases
  */
 exports.cli = (args,skipDb) => {
-  exports.init(skipDb)
+  let K = exports
+  K.init(skipDb)
     .then(() => {
       let moduleName = args[2]
+      let module
       args.splice(2,1)
       process.argv = args
-      Object.keys(exports.modules).forEach((modName) => {
-        let mod = exports.modules[modName]
-        if(mod.name === moduleName){
-          let module = require(mod.root + '/kado.js')
-          module.cli(exports,args)
-        }
+      Object.keys(K.modules).forEach((m) => {
+        if(!module && K.modules[m].name === moduleName) module = K.modules[m]
       })
+      if(!module){
+        throw new Error('Invalid CLI call, no module found: ' + moduleName)
+      }
+      require(module.root + '/kado.js').cli(exports,args)
     })
+    .catch((err) => {
+      K.log.error(err.message)
+      process.exit()
+    })
+}
+
+
+/**
+ * Testing system
+ * @param {string} filter passed to --fgrep
+ */
+exports.test = (filter) => {
+  const spawn = require('child_process').spawn
+  exports.log.info('Welcome to Test Mode')
+  let env = process.env
+  env.KADO_TEST = 'kado'
+  env.KADO_CONFIG_STRING = JSON.stringify(config.$strip())
+  let args = [
+    './node_modules/mocha/bin/mocha',
+    '-c',
+    '--delay'
+  ]
+  if(filter){
+    args.push('--fgrep')
+    args.push(filter)
+  }
+  process.argv.forEach((v,i) => {
+    if(i<4) return
+    args.push(v)
+  })
+  args.push('test/kado.test.js')
+  let opts = {
+    env: env,
+    shell: true
+  }
+  let t = spawn('node',args,opts)
+  t.stdout.on('data',(d) => {
+    process.stdout.write(d.toString())
+  })
+  t.stderr.on('data',(d) => {
+    process.stderr.write(d.toString())
+  })
+  t.on('close',(code)=>{
+    if(code > 0){
+      exports.log.warn('Testing has failed')
+    } else {
+      exports.log.info('Testing complete')
+    }
+  })
 }
 
 
@@ -777,6 +840,9 @@ exports.go = (name) => {
           })
         }
       )
+    } else if('test' === process.argv[2]){
+      exports.test(process.argv[3])
+      resolve()
     } else {
       exports.log.debug('CLI Mode')
       let skipDb = false
