@@ -1,6 +1,9 @@
 ### 3.7.0 (planned)
 
-### 3.6.1 (staged)
+### 3.6.2 (staged)
+
+### 3.6.1
+* Fix path to test file in applications.
 
 ### 3.6.0
 * Introduce modular testing!

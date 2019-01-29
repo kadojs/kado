@@ -715,7 +715,7 @@ exports.cli = (args,skipDb) => {
   K.init(skipDb)
     .then(() => {
       let moduleName = args[2]
-      let module
+      let module = {}
       args.splice(2,1)
       process.argv = args
       Object.keys(K.modules).forEach((m) => {
@@ -756,7 +756,7 @@ exports.test = (filter) => {
     if(i<4) return
     args.push(v)
   })
-  args.push('test/kado.test.js')
+  args.push(process.env.KADO_ROOT + '/test/kado.test.js')
   let opts = {
     env: env,
     shell: true

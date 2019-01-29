@@ -197,7 +197,7 @@ K.scanModules().then(()=>{
             .then((res) => {
               expect(res.statusCode).to.equal(200)
               //expect(res.body).to.match(/Welcome to Kado/)
-              expect(res.body).to.match(/Kado Main/)
+              expect(res.body).to.match(/<body>/)
             })
         })
         describe('routes',() => {
