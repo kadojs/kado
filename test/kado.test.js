@@ -73,7 +73,7 @@ K.scanModules().then(()=>{
           module = require(modInfo.root + '/kado.js')
           if(!module || 'function' !== typeof module.test) return
           tests = module.test()
-          if('function' === typeof tests.cli){
+          if('object' === typeof tests && 'function' === typeof tests.cli){
             tests.cli(K,expect,request,exec,params)
           }
         })
@@ -165,7 +165,7 @@ K.scanModules().then(()=>{
             module = require(modInfo.root + '/kado.js')
             if(!module || 'function' !== typeof module.test) return
             tests = module.test()
-            if('function' === typeof tests.admin){
+            if('object' === typeof tests && 'function' === typeof tests.admin){
               tests.admin(K,expect,request,exec,params)
             }
           })
@@ -217,7 +217,7 @@ K.scanModules().then(()=>{
             module = require(modInfo.root + '/kado.js')
             if(!module || 'function' !== typeof module.test) return
             tests = module.test()
-            if('function' === typeof tests.main){
+            if('object' === typeof tests && 'function' === typeof tests.main){
               tests.main(K,expect,request,exec,params)
             }
           })

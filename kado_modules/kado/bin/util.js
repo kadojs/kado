@@ -95,15 +95,30 @@ program.command('insertsamples')
 
 
 program.command('generate')
+  .option('--header <s>','File to read for file header text')
   .option('--modconf <s>','Provide a JSON file containing a module definition' +
     ', otherwise an interactive process will be used.')
   .option('--saveconf','Save module configuration to a JSON file')
   .option('--stomp','Remove the destination directory if it exists, DANGEROUS!')
   .action((cmd) => {
+    let fileHeaderPath = __dirname + '/header.txt'
+    let fileHeader = 'KADO GENERATOR\n'
+    //get our file header
+    if(cmd.header && cmd.header[0] !== '/' && cmd.header[2] !== '\\'){
+      cmd.header = path.resolve(
+        path.join(path.dirname(process.argv[1]),cmd.header))
+    }
+    console.log(cmd.header)
+    if(cmd.header && fs.existsSync(cmd.header)){
+      fileHeader = fs.readFileSync(cmd.header)
+    } else if(fs.existsSync(fileHeaderPath)){
+      fileHeader = fs.readFileSync(fileHeaderPath)
+    }
     //set our mustache tag usage here
     Mustache.tags = ['<%','%>']
     let folder = process.cwd()
     let modconf = {moduleFields: []}
+    modconf.fileHeader = fileHeader
     if(cmd.modconf){
       let modconfFile = folder + '/' + cmd.modconf
       if(!modconfFile || !fs.existsSync(modconfFile)){
@@ -181,6 +196,7 @@ program.command('generate')
       .each((file) => {
         let template = fs.readFileSync(file,{encoding: 'utf-8'})
         let relativePath = file.replace(templateFolder,'')
+        //execute path renames here as we write files
         if(relativePath.match('Model.js')){
           relativePath = relativePath.replace(
             'Model.js',modconf.moduleModelName + '.js'
@@ -188,7 +204,12 @@ program.command('generate')
         }
         if(relativePath.match('cli.js')){
           relativePath = relativePath.replace(
-            'cli.js',modconf.moduleModelName + '.js'
+            'cli.js',modconf.moduleName + '.js'
+          )
+        }
+        if(relativePath.match('test.test.js')){
+          relativePath = relativePath.replace(
+            'test.test.js',modconf.moduleName + '.js'
           )
         }
         //upgrade data type fields

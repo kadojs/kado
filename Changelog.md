@@ -1,6 +1,12 @@
 ### 3.7.0 (planned)
 
-### 3.6.4 (staged)
+### 3.6.5 (staged)
+
+### 3.6.4
+* Fix issue where an undefined return to the test entry would cause a crash.
+* Add `--header <filePath>` flag to generator to provide custom file header when generating modules.
+* Correct CLI naming issues and argument augmentation from generator.
+* Correct naming of test file on generator.
 
 ### 3.6.3
 * Move testing requirements into named dependencies so projects can utilize them.
