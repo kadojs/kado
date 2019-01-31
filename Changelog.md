@@ -1,6 +1,12 @@
 ### 3.7.0 (planned)
 
-### 3.6.6 (staged)
+### 3.6.7 (staged)
+
+### 3.6.6
+* Fix to language switching system to be ordered after session startup.
+* Add `nocache` package to aid with not having session bound pages cached.
+* When `worker.enableSession()` is called this now turns on `app.use(nocache())`
+* Remove body display modifications from `search.css` to be more compatible.
 
 ### 3.6.5
 * Allow lookups into kado by default in the admin and main interfaces.

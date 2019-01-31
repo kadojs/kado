@@ -23,15 +23,6 @@ const K = require('../../helpers/kado')
 const interfaceRoot = __dirname
 const interfaceName = 'main'
 K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
-  worker.setupLang(() => {
-    //activate lang pack
-    K.log.debug(Object.keys(K.lang.pack).length +
-      ' ' + interfaceName + ' language packs activated')
-  })
-  worker.setupUri(() => {
-    //activate uri system
-    K.log.debug(interfaceName + ' URI system activated')
-  })
   worker.enableHtml((app) =>{
     const mustacheExpress = require('mustache-express')
     const serveStatic = require('serve-static')
@@ -108,6 +99,15 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
       res.locals.flash = worker.flashHandler(req)
       next()
     })
+  })
+  worker.setupLang(() => {
+    //activate lang pack
+    K.log.debug(Object.keys(K.lang.pack).length +
+      ' ' + interfaceName + ' language packs activated')
+  })
+  worker.setupUri(() => {
+    //activate uri system
+    K.log.debug(interfaceName + ' URI system activated')
   })
   worker.setupContent(() => {
     //activate the content system

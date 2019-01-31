@@ -87,6 +87,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     const http = require('http')
     const locale = require('locale')
     const mustache = require('mustache')
+    const nocache = require('nocache')
     const path = require('path')
     const serveStatic = require('serve-static')
     const Breadcrumb = require('../helpers/Breadcrumb')
@@ -354,7 +355,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       app.use((req,res,next) => {
         if(req.query.lang){
           if(req.session) req.session.lang = req.query.lang
-          return res.redirect(301,req.headers.referer)
+          return res.redirect(301,req.headers.referer || '/')
         }
         if(req.session && req.session.lang) req.locale = req.session.lang
         //actually finally load the pack
@@ -489,6 +490,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
      */
     worker.enableSession = (callback) => {
       if(!callback) callback = () => {}
+      app.use(nocache())
       app.use(cookieParser(config.interface[interfaceName].cookie.secret))
       //session setup
       app.use(expressSession({

@@ -23,18 +23,9 @@ const K = require('../../index')
 const interfaceRoot = __dirname
 const interfaceName = 'admin'
 K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
-  worker.setupLang(() => {
-    //activate lang pack
-    K.log.debug(Object.keys(K.lang.pack).length +
-      ' ' + interfaceName + ' language packs activated')
-  })
   worker.setupUri(() => {
     //activate uri system
     K.log.debug(interfaceName + ' URI system activated')
-  })
-  worker.setupPermission(() => {
-    //activate lang pack
-    K.log.debug(interfaceName + ' permissions system activated')
   })
   worker.enableHtml((app) => {
     const mustacheExpress = require('mustache-express')
@@ -113,6 +104,15 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
       res.locals.flash = worker.flashHandler(req)
       next()
     })
+  })
+  worker.setupLang(() => {
+    //activate lang pack
+    K.log.debug(Object.keys(K.lang.pack).length +
+      ' ' + interfaceName + ' language packs activated')
+  })
+  worker.setupPermission(() => {
+    //activate lang pack
+    K.log.debug(interfaceName + ' permissions system activated')
   })
   worker.setup((app) => {
     let errorView = __dirname + '/view/error.html'
