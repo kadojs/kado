@@ -1,6 +1,10 @@
 ### 3.7.0 (planned)
 
-### 3.6.5 (staged)
+### 3.6.6 (staged)
+
+### 3.6.5
+* Allow lookups into kado by default in the admin and main interfaces.
+* Search system now handles errors for modules individually and overall page errors.
 
 ### 3.6.4
 * Fix issue where an undefined return to the test entry would cause a crash.

@@ -65,6 +65,8 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     worker.setupScriptServer('to-mark')
     //country flags
     worker.setupScriptServer('flag-icon-css')
+    //kado itself for lookups by apps
+    worker.setupScriptServer('kado')
     //user defined script server entries
     if(K.config.interface[interfaceName] &&
       K.config.interface[interfaceName].scriptServer

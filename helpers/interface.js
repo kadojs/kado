@@ -420,7 +420,10 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       return (req,res) => {
         K.search(app,req.query.searchPhrase)
           .then((result) => {
-            res.render(res.locals._view.get('search'),result)
+            res.render('search',result)
+          })
+          .catch((err) => {
+            res.render('error',{error: err.message})
           })
       }
     }
@@ -435,7 +438,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
         ourScriptPath = path.resolve(
           path.join(interfaceRoot,'..','..','node_modules',scriptPath))
       }
-      if(!fs.existsSync(ourScriptPath)){
+      if(!fs.existsSync(ourScriptPath) && 'kado' !== name){
         console.log('falling back2',ourScriptPath)
       }
       app.use('/node_modules/' + name,serveStatic(

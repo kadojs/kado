@@ -53,6 +53,17 @@ module.exports = (K,app,phrase,start,limit) => {
                   }
                 }
               })
+              .catch((err) => {
+                K.log.warn('Search failed on module: ' +
+                  mod.name + ' due to: ' + err.message)
+                return {
+                  moduleName: mod.name,
+                  moduleTitle: mod.title,
+                  moduleResults: [],
+                  moduleError: 'Search failed on module "' +
+                    mod.name + '" due to: <b>' + err.message + '</b>'
+                }
+              })
           )
         }
       }
@@ -66,14 +77,12 @@ module.exports = (K,app,phrase,start,limit) => {
       if(result.length){
         results = result.filter((a) => {
           if(
-            a && a.moduleResults &&
-            a.moduleResults.length && a.moduleResults.length > 0
-          )
-          {
+            a && (a.moduleError || a.moduleResults &&
+            a.moduleResults.length && a.moduleResults.length > 0)
+          ){
             resultCount = resultCount + a.moduleResults.length
             return true
-          }
-          else{
+          } else {
             return false
           }
         })

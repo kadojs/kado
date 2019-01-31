@@ -13,6 +13,9 @@
       </div>
       <div class="search-results">
         {{#results}}
+          {{#moduleError}}
+            <div class="alert alert-warning">{{&moduleError}}</div>
+          {{/moduleError}}
           {{#moduleResults}}
             <article class="search-result row">
               <div class="col-xs-12 col-sm-12 col-md-12">
