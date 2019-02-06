@@ -76,6 +76,10 @@ let createInst = () => {
               if(-1 < sql.indexOf(t)) skip = true
             })
           }
+          //dont show the test query
+          if(sql === 'Executed (default): SELECT 1+1 AS result'){
+            skip = true
+          }
           //skip logging query if needed
           if(skip) return
           //log query

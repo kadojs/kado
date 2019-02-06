@@ -108,7 +108,6 @@ program.command('generate')
       cmd.header = path.resolve(
         path.join(path.dirname(process.argv[1]),cmd.header))
     }
-    console.log(cmd.header)
     if(cmd.header && fs.existsSync(cmd.header)){
       fileHeader = fs.readFileSync(cmd.header)
     } else if(fs.existsSync(fileHeaderPath)){

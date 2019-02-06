@@ -53,7 +53,9 @@ class Breadcrumb {
         }
       }
     })
-    if(!crumb && !req.url.match(/(js|css|html|jpg|jpeg|png)/i)){
+    if(!crumb &&
+      !req.url.match(/(js|css|html|jpg|jpeg|png|svg)/i && req.method === 'GET')
+    ){
       let parts = req.url.split('/')
       if(parts.length >= 3){
         let name = app.locals._capitalize(parts[1].replace(/\?.*/,'')) + ' ' +

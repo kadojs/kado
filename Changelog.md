@@ -1,6 +1,12 @@
 ### 3.7.0 (planned)
 
-### 3.6.7 (staged)
+### 3.6.8 (staged)
+
+### 3.6.7
+* Remove debug log message from generator.
+* Dont save POST requests to history
+* Add Module Title to middleware at the top of the interface definition
+* Fix unregistered doc module project create URI.
 
 ### 3.6.6
 * Fix to language switching system to be ordered after session startup.
