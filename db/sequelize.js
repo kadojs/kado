@@ -109,7 +109,7 @@ let createInst = () => {
       if(process.env.DEBUG && process.env.DEBUG.match(/sequelize/i)){
         console.trace('Duplicate model load attempted on ' + modelName)
       }
-      return
+      return inst.models[modelName]
     }
     inst._loadedModels.push(modelName)
     inst.import(modelFile)

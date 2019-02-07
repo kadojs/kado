@@ -1,6 +1,9 @@
 ### 3.7.0 (planned)
 
-### 3.6.10 (staged)
+### 3.6.11 (staged)
+
+### 3.6.10
+* Small fix to doImport handler to return instance on duplicate hit.
 
 ### 3.6.9
 * Add `sequelize.doImport(modelName,modeFile)` helps track registered models and
