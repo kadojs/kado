@@ -53,9 +53,7 @@ class Breadcrumb {
         }
       }
     })
-    if(!crumb &&
-      !req.url.match(/(js|css|html|jpg|jpeg|png|svg)/i && req.method === 'GET')
-    ){
+    if(!crumb && !req.url.match(/(js|css|html|jpg|jpeg|png|svg)/i)){
       let parts = req.url.split('/')
       if(parts.length >= 3){
         let name = app.locals._capitalize(parts[1].replace(/\?.*/,'')) + ' ' +
@@ -67,7 +65,7 @@ class Breadcrumb {
         }
       }
     }
-    if(crumb && crumb.uri !== '/'){
+    if('GET' === req.method && crumb && crumb.uri !== '/'){
       this.add(req.url,crumb.name,crumb.icon)
     }
     this.save(req)

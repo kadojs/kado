@@ -1,6 +1,9 @@
 ### 3.7.0 (planned)
 
-### 3.6.8 (staged)
+### 3.6.9 (staged)
+
+### 3.6.8
+* Fix to Breadcrumb, no longer tracks POST or SVG requests, fixes bug with filtering.
 
 ### 3.6.7
 * Remove debug log message from generator.
