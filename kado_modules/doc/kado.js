@@ -46,25 +46,20 @@ exports.config = (config) => {
  * Initialize database access
  * @param {K} K Master Kado Object
  * @param {K.db} db
+ * @param {K.db.sequelize} s Sequelize instance
  */
-exports.db = (K,db) => {
-  db.sequelize.enabled = true
-  db.sequelize.import(__dirname + '/models/Doc.js')
-  db.sequelize.import(__dirname + '/models/DocRevision.js')
-  db.sequelize.import(__dirname + '/models/DocProject.js')
-  db.sequelize.import(__dirname + '/models/DocProjectVersion.js')
-  let Doc = db.sequelize.models.Doc
-  let DocRevision = db.sequelize.models.DocRevision
-  let DocProject = db.sequelize.models.DocProject
-  let DocProjectVersion = db.sequelize.models.DocProjectVersion
-  Doc.hasMany(DocRevision,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
-  DocRevision.belongsTo(Doc,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
-  DocProject.hasMany(DocProjectVersion,
-    {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
-  DocProjectVersion.belongsTo(DocProject,
-    {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
-  DocProjectVersion.hasMany(Doc,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
-  Doc.belongsTo(DocProjectVersion,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+exports.db = (K,db,s) => {
+  let opts = s._relate.cascade()
+  let Doc = s.doImport(__dirname + '/models/Doc.js')
+  let DocRevision = s.doImport(__dirname + '/models/DocRevision.js')
+  let DocProject = s.doImport(__dirname + '/models/DocProject.js')
+  let DocProjectVersion = s.doImport(__dirname + '/models/DocProjectVersion.js')
+  Doc.hasMany(DocRevision,opts)
+  DocRevision.belongsTo(Doc,opts)
+  DocProject.hasMany(DocProjectVersion,opts)
+  DocProjectVersion.belongsTo(DocProject,opts)
+  DocProjectVersion.hasMany(Doc,opts)
+  Doc.belongsTo(DocProjectVersion,opts)
 }
 
 

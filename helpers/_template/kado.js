@@ -27,10 +27,10 @@ exports.config = (config) => {
  * Initialize database access
  * @param {K} K Master Kado Object
  * @param {K.db} db
+ * @param {K.db.sequelize} s Sequelize instance
  */
-exports.db = (K,db) => {
-  db.sequelize.enabled = true
-  db.sequelize.import(__dirname + '/models/<%moduleModelName%>.js')
+exports.db = (K,db,s) => {
+  s.doImport(__dirname + '/models/<%moduleModelName%>.js')
 }
 
 

@@ -39,9 +39,22 @@ program.version(K.config.version)
 
 
 program.command('dbsetup')
-  .action(() => {
+  .option('--force','Dangerously upgrade table schemas')
+  .action((cmd) => {
     K.log.info('Connecting to sequelize')
-    K.db.sequelize.doConnect({sync: true})
+    cmd.force = !!cmd.force
+    if(cmd.force){
+      let forceConfirm = readlineSync(
+        'Are you sure you want to continue, may DESTROY DATA!? (y/n)'
+      )
+      if('y' !== forceConfirm){
+        K.log.info('Force mode aborted, sissy!')
+        cmd.force = false
+      } else {
+        K.log.info('Force mode engaged, welcome Rambo')
+      }
+    }
+    K.db.sequelize.doConnect({sync: true, syncForce: cmd.force})
       .then(() => {
         log.info('Database connected, initializing...')
       })

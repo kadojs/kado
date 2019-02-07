@@ -1,6 +1,17 @@
 ### 3.7.0 (planned)
 
-### 3.6.9 (staged)
+### 3.6.10 (staged)
+
+### 3.6.9
+* Add `sequelize.doImport(modelName,modeFile)` helps track registered models and
+prevent duplicates.
+* Add `sequelize._relate` helper which will quickly yield settings for Model
+relationships with the following methods: `cascade(), setNull(), noAction(), custom()`
+* Sequelize is now enabled by default since all core modules and sessions use it.
+* The DB call now comes with the sequelize instance as the third parameter.
+* Add ability to use `node app kado dbsetup --force` which will alter schemas
+and distort data automatically. Use for development ONLY.
+
 
 ### 3.6.8
 * Fix to Breadcrumb, no longer tracks POST or SVG requests, fixes bug with filtering.

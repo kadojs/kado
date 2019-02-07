@@ -46,15 +46,14 @@ exports.config = (config) => {
  * Initialize database access
  * @param {K} K Master Kado Object
  * @param {K.db} db
+ * @param {K.db.sequelize} s Sequelize instance
  */
-exports.db = (K,db) => {
-  db.sequelize.enabled = true
-  db.sequelize.import(__dirname + '/models/Blog.js')
-  db.sequelize.import(__dirname + '/models/BlogRevision.js')
-  let Blog = db.sequelize.models.Blog
-  let BlogRevision = db.sequelize.models.BlogRevision
-  Blog.hasMany(BlogRevision,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
-  BlogRevision.belongsTo(Blog,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+exports.db = (K,db,s) => {
+  let opts = s._relate.cascade()
+  let Blog = s.doImport(__dirname + '/models/Blog.js')
+  let BlogRevision = s.doImport(__dirname + '/models/BlogRevision.js')
+  Blog.hasMany(BlogRevision,opts)
+  BlogRevision.belongsTo(Blog,opts)
 }
 
 

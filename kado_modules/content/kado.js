@@ -46,16 +46,14 @@ exports.config = (config) => {
  * Initialize database access
  * @param {K} K Master Kado Object
  * @param {K.db} db
+ * @param {K.db.sequelize} s Sequelize instance
  */
-exports.db = (K,db) => {
-  db.sequelize.enabled = true
-  db.sequelize.import(__dirname + '/models/Content.js')
-  db.sequelize.import(__dirname + '/models/ContentNav.js')
-  db.sequelize.import(__dirname + '/models/ContentRevision.js')
-  let Content = db.sequelize.models.Content
-  let ContentRevision = db.sequelize.models.ContentRevision
-  Content.hasMany(ContentRevision,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
-  ContentRevision.belongsTo(Content,{onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+exports.db = (K,db,s) => {
+  let Content = s.doImport(__dirname + '/models/Content.js')
+  let ContentRevision = s.doImport(__dirname + '/models/ContentRevision.js')
+  s.doImport(__dirname + '/models/ContentNav.js')
+  Content.hasMany(ContentRevision,s._relate.cascade())
+  ContentRevision.belongsTo(Content,s._relate.cascade())
 }
 
 

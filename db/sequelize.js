@@ -20,6 +20,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const K = require('../index')
+const path = require('path')
 const Sequelize = require('sequelize')
 
 let config = K.config
@@ -94,10 +95,38 @@ let createInst = () => {
   inst.doConnect = function(opts){
     if(!opts) opts = {}
     if(!opts.sync) opts.sync = false
+    if(!opts.syncForce) opts.syncForce = false
     let that = this
     return that.authenticate().then(() => {
-      if(opts.sync) return that.sync()
+      if(opts.sync) return that.sync({force: opts.syncForce})
     })
+  }
+  inst._loadedModels = []
+  inst.doImport = (modelFile) => {
+    let modelName = path.basename(modelFile)
+    modelName = modelName.replace(path.extname(modelName),'')
+    if(-1 < inst._loadedModels.indexOf(modelName)){
+      if(process.env.DEBUG && process.env.DEBUG.match(/sequelize/i)){
+        console.trace('Duplicate model load attempted on ' + modelName)
+      }
+      return
+    }
+    inst._loadedModels.push(modelName)
+    inst.import(modelFile)
+    if(!inst.models[modelName]){
+      throw new Error(modelName + ' not found, loading failed')
+    }
+    return inst.models[modelName]
+  }
+  inst._relate = {
+    custom: (onDelete,onUpdate,opts)=>{
+      let o = new K.ObjectManage({onDelete: onDelete, onUpdate: onUpdate})
+      o.$load(opts)
+      return o.$strip()
+    },
+    cascade: (opts)=>{return inst._relate.custom('CASCADE','CASCADE',opts)},
+    setNull: (opts)=>{return inst._relate.custom('SET NULL','SET NULL',opts)},
+    noAction: (opts)=>{return inst._relate.custom('NO ACTION','NO ACTION',opts)}
   }
   return inst
 }

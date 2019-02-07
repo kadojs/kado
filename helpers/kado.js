@@ -117,7 +117,7 @@ config.$load({
   //database connectors
   db: {
     sequelize: {
-      enabled: false,
+      enabled: true,
       load: true,
       name: 'kado',
       host: '127.0.0.1',
@@ -633,7 +633,7 @@ exports.init = (skipDb) => {
               let modFile = modConf.root + '/kado.js'
               let mod = require(modFile)
               if('function' === typeof mod.db){
-                mod.db(exports,exports.db)
+                mod.db(exports,exports.db,exports.db.sequelize)
               }
             }
           }
