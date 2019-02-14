@@ -1,6 +1,11 @@
 ### 3.7.0 (planned)
 
-### 3.6.11 (staged)
+### 3.6.12 (staged)
+
+### 3.6.11
+* Fix generator to properly name generated test file.
+* The options object on each `db` connector now passes those additional options
+into the connector and overrides the Kado defaults.
 
 ### 3.6.10
 * Small fix to doImport handler to return instance on duplicate hit.
@@ -14,7 +19,6 @@ relationships with the following methods: `cascade(), setNull(), noAction(), cus
 * The DB call now comes with the sequelize instance as the third parameter.
 * Add ability to use `node app kado dbsetup --force` which will alter schemas
 and distort data automatically. Use for development ONLY.
-
 
 ### 3.6.8
 * Fix to Breadcrumb, no longer tracks POST or SVG requests, fixes bug with filtering.

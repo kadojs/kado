@@ -128,7 +128,8 @@ config.$load({
       skipLoggingTable: ['StaffSessions'],
       benchmark: false,
       slowQueryTime: 10000,
-      dialect: 'mysql'
+      dialect: 'mysql',
+      options: {}
     }
   },
   //define interfaces
@@ -611,7 +612,8 @@ exports.init = (skipDb) => {
     //check if the connector is registered and enabled
     if(config.db[name] && config.db[name].load){
       exports.log.debug(name + ' connector loaded')
-      exports.db[name] = require(file)()
+      if(!config.db[name].options) config.db[name].options = {}
+      exports.db[name] = require(file)(config.db[name].options)
     }
   }
   let dbGlob = process.env.KADO_ROOT + '/db/*.js'

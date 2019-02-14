@@ -221,7 +221,7 @@ program.command('generate')
         }
         if(relativePath.match('test.test.js')){
           relativePath = relativePath.replace(
-            'test.test.js',modconf.moduleName + '.js'
+            'test.test.js',modconf.moduleName + '.test.js'
           )
         }
         //upgrade data type fields

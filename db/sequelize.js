@@ -24,72 +24,96 @@ const path = require('path')
 const Sequelize = require('sequelize')
 
 let config = K.config
-
 let inst
 
 
 /**
  * Create the Sequelze instance
+ * @param {object} userOptions
  * @return {Sequelize}
  */
-let createInst = () => {
+let createInst = (userOptions) => {
   //configure the instance for connection
   let benchmark = config.db.sequelize.benchmark || false
   let slowQueryTime = config.db.sequelize.slowQueryTime || 10000
   let skipTable = config.db.sequelize.skipLoggingTable || []
+  //apply development overrides
   if(config.dev){
     benchmark = true
     slowQueryTime = 1000
   }
+  /**
+   * Kado Query Logging
+   * @param {string} sql
+   * @param {Number} time
+   * @param {object} info
+   */
+  let kadoLogging = (sql,time,info) => {
+    //if the user setup their own function just use that
+    if('function' === typeof config.db.sequelize.logging){
+      config.db.sequelize.logging(sql,time)
+    } else if(true === config.dev) {
+      if(time instanceof Object){
+        info = time
+        time = 'n/a '
+      }
+      if(!info) info = {}
+      //skip session queries
+      let skip = false
+      if(info.tableNames){
+        info.tableNames.forEach((t)=>{
+          if(-1 < skipTable.indexOf(t)) skip = true
+        })
+      }
+      if(!info.tableNames && info.instance &&
+        -1 < skipTable.indexOf(info.instance._modelOptions.name.plural)){
+        skip = true
+      }
+      if(!info.tableNames && !info.instance && info.type === 'BULKDELETE'){
+        skipTable.forEach((t)=>{
+          if(-1 < sql.indexOf(t)) skip = true
+        })
+      }
+      //dont show the test query
+      if(sql === 'Executed (default): SELECT 1+1 AS result'){
+        skip = true
+      }
+      //skip logging query if needed
+      if(skip) return
+      //log query
+      K.log.debug('SQL Query took ' + time + 'ms: ' + sql)
+    } else if(!(time instanceof Object) && slowQueryTime > time){
+      K.log.warn('SLOW QUERY took ' + time + 'ms: ' + sql)
+    }
+  }
+  //setup default options
+  let sequelizeOptions = new K.ObjectManage({
+    host: config.db.sequelize.host,
+    port: config.db.sequelize.port,
+    dialect: config.db.sequelize.dialect || 'mysql',
+    define: {
+      paranoid: false,
+      freezeTableName: false,
+      underscored: false,
+      charset: 'utf8',
+      dialectOptions: {
+        collate: 'utf8_general_ci'
+      }
+    }
+  })
+  //apply runtime options
+  sequelizeOptions.$load(userOptions)
+  sequelizeOptions = sequelizeOptions.$strip()
+  //apply system options
+  sequelizeOptions.operatorsAliases =  Sequelize.Op
+  sequelizeOptions.benchmark = benchmark
+  sequelizeOptions.logging = kadoLogging
+  //setup sequelize instance
   let inst = new Sequelize(
     config.db.sequelize.name,
     config.db.sequelize.user,
     config.db.sequelize.password,
-    {
-      host: config.db.sequelize.host,
-      port: config.db.sequelize.port,
-      dialect: config.db.sequelize.dialect || 'mysql',
-      operatorsAliases: Sequelize.Op,
-      benchmark: benchmark,
-      logging: (sql,time,info) => {
-        //if the user setup their own function just use that
-        if('function' === typeof config.db.sequelize.logging){
-          config.db.sequelize.logging(sql,time)
-        } else if(true === config.dev) {
-          if(time instanceof Object){
-            info = time
-            time = 'n/a '
-          }
-          if(!info) info = {}
-          //skip session queries
-          let skip = false
-          if(info.tableNames){
-            info.tableNames.forEach((t)=>{
-              if(-1 < skipTable.indexOf(t)) skip = true
-            })
-          }
-          if(!info.tableNames && info.instance &&
-            -1 < skipTable.indexOf(info.instance._modelOptions.name.plural)){
-            skip = true
-          }
-          if(!info.tableNames && !info.instance && info.type === 'BULKDELETE'){
-            skipTable.forEach((t)=>{
-              if(-1 < sql.indexOf(t)) skip = true
-            })
-          }
-          //dont show the test query
-          if(sql === 'Executed (default): SELECT 1+1 AS result'){
-            skip = true
-          }
-          //skip logging query if needed
-          if(skip) return
-          //log query
-          K.log.debug('SQL Query took ' + time + 'ms: ' + sql)
-        } else if(!(time instanceof Object) && slowQueryTime > time){
-          K.log.warn('SLOW QUERY took ' + time + 'ms: ' + sql)
-        }
-      }
-    }
+    sequelizeOptions
   )
   //finally connect to the database
   inst.doConnect = function(opts){
@@ -134,10 +158,11 @@ let createInst = () => {
 
 /**
  * Export the singleton
+ * @param {object} opts
  * @return {Sequelize}
  */
-module.exports = () => {
+module.exports = (opts) => {
   if(inst) return inst
-  inst = createInst()
+  inst = createInst(opts)
   return inst
 }
