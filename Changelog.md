@@ -1,6 +1,11 @@
 ### 3.7.0 (planned)
 
-### 3.6.12 (staged)
+### 3.6.13 (staged)
+
+### 3.6.12
+* Add `modelInit` parameter to db connectors to allow custom initialization of
+models after module scan. This makes it easier to work with more complex data
+structures.
 
 ### 3.6.11
 * Fix generator to properly name generated test file.
