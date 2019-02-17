@@ -121,6 +121,10 @@ let createInst = (userOptions) => {
     if(!opts.sync) opts.sync = false
     if(!opts.syncForce) opts.syncForce = false
     let that = this
+    if('function' === typeof config.db.sequelize.modelInit){
+      exports.log.debug('Sequelize calling model initialization')
+      config.db.sequelize.modelInit(K,K.db,inst)
+    }
     return that.authenticate().then(() => {
       if(opts.sync) return that.sync({force: opts.syncForce})
     })

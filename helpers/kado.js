@@ -659,11 +659,6 @@ exports.init = (skipDb) => {
             if(exports.db.hasOwnProperty(dbKey)){
               let db = exports.db[dbKey]
               if(db.enabled){
-                if('function' === typeof exports.db[dbKey].modelInit){
-                  exports.log.debug(dbKey + ' calling model initialization')
-                  exports.db[dbKey].modelInit(
-                    exports,exports.db,exports.db[dbKey])
-                }
                 if('function' === typeof exports.db[dbKey].doConnect){
                   exports.db[dbKey].doConnect({sync: false})
                   exports.log.debug(dbKey + ' connector connected')
