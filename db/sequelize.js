@@ -122,7 +122,7 @@ let createInst = (userOptions) => {
     if(!opts.syncForce) opts.syncForce = false
     let that = this
     if('function' === typeof config.db.sequelize.modelInit){
-      exports.log.debug('Sequelize calling model initialization')
+      K.log.debug('Sequelize calling model initialization')
       config.db.sequelize.modelInit(K,K.db,inst)
     }
     return that.authenticate().then(() => {
