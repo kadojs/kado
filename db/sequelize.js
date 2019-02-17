@@ -125,7 +125,7 @@ let createInst = (userOptions) => {
     if(config.db.sequelize.modelInit){
       init = path.resolve(config.db.sequelize.modelInit)
     }
-    if(init){
+    if(init && K.fs.existsSync(init)){
       K.log.debug('Sequelize calling model initialization')
       require(init)(K,K.db,inst)
     }
