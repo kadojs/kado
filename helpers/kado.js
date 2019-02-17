@@ -129,7 +129,7 @@ config.$load({
       benchmark: false,
       slowQueryTime: 10000,
       dialect: 'mysql',
-      modelInit: ()=>{},
+      modelInit: null,
       options: {}
     }
   },

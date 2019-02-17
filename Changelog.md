@@ -1,6 +1,10 @@
 ### 3.7.0 (planned)
 
-### 3.6.14 (staged)
+### 3.6.15 (staged)
+
+### 3.6.14
+* Fix issue where `modelInit` needs to be passed as a path to the init file
+which is then required to avoid dynamic scoping issues.
 
 ### 3.6.13
 * Fix issue where `modelInit` is not called during `node app kado dbsetup` the
