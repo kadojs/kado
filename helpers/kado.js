@@ -644,8 +644,7 @@ exports.init = (skipDb) => {
         let dbEnabled = 0
         Object.keys(exports.db).forEach((dbKey) => {
           if(exports.db.hasOwnProperty(dbKey)){
-            let db = exports.db[dbKey]
-            if(db.enabled){
+            if(config.db[dbKey].enabled){
               exports.log.debug(dbKey + ' connector enabled')
               dbEnabled++
             }
@@ -657,8 +656,7 @@ exports.init = (skipDb) => {
           let dbConnected = 0
           Object.keys(exports.db).forEach((dbKey) => {
             if(exports.db.hasOwnProperty(dbKey)){
-              let db = exports.db[dbKey]
-              if(db.enabled){
+              if(config.db[dbKey].enabled){
                 if('function' === typeof exports.db[dbKey].doConnect){
                   exports.db[dbKey].doConnect({sync: false})
                   exports.log.debug(dbKey + ' connector connected')
