@@ -5,6 +5,7 @@
 ### 3.6.16
 * Document module requires a project to be created before allowing creation of a
 document.
+* Update dependencies.
 
 ### 3.6.15
 * Fix issue where DB connectors would not be connected to even when enabled.
