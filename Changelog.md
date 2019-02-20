@@ -1,6 +1,10 @@
 ### 3.7.0 (planned)
 
-### 3.6.16 (staged)
+### 3.6.17 (staged)
+
+### 3.6.16
+* Document module requires a project to be created before allowing creation of a
+document.
 
 ### 3.6.15
 * Fix issue where DB connectors would not be connected to even when enabled.

@@ -53,5 +53,8 @@ module.exports = {
   'created': 'Created',
   'modified': 'Modified',
   'active': 'Active',
-  'action': 'Action'
+  'action': 'Action',
+  'create_one': 'create one',
+  'no_projects_exist': 'No Projects exist to create Documents in,',
+  'no_project_version_exist': 'also make sure a Project Version exists within the'
 }

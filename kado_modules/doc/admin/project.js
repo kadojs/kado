@@ -108,7 +108,8 @@ exports.save = (req,res) => {
           href: '/doc/project/edit?id=' + result.id,
           name: result.id
         })
-        res.redirect('/doc/project/list')
+        req.flash('info','NOTE: Create a version below before creating documents.')
+        res.redirect('/doc/project/edit?id=' + result.id)
       }
     })
     .catch((err) => {

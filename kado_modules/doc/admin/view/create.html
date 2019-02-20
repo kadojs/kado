@@ -10,17 +10,26 @@
           <label for="docUri">{{_l.doc.uri}}</label>
           <input class="form-control" type="text" id="docUri" name="uri" placeholder="{{_l.doc.uri}}" />
         </div>
-        <div class="form-group">
-          <label for="DocProjectVersionId">{{_l.doc.project_version}}</label>
-          <select class="form-control" id="DocProjectVersionId" name="DocProjectVersionId">
-          {{#projects}}
-            <option value="{{id}}">{{DocProject.name}} {{name}}</option>
-          {{/projects}}
-          </select>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-success">{{_l.save}}</button>
-        </div>
+        {{#projects.length}}
+          <div class="form-group">
+            <label for="DocProjectVersionId">{{_l.doc.project_version}}</label>
+            <select class="form-control" id="DocProjectVersionId" name="DocProjectVersionId">
+              {{#projects}}
+                <option value="{{id}}">{{DocProject.name}} {{name}}</option>
+              {{/projects}}
+            </select>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success">{{_l.save}}</button>
+          </div>
+        {{/projects.length}}
+        {{^projects}}
+          <div class="alert alert-warning">
+            {{_l.doc.no_projects_exist}}
+            [<a href="{{{_baseUrl}}}{{{_u._doc_project_create}}}">{{_l.doc.create_one}}</a>],
+            {{_l.doc.no_project_version_exist}} <a href="{{{_baseUrl}}}{{{_u._doc_project_list}}}">Projects</a>.
+          </div>
+        {{/projects}}
       </form>
     </div>
 {{>footer}}
