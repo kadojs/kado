@@ -29,6 +29,10 @@ const request = require('request')
 K.bluebird.promisifyAll(request)
 
 K.scanModules().then(()=>{
+  let appTest = false
+  if('string' === K.config.tests && K.fs.existsSync(K.config.tests)){
+    appTest = require(K.config.tests)
+  }
   describe('kado',function(){
     this.timeout(20000)
     //start servers and create a staff
@@ -77,6 +81,9 @@ K.scanModules().then(()=>{
             tests.cli(K,expect,request,exec,params)
           }
         })
+        if('object' === typeof appTest && 'function' === appTest.cli){
+          appTest.cli(K,expect,request,exec,params)
+        }
       })
       describe('admin',() => {
         const baseUrl = 'http://127.0.0.1:3000'
@@ -169,6 +176,9 @@ K.scanModules().then(()=>{
               tests.admin(K,expect,request,exec,params)
             }
           })
+          if('object' === typeof appTest && 'function' === appTest.admin){
+            appTest.admin(K,expect,request,exec,params)
+          }
           describe('logout',() => {
             before(() => {
               if(!cookieJar) return doLogin()
@@ -221,9 +231,15 @@ K.scanModules().then(()=>{
               tests.main(K,expect,request,exec,params)
             }
           })
+          if('object' === typeof appTest && 'function' === appTest.main){
+            appTest.main(K,expect,request,exec,params)
+          }
         })
       })
     })
+    if('object' === typeof appTest && 'function' === appTest.test){
+      appTest.test(K,expect,request,exec)
+    }
   })
   run()
 })

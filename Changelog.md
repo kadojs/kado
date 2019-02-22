@@ -1,6 +1,13 @@
 ### 3.7.0 (planned)
 
-### 3.6.17 (staged)
+### 3.6.18 (staged)
+
+### 3.6.17
+* Add test hooks that can be loaded through a config option `K.config.test` this
+allows the application so specify global tests for each interface and then
+finally global tests against the application. This completes the testing harness
+to support modular and project level testing while continuing to support the
+enormously dynamic structure of Kado.
 
 ### 3.6.16
 * Document module requires a project to be created before allowing creation of a
