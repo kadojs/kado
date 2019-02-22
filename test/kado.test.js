@@ -30,7 +30,7 @@ K.bluebird.promisifyAll(request)
 
 K.scanModules().then(()=>{
   let appTest = false
-  if('string' === K.config.tests && K.fs.existsSync(K.config.tests)){
+  if('string' === typeof K.config.tests && K.fs.existsSync(K.config.tests)){
     appTest = require(K.config.tests)
   }
   describe('kado',function(){
@@ -81,7 +81,7 @@ K.scanModules().then(()=>{
             tests.cli(K,expect,request,exec,params)
           }
         })
-        if('object' === typeof appTest && 'function' === appTest.cli){
+        if('object' === typeof appTest && 'function' === typeof appTest.cli){
           appTest.cli(K,expect,request,exec,params)
         }
       })
@@ -176,7 +176,9 @@ K.scanModules().then(()=>{
               tests.admin(K,expect,request,exec,params)
             }
           })
-          if('object' === typeof appTest && 'function' === appTest.admin){
+          if('object' === typeof appTest &&
+            'function' === typeof appTest.admin
+          ){
             appTest.admin(K,expect,request,exec,params)
           }
           describe('logout',() => {
@@ -231,13 +233,13 @@ K.scanModules().then(()=>{
               tests.main(K,expect,request,exec,params)
             }
           })
-          if('object' === typeof appTest && 'function' === appTest.main){
+          if('object' === typeof appTest && 'function' === typeof appTest.main){
             appTest.main(K,expect,request,exec,params)
           }
         })
       })
     })
-    if('object' === typeof appTest && 'function' === appTest.test){
+    if('object' === typeof appTest && 'function' === typeof appTest.test){
       appTest.test(K,expect,request,exec)
     }
   })

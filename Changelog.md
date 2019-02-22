@@ -1,6 +1,12 @@
 ### 3.7.0 (planned)
 
-### 3.6.18 (staged)
+### 3.6.19 (staged)
+
+### 3.6.18
+* Add environment config loaded to be done at scanModules and init time to make
+it more comprehensive.
+* Fix bug in new test runners that were not checking proper variable type of the
+test functions.
 
 ### 3.6.17
 * Add test hooks that can be loaded through a config option `K.config.test` this

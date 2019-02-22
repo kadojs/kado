@@ -542,6 +542,8 @@ let doScan = (pattern,handler) => {
  * @return {P}
  */
 exports.scanModules = () => {
+  //load environmental config
+  exports.loadEnvConfig()
   let sysGlob = process.env.KADO_MODULES + '/**/kado.js'
   let userGlob = process.env.KADO_USER_MODULES + '/**/kado.js'
   let loadModule = (file) => {
@@ -575,20 +577,37 @@ exports.scanModules = () => {
 
 
 /**
- * Init, scan modules and interfaces
- * @return {P}
+ * Support loading config from environment variable one time
+ * @type {boolean}
  */
-exports.init = (skipDb) => {
+let envConfigLoaded = false
+
+
+/**
+ * Load environment config if not loaded already
+ */
+exports.loadEnvConfig = () => {
   //load any config left in the env for us
-  if(process.env.KADO_CONFIG_STRING){
+  if(!envConfigLoaded && process.env.KADO_CONFIG_STRING){
     try {
       let configDelta = JSON.parse(process.env.KADO_CONFIG_STRING)
       exports.log.debug('Adding found environment config')
       config.$load(configDelta)
+      envConfigLoaded = true
     } catch(e){
       exports.log.warn('Failed to load env config: ' + e.message)
     }
   }
+}
+
+
+/**
+ * Init, scan modules and interfaces
+ * @return {P}
+ */
+exports.init = (skipDb) => {
+  //load environmental config
+  exports.loadEnvConfig()
   //override logger with runtime logger
   exports.log = logger.setupLogger(
     process.pid + '-' + config.name,
@@ -702,7 +721,7 @@ exports.init = (skipDb) => {
         exports.log.debug('Init complete')
         resolve()
       })
-    })
+  })
 }
 
 
