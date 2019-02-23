@@ -66,7 +66,7 @@ window.DataTableConfig = (tableName) => {
     lengthMenu: [ [10, 20, 50, 100, 250, -1], [10 ,20, 50, 100, 250, 'All'] ],
     columns: (() => {
       let cols = []
-      $('#table th').each(function(i){
+      $('#' + tableName +' th').each(function(i){
         let that = this
         let dataName = $(that).attr('data-name')
         let dataFormat = $(that).attr('data-format')
@@ -81,7 +81,7 @@ window.DataTableConfig = (tableName) => {
             if(!dataLink && !dataFormat) return data
             if(dataLink){
               data = '<a href="' + dataUri + '?' + dataLink + '=' +
-              row[dataLink] + '">' + data + '</a>'
+                row[dataLink] + '">' + data + '</a>'
             }
             if(dataFormat){
               data = window[dataFormat](data,type,row)
@@ -93,6 +93,6 @@ window.DataTableConfig = (tableName) => {
       return cols
     })()
   }
-  if(serverSide) dtCfg.ajax = window.location.href
+  if(serverSide) dtCfg.ajax = (true === dataSrc) ? window.location.href : dataSrc
   return dtCfg
 }
