@@ -93,6 +93,6 @@ window.DataTableConfig = (tableName) => {
       return cols
     })()
   }
-  if(serverSide) dtCfg.ajax = (true === dataSrc) ? window.location.href : dataSrc
+  if(serverSide) dtCfg.ajax = (undefined === dataSrc) ? window.location.href : dataSrc
   return dtCfg
 }
