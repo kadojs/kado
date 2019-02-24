@@ -110,19 +110,19 @@ exports.admin = (K,app) => {
   app.view.add('blog/edit',__dirname + '/admin/view/edit.html')
   app.view.add('blog/list',__dirname + '/admin/view/list.html')
   //register navigation
-  app.nav.addGroup(app.uri.add('/blog'),'Blog','book')
-  app.nav.addItem('Blog',app.uri.add('/blog/list'),'List','list')
-  app.nav.addItem('Blog',app.uri.add('/blog/create'),'Create','plus')
+  app.nav.addGroup(app.uri.p('/blog'),'Blog','book')
+  app.nav.addItem('Blog',app.uri.p('/blog/list'),'List','list')
+  app.nav.addItem('Blog',app.uri.p('/blog/create'),'Create','plus')
   //register routes
-  app.get(app.uri.get('/blog'),(req,res) => {
-    res.redirect(301,app.uri.get('/blog/list'))
+  app.get(app.uri.p('/blog'),(req,res) => {
+    res.redirect(301,app.uri.p('/blog/list'))
   })
-  app.get(app.uri.get('/blog/list'),admin.list)
-  app.get(app.uri.get('/blog/create'),admin.create)
-  app.get(app.uri.add('/blog/edit'),admin.edit)
-  app.post(app.uri.add('/blog/save'),admin.save)
-  app.post(app.uri.add('/blog/remove'),admin.remove)
-  app.get(app.uri.get('/blog/remove'),admin.remove)
+  app.get(app.uri.p('/blog/list'),admin.list)
+  app.get(app.uri.p('/blog/create'),admin.create)
+  app.get(app.uri.p('/blog/edit'),admin.edit)
+  app.post(app.uri.p('/blog/save'),admin.save)
+  app.post(app.uri.p('/blog/remove'),admin.remove)
+  app.get(app.uri.p('/blog/remove'),admin.remove)
 }
 
 
@@ -134,13 +134,13 @@ exports.admin = (K,app) => {
 exports.main = (K,app) => {
   let main = require('./main')
   //register routes
-  app.get(app.uri.add('/blog'),main.index)
-  app.get(app.uri.add('/blog/:blogUri'),main.entry)
+  app.get(app.uri.p('/blog'),main.index)
+  app.get(app.uri.p('/blog/:blogUri'),main.entry)
   //register views
   app.view.add('blog/entry',__dirname + '/main/view/entry.html')
   app.view.add('blog/list',__dirname + '/main/view/list.html')
   //register navigation
-  app.nav.addGroup(app.uri.get('/blog'),'Blog','book')
+  app.nav.addGroup(app.uri.p('/blog'),'Blog','book')
 }
 
 

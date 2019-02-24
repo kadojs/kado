@@ -41,11 +41,11 @@ exports.admin = (K,app) => {
   app.permission.add('/setting/edit','Edit etting')
   app.permission.add('/setting/save','Save etting')
   //register routes
-  app.get(app.uri.add('/setting'),(req,res) => {
-    res.redirect(301,app.uri.add('/setting/list'))
+  app.get(app.uri.p('/setting'),(req,res) => {
+    res.redirect(301,app.uri.p('/setting/list'))
   })
-  app.get(app.uri.add('/setting/list'),admin.list)
-  app.get(app.uri.add('/setting/edit'),admin.edit)
-  app.post(app.uri.add('/setting/list'),admin.listAction)
-  app.post(app.uri.add('/setting/save'),admin.save)
+  app.get(app.uri.p('/setting/list'),admin.list)
+  app.get(app.uri.p('/setting/edit'),admin.edit)
+  app.post(app.uri.p('/setting/list'),admin.listAction)
+  app.post(app.uri.p('/setting/save'),admin.save)
 }

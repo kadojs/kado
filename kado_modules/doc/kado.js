@@ -139,38 +139,38 @@ exports.admin = (K,app) => {
     '/admin/view/version/create.html')
   app.view.add('doc/version/edit',__dirname + '/admin/view/version/edit.html')
   //register navigation
-  app.nav.addGroup(app.uri.add('/doc'),'Doc','file-alt')
-  app.nav.addItem('Doc',app.uri.add('/doc/list'),'List','list')
-  app.nav.addItem('Doc',app.uri.add('/doc/create'),'Create','plus')
-  app.nav.addItem('Doc',app.uri.add('/doc/project/list'),
+  app.nav.addGroup(app.uri.p('/doc'),'Doc','file-alt')
+  app.nav.addItem('Doc',app.uri.p('/doc/list'),'List','list')
+  app.nav.addItem('Doc',app.uri.p('/doc/create'),'Create','plus')
+  app.nav.addItem('Doc',app.uri.p('/doc/project/list'),
     'List Projects','umbrella')
   //register routes
   //main doc routes
-  app.get(app.uri.get('/doc'),(req,res) => {
-    res.redirect(301,app.uri.get('/doc/list'))
+  app.get(app.uri.p('/doc'),(req,res) => {
+    res.redirect(301,app.uri.p('/doc/list'))
   })
-  app.get(app.uri.get('/doc/list'),admin.list)
-  app.get(app.uri.get('/doc/create'),admin.create)
-  app.get(app.uri.add('/doc/edit'),admin.edit)
-  app.post(app.uri.add('/doc/save'),admin.save)
-  app.post(app.uri.add('/doc/remove'),admin.remove)
-  app.get(app.uri.get('/doc/remove'),admin.remove)
+  app.get(app.uri.p('/doc/list'),admin.list)
+  app.get(app.uri.p('/doc/create'),admin.create)
+  app.get(app.uri.p('/doc/edit'),admin.edit)
+  app.post(app.uri.p('/doc/save'),admin.save)
+  app.post(app.uri.p('/doc/remove'),admin.remove)
+  app.get(app.uri.p('/doc/remove'),admin.remove)
   //project routes
-  app.get(app.uri.add('/doc/project'),(req,res) => {
-    res.redirect(301,app.uri.get('/doc/project/list'))
+  app.get(app.uri.p('/doc/project'),(req,res) => {
+    res.redirect(301,app.uri.p('/doc/project/list'))
   })
-  app.get(app.uri.get('/doc/project/list'),admin.project.list)
-  app.get(app.uri.add('/doc/project/create'),admin.project.create)
-  app.get(app.uri.add('/doc/project/edit'),admin.project.edit)
-  app.post(app.uri.add('/doc/project/save'),admin.project.save)
-  app.post(app.uri.add('/doc/project/remove'),admin.project.remove)
-  app.get(app.uri.get('/doc/project/remove'),admin.project.remove)
+  app.get(app.uri.p('/doc/project/list'),admin.project.list)
+  app.get(app.uri.p('/doc/project/create'),admin.project.create)
+  app.get(app.uri.p('/doc/project/edit'),admin.project.edit)
+  app.post(app.uri.p('/doc/project/save'),admin.project.save)
+  app.post(app.uri.p('/doc/project/remove'),admin.project.remove)
+  app.get(app.uri.p('/doc/project/remove'),admin.project.remove)
   //version routes
-  app.get(app.uri.add('/doc/version/create'),admin.version.create)
-  app.get(app.uri.add('/doc/version/edit'),admin.version.edit)
-  app.post(app.uri.add('/doc/version/save'),admin.version.save)
-  app.post(app.uri.add('/doc/version/remove'),admin.version.remove)
-  app.get(app.uri.get('/doc/version/remove'),admin.version.remove)
+  app.get(app.uri.p('/doc/version/create'),admin.version.create)
+  app.get(app.uri.p('/doc/version/edit'),admin.version.edit)
+  app.post(app.uri.p('/doc/version/save'),admin.version.save)
+  app.post(app.uri.p('/doc/version/remove'),admin.version.remove)
+  app.get(app.uri.p('/doc/version/remove'),admin.version.remove)
 }
 
 
@@ -182,14 +182,14 @@ exports.admin = (K,app) => {
 exports.main = (K,app) => {
   let main = require('./main/index')
   //register routes
-  app.get(app.uri.add('/doc/project'),main.project.index)
-  app.get(app.uri.add('/doc/project/:uri'),main.project.entry)
-  app.get(app.uri.add('/doc'),main.index)
-  app.get(app.uri.add('/doc/:project/:version/:uri'),main.entry)
-  app.get(app.uri.add('/doc/:project/:version'),main.list)
-  app.get(app.uri.add('/doc/:project'),main.versionList)
+  app.get(app.uri.p('/doc/project'),main.project.index)
+  app.get(app.uri.p('/doc/project/:uri'),main.project.entry)
+  app.get(app.uri.p('/doc'),main.index)
+  app.get(app.uri.p('/doc/:project/:version/:uri'),main.entry)
+  app.get(app.uri.p('/doc/:project/:version'),main.list)
+  app.get(app.uri.p('/doc/:project'),main.versionList)
   //register navigation
-  app.nav.addGroup(app.uri.get('/doc'),'Documentation','file-alt')
+  app.nav.addGroup(app.uri.p('/doc'),'Documentation','file-alt')
   //register views
   app.view.add('doc/entry',__dirname + '/main/view/entry.html')
   app.view.add('doc/versionList',__dirname + '/main/view/versionList.html')

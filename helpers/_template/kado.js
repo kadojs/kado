@@ -78,19 +78,19 @@ exports.admin = (K,app) => {
   app.view.add('<%moduleName%>/edit',__dirname + '/admin/view/edit.html')
   app.view.add('<%moduleName%>/list',__dirname + '/admin/view/list.html')
   //register navigation
-  app.nav.addGroup(app.uri.add('/<%moduleName%>'),'<%moduleTitle%>','<%moduleIcon%>')
-  app.nav.addItem('<%moduleTitle%>',app.uri.add('/<%moduleName%>/list'),'List','list')
-  app.nav.addItem('<%moduleTitle%>',app.uri.add('/<%moduleName%>/create'),'Create','plus')
+  app.nav.addGroup(app.uri.p('/<%moduleName%>'),'<%moduleTitle%>','<%moduleIcon%>')
+  app.nav.addItem('<%moduleTitle%>',app.uri.p('/<%moduleName%>/list'),'List','list')
+  app.nav.addItem('<%moduleTitle%>',app.uri.p('/<%moduleName%>/create'),'Create','plus')
   //register routes
-  app.get(app.uri.get('/<%moduleName%>'),(req,res) => {
-    res.redirect(301,app.uri.get('/<%moduleName%>/list'))
+  app.get(app.uri.p('/<%moduleName%>'),(req,res) => {
+    res.redirect(301,app.uri.p('/<%moduleName%>/list'))
   })
-  app.get(app.uri.get('/<%moduleName%>/list'),admin.list)
-  app.get(app.uri.get('/<%moduleName%>/create'),admin.create)
-  app.get(app.uri.add('/<%moduleName%>/edit'),admin.edit)
-  app.post(app.uri.add('/<%moduleName%>/save'),admin.save)
-  app.post(app.uri.add('/<%moduleName%>/remove'),admin.remove)
-  app.get(app.uri.get('/<%moduleName%>/remove'),admin.remove)
+  app.get(app.uri.p('/<%moduleName%>/list'),admin.list)
+  app.get(app.uri.p('/<%moduleName%>/create'),admin.create)
+  app.get(app.uri.p('/<%moduleName%>/edit'),admin.edit)
+  app.post(app.uri.p('/<%moduleName%>/save'),admin.save)
+  app.post(app.uri.p('/<%moduleName%>/remove'),admin.remove)
+  app.get(app.uri.p('/<%moduleName%>/remove'),admin.remove)
 }
 
 
@@ -102,10 +102,10 @@ exports.admin = (K,app) => {
 exports.main = (K,app) => {
   let main = require('./main/index')
   //register routes
-  app.get(app.uri.add('/<%moduleName%>'),main.index)
-  app.get(app.uri.add('/<%moduleName%>/:uri'),main.entry)
+  app.get(app.uri.p('/<%moduleName%>'),main.index)
+  app.get(app.uri.p('/<%moduleName%>/:uri'),main.entry)
   //register navigation
-  app.nav.addGroup(app.uri.get('/<%moduleName%>'),'<%moduleTitle%>','<%moduleIcon%>')
+  app.nav.addGroup(app.uri.p('/<%moduleName%>'),'<%moduleTitle%>','<%moduleIcon%>')
 }
 
 

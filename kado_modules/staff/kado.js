@@ -120,19 +120,19 @@ exports.admin = (K,app) => {
   app.view.add('staff/edit',__dirname + '/admin/view/edit.html')
   app.view.add('staff/list',__dirname + '/admin/view/list.html')
   //staff routes
-  app.uri.add('/login')
-  app.uri.add('/logout')
-  app.get(app.uri.add('/staff'),(req,res) => {
-    res.redirect(301,app.uri.add('/staff/list'))
+  app.uri.p('/login')
+  app.uri.p('/logout')
+  app.get(app.uri.p('/staff'),(req,res) => {
+    res.redirect(301,app.uri.p('/staff/list'))
   })
-  app.post(app.uri.add('/staff/save'),admin.save)
-  app.get(app.uri.add('/staff/list'),admin.list)
-  app.get(app.uri.add('/staff/create'),admin.create)
-  app.get(app.uri.add('/staff/edit'),admin.edit)
-  app.get(app.uri.add('/staff/grant'),admin.grant)
-  app.get(app.uri.add('/staff/revoke'),admin.revoke)
-  app.post(app.uri.add('/staff/remove'),admin.remove)
-  app.get(app.uri.add('/staff/remove'),admin.remove)
+  app.post(app.uri.p('/staff/save'),admin.save)
+  app.get(app.uri.p('/staff/list'),admin.list)
+  app.get(app.uri.p('/staff/create'),admin.create)
+  app.get(app.uri.p('/staff/edit'),admin.edit)
+  app.get(app.uri.p('/staff/grant'),admin.grant)
+  app.get(app.uri.p('/staff/revoke'),admin.revoke)
+  app.post(app.uri.p('/staff/remove'),admin.remove)
+  app.get(app.uri.p('/staff/remove'),admin.remove)
 }
 
 

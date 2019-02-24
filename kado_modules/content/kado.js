@@ -123,31 +123,31 @@ exports.admin = (K,app) => {
   app.view.add('content/nav/edit',__dirname + '/admin/view/nav/edit.html')
   app.view.add('content/nav/list',__dirname + '/admin/view/nav/list.html')
   //register navigation
-  app.nav.addGroup(app.uri.add('/content'),'Content','file-alt')
-  app.nav.addItem('Content',app.uri.add('/content/list'),'List','list')
-  app.nav.addItem('Content',app.uri.add('/content/create'),'Create','plus')
-  app.nav.addItem('Content',app.uri.add('/content/nav/list'),
+  app.nav.addGroup(app.uri.p('/content'),'Content','file-alt')
+  app.nav.addItem('Content',app.uri.p('/content/list'),'List','list')
+  app.nav.addItem('Content',app.uri.p('/content/create'),'Create','plus')
+  app.nav.addItem('Content',app.uri.p('/content/nav/list'),
     'Manage Nav','clipboard-list')
   //register routes
-  app.get(app.uri.get('/content'),(req,res) => {
-    res.redirect(301,app.uri.get('/content/list'))
+  app.get(app.uri.p('/content'),(req,res) => {
+    res.redirect(301,app.uri.p('/content/list'))
   })
-  app.get(app.uri.get('/content/list'),admin.list)
-  app.get(app.uri.get('/content/create'),admin.create)
-  app.get(app.uri.add('/content/edit'),admin.edit)
-  app.post(app.uri.add('/content/save'),admin.save)
-  app.post(app.uri.add('/content/remove'),admin.remove)
-  app.get(app.uri.get('/content/remove'),admin.remove)
+  app.get(app.uri.p('/content/list'),admin.list)
+  app.get(app.uri.p('/content/create'),admin.create)
+  app.get(app.uri.p('/content/edit'),admin.edit)
+  app.post(app.uri.p('/content/save'),admin.save)
+  app.post(app.uri.p('/content/remove'),admin.remove)
+  app.get(app.uri.p('/content/remove'),admin.remove)
   //nav routes
-  app.get(app.uri.get('/content/nav',(req,res) => {
+  app.get(app.uri.p('/content/nav',(req,res) => {
     res.redirect(301,app.uri.get('/content/nav/list'))
   }))
-  app.get(app.uri.add('/content/nav/list'),admin.nav.list)
-  app.get(app.uri.add('/content/nav/create'),admin.nav.create)
-  app.get(app.uri.add('/content/nav/edit'),admin.nav.edit)
-  app.post(app.uri.add('/content/nav/save'),admin.nav.save)
-  app.post(app.uri.add('/content/nav/remove'),admin.nav.remove)
-  app.get(app.uri.add('/content/nav/remove'),admin.nav.remove)
+  app.get(app.uri.p('/content/nav/list'),admin.nav.list)
+  app.get(app.uri.p('/content/nav/create'),admin.nav.create)
+  app.get(app.uri.p('/content/nav/edit'),admin.nav.edit)
+  app.post(app.uri.p('/content/nav/save'),admin.nav.save)
+  app.post(app.uri.p('/content/nav/remove'),admin.nav.remove)
+  app.get(app.uri.p('/content/nav/remove'),admin.nav.remove)
 }
 
 
@@ -159,7 +159,7 @@ exports.admin = (K,app) => {
 exports.main = (K,app) => {
   let main = require('./main')
   //register routes
-  app.get(app.uri.add('/content') + '/:contentUri',main.entry)
+  app.get(app.uri.p('/content') + '/:contentUri',main.entry)
   //register view
   app.view.add('content/entry',__dirname + '/main/view/entry.html')
 }

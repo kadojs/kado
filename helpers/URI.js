@@ -65,7 +65,19 @@ class URI {
    * @return {string}
    */
   get(name){
-    return this.uri[name] || '/'
+    if(!this.uri[name]) throw new Error('Requested undefined URI: ' + name)
+    return this.uri[name]
+  }
+
+  /**
+   * Pass through (this is the preferred usage)
+   * @param {string} name
+   * @param {string} uri
+   */
+  p(name,uri){
+    if(!uri) uri = name
+    if(!this.uri[name]) this.add(name,uri)
+    return this.get(name)
   }
   /**
    * Get all URIs for template use mashed into an object

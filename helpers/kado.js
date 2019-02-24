@@ -133,6 +133,22 @@ config.$load({
       options: {}
     }
   },
+  //email connectors
+  email: {
+    notifyTo: 'Kado <kado@localhost>',
+    replyTo: 'Kado <kado@localhost>',
+    defaultFrom: 'Kado <kado@localhost>',
+    defaultSubject: 'Email from Kado',
+    emailjs: {
+      user: 'kado@localhost',
+      password: '',
+      host: 'localhost',
+      port: null,
+      ssl: false,
+      tls: false,
+      timeout: null
+    }
+  },
   //define interfaces
   interface: {
     admin: {
@@ -302,6 +318,33 @@ exports.modelRemoveById = (Model,items) => {
     return P.all(promises)
   })
 }
+
+
+/**
+ * Event Class
+ * @type {Event}
+ */
+exports.Event = require('./Event')
+
+
+/**
+ * Event instance
+ */
+exports.event = new exports.Event(exports)
+
+
+/**
+ * Message class
+ * @type {Message}
+ */
+exports.Message = require('./Message')
+
+
+/**
+ * Message instance
+ * @type {Message}
+ */
+exports.message = new exports.Message(exports)
 
 
 /**

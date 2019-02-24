@@ -1,6 +1,18 @@
 ### 3.7.0 (planned)
 
-### 3.6.19 (staged)
+### 3.6.20 (staged)
+
+### 3.6.19
+* Add Message support that allows modules to register as message handlers.
+* Add Event system that tracks system activity and notifies via email on
+configured levels.
+* Fix to table.js to properly handle multiple table instances.
+* Introduce `Uri.p(name,uri)` pass through method to supersede `Uri.add|get` 
+also `Uri.get` will now throw an error when trying to reach an undefined uri
+instead of returning '/'
+* NOTE: The Contact, Event, Message management modules will be included at a
+later date. This release only includes the primitives needed to build the
+modules on.
 
 ### 3.6.18
 * Add environment config loaded to be done at scanModules and init time to make
