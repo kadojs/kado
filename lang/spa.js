@@ -32,7 +32,7 @@ module.exports = {
   '_pack_flag': 'es',
   'admin_panel': 'Panel',
   'kado': 'Kado',
-  'kado_description': 'Un asombroso sistema de módulos para la gestión Enterprise Grade.',
+  'kado_description': 'Sistema de desarrollo para aplicaciones web..',
   'version': 'Versión',
   'welcome_to': 'Bienvenido a',
   'an_error_occurred': 'Se ha producido un error :(',
