@@ -2,9 +2,11 @@
 
 Development system for Web Applications.
 
-## Preface
+## Why Kado?
 
-Take a look at [this thesis document](https://kado.org/content/thesis)
+Kado is a consistent curated development environment that aims to empower the
+modern developer. All you need is knowledge of HTML, CSS, JavaScript and then
+Node.JS helps too. Afterwards you can create stunning web products.
 
 ## What is it?
 
@@ -39,6 +41,11 @@ already develop web applications. See the
 
 Please [see the documentation](https://kado.org/doc/kado/3.x) for more
 
+## Thesis
+
+Take a look at [this thesis document](https://kado.org/content/thesis) for a
+more expanded look at why Kado was written and learn about how it will solve
+a problem for you or your company.
 
 ## Bugs or Issues
 
