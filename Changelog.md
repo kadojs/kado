@@ -17,6 +17,8 @@ module definition.
 * Fix #234 Admin Staff List Title is undefined
 * Fix #264 Improve generator CLI to add redos and options, default value no
 longer added when omitted.
+* `K` now provides a `sendMail` function that looks at registered email
+connectors and will attempt to use them.
 * NOTE: The Contact, Event, Message management modules will be included at a
 later date. This release only includes the primitives needed to build the
 modules on.

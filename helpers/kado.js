@@ -141,6 +141,7 @@ config.$load({
     defaultSubject: 'Email from Kado',
     emailjs: {
       enabled: false,
+      load: true,
       user: 'kado@localhost',
       password: '',
       host: 'localhost',
@@ -520,10 +521,49 @@ exports.modulePath = (p) => {
 
 
 /**
+ * Send Mail
+ *  {
+ *    from: 'Foo <foo@example.com>',
+ *    to: 'Foo <foo@example.com>',
+ *    subject: 'Foo Foo',
+ *    message: 'Foo bar baz',
+ *    html: '<b>Foo</b>',
+ *    attachment: '/foo.jpg' || streamFoo || 'foo attachment message'
+ *  }
+ * @param {object} options
+ */
+exports.sendMail = (options) => {
+  let handlers = []
+  //select active email handlers
+  Object.keys(exports.email).forEach((key) => {
+    let mailConf = exports.config.email[key]
+    if(!mailConf.enabled) return
+    handlers.push(key)
+  })
+  //notify the console if there are no handlers active
+  if(!handlers.length){
+    exports.log.warn('No mail handlers active to send',options)
+    return
+  }
+  //use all active connectors to send with
+  exports.bluebird.try(()=>{return handlers}).each((key)=>{
+    if('function' !== exports.email[key])
+    return exports.email[key](exports,options)
+  })
+}
+
+
+/**
  * Store database connectors
  * @type {object}
  */
 exports.db = {}
+
+
+/**
+ * Store email connectors
+ */
+exports.email = {}
 
 
 /**
@@ -671,22 +711,34 @@ exports.init = (skipDb) => {
     exports.log.info('Shutdown complete')
   })
   exports.log.debug('Beginning startup')
-  let loadConnector = (file) => {
+  let loadDbConnector = (file) => {
     let name = path.basename(file,'.js')
     //check if the connector is registered and enabled
     if(config.db[name] && config.db[name].load){
-      exports.log.debug(name + ' connector loaded')
+      exports.log.debug(name + ' database connector loaded')
       if(!config.db[name].options) config.db[name].options = {}
       exports.db[name] = require(file)(config.db[name].options)
     }
   }
+  let loadEmailConnector = (file) => {
+    let name = path.basename(file,'.js')
+    //check if the connector is registered and enabled
+    if(config.email[name] && config.email[name].load){
+      exports.log.debug(name + ' email connector loaded')
+      exports.email[name] = require(file)
+    }
+  }
   let dbGlob = process.env.KADO_ROOT + '/db/*.js'
+  let emailGlob = process.env.KADO_ROOT + '/email/*.js'
   return new P((resolve) => {
     //scan db connectors
     exports.log.debug('Scanning connectors')
     exports.scanModules()
       .then(() => {
-        return doScan(dbGlob,loadConnector)
+        return doScan(emailGlob,loadEmailConnector)
+      })
+      .then(() => {
+        return doScan(dbGlob,loadDbConnector)
       })
       .then(() => {
         exports.log.debug('Setting up data storage access')

@@ -1,8 +1,12 @@
 'use strict';
 const email = require('emailjs')
 
-//email server instance
-let emailServer
+
+/**
+ * Email Server
+ * @type {object}
+ */
+exports.emailServer = null
 
 
 /**
@@ -19,7 +23,7 @@ let emailServer
  * @param {object} K
  * @param {object} options
  */
-module.exports = function(K,options){
+exports.send = function(K,options){
   //coerce options to our liking
   if(options.html && !options.attachment){
     options.attachment = [{data: options.html, alternative: true}]
@@ -33,8 +37,8 @@ module.exports = function(K,options){
   }
   return new K.bluebird(function(resolve,reject){
     //setup email server if not already
-    if(!emailServer){
-      emailServer = email.server.connect({
+    if(!exports.emailServer){
+      exports.emailServer = email.server.connect({
         user: K.config.email.emailjs.user || 'root',
         password: K.config.email.emailjs.password || '',
         host: K.config.email.emailjs.host || 'localhost',
@@ -45,7 +49,7 @@ module.exports = function(K,options){
       })
     }
     //send the email
-    emailServer.send({
+    exports.emailServer.send({
       text: options.text,
       to: options.to || K.config.email.notifyTo,
       'reply-to': options.replyTo || K.config.email.replyTo,
