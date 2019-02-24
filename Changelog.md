@@ -13,6 +13,10 @@ instead of returning '/'
 * Fix #269 allowing modules to add their own static roots now. The system now
 looks for `module/public` folder or a `_kado.staticRoot` config inside the
 module definition.
+* Fix #273 Generator adds active save handler regardless of generation selection
+* Fix #234 Admin Staff List Title is undefined
+* Fix #264 Improve generator CLI to add redos and options, default value no
+longer added when omitted.
 * NOTE: The Contact, Event, Message management modules will be included at a
 later date. This release only includes the primitives needed to build the
 modules on.

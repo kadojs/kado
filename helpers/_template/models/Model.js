@@ -14,7 +14,9 @@ module.exports = (sequelize,DataTypes) => {
     <%fieldName%>: {
       type: DataTypes.<%fieldType%>,
       allowNull: <%fieldAllowNull%>,
-      defaultValue: <%fieldDefaultValue%>
+      <%#fieldDefaultValue%>
+        defaultValue: <%fieldDefaultValue%>
+      <%/fieldDefaultValue%>
     },
     <%/moduleFields%>
   })

@@ -28,6 +28,7 @@ module.exports = {
   'create_staff': 'Create Staff',
   'staff_list': 'Staff List',
   'edit_staff': 'Edit Staff',
+  'staff': 'Staff',
   'name': 'Name',
   'email': 'Email',
   'last_login': 'Last Login',

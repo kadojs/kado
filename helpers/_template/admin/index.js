@@ -71,8 +71,6 @@ exports.save = (req,res) => {
       <%#moduleFields%>
       if(data.<%fieldName%>) result.<%fieldName%> = data.<%fieldName%>
       <%/moduleFields%>
-      if('undefined' === typeof data.active) result.active = false
-      if(data.active) result.active = true
       return result.save()
     })
     .then((result) => {
