@@ -1,17 +1,33 @@
 # Kado [![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
 
-Module system for Enterprise Grade applications.
+Development system for Web Applications.
 
 ## Preface
 
 Take a look at [this thesis document](https://kado.org/content/thesis)
 
-## What does it do
+## What is it?
 
-Kado is a consistent curated development environment that aims to
-empower the modern developer. All you need is knowledge of websites
-and then Node.JS helps too. Afterwards you can create stunning web
-products.
+Kado is a development platform that provides the necessary features to build
+Web Applications. We consider Node.JS a great interpreter but it expects user
+space to bring all functionality which is good for Node.JS, however hard on the
+developer. Kado aims to ease that pain by bringing a curated set of features
+that make developing in Node.JS much like other first class web languages
+such as: PHP, Ruby, Django on Python, etc. 
+
+## Features
+
+* Provides all the needed tools to build websites.
+* Removes the hassle of searching NPM for each thing.
+* Easy to use and install, most websites need only HTML editing.
+* Extensive features and depth for building new modules.
+* Does not get in the way of your existing style.
+* Speeds up the time needed to get a project started.
+* Keeps development across multiple projects consistent.
+* Reuse code by introducing a completely modular structure.
+* Builds on top of favorite technologies like:
+ Node.JS, Express, Sequelize, Mustache, etc
+* There are more! See [kado.org](https://kado.org/)
 
 ## Demo
 
