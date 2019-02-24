@@ -140,6 +140,7 @@ config.$load({
     defaultFrom: 'Kado <kado@localhost>',
     defaultSubject: 'Email from Kado',
     emailjs: {
+      enabled: false,
       user: 'kado@localhost',
       password: '',
       host: 'localhost',

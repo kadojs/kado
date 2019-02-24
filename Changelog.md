@@ -10,6 +10,9 @@ configured levels.
 * Introduce `Uri.p(name,uri)` pass through method to supersede `Uri.add|get` 
 also `Uri.get` will now throw an error when trying to reach an undefined uri
 instead of returning '/'
+* Fix #269 allowing modules to add their own static roots now. The system now
+looks for `module/public` folder or a `_kado.staticRoot` config inside the
+module definition.
 * NOTE: The Contact, Event, Message management modules will be included at a
 later date. This release only includes the primitives needed to build the
 modules on.

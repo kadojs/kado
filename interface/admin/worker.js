@@ -87,13 +87,21 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     app.engine('html',mustacheExpress())
     //override static servers
     let staticRoot = K.config.interface[interfaceName].staticRoot
-    if(staticRoot){
+    if(staticRoot && (staticRoot instanceof Array)){
       staticRoot.forEach((r)=>{
         if(K.fs.existsSync(r)){
           app.use(serveStatic(r,app.staticOptions))
         }
       })
     }
+    //module static servers
+    Object.keys(K.modules).forEach((key)=>{
+      let modConf = K.modules[key]
+      let staticPath = path.resolve(path.join(modConf.root,'pubic'))
+      if(modConf.staticRoot) staticPath = path.resolve(modConf.staticRoot)
+      if(!K.fs.existsSync(staticPath)) return
+      app.use(serveStatic(staticPath,app.staticOptions))
+    })
     //static files
     app.use(serveStatic(interfaceRoot + '/public',app.staticOptions))
   })
