@@ -111,7 +111,7 @@ module.exports.getPack = (locale,override) => {
 module.exports.all = () => {
   const that = this
   let a = []
-  Object.keys(that.pack).forEach((k) =>{
+  Object.keys(that.pack).map((k) =>{
     if(that.pack.hasOwnProperty(k)){
       a.push(that.pack[k])
     }
@@ -164,7 +164,7 @@ module.exports.scan = () => {
       }
     }
   }
-  let doScan = (pattern,handler) => {return glob.sync(pattern).forEach(handler)}
+  let doScan = (pattern,handler) => {return glob.sync(pattern).map(handler)}
   //scan lang packs
   K.log.debug('Scanning language packs')
   doScan(defaultLangGlob,loadLanguage)

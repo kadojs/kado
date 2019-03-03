@@ -47,7 +47,7 @@ exports.search = (K,app,keywords,start,limit) => {
   let s = K.db.sequelize
   let <%moduleModelName%> = s.models.<%moduleModelName%>
   let where = {[s.Op.or]: []}
-  keywords.forEach((w) => {
+  keywords.map((w) => {
     where[s.Op.or].push({id: {[s.Op.like]: '%'+w+'%'}})
   })
   return <%moduleModelName%>.findAll({where: where, start: start, limit: limit})

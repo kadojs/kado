@@ -1,6 +1,11 @@
 ### 3.7.0 (planned)
 
-### 3.6.20 (staged)
+### 3.6.21 (staged)
+
+### 3.6.20
+* Update dependencies to fix security vulnerabilities through dependencies.
+* Patch to table.js that affects listing of multiple tables on one page.
+* Replace incorrect usages for `.forEach` with `.map`.
 
 ### 3.6.19
 * Add Message support that allows modules to register as message handlers.

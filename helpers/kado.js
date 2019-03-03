@@ -136,6 +136,7 @@ config.$load({
   //email connectors
   email: {
     notifyTo: 'Kado <kado@localhost>',
+    notifyCc: '',
     replyTo: 'Kado <kado@localhost>',
     defaultFrom: 'Kado <kado@localhost>',
     defaultSubject: 'Email from Kado',
@@ -535,7 +536,7 @@ exports.modulePath = (p) => {
 exports.sendMail = (options) => {
   let handlers = []
   //select active email handlers
-  Object.keys(exports.email).forEach((key) => {
+  Object.keys(exports.email).map((key) => {
     let mailConf = exports.config.email[key]
     if(!mailConf.enabled) return
     handlers.push(key)
@@ -614,7 +615,7 @@ exports.initComplete = false
 let doScan = (pattern,handler) => {
   return new P((resolve) => {
     glob(pattern,(err,files) => {
-      files.forEach(handler)
+      files.map(handler)
       resolve()
     })
   })
@@ -742,7 +743,7 @@ exports.init = (skipDb) => {
       })
       .then(() => {
         exports.log.debug('Setting up data storage access')
-        Object.keys(exports.modules).forEach((modKey) => {
+        Object.keys(exports.modules).map((modKey) => {
           if(exports.modules.hasOwnProperty(modKey)){
             let modConf = exports.modules[modKey]
             //enable the kado module regardless of configuration
@@ -757,7 +758,7 @@ exports.init = (skipDb) => {
           }
         })
         let dbEnabled = 0
-        Object.keys(exports.db).forEach((dbKey) => {
+        Object.keys(exports.db).map((dbKey) => {
           if(exports.db.hasOwnProperty(dbKey)){
             if(config.db[dbKey].enabled){
               exports.log.debug(dbKey + ' connector enabled')
@@ -769,7 +770,7 @@ exports.init = (skipDb) => {
         if(!skipDb){
           exports.log.debug('Connecting to found database connectors')
           let dbConnected = 0
-          Object.keys(exports.db).forEach((dbKey) => {
+          Object.keys(exports.db).map((dbKey) => {
             if(exports.db.hasOwnProperty(dbKey)){
               if(config.db[dbKey].enabled){
                 if('function' === typeof exports.db[dbKey].doConnect){
@@ -799,7 +800,7 @@ exports.init = (skipDb) => {
             }
           )
         }
-        Object.keys(config.interface).forEach((name) => {
+        Object.keys(config.interface).map((name) => {
           //web panel
           if(
             true === config.$get(['interface',name,'enabled']) &&
@@ -834,7 +835,7 @@ exports.cli = (args,skipDb) => {
       let module = false
       args.splice(2,1)
       process.argv = args
-      Object.keys(K.modules).forEach((m) => {
+      Object.keys(K.modules).map((m) => {
         if(!module && K.modules[m].name === moduleName) module = K.modules[m]
       })
       if(!module){

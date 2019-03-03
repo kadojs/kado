@@ -49,7 +49,7 @@ class Message {
     let K = this.K
     let mods = []
     //select messaging modules
-    Object.keys(K.modules).forEach((key) => {
+    Object.keys(K.modules).map((key) => {
       let mod = K.modules[key]
       if(true !== mod.message) return
       mods.push(mod)

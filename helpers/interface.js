@@ -313,21 +313,21 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
         }}
         //when a permission set is available populate the proper allowed object
         //otherwise populate the entire permission set
-        app.permission.all().forEach((s) => {
+        app.permission.all().map((s) => {
           res.locals._p.available.push({
             name: s.name, description: s.description
           })
         })
         if(req.session && req.session._staff && req.session._staff.permission){
           set = req.session._staff.permission
-          set.forEach((s) => {res.locals._p.allowed[s] = s})
+          set.map((s) => {res.locals._p.allowed[s] = s})
         } else {
-          app.permission.digest().forEach((s) => {res.locals._p.allowed[s] = s})
+          app.permission.digest().map((s) => {res.locals._p.allowed[s] = s})
         }
         //load overrides
         let permission = K.config.interface[interfaceName].override.permission
         if(permission){
-          permission.available.forEach((a) => {
+          permission.available.map((a) => {
             res.locals._p.available.push({
               name: a.name, description: a.description
             })
@@ -396,7 +396,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
             {where: {uri: {[K.db.sequelize.Op.like]: 'partial_%'}}}
           )
             .then((result) => {
-              result.forEach((row) => {
+              result.map((row) => {
                 res.locals._c[row.uri.replace('partial_','')] = row.html
               })
               return K.db.sequelize.models.ContentNav.findAll({
@@ -404,7 +404,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
               })
             })
             .then((result) => {
-              result.forEach((row) => {
+              result.map((row) => {
                 res.locals._localNav.addGroup(row.uri,row.title,row.icon || '')
               })
               next()
@@ -456,7 +456,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
           let level = parts[0],tpl = parts[1],out = ''
           let messages = req.flash(level)
           if(messages && messages.length){
-            messages.forEach((message) => {
+            messages.map((message) => {
               if(message && message.message && message.href){
                 message = message.message +
                   '&nbsp; [<a href="' + message.href + '">' +
@@ -536,7 +536,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
 
       //so now loop here and load modules that want to be loaded
       P.try(() =>{
-        Object.keys(K.modules).forEach((modName) =>{
+        Object.keys(K.modules).map((modName) =>{
           let mod = K.modules[modName]
           if(mod.enabled){
             let modFile = mod.root + '/kado.js'

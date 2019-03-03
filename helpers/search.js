@@ -36,7 +36,7 @@ module.exports = (K,app,phrase,start,limit) => {
   let keywords = (phrase || '').split(' ')
   let promises = []
   if('' !== keywords[0]){
-    Object.keys(K.modules).forEach((modName) => {
+    Object.keys(K.modules).map((modName) => {
       let mod = K.modules[modName]
       if(mod.enabled){
         let modFile = mod.root + '/kado.js'

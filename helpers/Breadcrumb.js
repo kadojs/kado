@@ -32,8 +32,8 @@ class Breadcrumb {
   middleware(app,req){
     let crumb
     this.restore(req)
-    app.nav.all().forEach((g) => {
-      g.nav.forEach((n) => {
+    app.nav.all().map((g) => {
+      g.nav.map((n) => {
         if('/' !== n.uri && req.url.match(new RegExp('^' +n.uri,'i'))){
           crumb = {
             uri: n.uri,
