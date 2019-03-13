@@ -30,11 +30,6 @@ let toWindow = (name,val) => {
   window[name] = val
 }
 
-//jquery
-let jQuery = require('jquery')
-toWindow('$',jQuery)
-toWindow('jQuery',jQuery)
-
 //headless dependencies
 require('bootstrap')
 require('bootstrap-select')

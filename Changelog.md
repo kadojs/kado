@@ -1,6 +1,11 @@
 ### 3.7.0 (planned)
 
-### 3.6.25 (staged)
+### 3.6.26 (staged)
+
+### 3.6.25
+* Serve jQuery initially and then the bundle as a deferred resource. This will
+greatly reduce the time to load on mobile and desktop and allow the JS to fill
+in as the user browses. This also applies to the admin panel.
 
 ### 3.6.24
 * Fix deprecated references to the `.find()` method from sequelize in the doc
