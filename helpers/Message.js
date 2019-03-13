@@ -40,10 +40,11 @@ class Message {
     if(!to && !message && !options){
       throw new Error('No parameters sent to message send')
     }
-    if((!options || 'object' !== typeof options) && message){
+    if(null !== options && 'object' !== typeof options && message){
       options = {text: message}
+    } else if(options && !options.text && message) {
+      options.text = message
     }
-    if(options.text && message) options.text = message
     //assign recipient
     options.to = to
     let K = this.K
@@ -51,17 +52,18 @@ class Message {
     //select messaging modules
     Object.keys(K.modules).map((key) => {
       let mod = K.modules[key]
-      if(true !== mod.message) return
-      mods.push(mod)
+      if(mod.message && true === mod.message.enabled){
+        mods.push(mod)
+      }
     })
     //sort messaging modules
     mods.sort((a,b)=>{return (a.message.priority||0) - (b.message.priority||0)})
     //ship message to accepting modules and await their promises
     return K.bluebird.try(()=>{return mods}).each((mod)=>{
       let modObj = require(mod.root + '/kado')
-      if('function' !== typeof modObj.messaging) return
+      if('function' !== typeof modObj.message) return
       //send message to module for processing
-      return modObj.messaging(K,options)
+      return modObj.message(K,options)
     })
   }
 }

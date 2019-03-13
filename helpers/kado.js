@@ -547,9 +547,11 @@ exports.sendMail = (options) => {
     return
   }
   //use all active connectors to send with
-  exports.bluebird.try(()=>{return handlers}).each((key)=>{
-    if('function' !== exports.email[key])
-    return exports.email[key](exports,options)
+  return exports.bluebird.try(()=>{return handlers}).each((key)=>{
+    if(!exports.email[key] || 'function' !== typeof exports.email[key].send){
+      return
+    }
+    return exports.email[key].send(exports,options)
   })
 }
 

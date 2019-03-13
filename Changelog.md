@@ -1,6 +1,10 @@
 ### 3.7.0 (planned)
 
-### 3.6.21 (staged)
+### 3.6.22 (staged)
+
+### 3.6.21
+* Fixes to the email system.
+* Update dependencies
 
 ### 3.6.20
 * Update dependencies to fix security vulnerabilities through dependencies.

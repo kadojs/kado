@@ -49,14 +49,17 @@ exports.send = function(K,options){
       })
     }
     //send the email
-    exports.emailServer.send({
+    let emailOptions = {
       text: options.text,
       to: options.to || K.config.email.notifyTo,
-      'reply-to': options.replyTo || K.config.email.replyTo,
-      from: options.from || K.config.email.defaultFrom,
+      cc: options.cc || K.config.email.defaultCc || '',
+      bcc: options.bcc || K.config.email.defaultBcc || '',
+      'reply-to': options.sender || options.replyTo || K.config.email.replyTo,
+      from: options.sender || options.from || K.config.email.defaultFrom,
       subject: options.subject || K.config.email.defaultSubject,
       attachment: options.attachment || []
-    },(err,message) => {
+    }
+    exports.emailServer.send(emailOptions,(err,message) => {
       if(err) return reject(err)
       resolve(message)
     })
