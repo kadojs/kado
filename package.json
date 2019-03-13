@@ -2,7 +2,7 @@
   "author": "Bryan Tong <hello@kado.org>",
   "name": "kado",
   "description": "Development system for Web Applications.",
-  "version": "3.6.22",
+  "version": "3.6.23",
   "homepage": "https://kado.org",
   "license": "LGPL-3.0",
   "repository": {
@@ -87,7 +87,7 @@
     "recursive-readdir": "^2.2.2",
     "request": "^2.88.0",
     "rmdir-promise": "^1.0.0",
-    "sequelize": "^4.43.0",
+    "sequelize": "^5.1.0",
     "sequelize-datatable": "^2.0.0",
     "serve-static": "^1.13.2",
     "squire-rte": "^1.9.0",

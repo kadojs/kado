@@ -77,7 +77,7 @@ program
   .description('Update existing staff member')
   .action((opts) => {
     if(!opts.email) throw new Error('Email is required')
-    Staff.find({where: {email: opts.email}})
+    Staff.findOne({where: {email: opts.email}})
       .then((result) => {
         let doc = result
         if(opts.newEmail) doc.email = opts.newEmail
@@ -123,7 +123,7 @@ program
   .action((opts) => {
     if(!opts.email) throw new Error('Email is required... exiting')
     if(!opts.perm) throw new Error('Permission is required... exiting')
-    Staff.find({where: {email: opts.email}})
+    Staff.findOne({where: {email: opts.email}})
       .then((result) => {
         if(!result) throw new Error('Staff member not found')
         return StaffPermission.create({
@@ -150,7 +150,7 @@ program
   .action((opts) => {
     if(!opts.email) throw new Error('Email is required... exiting')
     if(!opts.perm) throw new Error('Permission is required... exiting')
-    Staff.find({where: {email: opts.email}})
+    Staff.findOne({where: {email: opts.email}})
       .then((result) => {
         if(!result) throw new Error('Staff member not found')
         return StaffPermission.find({

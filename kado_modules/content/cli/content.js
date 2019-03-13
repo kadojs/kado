@@ -72,7 +72,7 @@ program
   .description('Update existing content entry')
   .action((opts) => {
     if(!opts.id) throw new Error('Content id is required')
-    Content.find({where: {id: opts.id}})
+    Content.findByPk(opts.id)
       .then((result) => {
         let doc = result
         if(opts.title) doc.title = opts.title

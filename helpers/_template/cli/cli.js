@@ -47,7 +47,7 @@ program
   .description('Update existing <%moduleName%> entry')
   .action((opts) => {
     if(!opts.id) throw new Error('<%moduleTitle%> id is required')
-    <%moduleModelName%>.find({where: {id: opts.id}})
+    <%moduleModelName%>.findByPk(opts.id)
       .then((result) => {
         let doc = result
         <%#moduleFields%>

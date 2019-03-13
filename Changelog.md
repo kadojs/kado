@@ -1,6 +1,12 @@
 ### 3.7.0 (planned)
 
-### 3.6.23 (staged)
+### 3.6.24 (staged)
+
+### 3.6.23
+* Move front end Javascript to footer and defer all inline script entries. This
+change greatly improves page load times especially on mobile.
+* Update to sequelize 5.
+* Move All JS loading to the footer, use defer on list and inline definitions
 
 ### 3.6.22
 * Fix return values from mail and message system.

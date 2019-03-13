@@ -72,7 +72,7 @@ program
   .description('Update existing blog entry')
   .action((opts) => {
     if(!opts.id) throw new Error('Blog id is required')
-    Blog.find({where: {id: opts.id}})
+    Blog.findByPk(opts.id)
       .then((result) => {
         let doc = result
         if(opts.title) doc.title = opts.title

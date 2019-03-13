@@ -105,7 +105,7 @@ let createInst = (userOptions) => {
   sequelizeOptions.$load(userOptions)
   sequelizeOptions = sequelizeOptions.$strip()
   //apply system options
-  sequelizeOptions.operatorsAliases =  Sequelize.Op
+  //sequelizeOptions.operatorsAliases =  Sequelize.Op
   sequelizeOptions.benchmark = benchmark
   sequelizeOptions.logging = kadoLogging
   //setup sequelize instance
