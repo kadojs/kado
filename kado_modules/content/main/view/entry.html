@@ -1,14 +1,7 @@
 {{>header}}
   <main role="main" class="container">
-    <div id="content"></div>
-    <script>
-      $(document).ready(() => {
-        var editor = new TuiViewer({
-          el: document.querySelector('#content'),
-          initialValue: new TextDecoder().decode(b64.toByteArray('{{{content.content}}}'))
-        })
-        editor.ok = true
-      })
-    </script>
+    <div class="tui-content" id="content" data-src="{{{content.content}}}"></div>
+    <script type="text/javascript" src="/js/loadTuiViewer.js" defer="defer"></script>
+    <noscript><div class="basic-content">{{{content.contentRaw}}}</div></noscript>
   </main>
 {{>footer}}

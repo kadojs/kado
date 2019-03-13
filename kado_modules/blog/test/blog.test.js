@@ -114,7 +114,7 @@ exports.admin = (K,expect,request,exec,params) => {
         jar: adminCookieJar,
         json: {
           title: 'Test Blog',
-          uri: 'test-blog',
+          uri: 'kado-test-blog',
           content: 'testing the blog',
           html: '<p>testing the blog</p>'
         }
@@ -131,7 +131,7 @@ exports.admin = (K,expect,request,exec,params) => {
         json: {
           id: blogId,
           title: 'Test blog 2',
-          uri: 'test-blog-2',
+          uri: 'kado-test-blog-2',
           content: 'testing the blog 2',
           html: '<p>testing the blog 2</p>'
         }

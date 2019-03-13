@@ -5,16 +5,9 @@
         <div class="blog-post">
           <h2 class="blog-post-title">{{doc.title}}</h2>
           <p class="blog-post-meta">{{#_printDate}}{{doc.createdAt}}{{/_printDate}}</p>
-          <div id="content"></div>
-          <script>
-            $(document).ready(() => {
-              var editor = new TuiViewer({
-                el: document.querySelector('#content'),
-                initialValue: new TextDecoder().decode(base64js.toByteArray('{{{doc.content}}}'))
-              })
-              editor.ok = true
-            })
-          </script>
+          <div class="tui-content" id="content" data-src="{{{doc.content}}}"></div>
+          <script type="text/javascript" src="/js/loadTuiViewer.js" defer="defer"></script>
+          <noscript><div class="basic-content">{{{doc.contentRaw}}}</div></noscript>
         </div><!-- /.document -->
       </div>
       <aside class="col-md-3 blog-sidebar">

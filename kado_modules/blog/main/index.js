@@ -58,6 +58,7 @@ exports.entry = (req,res) => {
   Blog.findOne(q)
     .then((result) => {
       if(!result) throw new Error('Blog not found')
+      result.contentRaw = result.content
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
       res.render('blog/entry',{
         blog: result,

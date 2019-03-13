@@ -115,7 +115,7 @@ exports.entry = (req,res) => {
   Doc.findAll(q)
     .then((result) => {
       docList = result
-      return Doc.find({
+      return Doc.findOne({
         where: {uri: req.params.uri},
         include: [
           {
@@ -130,8 +130,9 @@ exports.entry = (req,res) => {
     })
     .then((result) => {
       if(!result) throw new Error('Document not found')
+      result.contentRaw = result.content
       result.content = K.base64js.fromByteArray(
-        new Buffer(result.content,'utf-8'))
+        Buffer.from(result.content,'utf-8'))
       res.render('doc/entry',{
         doc: result,
         docList: docList,

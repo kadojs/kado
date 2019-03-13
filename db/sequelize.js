@@ -133,6 +133,9 @@ let createInst = (userOptions) => {
       if(opts.sync) return that.sync({force: opts.syncForce})
     })
   }
+  //add the operators for compat and as the manual says we were using a dropped
+  //prototype though
+  inst.Op = Sequelize.Op
   inst._loadedModels = []
   inst.doImport = (modelFile) => {
     let modelName = path.basename(modelFile)

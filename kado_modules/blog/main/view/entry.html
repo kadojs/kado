@@ -3,16 +3,9 @@
     <div class="blog-post">
       <h2 class="blog-post-title">{{blog.title}}</h2>
       <p class="blog-post-meta">{{#_printDate}}{{blog.datePosted}}{{/_printDate}}</p>
-      <div id="content"></div>
-      <script>
-        $(document).ready(() => {
-          var editor = new TuiViewer({
-            el: document.querySelector('#content'),
-            initialValue: new TextDecoder().decode(b64.toByteArray('{{{blog.content}}}'))
-          })
-          editor.ok = true
-        })
-      </script>
+      <div class="tui-content" id="content" data-src="{{{blog.content}}}"></div>
+      <script type="text/javascript" src="/js/loadTuiViewer.js" defer="defer"></script>
+      <noscript><div class="basic-content">{{{blog.contentRaw}}}</div></noscript>
     </div><!-- /.blog-post -->
   </main>
 {{>footer}}

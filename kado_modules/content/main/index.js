@@ -35,6 +35,7 @@ exports.entry = (req,res) => {
   Content.findOne(q)
     .then((result) => {
       if(!result) throw new Error('Content not found')
+      result.contentRaw = result.content
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
       res.render('content/entry',{
         content: result,

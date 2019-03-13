@@ -1,6 +1,14 @@
 ### 3.7.0 (planned)
 
-### 3.6.24 (staged)
+### 3.6.25 (staged)
+
+### 3.6.24
+* Fix deprecated references to the `.find()` method from sequelize in the doc
+module.
+* Fix Sequelize Operator changes in version 5.
+* Add `loadTuiViewer.js` to allow deferred content loading.
+* Print the actual page content inside of a `<noscript></noscript>` tag allowing
+search engines to parse page content regardless of markup loading.
 
 ### 3.6.23
 * Move front end Javascript to footer and defer all inline script entries. This
