@@ -31,6 +31,8 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     const mustacheExpress = require('mustache-express')
     const serveStatic = require('serve-static')
     const path = require('path')
+    //jquery
+    worker.setupScriptServer('jquery')
     //bootstrap
     worker.setupScriptServer('bootstrap')
     worker.setupScriptServer('bootstrap-select')

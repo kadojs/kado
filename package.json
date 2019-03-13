@@ -2,7 +2,7 @@
   "author": "Bryan Tong <hello@kado.org>",
   "name": "kado",
   "description": "Development system for Web Applications.",
-  "version": "3.6.25",
+  "version": "3.6.26",
   "homepage": "https://kado.org",
   "license": "LGPL-3.0",
   "repository": {

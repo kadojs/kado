@@ -1,6 +1,9 @@
 ### 3.7.0 (planned)
 
-### 3.6.26 (staged)
+### 3.6.27 (staged)
+
+### 3.6.26
+* Allow jQuery to be loaded directly.
 
 ### 3.6.25
 * Serve jQuery initially and then the bundle as a deferred resource. This will
