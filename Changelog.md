@@ -1,6 +1,10 @@
 ### 3.7.0 (planned)
 
-### 3.6.22 (staged)
+### 3.6.23 (staged)
+
+### 3.6.22
+* Fix return values from mail and message system.
+* Fix return values for event system.
 
 ### 3.6.21
 * Fixes to the email system.

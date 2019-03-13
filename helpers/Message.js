@@ -59,7 +59,7 @@ class Message {
     //sort messaging modules
     mods.sort((a,b)=>{return (a.message.priority||0) - (b.message.priority||0)})
     //ship message to accepting modules and await their promises
-    return K.bluebird.try(()=>{return mods}).each((mod)=>{
+    return K.bluebird.try(()=>{return mods}).map((mod)=>{
       let modObj = require(mod.root + '/kado')
       if('function' !== typeof modObj.message) return
       //send message to module for processing
