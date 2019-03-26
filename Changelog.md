@@ -1,6 +1,9 @@
 ### 3.7.0 (planned)
 
-### 3.6.27 (staged)
+### 3.6.28 (staged)
+
+### 3.6.27
+* Small fixes to Event, Email and Messaging.
 
 ### 3.6.26
 * Allow jQuery to be loaded directly.

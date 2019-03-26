@@ -110,6 +110,9 @@ class Event {
     if(!text){
       options.to = 'all'
       options.text = to
+    } else {
+      options.to = to
+      options.text = text
     }
     //now setup all the proper options
     if(!options.to) throw new Error('Cant digest event no recipient')
