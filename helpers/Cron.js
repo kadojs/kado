@@ -20,7 +20,6 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const CronJob = require('cron').CronJob
-const path = require('path')
 
 
 /**
@@ -33,23 +32,6 @@ class Cron {
     this.cron = {}
   }
 
-  /**
-   * Scan modules and let them register cron jobs
-   */
-  scan(){
-    let K = this.K
-    return K.bluebird.try(()=>{
-      return Object.keys(K.modules)
-    })
-      .map((modName)=>{
-        let modInfo = K.modules[modName]
-        let mod = require(path.resolve(modInfo.root + '/kado.js'))
-        if(mod && 'function' === typeof mod.cron){
-          return mod.cron(K)
-        }
-      })
-  }
-
 
   /**
    * Create a cron job
@@ -60,9 +42,11 @@ class Cron {
    *
    */
   create(name,cronTime,onTick,opts){
-    let params = {
-      cronTime: cronTime,
-      onTick: onTick
+    let params = {}
+    if(cronTime) params.cronTime = cronTime
+    if(onTick) params.onTick = onTick
+    if(!cronTime || !onTick){
+      throw new Error('cronTime and onTick required to schedule a cron job')
     }
     if(opts.onComplete) params.onComplete = opts.onComplete
     if(opts.start) params.start = opts.start

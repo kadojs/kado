@@ -7,7 +7,7 @@
 * Update dependencies.
 * Fix displaying of TUI Editor in Admin interface.
 * Add `K.cron` helper which is backed by `node-cron`, any modules utilizing
-cron jobs should add them through `exports.cron = (K)=>{}` in the module 
+cron jobs should add them through `exports.cron = (K,cron)=>{}` in the module 
 `kado.js`
 
 ### 3.6.27

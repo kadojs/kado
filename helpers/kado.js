@@ -335,13 +335,6 @@ exports.Cron = require('./Cron')
 
 
 /**
- * Setup Cron handler
- * @type {Cron}
- */
-exports.cron = new exports.Cron(exports)
-
-
-/**
  * Event Class
  * @type {Event}
  */
@@ -806,6 +799,14 @@ exports.init = (skipDb) => {
           exports.log.debug(dbConnected + ' connected database connectors')
         }
         if(false === envConfigLoaded){
+          /**
+           * Setup Cron handler
+           *   only set this helper up when Kado is in the master process
+           *   this prevents modules from scheduling cron jobs where they
+           *   wont be ran
+           * @type {Cron}
+           */
+          exports.cron = new exports.Cron(exports)
           exports.log.debug('Scanning for cron jobs from modules')
           let cronModuleCount = 0
           Object.keys(exports.modules).map((modKey) => {
