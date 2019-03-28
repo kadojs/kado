@@ -119,7 +119,7 @@ class Event {
     if(!options.text) throw new Error('Cant digest event no text')
     if(!options.module) options.module = 'global'
     options.level = level
-    options.levelInfo = this._levelInfo[level]
+    options.levelInfo = this.levelInfo[level]
     return options
   }
 

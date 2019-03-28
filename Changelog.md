@@ -1,6 +1,14 @@
 ### 3.7.0 (planned)
 
-### 3.6.28 (staged)
+### 3.6.29 (staged)
+
+### 3.6.28
+* Fix bug in event casting in regards to level translation.
+* Update dependencies.
+* Fix displaying of TUI Editor in Admin interface.
+* Add `K.cron` helper which is backed by `node-cron`, any modules utilizing
+cron jobs should add them through `exports.cron = (K)=>{}` in the module 
+`kado.js`
 
 ### 3.6.27
 * Small fixes to Event, Email and Messaging.

@@ -328,6 +328,20 @@ exports.modelRemoveById = (Model,items) => {
 
 
 /**
+ * Cron class
+ * @type {Cron}
+ */
+exports.Cron = require('./Cron')
+
+
+/**
+ * Setup Cron handler
+ * @type {Cron}
+ */
+exports.cron = new exports.Cron(exports)
+
+
+/**
  * Event Class
  * @type {Event}
  */
@@ -739,12 +753,14 @@ exports.init = (skipDb) => {
   let emailGlob = process.env.KADO_ROOT + '/email/*.js'
   return new P((resolve) => {
     //scan db connectors
-    exports.log.debug('Scanning connectors')
+    exports.log.debug('Scanning modules')
     exports.scanModules()
       .then(() => {
+        exports.log.debug('Scanning for email connectors')
         return doScan(emailGlob,loadEmailConnector)
       })
       .then(() => {
+        exports.log.debug('Scanning for database connectors')
         return doScan(dbGlob,loadDbConnector)
       })
       .then(() => {
@@ -788,6 +804,25 @@ exports.init = (skipDb) => {
             }
           })
           exports.log.debug(dbConnected + ' connected database connectors')
+        }
+        if(false === envConfigLoaded){
+          exports.log.debug('Scanning for cron jobs from modules')
+          let cronModuleCount = 0
+          Object.keys(exports.modules).map((modKey) => {
+            if(exports.modules.hasOwnProperty(modKey)){
+              let modConf = exports.modules[modKey]
+              if(true === modConf.enabled){
+                let modFile = modConf.root + '/kado.js'
+                let mod = require(modFile)
+                if('function' === typeof mod.cron){
+                  cronModuleCount++
+                  mod.cron(exports,exports.cron)
+                }
+              }
+            }
+          })
+          exports.log.debug('Cron job scan complete ' + cronModuleCount +
+            ' modules(s) and ' + exports.cron.count() + ' job(s) registered')
         }
         exports.log.debug('Scanning interfaces')
         //register interfaces for startup

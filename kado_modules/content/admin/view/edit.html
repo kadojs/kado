@@ -15,7 +15,7 @@
         </div>
         <div class="form-group">
           <label for="contentContent">{{_l.content.content}}</label>
-          <div id="contentContent"></div>
+          <div class="tui-content" id="contentContent" data-src="{{{content.content}}}" data-text-id="#contentContentInput" data-html-id="#contentHtmlInput"></div>
         </div>
         <div class="form-group">
           <label for="active">{{_l.content.active}}</label>
@@ -25,23 +25,6 @@
           <button class="btn btn-success" type="submit">{{_l.save}}</button>
         </div>
       </form>
-      <script type="text/javascript">
-        $(document).ready(() => {
-          let editor = new TuiEditor({
-            el: document.querySelector('#contentContent'),
-            initialEditType: 'markdown',
-            previewStyle: 'vertical',
-            height: '400px',
-            codeBlockLanguages: ['ruby', 'PHP', 'javascript'],
-            initialValue: new TextDecoder().decode(b64.toByteArray('{{{content.content}}}')),
-            events: {
-              change: () => {
-                $('#contentContentInput').val(editor.getMarkdown())
-                $('#contentHtmlInput').val(editor.getHtml())
-              }
-            }
-          })
-        })
-      </script>
+      <script type="text/javascript" src="/js/loadTuiEditor.js" defer="defer"></script>
     </div>
 {{>footer}}

@@ -20,29 +20,12 @@
         </div>
         <div class="form-group">
           <label for="docContent">{{_l.doc.content}}</label>
-          <div id="docContent"></div>
+          <div class="tui-content" id="docContent" data-src="{{{item.content}}}" data-text-id="#docContentInput" data-html-id="#docHtmlInput"></div>
         </div>
         <div class="form-group">
           <button class="btn btn-success" id="docSave" type="submit">{{_l.save}}</button>
         </div>
       </form>
-      <script type="text/javascript">
-        $(document).ready(() => {
-          let editor = new TuiEditor({
-            el: document.querySelector('#docContent'),
-            initialEditType: 'markdown',
-            previewStyle: 'vertical',
-            height: '400px',
-            codeBlockLanguages: ['ruby', 'PHP', 'javascript'],
-            initialValue: new TextDecoder().decode(b64.toByteArray('{{{item.content}}}')),
-            events: {
-              change: () => {
-                $('#docContentInput').val(editor.getMarkdown())
-                $('#docHtmlInput').val(editor.getHtml())
-              }
-            }
-          })
-        })
-      </script>
+      <script type="text/javascript" src="/js/loadTuiEditor.js" defer="defer"></script>
     </div>
 {{>footer}}
