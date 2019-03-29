@@ -26,7 +26,7 @@ in as the user browses. This also applies to the admin panel.
 module.
 * Fix Sequelize Operator changes in version 5.
 * Add `loadTuiViewer.js` to allow deferred content loading.
-* Print the actual page content inside of a `<noscript></noscript>` tag allowing
+* Print the actual page content inside of a `noscript` tag allowing
 search engines to parse page content regardless of markup loading.
 
 ### 3.6.23
