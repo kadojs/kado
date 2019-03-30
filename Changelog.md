@@ -1,6 +1,11 @@
 ### 3.7.0 (planned)
 
-### 3.6.29 (staged)
+### 3.6.30 (staged)
+
+### 3.6.29
+* Fix module static servers, the default path was incorrect and missing the
+interface name.
+* Fix module generation to use the proper deferred javascript upgrades.
 
 ### 3.6.28
 * Fix bug in event casting in regards to level translation.
