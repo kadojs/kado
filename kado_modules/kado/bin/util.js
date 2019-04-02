@@ -28,7 +28,7 @@ const Mustache = require('mustache')
 const path = require('path')
 const readlineSync = require('readline-sync').question
 const readdir = require('recursive-readdir')
-const rmdir = K.bluebird.promisify(require('rmdir2'))
+const rmdir = K.bluebird.promisify(require('rimraf'))
 
 const log = K.log
 
