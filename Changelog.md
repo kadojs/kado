@@ -1,6 +1,13 @@
 ### 3.7.0 (planned)
 
-### 3.6.30 (staged)
+### 3.6.31 (staged)
+
+### 3.6.30
+* Fix bug with loading static assets from modules.
+* Add testing to static asset loading from modules.
+* Remove Chart.js from front end bundle and from Kado, it should be added in
+user space.
+* Remove rmdir-promise package replace with upgraded rmdir2 package.
 
 ### 3.6.29
 * Fix module static servers, the default path was incorrect and missing the

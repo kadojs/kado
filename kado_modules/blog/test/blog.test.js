@@ -90,6 +90,15 @@ exports.admin = (K,expect,request,exec,params) => {
     after(() => {
       if(blogId) removeBlog()
     })
+    it('should have public static content',()=>{
+      return request.getAsync({
+        url: adminBaseUrl + '/ping',
+        jar: adminCookieJar
+      })
+        .then((res) => {
+          expect(res.body).to.match(/pong/)
+        })
+    })
     it('should list',() => {
       return request.getAsync({
         url: adminBaseUrl + '/blog/list',
@@ -174,6 +183,15 @@ exports.main = (K,expect,request,exec,params) => {
         .then((result) => {
           expect(result).to.match(/Blog entry removed successfully!/i)
           blogId = null
+        })
+    })
+    it('should have public static content',()=>{
+      return request.getAsync({
+        url: mainBaseUrl + '/ping',
+        jar: mainCookieJar
+      })
+        .then((res) => {
+          expect(res.body).to.match(/pong/)
         })
     })
     it('should allow viewing',() => {

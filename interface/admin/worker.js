@@ -100,7 +100,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     Object.keys(K.modules).forEach((key)=>{
       let modConf = K.modules[key]
       let staticPath = path.resolve(path.join(
-        modConf.root,interfaceName,'pubic'))
+        modConf.root,interfaceName,'public'))
       if(modConf.staticRoot) staticPath = path.resolve(modConf.staticRoot)
       if(!K.fs.existsSync(staticPath)) return
       app.use(serveStatic(staticPath,app.staticOptions))
