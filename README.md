@@ -1,4 +1,5 @@
 # Kado [![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKadoOrg%2Fkado.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FKadoOrg%2Fkado?ref=badge_shield)
 
 Development system for Web Applications.
 
@@ -62,3 +63,7 @@ or
 ## Changelog
 
 Please see the changelog at [kado.org](https://kado.org/content/changelog)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKadoOrg%2Fkado.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FKadoOrg%2Fkado?ref=badge_large)
