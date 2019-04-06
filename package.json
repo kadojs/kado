@@ -116,7 +116,7 @@
     "build": "nbpm run postinstall",
     "bootstrap": "node ./node_modules/kado/bin/kado bootstrap",
     "start": "nodemon --config nodemon.json app.js",
-    "postinstall": "node app kado bundle",
+    "postinstall": "node ./kado_modules/kado/bin/util bundle",
     "test": "node ./node_modules/mocha/bin/mocha ./test/*.test.js"
   }
 }
