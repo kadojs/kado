@@ -1,24 +1,11 @@
 #!/use/bin/env node
 'use strict';
 /**
- * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
+ * Kado - Web Application System
+ * Copyright © 2015-2019 Bryan Tong, NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
- * This file is part of Kado.
- *
- * Kado is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Kado is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
+ * This file is part of Kado and bound to the MIT license distributed within.
  */
 const K = require('../../../index')
 const program = require('commander')
@@ -70,7 +57,7 @@ program.command('dbsetup')
   })
 
 
-program.command('insertsamples')
+program.command('insert-samples')
   .action(() => {
     K.log.info('Connecting to sequelize')
     let sql
@@ -353,6 +340,113 @@ program.command('bootstrap')
     fs.writeFileSync(appFile,appData)
     log.info('Application is ready!')
     process.exit()
+  })
+
+program.command('bundle')
+  .option('-i --interface <name>','Only bundle for this interface')
+  .option('-l --local','Only bundle local items')
+  .action((cmd) => {
+    /**
+     * Bundle an interface for distribution
+     * @param {string} ifaceName
+     */
+    const bundleInterface = function bundleInterface(ifaceName,configFile){
+      const webpack = require('webpack')
+      if(!K.interfaces || !K.interfaces[ifaceName]){
+        throw new Error('Interface does not exist, cannot be bundled')
+      }
+      if(!configFile) configFile = 'webpack.config.js'
+      let packOptionFile = K.path.resolve(
+        K.interfaces[ifaceName].root + '/' + configFile)
+      let packOptions = require(packOptionFile)
+      if(!packOptions || !packOptions.entry){
+        K.log.warn('Skipped packing ' + ifaceName + ' with config file: ' +
+          configFile + ', KADO_USER_ROOT missing.')
+        return
+      }
+      K.log.info('Starting webpack for ' + ifaceName + ' using ' + configFile)
+      K.log.debug(ifaceName + ' options: ' + JSON.stringify(packOptions))
+      let pack = webpack(packOptions)
+      pack.run = K.bluebird.promisify(pack.run)
+      return pack.run()
+        .then((result)=>{
+          return {stat: result, statJson: result.toJson(), ifaceName: ifaceName}
+        })
+        .catch((e)=> {
+          console.log(e)
+          K.log.warn('Failed to bundle ' + ifaceName + ': ' + e.message)
+        })
+    }
+    let systemConfigFile = 'webpack.config.js'
+    let localConfigFile = 'webpackLocal.config.js'
+    //interfaces so hmm
+    K.bluebird.try(()=> {
+      return Object.keys(K.interfaces)
+    })
+      .filter((ifaceName)=>{
+        if(!cmd.interface) return true
+        return (cmd.interface && ifaceName === cmd.interface)
+      })
+      .map((ifaceName)=>{
+        let promises = []
+        if(cmd.local){
+          promises.push(bundleInterface(ifaceName,localConfigFile))
+        } else {
+          promises.push(bundleInterface(ifaceName,systemConfigFile))
+          promises.push(bundleInterface(ifaceName,localConfigFile))
+        }
+        return K.bluebird.all(promises)
+      })
+      .each((results)=>{
+        results.map((result) => {
+          if(!result || !result.stat) return
+          let duration = result.stat.endTime - result.stat.startTime
+          K.log.info('Bundle result complete for ' + result.ifaceName +
+            ' with hash: ' + result.stat.hash + ' and took ' + duration + 'ms')
+          if(result.stat.hasWarnings()){
+            K.log.warn(result.ifaceName + ' bundle finished with warnings: ' +
+              result.statJson.warnings)
+          }
+          if(result.stat.hasErrors()){
+            K.log.error(result.ifaceName + ' bundle finished with errors: ' +
+              result.statJson.errors)
+          }
+        })
+      })
+      .then(()=>{
+        K.log.info('Bundle process complete')
+        process.exit(0)
+      })
+      .catch((e)=>{
+        console.log(e)
+        K.log.error('Failed to bundle: ' + e.message)
+        process.exit(1)
+      })
+  })
+
+program.command('scan-modules')
+  .option('-j --json','JSON output of module object instead')
+  .action((cmd) => {
+    K.scanModules()
+      .then(()=>{
+        if(cmd.json){
+          console.log(JSON.stringify(K.modules))
+        } else {
+          Object.keys(K.modules).map((modKey)=>{
+            let modInfo = K.modules[modKey]
+            console.log(modInfo.root)
+          })
+        }
+        process.exit(0)
+      })
+      .catch((e)=> {
+        if(cmd.json){
+          console.log(JSON.stringify({error: e.message}))
+        } else {
+          console.log(e)
+        }
+        process.exit(1)
+      })
   })
 
 program.parse(process.argv)

@@ -12,3 +12,5 @@ app.js.bak
 bundle.*
 /sessions.s3db
 *.s3db
+**/public/dist/*.js
+interface/**/asset/module.js

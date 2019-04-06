@@ -6,7 +6,6 @@
           <h2 class="blog-post-title">{{doc.title}}</h2>
           <p class="blog-post-meta">{{#_printDate}}{{doc.createdAt}}{{/_printDate}}</p>
           <div class="tui-content" id="content" data-src="{{{doc.content}}}"></div>
-          <script type="text/javascript" src="/js/loadTuiViewer.js" defer="defer"></script>
           <noscript><div class="basic-content">{{{doc.contentRaw}}}</div></noscript>
         </div><!-- /.document -->
       </div>

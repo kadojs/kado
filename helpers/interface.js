@@ -1,23 +1,10 @@
 'use strict';
 /**
- * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
+ * Kado - Web Application System
+ * Copyright © 2015-2019 Bryan Tong, NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
- * This file is part of Kado.
- *
- * Kado is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Kado is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
+ * This file is part of Kado and bound to the MIT license distributed within.
  */
 let P = require('bluebird')
 let fs = require('graceful-fs')
@@ -90,6 +77,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     const nocache = require('nocache')
     const path = require('path')
     const serveStatic = require('serve-static')
+    const Asset = require('../helpers/Asset')
     const Breadcrumb = require('../helpers/Breadcrumb')
     const Nav = require('../helpers/Nav')
     const Permission = require('../helpers/Permission')
@@ -120,6 +108,8 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     //interface settings
     app._interfaceName = interfaceName
     app._interfaceRoot = interfaceRoot
+    //asset system
+    app.asset = new Asset()
     //breadcrumb system
     app.breadcrumb = new Breadcrumb()
     //navigation system
@@ -196,6 +186,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
     app.locals._version = config.version
     app.locals._currentYear = app.locals._moment().format('YYYY')
     //expose translation systems
+    app.locals._asset = app.aset
     app.locals._breadcrumb = app.breadcrumb
     app.locals._dev = config.dev
     app.locals._nav = app.nav
@@ -282,6 +273,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       //add breadcrumb links
       app.breadcrumb.crumbs = app.breadcrumb.middleware(app,req)
       //expose system vars
+      res.locals._asset = app.asset
       res.locals._breadcrumb = app.breadcrumb
       res.locals._permission = app.permission
       res.locals._uri = app.uri
@@ -386,6 +378,15 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
         //callback
         if('function' === typeof(cb)) return cb(app,K)
       })
+    }
+    worker.setupAsset = (cb) => {
+      app.use((req,res,next)=>{
+        res.locals._css = app.asset.allCss()
+        res.locals._script = app.asset.allScript()
+        next()
+      })
+      //callback
+      if('function' === typeof(cb)) return cb(app,K)
     }
     worker.setupContent = (cb) => {
       if(K.config.module.content.enabled){

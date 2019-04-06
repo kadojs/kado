@@ -1,23 +1,10 @@
 'use strict';
 /**
- * Kado - Module system for Enterprise Grade applications.
- * Copyright © 2015-2019 NULLIVEX LLC. All rights reserved.
+ * Kado - Web Application System
+ * Copyright © 2015-2019 Bryan Tong, NULLIVEX LLC. All rights reserved.
  * Kado <support@kado.org>
  *
- * This file is part of Kado.
- *
- * Kado is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Kado is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
+ * This file is part of Kado and bound to the MIT license distributed within.
  */
 const P = require('bluebird')
 const execSync = require('child_process').execSync
@@ -51,6 +38,16 @@ let logger = require('./logger')
  * @type {String}
  */
 process.env.KADO_ROOT = path.dirname(__dirname)
+
+
+/**
+ * Kado User Root Folder
+ * @type {string}
+ */
+process.env.KADO_USER_ROOT = path.dirname(path.dirname(process.env.KADO_ROOT))
+if(!fs.existsSync(process.env.KADO_USER_ROOT + '/node_modules/kado')){
+  process.env.KADO_USER_ROOT = 0
+}
 
 
 /**
@@ -437,10 +434,17 @@ exports.dir = () => {
  * @param {string} part
  * @return {string}
  */
-exports.path = (part) => {
+exports.kadoPath = (part) => {
   if(part) return path.resolve(exports.dir() + '/' + part)
   else return exports.dir()
 }
+
+
+/**
+ * Shortcut to node.path
+ * @type {module:path}
+ */
+exports.path = require('path')
 
 
 /**
@@ -832,6 +836,7 @@ exports.init = (skipDb) => {
           let iface = config.interface[name].path
           env.KADO_CONFIG_STRING = JSON.stringify(config.$strip())
           exports.interfaces[name] = infant.parent(iface,{fork: {env: env}})
+          exports.interfaces[name].root = iface
           lifecycle.add(
             name,
             (done) => {

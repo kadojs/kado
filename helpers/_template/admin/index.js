@@ -13,6 +13,8 @@ const <%moduleModelName%> = sequelize.models.<%moduleModelName%>
  */
 exports.list = (req,res) => {
   if(!req.query.length){
+    res.locals._asset.addScript('/dist/dataTables.min.js')
+    res.locals._asset.addScript('/js/dataTableList.js')
     res.render('<%moduleName%>/list')
   } else {
     K.datatable(<%moduleModelName%>,req.query)

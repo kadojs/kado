@@ -1,6 +1,24 @@
-### 3.7.0 (planned)
+### 3.8.0 (planned)
 
-### 3.6.31 (staged)
+### 3.7.1 (staged)
+
+### 3.7.0
+* Distribute Kado under the MIT license!
+* Start using webpack as build system for front end.
+* Split key asset groups into loading packs for accelerated and circumstantial
+page loading.
+* Add asset system to dynamically register and use assets from the route files.
+This works with both CSS and Script tags.
+* Add `KADO_USER_ROOT` process environment variable to assume user root when
+available.
+* Insert samples command is now `node app kado insert-samples`
+* Added new utility commend `node app kado scan-modules` returns a line
+delimited list of modules currently registered to the system.
+* Scan modules for asset folders and include assets into build.
+* Includes easy to use user space build setup. Add entry points into the app
+declaration and run `node app kado bundle` or `node app kado bundle -i admin`
+local building is done through the -l flag such as `node app kado bundle -l` or
+combined `node app kado bundle -i admin -l` to build locally only for admin.
 
 ### 3.6.30
 * Fix bug with loading static assets from modules.

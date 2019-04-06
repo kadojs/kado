@@ -1,15 +1,21 @@
 <!DOCTYPE HTML>
 <html lang="en-us">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <link rel="stylesheet" type="text/css" href="{{{_baseUrl}}}/main.css" />
+  <meta name="application-name" content="Kado">
+  <meta name="description" content="Web Application System">
+  <meta name="keywords" content="Web, Application, System">
+  <meta name="author" content="Bryan Tong <bryan@nullivex.com>">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  {{#_css}}
+  <link rel="stylesheet" type="text/css" href="{{{uri}}}">
+  {{/_css}}
   {{#_pageTitle}}
-    <title>{{_pageTitle}} - {{_appTitle}} {{_l.admin_panel}} - {{_l.kado}} v{{_version}}</title>
+  <title>{{_pageTitle}} - {{_appTitle}} {{_l.admin_panel}} - {{_l.kado}} v{{_version}}</title>
   {{/_pageTitle}}
   {{^_pageTitle}}
-    <title>{{_appTitle}} {{_l.admin_panel}} - {{_l.kado}} v{{_version}}</title>
+  <title>{{_appTitle}} {{_l.admin_panel}} - {{_l.kado}} v{{_version}}</title>
   {{/_pageTitle}}
 </head>
 <body>

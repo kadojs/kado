@@ -1,3 +1,4 @@
 $(document).ready(() => {
-  $('#table').DataTable(DataTableConfig());
+  let tableConfig = DataTableConfig();
+  $('#table').DataTable(tableConfig);
 })

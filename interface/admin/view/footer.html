@@ -4,11 +4,15 @@
 </div>
 {{/_staff}}
 {{#_dev}}
-  <%&_pageProfile.HTML%>
+<%&_pageProfile.HTML%>
 {{/_dev}}
-<script src="{{{_baseUrl}}}/node_modules/jquery/dist/jquery.min.js"></script>
-<script src="{{{_baseUrl}}}/bundle/bundle.min.js" defer="defer"></script>
-<script src="{{{_baseUrl}}}/node_modules/jszip/dist/jszip.min.js" defer="defer"></script>
-<script src="{{{_baseUrl}}}/node_modules/pdfmake/build/vfs_fonts.js" defer="defer"></script>
+{{#_script}}
+{{#defer}}
+<script src="{{{uri}}}" type="text/javascript" defer="defer"></script>
+{{/defer}}
+{{^defer}}
+<script src="{{{uri}}}" type="text/javascript"></script>
+{{/defer}}
+{{/_script}}
 </body>
 </html>

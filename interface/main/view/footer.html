@@ -1,3 +1,4 @@
+</div><!--Close container-->
 <footer class="blog-footer">
   <p>&copy; {{_currentYear}} <a href="https://kado.org/">{{_l.kado}}</a>
     <strong>v{{_version}}</strong> by
@@ -15,21 +16,13 @@
 {{#_dev}}
   <%&_pageProfile.HTML%>
 {{/_dev}}
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="{{{_baseUrl}}}/node_modules/jquery/dist/jquery.min.js"></script>
-<script src="{{{_baseUrl}}}/bundle/bundle.min.js" defer="defer"></script>
-<script src="{{{_baseUrl}}}/node_modules/jszip/dist/jszip.min.js" defer="defer"></script>
-<script src="{{{_baseUrl}}}/node_modules/pdfmake/build/vfs_fonts.js" defer="defer"></script>
-<script>
-  $(document).ready(function(){
-    Holder.addTheme('thumb', {
-      bg: '#55595c',
-      fg: '#eceeef',
-      text: 'Thumbnail'
-    });
-  })
-</script>
+{{#_script}}
+{{#defer}}
+<script src="{{{uri}}}" type="text/javascript" defer="defer"></script>
+{{/defer}}
+{{^defer}}
+<script src="{{{uri}}}" type="text/javascript"></script>
+{{/defer}}
+{{/_script}}
 </body>
 </html>
