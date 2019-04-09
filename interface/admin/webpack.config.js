@@ -6,31 +6,12 @@
  *
  * This file is part of Kado and bound to the MIT license distributed within.
  */
-const childProcess = require('child_process')
-const fs = require('fs')
-const K = require('../../index')
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
 
 let entryFolder = path.resolve(__dirname + '/asset')
 let helperFolder = path.resolve(__dirname + '/../../helpers/asset')
 let outputFolder = path.resolve(__dirname + '/public/dist')
-
-let moduleAssets = []
-let moduleList = childProcess.execSync('node ' + K.root() +
-  '/kado_modules/kado/bin/util.js scan-modules').toString('utf-8').split('\n')
-moduleList.map((modRoot)=>{
-  let modName = path.basename(modRoot)
-  let assetFile = modRoot + '/admin/asset/' + modName + '.js'
-  if(fs.existsSync(assetFile)){
-    moduleAssets.push(assetFile)
-  }
-})
-//write the module list for reading in the extra.js helper
-fs.writeFileSync(outputFolder + '/moduleAssets.json',JSON.stringify({
-  assets: moduleAssets
-}))
-
 
 /**
  * Configure Webpack
@@ -56,7 +37,13 @@ module.exports = {
     ]
   },
   optimization: {
-    minimizer: [new TerserPlugin()]
+    minimizer: [new TerserPlugin({
+      parallel: true,
+      terserOptions: {
+        warnings: false,
+        ie8: false
+      }
+    })]
   },
   performance: {hints: false}
 }

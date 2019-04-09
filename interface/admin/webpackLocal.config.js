@@ -9,7 +9,6 @@
 
 const childProcess = require('child_process')
 const fs = require('fs')
-const K = require('../../index')
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
 
@@ -17,9 +16,17 @@ let entryFolder = path.resolve(process.env.KADO_ROOT +
   '/interface/admin/asset')
 let outputFolder = path.resolve(process.env.KADO_ROOT +
   '/interface/admin/public/dist')
-if(0 !== +process.env.KADO_USER_ROOT){
+if(0 !== +process.env.KADO_USER_ROOT && fs.existsSync(
+  path.resolve(process.env.KADO_USER_ROOT + '/interface/admin/asset'))
+)
+{
   entryFolder = path.resolve(process.env.KADO_USER_ROOT +
     '/interface/admin/asset')
+}
+if(0 !== +process.env.KADO_USER_ROOT && fs.existsSync(
+  path.resolve(process.env.KADO_USER_ROOT + '/interface/admin/public'))
+)
+{
   outputFolder = path.resolve(process.env.KADO_USER_ROOT +
     '/interface/admin/public/dist')
 }
@@ -27,7 +34,8 @@ if(0 !== +process.env.KADO_USER_ROOT){
 let moduleAssets = []
 let moduleJs = ''
 let moduleList = childProcess.execSync(
-  'node ' + K.root() + '/kado_modules/kado/bin/util.js scan-modules'
+  'node ' + process.env.KADO_ROOT +
+  '/kado_modules/kado/bin/util.js scan-modules'
 ).toString('utf-8').split('\n')
 moduleList.map((modRoot)=>{
   let assetFile = modRoot + '/admin/asset/index.js'
@@ -62,6 +70,12 @@ module.exports = {
     ]
   },
   optimization: {
-    minimizer: [new TerserPlugin()]
+    minimizer: [new TerserPlugin({
+      parallel: true,
+      terserOptions: {
+        warnings: false,
+        ie8: false
+      }
+    })]
   }
 }

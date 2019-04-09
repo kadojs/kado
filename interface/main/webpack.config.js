@@ -38,7 +38,13 @@ module.exports = {
     ]
   },
   optimization: {
-    minimizer: [new TerserPlugin()]
+    minimizer: [new TerserPlugin({
+      parallel: true,
+      terserOptions: {
+        warnings: false,
+        ie8: false
+      }
+    })]
   },
   performance: {hints: false}
 }

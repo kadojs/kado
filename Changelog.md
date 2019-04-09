@@ -1,6 +1,13 @@
 ### 3.8.0 (planned)
 
-### 3.7.1 (staged)
+### 3.7.2 (staged)
+
+### 3.7.1
+* Bug fixes to bundle root handling.
+* Use proper app suite on post install generation.
+* Start using Git tags and Github releases.
+* Drop unused dependencies.
+* Use parallel tersing for bundle speedups.
 
 ### 3.7.0
 * Distribute Kado under the MIT license!
@@ -260,7 +267,7 @@ and distort data automatically. Use for development ONLY.
 at the project helper locations.
 * Added `K.helper()` method to find and return helper locations.
 * Update to Infant 1.2.2: Added signal handler to properly handle graceful shutdowns through nodemon.
-This should prevent stuck processes during development.
+This should 8.0.5prevent stuck processes during development.
 
 ### 3.4.9
 * Fixes #261 CLI access on Module creation points to the wrong title/name
