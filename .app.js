@@ -9,6 +9,11 @@
 let K = require('./index')
 K.configure({
   root: __dirname,
+  db: {
+    sequelize: {
+      skipConnect: true
+    }
+  },
   interface: {
     admin: { enabled: true },
     main: { enabled: true }

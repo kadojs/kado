@@ -116,6 +116,7 @@ config.$load({
     sequelize: {
       enabled: true,
       load: true,
+      skipConnect: false,
       name: 'kado',
       host: '127.0.0.1',
       port: 3306,

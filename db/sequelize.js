@@ -107,6 +107,7 @@ let createInst = (userOptions) => {
     if(!opts) opts = {}
     if(!opts.sync) opts.sync = false
     if(!opts.syncForce) opts.syncForce = false
+    if(config.db.sequelize.skipConnect === true) return
     let that = this
     let init
     if(config.db.sequelize.modelInit){
