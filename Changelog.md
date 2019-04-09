@@ -1,6 +1,13 @@
 ### 3.8.0 (planned)
 
-### 3.7.2 (staged)
+### 3.7.3 (staged)
+
+### 3.7.2
+* Add the parameters `addCss: [{}], addScript: [{}]` to each interface
+declaration in order to add additional resources directly from the app config.
+Each object requires the key `uri` such as `{uri: '/a.css'}` or
+`addScript: [{uri: '/new.js', defer: false}]` which loads a new JS resource
+synchronously (all default adds are deferred).
 
 ### 3.7.1
 * Bug fixes to bundle root handling.

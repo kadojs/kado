@@ -168,6 +168,8 @@ config.$load({
       viewCache: true,
       scriptServer: [],
       staticRoot: [],
+      addCss: [],
+      addScript: [],
       override: {
         lang: {},
         nav: {},
@@ -202,6 +204,8 @@ config.$load({
       viewCache: true,
       scriptServer: [],
       staticRoot: [],
+      addCss: [],
+      addScript: [],
       override: {
         lang: {},
         nav: {},
