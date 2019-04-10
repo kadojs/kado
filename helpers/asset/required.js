@@ -18,6 +18,8 @@ let toWindow = (name,val) => {
 
 //headless dependencies
 toWindow('$',require('jquery'))
+toWindow('jQuery',window.$)
+toWindow('jquery',window.$)
 
 //global dependencies
 toWindow('base64js',require('base64-js'))

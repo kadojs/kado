@@ -1,6 +1,10 @@
 ### 3.8.0 (planned)
 
-### 3.7.3 (staged)
+### 3.7.4 (staged)
+
+### 3.7.3
+* Bug fix to required bundle process now assigns jquery to
+window.$, window.jQuery and window.jquery
 
 ### 3.7.2
 * Add the parameters `addCss: [{}], addScript: [{}]` to each interface
