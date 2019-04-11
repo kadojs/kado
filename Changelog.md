@@ -5,7 +5,7 @@
 ### 3.7.4
 * Disable performance hints by default when building, however allow them to be
 enabled by passing `node app kado bundle --hints` which will complain about
-large JS files. Once this is known it only serves to annoy.
+large JS files and other performance issues.
 
 ### 3.7.3
 * Bug fix to required bundle process now assigns jquery to
