@@ -1,6 +1,9 @@
 ### 3.8.0 (planned)
 
-### 3.7.5 (staged)
+### 3.7.6 (staged)
+
+### 3.7.5
+* Move bootstrap into required build chain.
 
 ### 3.7.4
 * Disable performance hints by default when building, however allow them to be

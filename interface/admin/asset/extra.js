@@ -18,7 +18,6 @@ let toWindow = (name,val) => {
 
 //extra
 require('jquery-ui')
-require('bootstrap')
 require('bootstrap-select')
 toWindow('moment',require('moment'))
 toWindow('Holder',require('holderjs'))
