@@ -345,6 +345,7 @@ program.command('bootstrap')
 program.command('bundle')
   .option('-i --interface <name>','Only bundle for this interface')
   .option('-l --local','Only bundle local items')
+  .option('-H --hints','Show performance hints when bundling')
   .action((cmd) => {
     /**
      * Bundle an interface for distribution
@@ -363,6 +364,11 @@ program.command('bundle')
         K.log.warn('Skipped packing ' + ifaceName + ' with config file: ' +
           configFile + ', KADO_USER_ROOT missing.')
         return
+      }
+      //turn on performance hints if needed
+      if(cmd.hints && packOptions){
+        if(!packOptions.performance) packOptions.performance = {}
+        packOptions.performance.hints = 'warning'
       }
       K.log.info('Starting webpack for ' + ifaceName + ' using ' + configFile)
       K.log.debug(ifaceName + ' options: ' + JSON.stringify(packOptions))

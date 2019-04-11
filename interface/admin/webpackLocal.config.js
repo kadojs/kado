@@ -77,5 +77,6 @@ module.exports = {
         ie8: false
       }
     })]
-  }
+  },
+  performance: {hints: false}
 }
