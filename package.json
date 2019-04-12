@@ -2,7 +2,7 @@
   "author": "Bryan Tong <bryan@nullivex.com>",
   "name": "kado",
   "description": "Web Application System",
-  "version": "3.7.7",
+  "version": "3.7.8",
   "homepage": "https://kado.org",
   "license": "MIT",
   "repository": {
@@ -91,7 +91,7 @@
     "recursive-readdir": "^2.2.2",
     "request": "^2.88.0",
     "rimraf": "^2.6.3",
-    "sequelize": "^5.3.2",
+    "sequelize": "^5.3.5",
     "sequelize-datatable": "^2.0.0",
     "serve-static": "^1.13.2",
     "squire-rte": "^1.9.0",

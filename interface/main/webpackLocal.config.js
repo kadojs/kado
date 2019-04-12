@@ -43,13 +43,15 @@ let localList = [
   process.env.KADO_USER_ROOT + '/interface/' + ifaceName + '/asset'
 ]
 localList.map((root)=>{
-  let assetFile = root + '/local.js'
-  let assetExtraFile = root + '/localExtra.js'
+  let assetFile = path.resolve(root + '/local.js')
+  let assetExtraFile = path.resolve(root + '/localExtra.js')
   if(fs.existsSync(assetFile)){
+    assetFile = assetFile.replace(/\\/g,'/')
     localAsset.push(assetFile)
     localJs = localJs + 'require(\'' + assetFile + '\')\n'
   }
   if(fs.existsSync(assetExtraFile)){
+    assetExtraFile = assetExtraFile.replace(/\\/g,'/')
     localAssetExtra.push(assetExtraFile)
     localExtraJs = localExtraJs + 'require(\'' + assetExtraFile + '\')\n'
   }

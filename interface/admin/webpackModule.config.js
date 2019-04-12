@@ -45,13 +45,16 @@ let moduleList = childProcess.execSync(
   '/kado_modules/kado/bin/util.js scan-modules'
 ).toString('utf-8').split('\n')
 moduleList.map((modRoot)=>{
-  let assetFile = modRoot + '/' + ifaceName + '/asset/module.js'
-  let assetExtraFile = modRoot + '/' + ifaceName + '/asset/moduleExtra.js'
+  let assetFile = path.resolve(modRoot + '/' + ifaceName + '/asset/module.js')
+  let assetExtraFile = path.resolve(
+    modRoot + '/' + ifaceName + '/asset/moduleExtra.js')
   if(fs.existsSync(assetFile)){
+    assetFile = assetFile.replace(/\\/g,'/')
     moduleAsset.push(assetFile)
     moduleJs = moduleJs + 'require(\'' + assetFile + '\')\n'
   }
   if(fs.existsSync(assetExtraFile)){
+    assetExtraFile = assetExtraFile.replace(/\\/g,'/')
     moduleAssetExtra.push(assetExtraFile)
     moduleExtraJs = moduleExtraJs + 'require(\'' + assetExtraFile + '\')\n'
   }

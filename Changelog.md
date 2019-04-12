@@ -1,6 +1,9 @@
 ### 3.8.0 (planned)
 
-### 3.7.8 (staged)
+### 3.7.9 (staged)
+
+### 3.7.8
+* Bug fix to windows paths generated during build process.
 
 ### 3.7.7
 * Fix local build suites to output to the system entry folder.
