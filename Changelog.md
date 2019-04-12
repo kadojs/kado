@@ -5,6 +5,11 @@
 ### 3.7.7
 * Fix local build suites to output to the system entry folder.
 * `local.js` and `localExtra.js` were not using the properly build module list.
+* Break build into system, module local chains with sync and extra packs.
+* Add ability to filter bundling by -s for system or -m for module.
+* Enable source maps in bundles by default.
+* Add `-q` to do quick builds of local only and then `-N` to skip building
+source maps. See `node app kado bundle --help` for more information.
 
 ### 3.7.6
 * Adding assets on page routes did not clear on render. The Asset system now has

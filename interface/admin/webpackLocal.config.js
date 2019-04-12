@@ -36,31 +36,6 @@ if(0 !== +process.env.KADO_USER_ROOT && fs.existsSync(
     '/interface/' + ifaceName + '/public/dist')
 }
 
-let moduleAsset = []
-let moduleAssetExtra = []
-let moduleJs = ''
-let moduleExtraJs = ''
-let moduleList = childProcess.execSync(
-  'node ' + process.env.KADO_ROOT +
-  '/kado_modules/kado/bin/util.js scan-modules'
-).toString('utf-8').split('\n')
-moduleList.map((modRoot)=>{
-  let assetFile = modRoot + '/' + ifaceName + '/asset/module.js'
-  let assetExtraFile = modRoot + '/' + ifaceName + '/asset/moduleExtra.js'
-  if(fs.existsSync(assetFile)){
-    moduleAsset.push(assetFile)
-    moduleJs = moduleJs + 'require(\'' + assetFile + '\')\n'
-  }
-  if(fs.existsSync(assetExtraFile)){
-    moduleAssetExtra.push(assetExtraFile)
-    moduleExtraJs = moduleExtraJs + 'require(\'' + assetExtraFile + '\')\n'
-  }
-})
-//write the module list for reading in the extra.js helper
-fs.writeFileSync(systemEntryFolder + '/module.js',moduleJs)
-fs.writeFileSync(systemEntryFolder + '/moduleExtra.js',moduleExtraJs)
-
-
 let localAsset = []
 let localAssetExtra = []
 let localJs = ''
@@ -92,11 +67,10 @@ fs.writeFileSync(systemEntryFolder + '/localExtra.js',localExtraJs)
 module.exports = {
   entry: {
     local: systemEntryFolder + '/local.js',
-    localExtra: systemEntryFolder + '/localExtra.js',
-    module: systemEntryFolder + '/module.js',
-    moduleExtra: systemEntryFolder + '/moduleExtra.js',
+    localExtra: systemEntryFolder + '/localExtra.js'
   },
   mode: process.env.DEV === 'kado' ? 'development' : 'production',
+  devtool: process.env.DEV === 'kado' ? 'cheap-module-source-map' : 'source-map',
   output: {
     path: outputFolder,
     filename: '[name].js'
@@ -111,6 +85,7 @@ module.exports = {
   optimization: {
     minimizer: [new TerserPlugin({
       parallel: true,
+      sourceMap: true,
       terserOptions: {
         warnings: false,
         ie8: false

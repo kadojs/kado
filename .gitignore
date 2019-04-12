@@ -15,3 +15,4 @@ bundle.*
 **/public/dist/*.js
 interface/**/asset/module*.js
 interface/**/asset/local*.js
+interface/**/public/dist/*.js.map

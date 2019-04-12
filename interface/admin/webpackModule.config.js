@@ -6,12 +6,13 @@
  *
  * This file is part of Kado and bound to the MIT license distributed within.
  */
+
 const childProcess = require('child_process')
 const fs = require('fs')
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
 
-const ifaceName = 'main'
+const ifaceName = 'admin'
 
 let entryFolder = path.resolve(process.env.KADO_ROOT +
   '/interface/' + ifaceName + '/asset')
@@ -35,28 +36,29 @@ if(0 !== +process.env.KADO_USER_ROOT && fs.existsSync(
     '/interface/' + ifaceName + '/public/dist')
 }
 
-let localAsset = []
-let localAssetExtra = []
-let localJs = ''
-let localExtraJs = ''
-let localList = [
-  process.env.KADO_USER_ROOT + '/interface/' + ifaceName + '/asset'
-]
-localList.map((root)=>{
-  let assetFile = root + '/local.js'
-  let assetExtraFile = root + '/localExtra.js'
+let moduleAsset = []
+let moduleAssetExtra = []
+let moduleJs = ''
+let moduleExtraJs = ''
+let moduleList = childProcess.execSync(
+  'node ' + process.env.KADO_ROOT +
+  '/kado_modules/kado/bin/util.js scan-modules'
+).toString('utf-8').split('\n')
+moduleList.map((modRoot)=>{
+  let assetFile = modRoot + '/' + ifaceName + '/asset/module.js'
+  let assetExtraFile = modRoot + '/' + ifaceName + '/asset/moduleExtra.js'
   if(fs.existsSync(assetFile)){
-    localAsset.push(assetFile)
-    localJs = localJs + 'require(\'' + assetFile + '\')\n'
+    moduleAsset.push(assetFile)
+    moduleJs = moduleJs + 'require(\'' + assetFile + '\')\n'
   }
   if(fs.existsSync(assetExtraFile)){
-    localAssetExtra.push(assetExtraFile)
-    localExtraJs = localExtraJs + 'require(\'' + assetExtraFile + '\')\n'
+    moduleAssetExtra.push(assetExtraFile)
+    moduleExtraJs = moduleExtraJs + 'require(\'' + assetExtraFile + '\')\n'
   }
 })
 //write the module list for reading in the extra.js helper
-fs.writeFileSync(systemEntryFolder + '/local.js',localJs)
-fs.writeFileSync(systemEntryFolder + '/localExtra.js',localExtraJs)
+fs.writeFileSync(systemEntryFolder + '/module.js',moduleJs)
+fs.writeFileSync(systemEntryFolder + '/moduleExtra.js',moduleExtraJs)
 
 
 /**
@@ -65,8 +67,8 @@ fs.writeFileSync(systemEntryFolder + '/localExtra.js',localExtraJs)
  */
 module.exports = {
   entry: {
-    local: systemEntryFolder + '/local.js',
-    localExtra: systemEntryFolder + '/localExtra.js',
+    module: systemEntryFolder + '/module.js',
+    moduleExtra: systemEntryFolder + '/moduleExtra.js',
   },
   mode: process.env.DEV === 'kado' ? 'development' : 'production',
   devtool: process.env.DEV === 'kado' ? 'cheap-module-source-map' : 'source-map',

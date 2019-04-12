@@ -25,6 +25,7 @@ module.exports = {
     tuiEditor: helperFolder + '/tuiEditor.js'
   },
   mode: process.env.DEV === 'kado' ? 'development' : 'production',
+  devtool: process.env.DEV === 'kado' ? 'cheap-module-source-map' : 'source-map',
   output: {
     path: outputFolder,
     filename: '[name].js'
@@ -39,6 +40,7 @@ module.exports = {
   optimization: {
     minimizer: [new TerserPlugin({
       parallel: true,
+      sourceMap: true,
       terserOptions: {
         warnings: false,
         ie8: false

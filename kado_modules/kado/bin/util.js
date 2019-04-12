@@ -343,10 +343,18 @@ program.command('bootstrap')
   })
 
 program.command('bundle')
+  .option('-q --quick','Local only no source maps')
   .option('-i --interface <name>','Only bundle for this interface')
   .option('-l --local','Only bundle local items')
+  .option('-m --module','Only bundle module items')
+  .option('-s --system','Only bundle system items')
+  .option('-N --nomap','Skip source mapping')
   .option('-H --hints','Show performance hints when bundling')
   .action((cmd) => {
+    let sourceMap = true
+    if(cmd.nomap || cmd.quick) sourceMap = false
+    if(cmd.quick) cmd.local = true
+
     /**
      * Bundle an interface for distribution
      * @param {string} ifaceName
@@ -370,6 +378,10 @@ program.command('bundle')
         if(!packOptions.performance) packOptions.performance = {}
         packOptions.performance.hints = 'warning'
       }
+      if(!sourceMap){
+        packOptions.devtool = false
+        packOptions.optimization.minimizer[0].sourceMap = false
+      }
       K.log.info('Starting webpack for ' + ifaceName + ' using ' + configFile)
       K.log.debug(ifaceName + ' options: ' + JSON.stringify(packOptions))
       let pack = webpack(packOptions)
@@ -384,6 +396,7 @@ program.command('bundle')
         })
     }
     let systemConfigFile = 'webpack.config.js'
+    let moduleConfigFile = 'webpackModule.config.js'
     let localConfigFile = 'webpackLocal.config.js'
     //interfaces so hmm
     K.bluebird.try(()=> {
@@ -397,9 +410,14 @@ program.command('bundle')
         let promises = []
         if(cmd.local){
           promises.push(bundleInterface(ifaceName,localConfigFile))
-        } else {
+        } else if(cmd.module){
+          promises.push(bundleInterface(ifaceName,moduleConfigFile))
+        } else if(cmd.system){
           promises.push(bundleInterface(ifaceName,systemConfigFile))
+        } else {
           promises.push(bundleInterface(ifaceName,localConfigFile))
+          promises.push(bundleInterface(ifaceName,moduleConfigFile))
+          promises.push(bundleInterface(ifaceName,systemConfigFile))
         }
         return K.bluebird.all(promises)
       })
