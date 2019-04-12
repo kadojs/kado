@@ -19,7 +19,6 @@ let toWindow = (name,val) => {
 //extra
 require('jquery-ui')
 require('bootstrap-select')
-toWindow('moment',require('moment'))
 toWindow('Holder',require('holderjs'))
 toWindow('querystring',require('qs'))
 toWindow('prettyBytes',require('pretty-bytes'))
@@ -27,12 +26,3 @@ toWindow('prettyBytes',require('pretty-bytes'))
 //panel plugins
 require('../../../helpers/asset/DataTableConfig')
 require('../../../helpers/asset/util')
-
-//page holder
-$(document).ready(function(){
-  Holder.addTheme('thumb', {
-    bg: '#55595c',
-    fg: '#eceeef',
-    text: 'Thumbnail'
-  })
-})

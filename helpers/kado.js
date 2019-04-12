@@ -111,6 +111,24 @@ config.$load({
   log: {
     dateFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
   },
+  //dynamic connectors
+  connector: {
+    stretchfs: {
+      load: false,
+      callback: {
+        method: 'post',
+        url: 'http://localhost:8160/file/jobUpdate',
+        rejectUnauthorized: false
+      },
+      referrer: ['localhost'],
+      domain: 'localhost:8162',
+      token: 'changeme',
+      host: 'localhost',
+      port: 8161,
+      username: '',
+      password: ''
+    }
+  },
   //database connectors
   db: {
     sequelize: {
@@ -577,6 +595,13 @@ exports.sendMail = (options) => {
 
 
 /**
+ * Dynamic Connectors
+ * @type {object}
+ */
+exports.connector = {}
+
+
+/**
  * Store database connectors
  * @type {object}
  */
@@ -751,19 +776,51 @@ exports.init = (skipDb) => {
       exports.email[name] = require(file)
     }
   }
+  let loadConnector = (file) => {
+    let name = path.basename(file,'.js')
+    //check if the connector is registered and enabled
+    if(config.connector[name] && config.connector[name].load){
+      exports.log.debug(name + ' connector loaded')
+      exports.connector[name] = require(file)
+      if('function' === typeof exports.connector[name].doConnect){
+        exports.log.debug(name + ' activating connector')
+        exports.connector[name].doConnect()
+      }
+    }
+  }
+  let connectorGlob = process.env.KADO_ROOT + '/connector/*.js'
+  let connectorGlobUser = process.env.KADO_USER_ROOT + '/connector/*.js'
   let dbGlob = process.env.KADO_ROOT + '/db/*.js'
+  let dbGlobUser = process.env.KADO_USER_ROOT + '/db/*.js'
   let emailGlob = process.env.KADO_ROOT + '/email/*.js'
+  let emailGlobUser = process.env.KADO_USER_ROOT + '/email/*.js'
   return new P((resolve) => {
     //scan db connectors
     exports.log.debug('Scanning modules')
     exports.scanModules()
       .then(() => {
-        exports.log.debug('Scanning for email connectors')
+        exports.log.debug('Scanning for system email connectors')
         return doScan(emailGlob,loadEmailConnector)
       })
       .then(() => {
-        exports.log.debug('Scanning for database connectors')
+        exports.log.debug('Scanning for user email connectors')
+        return doScan(emailGlobUser,loadEmailConnector)
+      })
+      .then(() => {
+        exports.log.debug('Scanning for system dynamic connectors')
+        return doScan(connectorGlob,loadConnector)
+      })
+      .then(() => {
+        exports.log.debug('Scanning for user dynamic connectors')
+        return doScan(connectorGlobUser,loadConnector)
+      })
+      .then(() => {
+        exports.log.debug('Scanning for system database connectors')
         return doScan(dbGlob,loadDbConnector)
+      })
+      .then(() => {
+        exports.log.debug('Scanning for user database connectors')
+        return doScan(dbGlobUser,loadDbConnector)
       })
       .then(() => {
         exports.log.debug('Setting up data storage access')

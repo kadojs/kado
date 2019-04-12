@@ -111,9 +111,11 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     let baseUrl = K.config.interface[interfaceName].baseUrl
     const LOAD_SYNC = false
     app.asset.addScript(baseUrl + '/dist/required.js',LOAD_SYNC)
+    app.asset.addScript(baseUrl + '/dist/module.js',LOAD_SYNC)
+    app.asset.addScript(baseUrl + '/dist/local.js',LOAD_SYNC)
     app.asset.addScript(baseUrl + '/dist/extra.js')
-    app.asset.addScript(baseUrl + '/dist/module.js')
-    app.asset.addScript(baseUrl + '/dist/local.js')
+    app.asset.addScript(baseUrl + '/dist/moduleExtra.js')
+    app.asset.addScript(baseUrl + '/dist/localExtra.js')
     app.asset.addCss(baseUrl + '/main.css')
   })
   worker.setupContent(() => {

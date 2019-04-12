@@ -1,6 +1,21 @@
 ### 3.8.0 (planned)
 
-### 3.7.6 (staged)
+### 3.7.7 (staged)
+
+### 3.7.6
+* Adding assets on page routes did not clear on render. The Asset system now has
+`addCssOnce` and `addScriptOnce` these methods are cleared with each call to the
+asset `allCss` and `allScript` methods.
+* Adds Dynamic Connector support. The `connector` folder can now contain generic
+connectors that are scanned and connected at init time.
+* All connector support: dynamic, email, db are now scanned for in their
+respective user space folders. Such as `projectroot/db/mongodb.js` etc.
+* Includes the **StretchFS** connector as the first of the dynamic connectors.
+* Changes the outlook on build chains. `Extra` chains are now meant to deferred
+while maintaining the levels. Such as `local` and `module` now have
+`localExtra` and `moduleExtra` these help facilitate loading extra needed
+dependencies in each portion of the chain and helping to avoid duplicates.
+* Moves `moment` into the required build chain to support various needs.
 
 ### 3.7.5
 * Move bootstrap into required build chain.

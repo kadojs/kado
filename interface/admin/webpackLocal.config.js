@@ -12,40 +12,76 @@ const fs = require('fs')
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
 
+const ifaceName = 'admin'
+
 let entryFolder = path.resolve(process.env.KADO_ROOT +
-  '/interface/admin/asset')
+  '/interface/' + ifaceName + '/asset')
 let outputFolder = path.resolve(process.env.KADO_ROOT +
-  '/interface/admin/public/dist')
+  '/interface/' + ifaceName + '/public/dist')
 if(0 !== +process.env.KADO_USER_ROOT && fs.existsSync(
-  path.resolve(process.env.KADO_USER_ROOT + '/interface/admin/asset'))
+  path.resolve(
+    process.env.KADO_USER_ROOT + '/interface/' + ifaceName + '/asset'))
 )
 {
   entryFolder = path.resolve(process.env.KADO_USER_ROOT +
-    '/interface/admin/asset')
+    '/interface/' + ifaceName + '/asset')
 }
 if(0 !== +process.env.KADO_USER_ROOT && fs.existsSync(
-  path.resolve(process.env.KADO_USER_ROOT + '/interface/admin/public'))
+  path.resolve(
+    process.env.KADO_USER_ROOT + '/interface/' + ifaceName + '/public'))
 )
 {
   outputFolder = path.resolve(process.env.KADO_USER_ROOT +
-    '/interface/admin/public/dist')
+    '/interface/' + ifaceName + '/public/dist')
 }
 
-let moduleAssets = []
+let moduleAsset = []
+let moduleAssetExtra = []
 let moduleJs = ''
+let moduleExtraJs = ''
 let moduleList = childProcess.execSync(
   'node ' + process.env.KADO_ROOT +
   '/kado_modules/kado/bin/util.js scan-modules'
 ).toString('utf-8').split('\n')
 moduleList.map((modRoot)=>{
-  let assetFile = modRoot + '/admin/asset/index.js'
+  let assetFile = modRoot + '/' + ifaceName + '/asset/module.js'
+  let assetExtraFile = modRoot + '/' + ifaceName + '/asset/moduleExtra.js'
   if(fs.existsSync(assetFile)){
-    moduleAssets.push(assetFile)
+    moduleAsset.push(assetFile)
     moduleJs = moduleJs + 'require(\'' + assetFile + '\')\n'
+  }
+  if(fs.existsSync(assetExtraFile)){
+    moduleAssetExtra.push(assetExtraFile)
+    moduleExtraJs = moduleExtraJs + 'require(\'' + assetExtraFile + '\')\n'
   }
 })
 //write the module list for reading in the extra.js helper
 fs.writeFileSync(entryFolder + '/module.js',moduleJs)
+fs.writeFileSync(entryFolder + '/moduleExtra.js',moduleExtraJs)
+
+
+let localAsset = []
+let localAssetExtra = []
+let localJs = ''
+let localExtraJs = ''
+let localList = [
+  process.env.KADO_USER_ROOT + '/interface/' + ifaceName + '/asset'
+]
+localList.map((root)=>{
+  let assetFile = root + '/local.js'
+  let assetExtraFile = root + '/localExtra.js'
+  if(fs.existsSync(assetFile)){
+    localAsset.push(assetFile)
+    localJs = localJs + 'require(\'' + assetFile + '\')\n'
+  }
+  if(fs.existsSync(assetExtraFile)){
+    localAssetExtra.push(assetExtraFile)
+    localExtraJs = localExtraJs + 'require(\'' + assetExtraFile + '\')\n'
+  }
+})
+//write the module list for reading in the extra.js helper
+fs.writeFileSync(entryFolder + '/local.js',moduleJs)
+fs.writeFileSync(entryFolder + '/localExtra.js',moduleExtraJs)
 
 
 /**
@@ -55,7 +91,9 @@ fs.writeFileSync(entryFolder + '/module.js',moduleJs)
 module.exports = {
   entry: {
     local: entryFolder + '/local.js',
+    localExtra: entryFolder + '/localExtra.js',
     module: entryFolder + '/module.js',
+    moduleExtra: entryFolder + '/moduleExtra.js',
   },
   mode: process.env.DEV === 'kado' ? 'development' : 'production',
   output: {

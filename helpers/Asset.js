@@ -15,7 +15,9 @@
 class Asset {
   constructor(){
     this.css = []
+    this.cssOnce = []
     this.script = []
+    this.scriptOnce = []
   }
 
   /**
@@ -26,6 +28,17 @@ class Asset {
   addCss(uri){
     if(this.css.filter((entry)=>{return (entry.uri === uri)}).length === 0){
       this.css.push({uri: uri})
+    }
+    return uri
+  }
+  /**
+   * Add CSS Asset Once
+   * @param {string} uri
+   * @return {string}
+   */
+  addCssOnce(uri){
+    if(this.cssOnce.filter((entry)=>{return (entry.uri === uri)}).length === 0){
+      this.cssOnce.push({uri: uri})
     }
     return uri
   }
@@ -44,11 +57,37 @@ class Asset {
     return entry
   }
   /**
+   * Add Script Asset Once
+   * @param {string} uri
+   * @param {boolean} defer
+   * @return {string}
+   */
+  addScriptOnce(uri,defer){
+    if(false !== defer) defer = true
+    let entry = {uri: uri, defer: !!defer}
+    if(this.scriptOnce.filter((entry)=>{
+      return (entry.uri === uri)
+    }).length === 0){
+      this.scriptOnce.push(entry)
+    }
+    return entry
+  }
+  /**
    * Remove Css
    * @param {string} uri
    */
   removeCss(uri){
-    this.css.filter((entry)=>{
+    this.css = this.css.filter((entry)=>{
+      return (entry.uri === uri)
+    })
+    return true
+  }
+  /**
+   * Remove Css Once
+   * @param {string} uri
+   */
+  removeCssOnce(uri){
+    this.cssOnce = this.cssOnce.filter((entry)=>{
       return (entry.uri === uri)
     })
     return true
@@ -58,7 +97,17 @@ class Asset {
    * @param {string} uri
    */
   removeScript(uri){
-    this.script.filter((entry)=>{
+    this.script = this.script.filter((entry)=>{
+      return (entry.uri === uri)
+    })
+    return true
+  }
+  /**
+   * Remove Script Once
+   * @param {string} uri
+   */
+  removeScriptOnce(uri){
+    this.scriptOnce = this.scriptOnce.filter((entry)=>{
       return (entry.uri === uri)
     })
     return true
@@ -68,14 +117,18 @@ class Asset {
    * @returns {Array}
    */
   allCss(){
-    return this.css
+    let result = [].concat(this.css,this.cssOnce)
+    this.cssOnce = []
+    return result
   }
   /**
    * Return all Scripts for Templating
    * @returns {Array}
    */
   allScript(){
-    return this.script
+    let result = [].concat(this.script,this.scriptOnce)
+    this.scriptOnce = []
+    return result
   }
 }
 
