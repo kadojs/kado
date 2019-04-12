@@ -16,6 +16,7 @@ const ifaceName = 'admin'
 
 let entryFolder = path.resolve(process.env.KADO_ROOT +
   '/interface/' + ifaceName + '/asset')
+let systemEntryFolder = entryFolder
 let outputFolder = path.resolve(process.env.KADO_ROOT +
   '/interface/' + ifaceName + '/public/dist')
 if(0 !== +process.env.KADO_USER_ROOT && fs.existsSync(
@@ -56,8 +57,8 @@ moduleList.map((modRoot)=>{
   }
 })
 //write the module list for reading in the extra.js helper
-fs.writeFileSync(entryFolder + '/module.js',moduleJs)
-fs.writeFileSync(entryFolder + '/moduleExtra.js',moduleExtraJs)
+fs.writeFileSync(systemEntryFolder + '/module.js',moduleJs)
+fs.writeFileSync(systemEntryFolder + '/moduleExtra.js',moduleExtraJs)
 
 
 let localAsset = []
@@ -80,8 +81,8 @@ localList.map((root)=>{
   }
 })
 //write the module list for reading in the extra.js helper
-fs.writeFileSync(entryFolder + '/local.js',moduleJs)
-fs.writeFileSync(entryFolder + '/localExtra.js',moduleExtraJs)
+fs.writeFileSync(systemEntryFolder + '/local.js',moduleJs)
+fs.writeFileSync(systemEntryFolder + '/localExtra.js',moduleExtraJs)
 
 
 /**
@@ -90,10 +91,10 @@ fs.writeFileSync(entryFolder + '/localExtra.js',moduleExtraJs)
  */
 module.exports = {
   entry: {
-    local: entryFolder + '/local.js',
-    localExtra: entryFolder + '/localExtra.js',
-    module: entryFolder + '/module.js',
-    moduleExtra: entryFolder + '/moduleExtra.js',
+    local: systemEntryFolder + '/local.js',
+    localExtra: systemEntryFolder + '/localExtra.js',
+    module: systemEntryFolder + '/module.js',
+    moduleExtra: systemEntryFolder + '/moduleExtra.js',
   },
   mode: process.env.DEV === 'kado' ? 'development' : 'production',
   output: {

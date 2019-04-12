@@ -1,6 +1,9 @@
 ### 3.8.0 (planned)
 
-### 3.7.7 (staged)
+### 3.7.8 (staged)
+
+### 3.7.7
+* Fix local build suites to output to the system entry folder.
 
 ### 3.7.6
 * Adding assets on page routes did not clear on render. The Asset system now has
