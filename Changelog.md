@@ -16,6 +16,8 @@ while maintaining the levels. Such as `local` and `module` now have
 `localExtra` and `moduleExtra` these help facilitate loading extra needed
 dependencies in each portion of the chain and helping to avoid duplicates.
 * Moves `moment` into the required build chain to support various needs.
+* Add `removeScript` and `removeCss` parameters to allow removal of system
+level components in lieu of custom components or a lighter stack.
 
 ### 3.7.5
 * Move bootstrap into required build chain.

@@ -380,31 +380,52 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
       })
     }
     worker.setupAsset = (cb) => {
+      //ensure the addCss and addScript parameters are arrays
+      if(!(K.config.interface[interfaceName].addCss instanceof Array)){
+        K.config.interface[interfaceName].addCss = [
+          K.config.interface[interfaceName].addCss
+        ]
+      }
+      if(!(K.config.interface[interfaceName].addScript instanceof Array)){
+        K.config.interface[interfaceName].addScript = [
+          K.config.interface[interfaceName].addScript
+        ]
+      }
+      //ensure the removeCss and removeScript parameters are arrays
+      if(!(K.config.interface[interfaceName].removeCss instanceof Array)){
+        K.config.interface[interfaceName].removeCss = [
+          K.config.interface[interfaceName].removeCss
+        ]
+      }
+      if(!(K.config.interface[interfaceName].removeScript instanceof Array)){
+        K.config.interface[interfaceName].removeScript = [
+          K.config.interface[interfaceName].removeScript
+        ]
+      }
+      //filter through useless entries and add the rest
+      K.config.interface[interfaceName].addCss.filter((r)=> {
+        return r && r.uri
+      }).map((r)=>{
+        app.asset.addCss(r.uri)
+      })
+      K.config.interface[interfaceName].removeCss.filter((r)=> {
+        return r && r.uri
+      }).map((r)=>{
+        app.asset.removeCss(r.uri)
+      })
+      K.config.interface[interfaceName].addScript.filter((r)=> {
+        return r && r.uri
+      }).map((r)=>{
+        let defer = true
+        if(false === r.defer) defer = false
+        app.asset.addScript(r.uri,defer)
+      })
+      K.config.interface[interfaceName].removeScript.filter((r)=> {
+        return r && r.uri
+      }).map((r)=>{
+        app.asset.removeScriptv(r.uri)
+      })
       app.use((req,res,next)=>{
-        //ensure the addCss and addScript parameters are arrays
-        if(!(K.config.interface[interfaceName].addCss instanceof Array)){
-          K.config.interface[interfaceName].addCss = [
-            K.config.interface[interfaceName].addCss
-          ]
-        }
-        if(!(K.config.interface[interfaceName].addScript instanceof Array)){
-          K.config.interface[interfaceName].addScript = [
-            K.config.interface[interfaceName].addScript
-          ]
-        }
-        //filter through useless entries and add the rest
-        K.config.interface[interfaceName].addCss.filter((r)=> {
-          return r && r.uri
-        }).map((r)=>{
-          app.asset.addCss(r.uri)
-        })
-        K.config.interface[interfaceName].addScript.filter((r)=> {
-          return r && r.uri
-        }).map((r)=>{
-          let defer = true
-          if(false === r.defer) defer = false
-          app.asset.addScript(r.uri,defer)
-        })
         res.locals._css = app.asset.allCss()
         res.locals._script = app.asset.allScript()
         next()

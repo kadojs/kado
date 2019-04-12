@@ -187,7 +187,9 @@ config.$load({
       scriptServer: [],
       staticRoot: [],
       addCss: [],
+      removeCss: [],
       addScript: [],
+      removeScript: [],
       override: {
         lang: {},
         nav: {},
@@ -223,7 +225,9 @@ config.$load({
       scriptServer: [],
       staticRoot: [],
       addCss: [],
+      removeCss: [],
       addScript: [],
+      removeScript: [],
       override: {
         lang: {},
         nav: {},
