@@ -81,8 +81,8 @@ localList.map((root)=>{
   }
 })
 //write the module list for reading in the extra.js helper
-fs.writeFileSync(systemEntryFolder + '/local.js',moduleJs)
-fs.writeFileSync(systemEntryFolder + '/localExtra.js',moduleExtraJs)
+fs.writeFileSync(systemEntryFolder + '/local.js',localJs)
+fs.writeFileSync(systemEntryFolder + '/localExtra.js',localExtraJs)
 
 
 /**

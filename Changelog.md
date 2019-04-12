@@ -4,6 +4,7 @@
 
 ### 3.7.7
 * Fix local build suites to output to the system entry folder.
+* `local.js` and `localExtra.js` were not using the properly build module list.
 
 ### 3.7.6
 * Adding assets on page routes did not clear on render. The Asset system now has
