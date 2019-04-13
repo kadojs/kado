@@ -17,8 +17,8 @@ const Content = sequelize.models.Content
  * @param {object} res
  */
 exports.entry = (req,res) => {
-  res.locals._asset.addScript('/dist/tuiViewer.js')
-  res.locals._asset.addScript('/js/loadTuiViewer.js')
+  res.locals._asset.addScriptOnce('/dist/tuiViewer.js')
+  res.locals._asset.addScriptOnce('/js/loadTuiViewer.js')
   let q = res.Q
   q.where = {uri: req.params.contentUri, active: true}
   Content.findOne(q)

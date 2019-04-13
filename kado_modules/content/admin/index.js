@@ -27,8 +27,8 @@ exports.nav = require('./nav')
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.locals._asset.addScript('/dist/dataTables.js')
-    res.locals._asset.addScript('/js/dataTableList.js')
+    res.locals._asset.addScriptOnce('/dist/dataTables.js')
+    res.locals._asset.addScriptOnce('/js/dataTableList.js')
     res.render('content/list',{
       _pageTitle: K._l.content.content + ' ' + K._l.list})
   } else {
@@ -60,8 +60,8 @@ exports.create = (req,res) => {
  * @param {object} res
  */
 exports.edit = (req,res) => {
-  res.locals._asset.addScript('/dist/tuiEditor.js')
-  res.locals._asset.addScript('/js/loadTuiEditor.js')
+  res.locals._asset.addScriptOnce('/dist/tuiEditor.js')
+  res.locals._asset.addScriptOnce('/js/loadTuiEditor.js')
   Content.findByPk(req.query.id,res.Q)
     .then((result) => {
       if(!result) throw new Error(K._l.content_entry_not_found)

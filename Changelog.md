@@ -1,6 +1,11 @@
 ### 3.8.0 (planned)
 
-### 3.7.10 (staged)
+### 3.7.11 (staged)
+
+### 3.7.10
+* Fix issue with `addScriptOnce` and `addCssOnce` where the resources display on
+the next page load.
+* Correct modules to use the `addScriptOnce` methods.
 
 ### 3.7.9
 * Use development mode for building by default and require either

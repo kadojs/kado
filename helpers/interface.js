@@ -219,6 +219,9 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
        *  of sending the data automatically
        */
       res.render = (tpl,options,cb) => {
+        //apply system resources
+        res.locals._css = app.asset.allCss()
+        res.locals._script = app.asset.allScript()
         //start the rendering timer
         res.locals._profiler.startRender()
         //check if we should try and lookup the view
@@ -402,36 +405,33 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
           K.config.interface[interfaceName].removeScript
         ]
       }
-      //filter through useless entries and add the rest
-      K.config.interface[interfaceName].addCss.filter((r)=> {
-        return r && r.uri
-      }).map((r)=>{
-        app.asset.addCss(r.uri)
-      })
-      K.config.interface[interfaceName].removeCss.filter((r)=> {
-        return r && r.uri
-      }).map((r)=>{
-        app.asset.removeCss(r.uri)
-      })
-      K.config.interface[interfaceName].addScript.filter((r)=> {
-        return r && r.uri
-      }).map((r)=>{
-        let defer = true
-        if(false === r.defer) defer = false
-        app.asset.addScript(r.uri,defer)
-      })
-      K.config.interface[interfaceName].removeScript.filter((r)=> {
-        return r && r.uri
-      }).map((r)=>{
-        app.asset.removeScriptv(r.uri)
-      })
-      app.use((req,res,next)=>{
-        res.locals._css = app.asset.allCss()
-        res.locals._script = app.asset.allScript()
-        next()
-      })
       //callback
-      if('function' === typeof(cb)) return cb(app,K)
+      if('function' === typeof(cb)) return cb(app,() => {
+        //filter through useless entries and add the rest
+        K.config.interface[interfaceName].addCss.filter((r)=> {
+          return r && r.uri
+        }).map((r)=>{
+          app.asset.addCss(r.uri)
+        })
+        K.config.interface[interfaceName].removeCss.filter((r)=> {
+          return r && r.uri
+        }).map((r)=>{
+          app.asset.removeCss(r.uri)
+        })
+        K.config.interface[interfaceName].addScript.filter((r)=> {
+          return r && r.uri
+        }).map((r)=>{
+          let defer = true
+          if(false === r.defer) defer = false
+          app.asset.addScript(r.uri,defer)
+        })
+        K.config.interface[interfaceName].removeScript.filter((r)=> {
+          return r && r.uri
+        }).map((r)=>{
+          app.asset.removeScriptv(r.uri)
+        })
+      })
+      else throw new Error('No callback sent for asset setup')
     }
     worker.setupContent = (cb) => {
       if(K.config.module.content.enabled){

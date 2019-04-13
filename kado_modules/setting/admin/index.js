@@ -100,8 +100,8 @@ exports.list = (req,res) => {
     res.render(res.locals._view.get('error'),{
       error: K._l.setting.no_settings_exist})
   } else {
-    res.locals._asset.addScript('/dist/dataTables.js')
-    res.locals._asset.addScript('/js/dataTableList.js')
+    res.locals._asset.addScriptOnce('/dist/dataTables.js')
+    res.locals._asset.addScriptOnce('/js/dataTableList.js')
     res.render(__dirname + '/view/list',{
       list: result.rows
     })

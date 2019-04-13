@@ -91,8 +91,8 @@ exports.list = (req,res) => {
  * @param {object} res
  */
 exports.entry = (req,res) => {
-  res.locals._asset.addScript('/dist/tuiViewer.js')
-  res.locals._asset.addScript('/js/loadTuiViewer.js')
+  res.locals._asset.addScriptOnce('/dist/tuiViewer.js')
+  res.locals._asset.addScriptOnce('/js/loadTuiViewer.js')
   let docList
   let q = res.Q
   q.include = [

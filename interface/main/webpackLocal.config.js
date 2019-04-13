@@ -6,7 +6,6 @@
  *
  * This file is part of Kado and bound to the MIT license distributed within.
  */
-const childProcess = require('child_process')
 const fs = require('fs')
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')

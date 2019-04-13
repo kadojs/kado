@@ -36,8 +36,8 @@ exports.version = require('./version')
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.locals._asset.addScript('/dist/dataTables.js')
-    res.locals._asset.addScript('/js/dataTableList.js')
+    res.locals._asset.addScriptOnce('/dist/dataTables.js')
+    res.locals._asset.addScriptOnce('/js/dataTableList.js')
     res.render('doc/list',{
       _pageTitle: K._l.doc.doc + ' ' + K._l.list})
   } else {
@@ -78,8 +78,8 @@ exports.create = (req,res) => {
  * @param {object} res
  */
 exports.edit = (req,res) => {
-  res.locals._asset.addScript('/dist/tuiEditor.js')
-  res.locals._asset.addScript('/js/loadTuiEditor.js')
+  res.locals._asset.addScriptOnce('/dist/tuiEditor.js')
+  res.locals._asset.addScriptOnce('/js/loadTuiEditor.js')
   Doc.findByPk(req.query.id,res.Q)
     .then((result) => {
       if(!result) throw new Error(K._l.doc.entry_not_found)

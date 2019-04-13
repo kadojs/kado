@@ -19,8 +19,8 @@ const ContentNav = sequelize.models.ContentNav
  */
 exports.list = (req,res) => {
   if(!req.query.length){
-    res.locals._asset.addScript('/dist/dataTables.js')
-    res.locals._asset.addScript('/js/dataTableList.js')
+    res.locals._asset.addScriptOnce('/dist/dataTables.js')
+    res.locals._asset.addScriptOnce('/js/dataTableList.js')
     res.render('content/nav/list')
   } else {
     K.datatable(ContentNav,req.query)

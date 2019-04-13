@@ -114,7 +114,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     //activate uri system
     K.log.debug(interfaceName + ' URI system activated')
   })
-  worker.setupAsset((app) => {
+  worker.setupAsset((app,cb) => {
     let baseUrl = K.config.interface[interfaceName].baseUrl
     const LOAD_SYNC = false
     app.asset.addScript(baseUrl + '/dist/required.js',LOAD_SYNC)
@@ -124,6 +124,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
     app.asset.addScript(baseUrl + '/dist/moduleExtra.js')
     app.asset.addScript(baseUrl + '/dist/localExtra.js')
     app.asset.addCss(baseUrl + '/main.css')
+    cb()
   })
   worker.setupContent(() => {
     //activate the content system
