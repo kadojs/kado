@@ -5,5 +5,5 @@
     "js": "node --harmony"
   },
   "script": "./app.js",
-  "ext": "js html"
+  "ext": "js"
 }

@@ -1,6 +1,15 @@
 ### 3.8.0 (planned)
 
-### 3.7.9 (staged)
+### 3.7.10 (staged)
+
+### 3.7.9
+* Use development mode for building by default and require either
+`NODE_ENV=production` or `node app kado bundle --production` to enable complete
+builds.
+* Disable view cache when in development mode.
+* No longer restart on .html changes with nodemon.
+* There is now `npm run build` for production and `npm run bundle` as well as
+`npm run postinstall` to handle development building.
 
 ### 3.7.8
 * Bug fix to windows paths generated during build process.

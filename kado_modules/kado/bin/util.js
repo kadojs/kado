@@ -343,13 +343,14 @@ program.command('bootstrap')
   })
 
 program.command('bundle')
-  .option('-q --quick','Local only no source maps')
+  .option('-H --hints','Show performance hints when bundling')
   .option('-i --interface <name>','Only bundle for this interface')
   .option('-l --local','Only bundle local items')
   .option('-m --module','Only bundle module items')
-  .option('-s --system','Only bundle system items')
   .option('-N --nomap','Skip source mapping')
-  .option('-H --hints','Show performance hints when bundling')
+  .option('-q --quick','Local only no source maps')
+  .option('-p --production','Production mode')
+  .option('-s --system','Only bundle system items')
   .action((cmd) => {
     let sourceMap = true
     if(cmd.nomap || cmd.quick) sourceMap = false
@@ -378,9 +379,15 @@ program.command('bundle')
         if(!packOptions.performance) packOptions.performance = {}
         packOptions.performance.hints = 'warning'
       }
+      //turn off source maps when not needed
       if(!sourceMap){
         packOptions.devtool = false
         packOptions.optimization.minimizer[0].sourceMap = false
+      }
+      //turn on dev mode any time we can
+      if('production' === process.env.NODE_ENV) cmd.production = true
+      if(!cmd.production){
+        process.env.DEV = 'kado'
       }
       K.log.info('Starting webpack for ' + ifaceName + ' using ' + configFile)
       K.log.debug(ifaceName + ' options: ' + JSON.stringify(packOptions))

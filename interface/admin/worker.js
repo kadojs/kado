@@ -54,8 +54,9 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
     //user defined script server entries
     if(K.config.interface[interfaceName] &&
       K.config.interface[interfaceName].scriptServer
-    ){
-      K.config.interface[interfaceName].scriptServer.forEach((s) =>{
+    )
+    {
+      K.config.interface[interfaceName].scriptServer.forEach((s) => {
         worker.setupScriptServer(s)
       })
     }
@@ -72,7 +73,14 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
       return fp
     })
     app.set('view engine','html')
-    if(K.config.interface[interfaceName].viewCache) app.enable('view cache')
+    if('kado' === process.env.DEV){
+      app.set('view cache',false)
+    } else if(
+      K.config.interface[interfaceName].viewCache === true ||
+      'production' === process.env.NODE_ENV
+    ){
+      app.enable('view cache')
+    }
     app.engine('html',mustacheExpress())
     //override static servers
     let staticRoot = K.config.interface[interfaceName].staticRoot

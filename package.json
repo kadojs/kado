@@ -100,12 +100,12 @@
     "tui-editor": "^1.3.3",
     "uriname": "^0.1.1",
     "validator": "^10.11.0",
-    "webpack": "^4.29.6",
+    "webpack": "^4.30.0",
     "winston": "^3.2.1"
   },
   "scripts": {
-    "bundle": "npm run postinstall",
-    "build": "nbpm run postinstall",
+    "bundle": "node ./app.js kado bundle",
+    "build": "node ./.app.js kado bundle --production",
     "bootstrap": "node ./node_modules/kado/bin/kado bootstrap",
     "start": "nodemon --config nodemon.json app.js",
     "postinstall": "node ./.app.js kado bundle",
