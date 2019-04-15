@@ -1,6 +1,10 @@
 ### 3.8.0 (planned)
 
-### 3.7.11 (staged)
+### 3.7.12 (staged)
+
+### 3.7.11
+* Fix npm complaint about `acorn` module (for some reason `acorn-dynamic-import@4.0.0` did not properly pull it as a dep?)
+* Fix npm trying to update `babel-loader` too far (v8.x.x does not work, but apparently satisfies `babel-loader@^7.1.5`)
 
 ### 3.7.10
 * Fix issue with `addScriptOnce` and `addCssOnce` where the resources display on
