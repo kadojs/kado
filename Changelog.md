@@ -1,6 +1,11 @@
 ### 3.8.0 (planned)
 
-### 3.7.12 (staged)
+### 3.7.13 (staged)
+
+### 3.7.12
+* Change bundle system to allow multiple chains at the same time such as
+`node app kado bundle -l -s -m` which is equivalent of `node app kado bundle`
+* Latest dependencies.
 
 ### 3.7.11
 * Fix npm complaint about `acorn` module (for some reason 

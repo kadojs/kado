@@ -415,12 +415,16 @@ program.command('bundle')
       })
       .map((ifaceName)=>{
         let promises = []
-        if(cmd.local){
-          promises.push(bundleInterface(ifaceName,localConfigFile))
-        } else if(cmd.module){
-          promises.push(bundleInterface(ifaceName,moduleConfigFile))
-        } else if(cmd.system){
-          promises.push(bundleInterface(ifaceName,systemConfigFile))
+        if(cmd.local || cmd.module || cmd.system){
+          if(cmd.local){
+            promises.push(bundleInterface(ifaceName,localConfigFile))
+          }
+          if(cmd.module){
+            promises.push(bundleInterface(ifaceName,moduleConfigFile))
+          }
+          if(cmd.system){
+            promises.push(bundleInterface(ifaceName,systemConfigFile))
+          }
         } else {
           promises.push(bundleInterface(ifaceName,localConfigFile))
           promises.push(bundleInterface(ifaceName,moduleConfigFile))
