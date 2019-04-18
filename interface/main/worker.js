@@ -7,6 +7,7 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 const K = require('../../helpers/kado')
+const debug = require('debug')('kado:main:worker')
 const interfaceRoot = __dirname
 const interfaceName = 'main'
 K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
@@ -107,12 +108,12 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
   })
   worker.setupLang(() => {
     //activate lang pack
-    K.log.debug(Object.keys(K.lang.pack).length +
+    debug(Object.keys(K.lang.pack).length +
       ' ' + interfaceName + ' language packs activated')
   })
   worker.setupUri(() => {
     //activate uri system
-    K.log.debug(interfaceName + ' URI system activated')
+    debug(interfaceName + ' URI system activated')
   })
   worker.setupAsset((app,cb) => {
     let baseUrl = K.config.interface[interfaceName].baseUrl
@@ -128,7 +129,7 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
   })
   worker.setupContent(() => {
     //activate the content system
-    K.log.debug(interfaceName + ' Content system activated')
+    debug(interfaceName + ' Content system activated')
   })
   worker.setup((app) =>{
     let errorView = __dirname + '/view/error.html'

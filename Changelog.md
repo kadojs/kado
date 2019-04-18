@@ -1,6 +1,13 @@
 ### 3.8.0 (planned)
 
-### 3.7.13 (staged)
+### 3.7.14 (staged)
+
+### 3.7.13
+* Automatically sets environment variables using `dotenv` package, and using
+`node app dev` will set `DEV=kado` automatically.
+* When in dev mode Kado will now automatically bundle the local and module
+chains using `node app kado bundle -l -m`
+* Moves init logging into the `debug` package under `kado*`
 
 ### 3.7.12
 * Change bundle system to allow multiple chains at the same time such as

@@ -7,12 +7,13 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 const K = require('../../index')
+const debug = require('debug')('kado:admin:worker')
 const interfaceRoot = __dirname
 const interfaceName = 'admin'
 K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
   worker.setupUri(() => {
     //activate uri system
-    K.log.debug(interfaceName + ' URI system activated')
+    debug(interfaceName + ' URI system activated')
   })
   worker.enableHtml((app) => {
     const mustacheExpress = require('mustache-express')
@@ -113,12 +114,12 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
   })
   worker.setupLang(() => {
     //activate lang pack
-    K.log.debug(Object.keys(K.lang.pack).length +
+    debug(Object.keys(K.lang.pack).length +
       ' ' + interfaceName + ' language packs activated')
   })
   worker.setupPermission(() => {
     //activate lang pack
-    K.log.debug(interfaceName + ' permissions system activated')
+    debug(interfaceName + ' permissions system activated')
   })
   worker.setupAsset((app,cb) => {
     let baseUrl = K.config.interface[interfaceName].baseUrl

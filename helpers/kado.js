@@ -7,6 +7,7 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 const P = require('bluebird')
+const debug = require('debug')('kado:core')
 const execSync = require('child_process').execSync
 const fs = require('fs')
 const glob = require('glob')
@@ -698,11 +699,11 @@ exports.scanModules = () => {
     }
   }
   //scan system modules
-  exports.log.debug('Scanning system modules')
+  debug('Scanning system modules')
   return doScan(sysGlob,loadModule)
     .then(() => {
       //scan extra modules
-      exports.log.debug('Scanning extra modules')
+      debug('Scanning extra modules')
       return doScan(userGlob,loadModule)
     })
     .then(() => {
@@ -727,12 +728,69 @@ exports.loadEnvConfig = () => {
   if(!envConfigLoaded && process.env.KADO_CONFIG_STRING){
     try {
       let configDelta = JSON.parse(process.env.KADO_CONFIG_STRING)
-      exports.log.debug('Adding found environment config')
+      debug('Adding found environment config')
       config.$load(configDelta)
       envConfigLoaded = true
     } catch(e){
       exports.log.warn('Failed to load env config: ' + e.message)
     }
+  }
+}
+
+
+/**
+ * Use development environment variables when not in production
+ */
+const setupEnv = ()  =>  {
+  let prodEnvFile = exports.path.resolve('./.env')
+  let prodEnvFileUser = exports.path.resolve(
+    process.env.KADO_USER_ROOT + '/.env'
+  )
+  let devEnvFile = exports.path.resolve('./.env_dev')
+  let devEnvFileUser = exports.path.resolve(
+    process.env.KADO_USER_ROOT + '/.env_dev'
+  )
+  if(fs.existsSync(prodEnvFileUser)) prodEnvFile = prodEnvFileUser
+  if(fs.existsSync(devEnvFileUser)) devEnvFile = devEnvFileUser
+  let dotEnvOpts = {path: prodEnvFile}
+  if('dev' === process.argv[2]){
+    //strip the dev word so normal kado commands come after
+    if('dev' === process.argv[2]) process.argv.splice(2,1)
+    dotEnvOpts.path = devEnvFile
+  }
+  require('dotenv').config(dotEnvOpts)
+}
+
+
+/**
+ * Automatically bundle resources when needed
+ */
+const autoBundle = () => {
+  if(process.argv.indexOf('--skipBundle') >= 0){
+    process.argv.splice(process.argv.indexOf('--skipBundle'),1)
+    //bundling for disabled, skip it
+    return
+  }
+  if(process.argv.indexOf('bundle') >= 0){
+    //already bundling, dont loop
+    return
+  }
+  if('kado' !== process.env.DEV){
+    //not in dev mode, no auto bundling
+    return
+  }
+  let startTime = new Date()
+  exports.log.debug('Starting auto bundling of front end resources')
+  let bundleAppFile = exports.path.resolve(process.env.KADO_ROOT + '/.app.js')
+  let result = execSync(
+    'node ' + bundleAppFile + ' kado bundle -l -m'
+  ).toString('utf-8')
+  if(result.indexOf('Bundle process complete') < 0){
+    exports.log.error('Auto bundling failed: ' + result)
+    process.exit(1)
+  } else {
+    let duration = +new Date() - (+startTime)
+    exports.log.info('Auto bundle complete in ' + duration + 'ms')
   }
 }
 
@@ -762,12 +820,12 @@ exports.init = (skipDb) => {
   lifecycle.on('offline',() => {
     exports.log.info('Shutdown complete')
   })
-  exports.log.debug('Beginning startup')
+  debug('Beginning startup')
   let loadDbConnector = (file) => {
     let name = path.basename(file,'.js')
     //check if the connector is registered and enabled
     if(config.db[name] && config.db[name].load){
-      exports.log.debug(name + ' database connector loaded')
+      debug(name + ' database connector loaded')
       if(!config.db[name].options) config.db[name].options = {}
       exports.db[name] = require(file)(config.db[name].options)
     }
@@ -776,7 +834,7 @@ exports.init = (skipDb) => {
     let name = path.basename(file,'.js')
     //check if the connector is registered and enabled
     if(config.email[name] && config.email[name].load){
-      exports.log.debug(name + ' email connector loaded')
+      debug(name + ' email connector loaded')
       exports.email[name] = require(file)
     }
   }
@@ -784,10 +842,10 @@ exports.init = (skipDb) => {
     let name = path.basename(file,'.js')
     //check if the connector is registered and enabled
     if(config.connector[name] && config.connector[name].load){
-      exports.log.debug(name + ' connector loaded')
+      debug(name + ' connector loaded')
       exports.connector[name] = require(file)
       if('function' === typeof exports.connector[name].doConnect){
-        exports.log.debug(name + ' activating connector')
+        debug(name + ' activating connector')
         exports.connector[name].doConnect()
       }
     }
@@ -800,34 +858,34 @@ exports.init = (skipDb) => {
   let emailGlobUser = process.env.KADO_USER_ROOT + '/email/*.js'
   return new P((resolve) => {
     //scan db connectors
-    exports.log.debug('Scanning modules')
+    debug('Scanning modules')
     exports.scanModules()
       .then(() => {
-        exports.log.debug('Scanning for system email connectors')
+        debug('Scanning for system email connectors')
         return doScan(emailGlob,loadEmailConnector)
       })
       .then(() => {
-        exports.log.debug('Scanning for user email connectors')
+        debug('Scanning for user email connectors')
         return doScan(emailGlobUser,loadEmailConnector)
       })
       .then(() => {
-        exports.log.debug('Scanning for system dynamic connectors')
+        debug('Scanning for system dynamic connectors')
         return doScan(connectorGlob,loadConnector)
       })
       .then(() => {
-        exports.log.debug('Scanning for user dynamic connectors')
+        debug('Scanning for user dynamic connectors')
         return doScan(connectorGlobUser,loadConnector)
       })
       .then(() => {
-        exports.log.debug('Scanning for system database connectors')
+        debug('Scanning for system database connectors')
         return doScan(dbGlob,loadDbConnector)
       })
       .then(() => {
-        exports.log.debug('Scanning for user database connectors')
+        debug('Scanning for user database connectors')
         return doScan(dbGlobUser,loadDbConnector)
       })
       .then(() => {
-        exports.log.debug('Setting up data storage access')
+        debug('Setting up data storage access')
         Object.keys(exports.modules).map((modKey) => {
           if(exports.modules.hasOwnProperty(modKey)){
             let modConf = exports.modules[modKey]
@@ -846,27 +904,27 @@ exports.init = (skipDb) => {
         Object.keys(exports.db).map((dbKey) => {
           if(exports.db.hasOwnProperty(dbKey)){
             if(config.db[dbKey].enabled){
-              exports.log.debug(dbKey + ' connector enabled')
+              debug(dbKey + ' connector enabled')
               dbEnabled++
             }
           }
         })
-        exports.log.debug('Found ' + dbEnabled + ' database connectors')
+        debug('Found ' + dbEnabled + ' database connectors')
         if(!skipDb){
-          exports.log.debug('Connecting to found database connectors')
+          debug('Connecting to found database connectors')
           let dbConnected = 0
           Object.keys(exports.db).map((dbKey) => {
             if(exports.db.hasOwnProperty(dbKey)){
               if(config.db[dbKey].enabled){
                 if('function' === typeof exports.db[dbKey].doConnect){
                   exports.db[dbKey].doConnect({sync: false})
-                  exports.log.debug(dbKey + ' connector connected')
+                  debug(dbKey + ' connector connected')
                   dbConnected++
                 }
               }
             }
           })
-          exports.log.debug(dbConnected + ' connected database connectors')
+          debug(dbConnected + ' connected database connectors')
         }
         if(false === envConfigLoaded){
           /**
@@ -877,7 +935,7 @@ exports.init = (skipDb) => {
            * @type {Cron}
            */
           exports.cron = new exports.Cron(exports)
-          exports.log.debug('Scanning for cron jobs from modules')
+          debug('Scanning for cron jobs from modules')
           let cronModuleCount = 0
           Object.keys(exports.modules).map((modKey) => {
             if(exports.modules.hasOwnProperty(modKey)){
@@ -892,10 +950,10 @@ exports.init = (skipDb) => {
               }
             }
           })
-          exports.log.debug('Cron job scan complete ' + cronModuleCount +
+          debug('Cron job scan complete ' + cronModuleCount +
             ' modules(s) and ' + exports.cron.count() + ' job(s) registered')
         }
-        exports.log.debug('Scanning interfaces')
+        debug('Scanning interfaces')
         //register interfaces for startup
         let addInterface = (name) => {
           let env = process.env
@@ -925,10 +983,10 @@ exports.init = (skipDb) => {
             addInterface(name)
           }
         })
-        exports.log.debug('Found ' + Object.keys(exports.interfaces).length +
+        debug('Found ' + Object.keys(exports.interfaces).length +
           ' interface(s)')
         exports.initComplete = true
-        exports.log.debug('Init complete')
+        debug('Init complete')
         resolve()
       })
   })
@@ -1050,6 +1108,10 @@ exports.stop = (done) => {
  * @param {string} name - name of app
  */
 exports.go = (name) => {
+  //load environment variables
+  setupEnv()
+  //auto bundle
+  autoBundle()
   return new P((resolve) => {
     if(process.argv.length <= 2){
       exports.infant.child(
@@ -1075,7 +1137,7 @@ exports.go = (name) => {
       exports.test(process.argv[3])
       resolve()
     } else {
-      exports.log.debug('CLI Mode')
+      debug('CLI Mode')
       let skipDb = false
       if('cli' === name) skipDb = true
       exports.cli(process.argv,skipDb)

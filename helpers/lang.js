@@ -7,6 +7,7 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 const K = require('./kado')
+const debug = require('debug')('kado:lang')
 
 
 /**
@@ -133,7 +134,7 @@ module.exports.scan = () => {
     for(let key in pack){
       if(pack.hasOwnProperty(key)){that.pack[name][key] = pack[key]}
     }
-    K.log.debug(that.pack[name]._pack_name +
+    debug(that.pack[name]._pack_name +
       ' v' + that.pack[name]._pack_version + ' language pack loaded')
   }
   let loadModuleLanguage = (file) => {
@@ -153,10 +154,10 @@ module.exports.scan = () => {
   }
   let doScan = (pattern,handler) => {return glob.sync(pattern).map(handler)}
   //scan lang packs
-  K.log.debug('Scanning language packs')
+  debug('Scanning language packs')
   doScan(defaultLangGlob,loadLanguage)
   doScan(defaultModuleLangGlob,loadModuleLanguage)
   doScan(localModuleLangGlob,loadModuleLanguage)
   doScan(localLangGlob,loadLanguage)
-  K.log.debug('Found ' + Object.keys(that.pack).length + ' language(s)')
+  debug('Found ' + Object.keys(that.pack).length + ' language(s)')
 }
