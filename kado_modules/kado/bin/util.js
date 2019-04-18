@@ -385,7 +385,6 @@ program.command('bundle')
         packOptions.optimization.minimizer[0].sourceMap = false
       }
       //turn on dev mode any time we can
-      if('production' === process.env.NODE_ENV) cmd.production = true
       if(!cmd.production){
         process.env.DEV = 'kado'
       }

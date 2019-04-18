@@ -1,6 +1,9 @@
 ### 3.8.0 (planned)
 
-### 3.7.14 (staged)
+### 3.7.15 (staged)
+
+### 3.7.14
+* Hot fix: build chain should not use production method unless asked.
 
 ### 3.7.13
 * Automatically sets environment variables using `dotenv` package, and using
