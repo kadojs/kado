@@ -8,6 +8,7 @@
  */
 const fs = require('fs')
 const path = require('path')
+const webpack = require('webpack')
 const TerserPlugin = require('terser-webpack-plugin')
 
 const ifaceName = 'main'
@@ -92,5 +93,11 @@ module.exports = {
       }
     })]
   },
-  performance: {hints: false}
+  performance: {hints: false},
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    })
+  ]
 }

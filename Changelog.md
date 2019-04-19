@@ -1,6 +1,11 @@
 ### 3.8.0 (planned)
 
-### 3.7.15 (staged)
+### 3.7.16 (staged)
+
+### 3.7.15
+* Adjust webpack to expose jquery globally. This is temporary as the build
+chain is refined. There will be a major build system overhaul in 3.8 to address
+the complexity of the build chains and webpack configuration files.
 
 ### 3.7.14
 * Hot fix: build chain should not use production method unless asked.

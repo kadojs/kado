@@ -7,6 +7,7 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 const path = require('path')
+const webpack = require('webpack')
 const TerserPlugin = require('terser-webpack-plugin')
 
 let entryFolder = path.resolve(__dirname + '/asset')
@@ -47,5 +48,11 @@ module.exports = {
       }
     })]
   },
-  performance: {hints: false}
+  performance: {hints: false},
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    })
+  ]
 }
