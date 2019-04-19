@@ -23,7 +23,7 @@ const BlogRevision = sequelize.models.BlogRevision
 exports.list = (req,res) => {
   if(!req.query.length){
     res.locals._asset.addScriptOnce('/dist/dataTables.js')
-    res.locals._asset.addScriptOnce('/js/dataTableList.js')
+    res.locals._asset.addScriptOnce('/js/dataTableList.js','defer')
     res.render('blog/list',{_pageTitle: K._l.blog.blog + ' ' + K._l.list})
   } else {
     K.datatable(Blog,req.query,res.Q)

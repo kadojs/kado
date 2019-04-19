@@ -37,7 +37,7 @@ exports.version = require('./version')
 exports.list = (req,res) => {
   if(!req.query.length){
     res.locals._asset.addScriptOnce('/dist/dataTables.js')
-    res.locals._asset.addScriptOnce('/js/dataTableList.js')
+    res.locals._asset.addScriptOnce('/js/dataTableList.js','defer')
     res.render('doc/list',{
       _pageTitle: K._l.doc.doc + ' ' + K._l.list})
   } else {

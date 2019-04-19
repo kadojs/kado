@@ -26,7 +26,7 @@ P.promisifyAll(bcrypt)
 exports.list = (req,res) => {
   if(!req.query.length){
     res.locals._asset.addScriptOnce('/dist/dataTables.js')
-    res.locals._asset.addScriptOnce('/js/dataTableList.js')
+    res.locals._asset.addScriptOnce('/js/dataTableList.js','defer')
     res.render('staff/list',{
       _pageTitle: K._l.staff.staff + ' ' + K._l.list})
   } else {

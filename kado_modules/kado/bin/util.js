@@ -345,30 +345,180 @@ program.command('bootstrap')
 program.command('bundle')
   .option('-H --hints','Show performance hints when bundling')
   .option('-i --interface <name>','Only bundle for this interface')
-  .option('-l --local','Only bundle local items')
-  .option('-m --module','Only bundle module items')
+  .option('-l --local','Bundle and deferred entry points only')
   .option('-N --nomap','Skip source mapping')
   .option('-q --quick','Local only no source maps')
   .option('-p --production','Production mode')
-  .option('-s --system','Only bundle system items')
   .action((cmd) => {
     let sourceMap = true
     if(cmd.nomap || cmd.quick) sourceMap = false
     if(cmd.quick) cmd.local = true
+    if(!cmd.production){
+      K.log.info(
+        'Development mode active, use --production to build for launch!')
+    }
+    if(cmd.local){
+      K.log.info('Building bundle and deferred entry points only')
+    }
 
     /**
      * Bundle an interface for distribution
      * @param {string} ifaceName
      */
     const bundleInterface = function bundleInterface(ifaceName,configFile){
+      const childProcess = require('child_process')
+      const TerserPlugin = require('terser-webpack-plugin')
       const webpack = require('webpack')
+      let entryFolder = path.resolve(process.env.KADO_ROOT +
+        '/interface/' + ifaceName + '/asset')
+      let helperFolder = path.resolve(process.env.KADO_ROOT + '/helpers/asset')
+      let systemEntryFolder = entryFolder
+      let outputFolder = path.resolve(process.env.KADO_ROOT +
+        '/interface/' + ifaceName + '/public/dist')
+      if(0 !== +process.env.KADO_USER_ROOT && fs.existsSync(
+        path.resolve(
+          process.env.KADO_USER_ROOT + '/interface/' + ifaceName + '/asset'))
+      )
+      {
+        entryFolder = path.resolve(process.env.KADO_USER_ROOT +
+          '/interface/' + ifaceName + '/asset')
+      }
+      if(0 !== +process.env.KADO_USER_ROOT && fs.existsSync(
+        path.resolve(
+          process.env.KADO_USER_ROOT + '/interface/' + ifaceName + '/public'))
+      )
+      {
+        outputFolder = path.resolve(process.env.KADO_USER_ROOT +
+          '/interface/' + ifaceName + '/public/dist')
+      }
+      //package local resources
+      let bundle = ''
+      let deferredJs = ''
+      let localList = [
+        process.env.KADO_ROOT + '/interface/' + ifaceName + '/asset',
+        process.env.KADO_USER_ROOT + '/interface/' + ifaceName + '/asset'
+      ]
+      localList.map((root)=>{
+        let assetFile = path.resolve(root + '/bundle.js')
+        let assetFileDeferred = path.resolve(root + '/deferred.js')
+        if(fs.existsSync(assetFile)){
+          assetFile = assetFile.replace(/\\/g,'/')
+          bundle = bundle + 'require(\'' + assetFile + '\')\n'
+        }
+        if(fs.existsSync(assetFileDeferred)){
+          assetFileDeferred = assetFileDeferred.replace(/\\/g,'/')
+          deferredJs = deferredJs + 'require(\'' + assetFileDeferred + '\')\n'
+        }
+      })
+      //write the module list for reading in the extra.js helper
+      fs.writeFileSync(systemEntryFolder + '/bundlePkg.js',bundle)
+      fs.writeFileSync(systemEntryFolder + '/deferredPkg.js',deferredJs)
+      //package module resources
+      let moduleJs = ''
+      let moduleDeferred = ''
+      let moduleList = childProcess.execSync(
+        'node ' + process.env.KADO_ROOT +
+        '/kado_modules/kado/bin/util.js scan-modules'
+      ).toString('utf-8').split('\n')
+      moduleList.map((modRoot)=>{
+        let assetFile = path.resolve(modRoot + '/' + ifaceName +
+          '/asset/bundle.js')
+        let assetFileDeferred = path.resolve(
+          modRoot + '/' + ifaceName + '/asset/deferred.js')
+        if(fs.existsSync(assetFile)){
+          assetFile = assetFile.replace(/\\/g,'/')
+          moduleJs = moduleJs + 'require(\'' + assetFile + '\')\n'
+        }
+        if(fs.existsSync(assetFileDeferred)){
+          assetFileDeferred = assetFileDeferred.replace(/\\/g,'/')
+          moduleDeferred = moduleDeferred + 'require(\'' + assetFileDeferred +
+            '\')\n'
+        }
+      })
+      //write the module list for reading in the extra.js helper
+      fs.appendFileSync(systemEntryFolder + '/bundlePkg.js',moduleJs)
+      fs.appendFileSync(systemEntryFolder + '/deferredPkg.js',moduleDeferred)
       if(!K.interfaces || !K.interfaces[ifaceName]){
         throw new Error('Interface does not exist, cannot be bundled')
       }
+      let entryPoints = {
+        main: helperFolder + '/main.js',
+        bundle: entryFolder + '/bundlePkg.js'
+      }
+      if(!cmd.local){
+        entryPoints.deferred =  systemEntryFolder + '/deferredPkg.js'
+        entryPoints.dataTables =  helperFolder + '/dataTables.js'
+        entryPoints.tuiEditor = helperFolder + '/tuiEditor.js'
+        entryPoints.tuiViewer = helperFolder + '/tuiViewer.js'
+      }
+      let packOptions = {
+        entry: entryPoints,
+        output: {
+          path: outputFolder,
+          filename: '[name].js'
+        },
+        module: {
+          rules: [
+            {test: /datatables\.net.*/, loader: 'imports-loader?define=>false'},
+            {test: /\.js$/, exclude: /node_modules/, use: {
+                loader: 'babel-loader', options: {presets: ['env']}}},
+            // any other rules
+            {
+              // Exposes jQuery for use outside Webpack build
+              test: require.resolve('jquery'),
+              use: [{
+                loader: 'expose-loader',
+                options: 'jQuery'
+              },{
+                loader: 'expose-loader',
+                options: '$'
+              }]
+            }
+          ]
+        },
+        optimization: {
+          minimizer: [new TerserPlugin({
+            parallel: true,
+            sourceMap: true,
+            terserOptions: {
+              warnings: false,
+              ie8: false
+            }
+          })]
+        },
+        performance: {hints: false},
+        plugins: [
+          new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+          })
+        ]
+      }
       if(!configFile) configFile = 'webpack.config.js'
-      let packOptionFile = K.path.resolve(
-        K.interfaces[ifaceName].root + '/' + configFile)
-      let packOptions = require(packOptionFile)
+      let packOptionFile = path.resolve(
+        K.interfaces[ifaceName].root + '/asset/' + configFile)
+      let packOptionFileUser = path.resolve(process.env.KADO_USER_ROOT +
+        '/interface/' + ifaceName + '/asset/' + configFile
+      )
+      let quickObjectMerge = (obj,ref)=>{
+        if('object' !== typeof obj && 'object' !== typeof ref) return
+        for(let key in obj){
+          if(obj.hasOwnProperty(key)){
+            if('object' === typeof obj[key]){
+              if(!ref[key]) ref[key] = {}
+              quickObjectMerge(obj[key],ref[key])
+            } else {
+              ref[key] = obj[key]
+            }
+          }
+        }
+      }
+      if(K.fs.existsSync(packOptionFile)){
+        quickObjectMerge(require(packOptionFile),packOptions)
+      }
+      if(K.fs.existsSync(packOptionFileUser)){
+        quickObjectMerge(require(packOptionFileUser),packOptions)
+      }
       if(!packOptions || !packOptions.entry){
         K.log.warn('Skipped packing ' + ifaceName + ' with config file: ' +
           configFile + ', KADO_USER_ROOT missing.')
@@ -387,8 +537,14 @@ program.command('bundle')
       //turn on dev mode any time we can
       if(!cmd.production){
         process.env.DEV = 'kado'
+        process.env.NODE_ENV = 'development'
+        packOptions.mode = 'development'
+        packOptions.devtool = 'cheap-module-source-map'
+      } else {
+        packOptions.mode = 'production'
+        packOptions.devtool = 'source-map'
       }
-      K.log.info('Starting webpack for ' + ifaceName + ' using ' + configFile)
+      K.log.info('Starting webpack for ' + ifaceName)
       K.log.debug(ifaceName + ' options: ' + JSON.stringify(packOptions))
       let pack = webpack(packOptions)
       pack.run = K.bluebird.promisify(pack.run)
@@ -402,8 +558,6 @@ program.command('bundle')
         })
     }
     let systemConfigFile = 'webpack.config.js'
-    let moduleConfigFile = 'webpackModule.config.js'
-    let localConfigFile = 'webpackLocal.config.js'
     //interfaces so hmm
     K.bluebird.try(()=> {
       return Object.keys(K.interfaces)
@@ -414,21 +568,7 @@ program.command('bundle')
       })
       .map((ifaceName)=>{
         let promises = []
-        if(cmd.local || cmd.module || cmd.system){
-          if(cmd.local){
-            promises.push(bundleInterface(ifaceName,localConfigFile))
-          }
-          if(cmd.module){
-            promises.push(bundleInterface(ifaceName,moduleConfigFile))
-          }
-          if(cmd.system){
-            promises.push(bundleInterface(ifaceName,systemConfigFile))
-          }
-        } else {
-          promises.push(bundleInterface(ifaceName,localConfigFile))
-          promises.push(bundleInterface(ifaceName,moduleConfigFile))
-          promises.push(bundleInterface(ifaceName,systemConfigFile))
-        }
+        promises.push(bundleInterface(ifaceName,systemConfigFile))
         return K.bluebird.all(promises)
       })
       .each((results)=>{

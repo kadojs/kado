@@ -9,10 +9,8 @@ settings.json
 npm-debug.log
 app.js
 app.js.bak
-bundle.*
 /sessions.s3db
 *.s3db
 **/public/dist/*.js
-interface/**/asset/module*.js
-interface/**/asset/local*.js
-interface/**/public/dist/*.js.map
+interface/**/asset/*Pkg.js
+interface/**/public/dist/*

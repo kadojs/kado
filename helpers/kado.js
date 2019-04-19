@@ -707,8 +707,7 @@ exports.scanModules = () => {
       return doScan(userGlob,loadModule)
     })
     .then(() => {
-      exports.log.debug('Found ' + Object.keys(exports.modules).length +
-        ' module(s)')
+      debug('Found ' + Object.keys(exports.modules).length + ' module(s)')
     })
 }
 
@@ -783,7 +782,7 @@ const autoBundle = () => {
   exports.log.debug('Starting auto bundling of front end resources')
   let bundleAppFile = exports.path.resolve(process.env.KADO_ROOT + '/.app.js')
   let result = execSync(
-    'node ' + bundleAppFile + ' kado bundle -l -m'
+    'node ' + bundleAppFile + ' kado bundle -l'
   ).toString('utf-8')
   if(result.indexOf('Bundle process complete') < 0){
     exports.log.error('Auto bundling failed: ' + result)

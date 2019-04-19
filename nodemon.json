@@ -1,9 +1,22 @@
 {
   "verbose": true,
   "signal": "SIGINT",
+  "delay": 1000,
   "execMap": {
     "js": "node --harmony"
   },
+  "ignore": [
+    "./interface/admin/public/theme/",
+    "./interface/main/public/theme/",
+    "./interface/admin/public/dist/",
+    "./interface/main/public/dist/",
+    "./interface/admin/asset/",
+    "./interface/admin/asset/",
+    "./interface/main/asset/",
+    "./interface/main/asset/",
+    "./node_modules/"
+  ],
   "script": "./app.js",
+  "args": ["dev"],
   "ext": "js"
 }

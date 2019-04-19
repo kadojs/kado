@@ -45,12 +45,12 @@ class Asset {
   /**
    * Add Script Asset
    * @param {string} uri
-   * @param {boolean} defer
+   * @param {string} defer
    * @return {string}
    */
   addScript(uri,defer){
-    if(false !== defer) defer = true
-    let entry = {uri: uri, defer: !!defer}
+    if('defer' !== defer) defer = ''
+    let entry = {uri: uri, defer: defer === 'defer'}
     if(this.script.filter((entry)=>{return (entry.uri === uri)}).length === 0){
       this.script.push(entry)
     }
@@ -59,12 +59,12 @@ class Asset {
   /**
    * Add Script Asset Once
    * @param {string} uri
-   * @param {boolean} defer
+   * @param {string} defer
    * @return {string}
    */
   addScriptOnce(uri,defer){
-    if(false !== defer) defer = true
-    let entry = {uri: uri, defer: !!defer}
+    if('defer' !== defer) defer = ''
+    let entry = {uri: uri, defer: defer === 'defer'}
     if(this.scriptOnce.filter((entry)=>{
       return (entry.uri === uri)
     }).length === 0){

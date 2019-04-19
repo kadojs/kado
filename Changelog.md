@@ -1,6 +1,22 @@
 ### 3.8.0 (planned)
 
-### 3.7.16 (staged)
+### 3.8.1 (staged)
+
+### 3.8.0
+* More refined local entry points.
+* Refinement of Webpack integration to solve dependency restrictions and find
+a balance of loading and splitting. The system now creates:
+  * main.js - Global elements loaded in the head tag, keep this small.
+  * bundle.js - Loaded at the end of the page containing additional deps.
+  * deferred.js - Loaded deferred after the bundle, extraneous dep free code.
+
+Routes that need one off scripts will load them deferred, conditional modules
+need to be loaded sync and then the enumerating scripts shall be deferred. This
+removes the idea of required, extra, module, moduleExtra, local, localExtra and
+compresses the build chains. Webpack is compressed into a single config chain
+per interface. The bundle system now handles configuring and running Webpack.
+Finally, Kado now supports applications overriding the Webpack configuration
+in order to make the build chain fully customizable.
 
 ### 3.7.15
 * Adjust webpack to expose jquery globally. This is temporary as the build
@@ -240,14 +256,16 @@ into the connector and overrides the Kado defaults.
 * Add `sequelize.doImport(modelName,modeFile)` helps track registered models and
 prevent duplicates.
 * Add `sequelize._relate` helper which will quickly yield settings for Model
-relationships with the following methods: `cascade(), setNull(), noAction(), custom()`
+relationships with the following methods: 
+`cascade(), setNull(), noAction(),custom()`
 * Sequelize is now enabled by default since all core modules and sessions use it.
 * The DB call now comes with the sequelize instance as the third parameter.
 * Add ability to use `node app kado dbsetup --force` which will alter schemas
 and distort data automatically. Use for development ONLY.
 
 ### 3.6.8
-* Fix to Breadcrumb, no longer tracks POST or SVG requests, fixes bug with filtering.
+* Fix to Breadcrumb, no longer tracks POST or SVG requests, fixes bug with
+filtering.
 
 ### 3.6.7
 * Remove debug log message from generator.
@@ -263,11 +281,13 @@ and distort data automatically. Use for development ONLY.
 
 ### 3.6.5
 * Allow lookups into kado by default in the admin and main interfaces.
-* Search system now handles errors for modules individually and overall page errors.
+* Search system now handles errors for modules individually and overall page
+errors.
 
 ### 3.6.4
 * Fix issue where an undefined return to the test entry would cause a crash.
-* Add `--header <filePath>` flag to generator to provide custom file header when generating modules.
+* Add `--header <filePath>` flag to generator to provide custom file header when
+ generating modules.
 * Correct CLI naming issues and argument augmentation from generator.
 * Correct naming of test file on generator.
 
@@ -282,8 +302,10 @@ and distort data automatically. Use for development ONLY.
 
 ### 3.6.0
 * Introduce modular testing!
-* Kado will now provide the test suite capabilities through the 2 following commands:
-  * `node app test` Assuming you have `app.js` this will test your entire application.
+* Kado will now provide the test suite capabilities through the 2 following
+commands:
+  * `node app test` Assuming you have `app.js` this will test your entire
+  application.
   * `node app test somemodule` Again, `app.js` except this will only test 
     `somemodule` EG: `blog`
 * The tests are now contained within the module and registered via the
@@ -334,7 +356,8 @@ and distort data automatically. Use for development ONLY.
 * Template variables now available. `_pageProfile` this is a result of the
  `Profiler` system. It contains an array of steps with times and messages that
  can be print used to build statistic footers. EG: 
- `<span>Page Generated in {{_pageProfile.totalTime}}ms, using {{_pageProfile.queryCount}}</span>`.
+ `<span>Page Generated in {{_pageProfile.totalTime}}ms, using
+ {{_pageProfile.queryCount}}</span>`.
  Finally, `{{{_pageProfile.HTML}}}` is a new variable that contains an HTML
  formatted printout of the profile for use below the footer of the page.
 * To make the query profiler work properly per page, there has to be a setting
@@ -354,8 +377,9 @@ and distort data automatically. Use for development ONLY.
 * Added `process.env.KADO_USER_HELPERS` environment variable to point
 at the project helper locations.
 * Added `K.helper()` method to find and return helper locations.
-* Update to Infant 1.2.2: Added signal handler to properly handle graceful shutdowns through nodemon.
-This should 8.0.5prevent stuck processes during development.
+* Update to Infant 1.2.2: Added signal handler to properly handle graceful
+shutdowns through nodemon. This should 8.0.5prevent stuck processes during
+development.
 
 ### 3.4.9
 * Fixes #261 CLI access on Module creation points to the wrong title/name
