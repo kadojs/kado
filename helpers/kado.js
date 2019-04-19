@@ -756,6 +756,10 @@ const setupEnv = ()  =>  {
     //strip the dev word so normal kado commands come after
     if('dev' === process.argv[2]) process.argv.splice(2,1)
     dotEnvOpts.path = devEnvFile
+    //force dev mode one
+    process.env.DEV = 'kado'
+    process.env.NODE_DEBUG = 'kado'
+    exports.config.dev = true
   }
   require('dotenv').config(dotEnvOpts)
 }
@@ -1076,6 +1080,8 @@ exports.start = (done) => {
     .then(() => {
       lifecycle.start((err) => {
         if(err) throw err
+        //auto bundle
+        autoBundle()
         done()
       })
     })
@@ -1109,8 +1115,7 @@ exports.stop = (done) => {
 exports.go = (name) => {
   //load environment variables
   setupEnv()
-  //auto bundle
-  autoBundle()
+  //go
   return new P((resolve) => {
     if(process.argv.length <= 2){
       exports.infant.child(

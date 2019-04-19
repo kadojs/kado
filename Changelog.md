@@ -1,6 +1,10 @@
 ### 3.8.0 (planned)
 
-### 3.8.2 (staged)
+### 3.8.3 (staged)
+
+### 3.8.2
+* Auto bundling moved to after the interfaces have been started.
+* Dev activation now fully forces Kado dev mode on when using the CLI parameter.
 
 ### 3.8.1
 * Fix path selection for bundling in app context.
