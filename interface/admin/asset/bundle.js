@@ -16,7 +16,11 @@ let toWindow = (name,val) => {
   window[name] = val
 }
 
-//extra
+//global dependencies
+toWindow('bootstrap',require('bootstrap'))
+toWindow('moment',require('moment'))
+toWindow('base64js',require('base64-js'))
+toWindow('b64',window.base64js)
 require('jquery-ui')
 require('bootstrap-select')
 toWindow('Holder',require('holderjs'))

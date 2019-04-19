@@ -20,10 +20,5 @@ let toWindow = (name,val) => {
 toWindow('$',require('jquery'))
 toWindow('jQuery',window.$)
 toWindow('jquery',window.$)
-toWindow('bootstrap',require('bootstrap'))
-toWindow('moment',require('moment'))
 
-//global dependencies
-toWindow('base64js',require('base64-js'))
-toWindow('b64',window.base64js)
 
