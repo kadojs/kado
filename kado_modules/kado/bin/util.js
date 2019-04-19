@@ -375,22 +375,6 @@ program.command('bundle')
       let systemEntryFolder = entryFolder
       let outputFolder = path.resolve(process.env.KADO_ROOT +
         '/interface/' + ifaceName + '/public/dist')
-      if(0 !== +process.env.KADO_USER_ROOT && fs.existsSync(
-        path.resolve(
-          process.env.KADO_USER_ROOT + '/interface/' + ifaceName + '/asset'))
-      )
-      {
-        entryFolder = path.resolve(process.env.KADO_USER_ROOT +
-          '/interface/' + ifaceName + '/asset')
-      }
-      if(0 !== +process.env.KADO_USER_ROOT && fs.existsSync(
-        path.resolve(
-          process.env.KADO_USER_ROOT + '/interface/' + ifaceName + '/public'))
-      )
-      {
-        outputFolder = path.resolve(process.env.KADO_USER_ROOT +
-          '/interface/' + ifaceName + '/public/dist')
-      }
       //package local resources
       let bundle = ''
       let deferredJs = ''

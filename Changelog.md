@@ -1,6 +1,9 @@
 ### 3.8.0 (planned)
 
-### 3.8.1 (staged)
+### 3.8.2 (staged)
+
+### 3.8.1
+* Fix path selection for bundling in app context.
 
 ### 3.8.0
 * More refined local entry points.
