@@ -97,7 +97,7 @@ exports.admin = (K,app) => {
   app.view.add('blog/edit',__dirname + '/admin/view/edit.html')
   app.view.add('blog/list',__dirname + '/admin/view/list.html')
   //register navigation
-  app.nav.addGroup(app.uri.p('/blog'),'Blog','book')
+  app.nav.addGroup(app.uri.p('/blog'),'Blog','file-alt')
   app.nav.addItem('Blog',app.uri.p('/blog/list'),'List','list')
   app.nav.addItem('Blog',app.uri.p('/blog/create'),'Create','plus')
   //register routes
@@ -127,7 +127,7 @@ exports.main = (K,app) => {
   app.view.add('blog/entry',__dirname + '/main/view/entry.html')
   app.view.add('blog/list',__dirname + '/main/view/list.html')
   //register navigation
-  app.nav.addGroup(app.uri.p('/blog'),'Blog','book')
+  app.nav.addGroup(app.uri.p('/blog'),'Blog','file-alt')
 }
 
 
