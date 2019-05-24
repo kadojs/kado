@@ -140,6 +140,7 @@ exports.admin = (K,app) => {
   app.get(app.uri.p('/doc/create'),admin.create)
   app.get(app.uri.p('/doc/edit'),admin.edit)
   app.post(app.uri.p('/doc/save'),admin.save)
+  app.post(app.uri.p('/doc/revert'),admin.revert)
   app.post(app.uri.p('/doc/remove'),admin.remove)
   app.get(app.uri.p('/doc/remove'),admin.remove)
   //project routes
