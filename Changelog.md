@@ -3,7 +3,7 @@
 ### 3.8.4 (staged)
 
 ### 3.8.3
-*Relased 5/23/2019*
+*Released 5/23/2019*
 * Added dates to the Changelog.
 * Merge PR #6 to update default icons in admin.
 * Merge PR #5 Change generated modules to use addScriptOnce properly.
