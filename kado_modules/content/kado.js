@@ -123,6 +123,7 @@ exports.admin = (K,app) => {
   app.get(app.uri.p('/content/create'),admin.create)
   app.get(app.uri.p('/content/edit'),admin.edit)
   app.post(app.uri.p('/content/save'),admin.save)
+  app.post(app.uri.p('/content/revert'),admin.revert)
   app.post(app.uri.p('/content/remove'),admin.remove)
   app.get(app.uri.p('/content/remove'),admin.remove)
   //nav routes

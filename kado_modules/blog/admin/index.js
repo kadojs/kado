@@ -55,7 +55,9 @@ exports.create = (req,res) => {
 exports.edit = (req,res) => {
   res.locals._asset.addScriptOnce('/dist/tuiEditor.js')
   res.locals._asset.addScriptOnce('/js/loadTuiEditor.js')
-  Blog.findByPk(req.query.id,res.Q)
+  let q = res.Q
+  q.include = [{model: BlogRevision}]
+  Blog.findByPk(req.query.id,q)
     .then((result) => {
       if(!result) throw new Error(K._l.blog_entry_not_found)
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
@@ -167,5 +169,47 @@ exports.remove = (req,res) => {
       } else {
         res.render('error',{error: err.message})
       }
+    })
+}
+
+
+/**
+ * Revert Blog to previous version
+ * @param {object} req
+ * @param {object} res
+ */
+exports.revert = (req,res) => {
+  let revision
+  let blog
+  let data = req.body
+  BlogRevision.findByPk(data.revisionId)
+    .then((result)=>{
+      revision = result
+      if(!revision) throw new Error('Revision Not Found')
+      return Blog.findByPk(data.blogId)
+        .then((result)=>{
+          blog= result
+          if(!blog) throw new Error('Blog Not Found')
+          return blog
+      })
+    })
+    .then(()=>{
+      blog.content = revision.content
+      blog.html = revision.html
+      revision.save()
+      return blog.save()
+    })
+    .then(() => {
+      res.json({
+        status: 'ok',
+        message: 'Blog Reverted',
+      })
+    })
+    .catch((err) => {
+      res.status(500)
+      res.json({
+        status: 'error',
+        message: err.message
+      })
     })
 }

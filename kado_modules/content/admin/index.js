@@ -62,7 +62,9 @@ exports.create = (req,res) => {
 exports.edit = (req,res) => {
   res.locals._asset.addScriptOnce('/dist/tuiEditor.js')
   res.locals._asset.addScriptOnce('/js/loadTuiEditor.js','defer')
-  Content.findByPk(req.query.id,res.Q)
+  let q = res.Q
+  q.include = [{model: ContentRevision}]
+  Content.findByPk(req.query.id,q)
     .then((result) => {
       if(!result) throw new Error(K._l.content_entry_not_found)
       result.content = K.b64.fromByteArray(Buffer.from(result.content,'utf-8'))
@@ -178,5 +180,47 @@ exports.remove = (req,res) => {
       } else {
         res.render('error',{error: err.message})
       }
+    })
+}
+
+
+/**
+ * Revert Content to previous version
+ * @param {object} req
+ * @param {object} res
+ */
+exports.revert = (req,res) => {
+  let revision
+  let content
+  let data = req.body
+  ContentRevision.findByPk(data.revisionId)
+    .then((result)=>{
+      revision = result
+      if(!revision) throw new Error('Revision Not Found')
+      return Content.findByPk(data.contentId)
+        .then((result)=>{
+          content= result
+          if(!content) throw new Error('Content Not Found')
+          return content
+        })
+    })
+    .then(()=>{
+      content.content = revision.content
+      content.html = revision.html
+      revision.save()
+      return content.save()
+    })
+    .then(() => {
+      res.json({
+        status: 'ok',
+        message: 'Content Reverted',
+      })
+    })
+    .catch((err) => {
+      res.status(500)
+      res.json({
+        status: 'error',
+        message: err.message
+      })
     })
 }

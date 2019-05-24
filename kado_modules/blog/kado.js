@@ -91,6 +91,7 @@ exports.admin = (K,app) => {
   app.permission.add('/blog/save','Save blog')
   app.permission.add('/blog/list','List blog')
   app.permission.add('/blog/edit','Edit blog')
+  app.permission.add('/blog/revert','Revert blog')
   app.permission.add('/blog/remove','Remove blog')
   //register views
   app.view.add('blog/create',__dirname + '/admin/view/create.html')
@@ -108,6 +109,7 @@ exports.admin = (K,app) => {
   app.get(app.uri.p('/blog/create'),admin.create)
   app.get(app.uri.p('/blog/edit'),admin.edit)
   app.post(app.uri.p('/blog/save'),admin.save)
+  app.post(app.uri.p('/blog/revert'),admin.revert)
   app.post(app.uri.p('/blog/remove'),admin.remove)
   app.get(app.uri.p('/blog/remove'),admin.remove)
 }

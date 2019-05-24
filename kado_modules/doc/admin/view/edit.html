@@ -26,6 +26,29 @@
           <button class="btn btn-success" id="docSave" type="submit">{{_l.save}}</button>
         </div>
       </form>
+      <div class="table-responsive table-bordered table-striped">
+        <table id="revisionTable">
+          <caption style="caption-side: top">Doc Revisions</caption>
+          <thead>
+            <tr>
+              <th data-name="updatedAt">Revision Updated</th>
+              <th data-name="content">Content</th>
+              <th data-name="html">HTML</th>
+              <th data-name="revert">Revert</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#item.DocRevisions}}
+              <tr>
+                <td>{{#_printDate}}{{updatedAt}}{{/_printDate}}</td>
+                <td>{{content}}</td>
+                <td>{{html}}</td>
+                <td id="revert" class="revertDoc" data-id="{{id}}" data-docId="{{item.id}}"><span class="fa fa-history"></span></td>
+              </tr>
+            {{/item.DocRevisions}}
+          </tbody>
+        </table>
+      </div>
       <script type="text/javascript" src="/js/loadTuiEditor.js" defer="defer"></script>
     </div>
 {{>footer}}

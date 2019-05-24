@@ -9,14 +9,14 @@
 
 
 $(window).on('load', function() {
-  $('.revertBlog').click(function(){
-    let blogId = $(this).attr('data-blogId');
+  $('.revertContent').click(function(){
+    let contentId = $(this).attr('data-contentId');
     let revisionId = $(this).attr('data-id');
-    $.ajax('/blog/revert',{
+    $.ajax('/content/revert',{
       contentType: 'application/json',
       type: 'POST',
       data: JSON.stringify({
-        blogId: blogId,
+        contentId: contentId,
         revisionId: revisionId,
       }),
       success: function(res){

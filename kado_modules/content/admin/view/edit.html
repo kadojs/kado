@@ -25,5 +25,28 @@
           <button class="btn btn-success" type="submit">{{_l.save}}</button>
         </div>
       </form>
+      <div class="table-responsive table-bordered table-striped">
+        <table id="revisionTable">
+          <caption style="caption-side: top">Content Revisions</caption>
+          <thead>
+            <tr>
+              <th data-name="updatedAt">Revision Updated</th>
+              <th data-name="content">Content</th>
+              <th data-name="html">HTML</th>
+              <th data-name="revert">Revert</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#content.ContentRevisions}}
+              <tr>
+                <td>{{#_printDate}}{{updatedAt}}{{/_printDate}}</td>
+                <td>{{content}}</td>
+                <td>{{html}}</td>
+                <td id="revert" class="revertContent" data-id="{{id}}" data-contentId="{{content.id}}"><span class="fa fa-history"></span></td>
+              </tr>
+            {{/content.ContentRevisions}}
+          </tbody>
+        </table>
+      </div>
     </div>
 {{>footer}}

@@ -21,5 +21,28 @@
           <button class="btn btn-success" type="submit">Save</button>
         </div>
       </form>
+      <div class="table-responsive table-bordered table-striped">
+        <table id="revisionTable">
+          <caption style="caption-side: top">Blog Revisions</caption>
+          <thead>
+            <tr>
+              <th data-name="updatedAt">Revision Updated</th>
+              <th data-name="content">Content</th>
+              <th data-name="html">HTML</th>
+              <th data-name="revert">Revert</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#blog.BlogRevisions}}
+              <tr>
+                <td>{{#_printDate}}{{updatedAt}}{{/_printDate}}</td>
+                <td>{{content}}</td>
+                <td>{{html}}</td>
+                <td id="revert" class="revertBlog" data-id="{{id}}" data-blogId="{{blog.id}}"><span class="fa fa-history"></span></td>
+              </tr>
+            {{/blog.BlogRevisions}}
+          </tbody>
+        </table>
+      </div>
     </div>
 {{>footer}}
