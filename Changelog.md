@@ -1,6 +1,12 @@
 ### 3.8.0 (planned)
 
-### 3.8.4 (staged)
+### 3.8.5 (staged)
+
+### 3.8.4
+*Released 7/3/2019*
+* Update to latest dependencies.
+* Use `nullivex/sequelize-datatable` to use latest packages.
+* Clear all known security advisories.
 
 ### 3.8.3
 *Released 5/23/2019*
