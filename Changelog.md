@@ -1,6 +1,10 @@
 ### 3.8.0 (planned)
 
-### 3.8.5 (staged)
+### 3.8.6 (staged)
+
+### 3.8.5
+*Released 7/18/2019*
+* Update to latest dependencies.
 
 ### 3.8.4
 *Released 7/3/2019*
