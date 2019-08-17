@@ -22,6 +22,8 @@ window.DataTableConfig = (tableName) => {
       'pdfHtml5',
       'csvHtml5',
       'print',
+      'selectAll',
+      'selectNone',
       {
         text: removeText || 'Remove',
         className: removeClass || 'btn-danger',

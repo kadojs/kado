@@ -1,6 +1,11 @@
 ### 3.8.0 (planned)
 
-### 3.8.6 (staged)
+### 3.8.7 (staged)
+
+### 3.8.6
+*Released 8/17/2019*
+* Add Select All and Deselect All buttons to table buttons
+* Update to latest dependencies.
 
 ### 3.8.5
 *Released 7/18/2019*
