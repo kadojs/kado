@@ -78,46 +78,56 @@ program.command('dbreload')
     if(kadoRoot === '0') kadoRoot = process.env.KADO_ROOT
     let backupFile = K.path.resolve(kadoRoot + '/.dbreloadBackup.sql')
     let backupFileCopy = backupFile + '2'
+    let mysqldump = require('mysqldump')
+    let mysqlImport = require('mysql-import')
+    let mImport = mysqlImport.config({
+      host: cfg.host,
+      user: cfg.user,
+      password: cfg.password,
+      database: cfg.name,
+      onerror: err=>console.log(err.message)
+    })
     if(K.fs.existsSync(backupFileCopy)) K.fs.unlinkSync(backupFileCopy)
     if(K.fs.existsSync(backupFile)) K.fs.renameSync(backupFile,backupFileCopy)
     let dumpFile = K.path.resolve(kadoRoot + '/.dbreloadDump.sql')
-    try {
-      let backupResult = childProcess.execSync(
-        'mysqldump -u ' + cfg.user +
-        ' -p' + cfg.password + ' ' + cfg.name + ' > ' + backupFile)
-      if(backupResult.length > 0) log.warn('Irregular backup: ' + backupResult)
-      log.info('Database backup complete')
-    } catch(e){
-      log.error('Failed to backup database: ' + e.message)
-      process.exit()
-    }
-    try {
-      let dumpResult = childProcess.execSync(
-        'mysqldump --no-create-info --skip-triggers -u ' + cfg.user +
-        ' -p' + cfg.password + ' ' + cfg.name + ' > ' + dumpFile)
-      if(dumpResult.length > 0) log.warn('Irregular dump: ' + dumpResult)
-      log.info('Database dump complete')
-    } catch(e){
-      log.error('Failed to dump database: ' + e.message)
-      process.exit()
-    }
-    log.info('Starting to sync to newest models...')
-    K.db.sequelize.doConnect({sync: true, syncForce: true})
+    K.bluebird.try(()=>{
+      return mysqldump({
+        connection: {
+          host: cfg.host,
+          user: cfg.user,
+          password: cfg.password,
+          database: cfg.name
+        },
+        dumpToFile: backupFile
+      })
+    })
+      .then(()=> {
+        log.info('Database backup complete')
+        return mysqldump({
+          connection: {
+            host: cfg.host,
+            user: cfg.user,
+            password: cfg.password,
+            database: cfg.name
+          },
+          dumpToFile: dumpFile,
+          dumpOptions: {
+            schema: false
+          }
+        })
+      })
+      .then(()=>{
+        log.info('Database dump complete')
+        log.info('Starting to sync to newest models...')
+        return K.db.sequelize.doConnect({sync: true, syncForce: true})
+      })
       .then(() => {
         log.info('Database restructure complete, applying database dump.')
-        try {
-          let importResult = childProcess.execSync('mysql -u' + cfg.user +
-            ' -p' + cfg.password + ' ' + cfg.name + ' < ' + dumpFile +
-            ' 2>/dev/null')
-          if(importResult.length > 0) log.warn('Irregular import: ' + importResult)
-          log.info('Import complete')
-        } catch(e){
-          log.error('Failed to import dump: ' + e.message)
-          process.exit()
-        }
+        return mImport.import(dumpFile)
       })
       .catch((err) => {
-        log.error(err)
+        log.error('DB Reload failed: ' + err)
+        K.db.sequelize.close()
         process.exit(1)
       })
       .finally(() => {
