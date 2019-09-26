@@ -28,17 +28,17 @@ program.version(K.config.version)
 program.command('dbsetup')
   .option('--force','Dangerously upgrade table schemas')
   .action((cmd) => {
-    K.log.info('Connecting to sequelize')
+    log.info('Connecting to sequelize')
     cmd.force = !!cmd.force
     if(cmd.force){
       let forceConfirm = readlineSync(
         'Are you sure you want to continue, may DESTROY DATA!? (y/n)'
       )
       if('y' !== forceConfirm){
-        K.log.info('Force mode aborted, sissy!')
+        log.info('Force mode aborted, sissy!')
         cmd.force = false
       } else {
-        K.log.info('Force mode engaged, welcome Rambo')
+        log.info('Force mode engaged, welcome Rambo')
       }
     }
     K.db.sequelize.doConnect({sync: true, syncForce: cmd.force})
@@ -57,9 +57,81 @@ program.command('dbsetup')
   })
 
 
+program.command('dbreload')
+  .action((cmd) => {
+    log.info('Connecting to sequelize')
+    cmd.force = !!cmd.force
+    let forceConfirm = readlineSync(
+      'Are you sure you want to continue, while this is NORMALLY SAFE, ' +
+      'it may DESTROY ALL DATA!? (y/n)'
+    )
+    if('y' !== forceConfirm){
+      log.info('Force mode aborted, sissy!')
+      process.exit()
+    } else {
+      log.info('Force mode engaged, welcome Rambo')
+    }
+    log.info('Beginning to dump current database.')
+    let childProcess = require('child_process')
+    let cfg = K.config.db.sequelize
+    let kadoRoot = process.env.KADO_USER_ROOT
+    if(kadoRoot === '0') kadoRoot = process.env.KADO_ROOT
+    let backupFile = K.path.resolve(kadoRoot + '/.dbreloadBackup.sql')
+    let backupFileCopy = backupFile + '2'
+    if(K.fs.existsSync(backupFileCopy)) K.fs.unlinkSync(backupFileCopy)
+    if(K.fs.existsSync(backupFile)) K.fs.renameSync(backupFile,backupFileCopy)
+    let dumpFile = K.path.resolve(kadoRoot + '/.dbreloadDump.sql')
+    try {
+      let backupResult = childProcess.execSync(
+        'mysqldump -u ' + cfg.user +
+        ' -p' + cfg.password + ' ' + cfg.name + ' > ' + backupFile +
+        ' 2>/dev/null')
+      if(backupResult.length > 0) log.warn('Irregular backup: ' + backupResult)
+      log.info('Database backup complete')
+    } catch(e){
+      log.error('Failed to backup database: ' + e.message)
+      process.exit()
+    }
+    try {
+      let dumpResult = childProcess.execSync(
+        'mysqldump --no-create-info --skip-triggers -u ' + cfg.user +
+        ' -p' + cfg.password + ' ' + cfg.name + ' > ' + dumpFile +
+        ' 2>/dev/null')
+      if(dumpResult.length > 0) log.warn('Irregular dump: ' + dumpResult)
+      log.info('Database dump complete')
+    } catch(e){
+      log.error('Failed to dump database: ' + e.message)
+      process.exit()
+    }
+    log.info('Starting to sync to newest models...')
+    K.db.sequelize.doConnect({sync: true, syncForce: true})
+      .then(() => {
+        log.info('Database restructure complete, applying database dump.')
+        try {
+          let importResult = childProcess.execSync('mysql -u' + cfg.user +
+            ' -p' + cfg.password + ' ' + cfg.name + ' < ' + dumpFile +
+            ' 2>/dev/null')
+          if(importResult.length > 0) log.warn('Irregular import: ' + importResult)
+          log.info('Import complete')
+        } catch(e){
+          log.error('Failed to import dump: ' + e.message)
+          process.exit()
+        }
+      })
+      .catch((err) => {
+        log.error(err)
+        process.exit(1)
+      })
+      .finally(() => {
+        log.info('Database reload complete!')
+        K.db.sequelize.close()
+        process.exit()
+      })
+  })
+
 program.command('insert-samples')
   .action(() => {
-    K.log.info('Connecting to sequelize')
+    log.info('Connecting to sequelize')
     let sql
     let statements = []
     K.db.sequelize.doConnect({sync: true})
@@ -354,11 +426,11 @@ program.command('bundle')
     if(cmd.nomap || cmd.quick) sourceMap = false
     if(cmd.quick) cmd.local = true
     if(!cmd.production){
-      K.log.info(
+      log.info(
         'Development mode active, use --production to build for launch!')
     }
     if(cmd.local){
-      K.log.info('Building bundle and deferred entry points only')
+      log.info('Building bundle and deferred entry points only')
     }
 
     /**
@@ -504,7 +576,7 @@ program.command('bundle')
         quickObjectMerge(require(packOptionFileUser),packOptions)
       }
       if(!packOptions || !packOptions.entry){
-        K.log.warn('Skipped packing ' + ifaceName + ' with config file: ' +
+        log.warn('Skipped packing ' + ifaceName + ' with config file: ' +
           configFile + ', KADO_USER_ROOT missing.')
         return
       }
@@ -528,8 +600,8 @@ program.command('bundle')
         packOptions.mode = 'production'
         packOptions.devtool = 'source-map'
       }
-      K.log.info('Starting webpack for ' + ifaceName)
-      K.log.debug(ifaceName + ' options: ' + JSON.stringify(packOptions))
+      log.info('Starting webpack for ' + ifaceName)
+      log.debug(ifaceName + ' options: ' + JSON.stringify(packOptions))
       let pack = webpack(packOptions)
       pack.run = K.bluebird.promisify(pack.run)
       return pack.run()
@@ -538,7 +610,7 @@ program.command('bundle')
         })
         .catch((e)=> {
           console.log(e)
-          K.log.warn('Failed to bundle ' + ifaceName + ': ' + e.message)
+          log.warn('Failed to bundle ' + ifaceName + ': ' + e.message)
         })
     }
     let systemConfigFile = 'webpack.config.js'
@@ -559,25 +631,25 @@ program.command('bundle')
         results.map((result) => {
           if(!result || !result.stat) return
           let duration = result.stat.endTime - result.stat.startTime
-          K.log.info('Bundle result complete for ' + result.ifaceName +
+          log.info('Bundle result complete for ' + result.ifaceName +
             ' with hash: ' + result.stat.hash + ' and took ' + duration + 'ms')
           if(result.stat.hasWarnings()){
-            K.log.warn(result.ifaceName + ' bundle finished with warnings: ' +
+            log.warn(result.ifaceName + ' bundle finished with warnings: ' +
               result.statJson.warnings)
           }
           if(result.stat.hasErrors()){
-            K.log.error(result.ifaceName + ' bundle finished with errors: ' +
+            log.error(result.ifaceName + ' bundle finished with errors: ' +
               result.statJson.errors)
           }
         })
       })
       .then(()=>{
-        K.log.info('Bundle process complete')
+        log.info('Bundle process complete')
         process.exit(0)
       })
       .catch((e)=>{
         console.log(e)
-        K.log.error('Failed to bundle: ' + e.message)
+        log.error('Failed to bundle: ' + e.message)
         process.exit(1)
       })
   })

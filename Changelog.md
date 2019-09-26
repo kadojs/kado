@@ -1,6 +1,15 @@
 ### 3.10.0 (planned)
 
-### 3.9.1 (staged)
+### 3.9.2 (staged)
+
+### 3.9.1
+*Released 9/25/2019*
+* Adds new utility command `node app kado dbreload` this is a macro
+command that will dump the data from your current database and then
+back it up. Afterwards it will perform a forced sequelize sync and finally
+re-apply the dumped data. This is useful for database changes when products
+are pre-release and the data set is not a priority. For production instances
+using sequelize migrations is highly recommended.
 
 ### 3.9.0
 *Released 9/25/2019*
