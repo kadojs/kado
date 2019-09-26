@@ -84,8 +84,7 @@ program.command('dbreload')
     try {
       let backupResult = childProcess.execSync(
         'mysqldump -u ' + cfg.user +
-        ' -p' + cfg.password + ' ' + cfg.name + ' > ' + backupFile +
-        ' 2>/dev/null')
+        ' -p' + cfg.password + ' ' + cfg.name + ' > ' + backupFile)
       if(backupResult.length > 0) log.warn('Irregular backup: ' + backupResult)
       log.info('Database backup complete')
     } catch(e){
@@ -95,8 +94,7 @@ program.command('dbreload')
     try {
       let dumpResult = childProcess.execSync(
         'mysqldump --no-create-info --skip-triggers -u ' + cfg.user +
-        ' -p' + cfg.password + ' ' + cfg.name + ' > ' + dumpFile +
-        ' 2>/dev/null')
+        ' -p' + cfg.password + ' ' + cfg.name + ' > ' + dumpFile)
       if(dumpResult.length > 0) log.warn('Irregular dump: ' + dumpResult)
       log.info('Database dump complete')
     } catch(e){

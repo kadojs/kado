@@ -1,6 +1,10 @@
 ### 3.10.0 (planned)
 
-### 3.9.2 (staged)
+### 3.9.3 (staged)
+
+### 3.9.2
+* Released 9/26/2019*
+* Fixes issues with `node app kado dbreload` on Windows.
 
 ### 3.9.1
 *Released 9/25/2019*
