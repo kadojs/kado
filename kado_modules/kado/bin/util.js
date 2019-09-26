@@ -111,7 +111,7 @@ program.command('dbreload')
             database: cfg.name
           },
           dumpToFile: dumpFile,
-          dumpOptions: {
+          dump: {
             schema: false
           }
         })
