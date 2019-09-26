@@ -438,6 +438,14 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
         app.use((req,res,next) => {
           res.locals._c = {}
           res.locals._localNav = new Nav()
+          if('object' === typeof K.config.module.content.content){
+            Object.keys(K.config.module.content.content).forEach((key)=>{
+              if(key.indexOf('partial_') === 0){
+                res.locals._c[key.replace('partial_','')] = K.fs.readFileSync(
+                  K.config.module.content.content[key])
+              }
+            })
+          }
           K.db.sequelize.models.Content.findAll(
             {where: {uri: {[K.db.sequelize.Op.like]: 'partial_%'}}}
           )

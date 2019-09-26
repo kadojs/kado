@@ -1,6 +1,16 @@
-### 3.8.0 (planned)
+### 3.10.0 (planned)
 
-### 3.8.7 (staged)
+### 3.9.1 (staged)
+
+### 3.9.0
+*Released 9/25/2019*
+* Content system now reads configuration for static content object
+which contains {'uri': 'template-file'}. This allows applications to
+have static content, for terms of service, privacy policy pages, etc.
+It also allows these pages to exist outside of the database, if they
+are intended to come with the project at the beginning this makes much
+more sense.
+* Update to latest dependencies.
 
 ### 3.8.6
 *Released 8/17/2019*
