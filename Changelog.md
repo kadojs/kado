@@ -14,9 +14,9 @@ using sequelize migrations is highly recommended.
 ### 3.9.0
 *Released 9/25/2019*
 * Content system now reads configuration for static content object
-which contains {'uri': 'template-file'}. This allows applications to
-have static content, for terms of service, privacy policy pages, etc.
-It also allows these pages to exist outside of the database, if they
+which contains {'uri': {templateFile: 'foo.html'}}. This allows
+applications to have static content, for terms of service, policy pages,
+etc. It also allows these pages to exist outside of the database, if they
 are intended to come with the project at the beginning this makes much
 more sense.
 * Update to latest dependencies.
