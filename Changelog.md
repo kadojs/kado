@@ -4,7 +4,9 @@
 
 ### 3.9.2
 * Released 9/26/2019*
-* Fixes issues with `node app kado dbreload` on Windows.
+* `node app kado dbreload` no longer utilizes the system level mysqldump
+and has internal tools to backup, dump and apply the dump to the database.
+This ensures the tool works on all platforms.
 
 ### 3.9.1
 *Released 9/25/2019*
