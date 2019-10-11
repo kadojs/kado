@@ -36,6 +36,7 @@ exports.entry = (req,res) => {
           //add the view to the view system
           res.locals._view.add('content/' + uri,content.templateFile)
           //now render with this template (so we have partials)
+          content._pageTitle = content.title
           res.render('content/' + uri,content)
         } else {
           throw new Error('Content not found')

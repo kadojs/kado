@@ -1,6 +1,12 @@
 ### 3.10.0 (planned)
 
-### 3.9.3 (staged)
+### 3.9.4 (staged)
+
+### 3.9.3
+* Released 10/11/2019*
+* Change the default content module to include the _pageTitle on static
+definitions, to match the behavior of content from the database.
+* Update to latest dependencies.
 
 ### 3.9.2
 * Released 9/26/2019*
