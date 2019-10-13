@@ -428,7 +428,7 @@ exports.worker = (K,interfaceName,interfaceRoot) => {
         K.config.interface[interfaceName].removeScript.filter((r)=> {
           return r && r.uri
         }).map((r)=>{
-          app.asset.removeScriptv(r.uri)
+          app.asset.removeScript(r.uri)
         })
       })
       else throw new Error('No callback sent for asset setup')

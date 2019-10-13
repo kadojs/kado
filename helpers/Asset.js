@@ -78,7 +78,7 @@ class Asset {
    */
   removeCss(uri){
     this.css = this.css.filter((entry)=>{
-      return (entry.uri === uri)
+      return entry.uri !== uri
     })
     return true
   }
@@ -88,7 +88,7 @@ class Asset {
    */
   removeCssOnce(uri){
     this.cssOnce = this.cssOnce.filter((entry)=>{
-      return (entry.uri === uri)
+      return entry.uri !== uri
     })
     return true
   }
@@ -98,7 +98,7 @@ class Asset {
    */
   removeScript(uri){
     this.script = this.script.filter((entry)=>{
-      return (entry.uri === uri)
+      return entry.uri !== uri
     })
     return true
   }
@@ -108,7 +108,7 @@ class Asset {
    */
   removeScriptOnce(uri){
     this.scriptOnce = this.scriptOnce.filter((entry)=>{
-      return (entry.uri === uri)
+      return entry.uri !== uri
     })
     return true
   }

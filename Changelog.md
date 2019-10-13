@@ -1,6 +1,10 @@
 ### 3.10.0 (planned)
 
-### 3.9.4 (staged)
+### 3.9.5 (staged)
+
+### 3.9.4
+* Released 10/12/2019*
+* Fix two small bugs in the Asset management system.
 
 ### 3.9.3
 * Released 10/11/2019*
