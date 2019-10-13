@@ -778,7 +778,7 @@ const autoBundle = () => {
     //already bundling, dont loop
     return
   }
-  if('kado' !== process.env.DEV){
+  if('kado' !== process.env.DEV || 'false' === process.env.BUNDLE){
     //not in dev mode, no auto bundling
     return
   }
