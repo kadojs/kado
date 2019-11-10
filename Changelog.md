@@ -1,4 +1,32 @@
+### 4.0.0 (planning)
+* Redesign startup API this means exposing more of the interface start process
+ into user space so that the application itself can define routes etc from the
+ ground up, drop the default modules and move them into a kado-ui pack that
+ comes with an admin panel and simple content management and blog publishing.
+ This should help drop the weight of the core down but more importantly give
+ Kado the true building block feel it should have came with all along. This
+ will also allow Kado to come with even less packages and continue to provide
+ the same consistent working environment. So what does this mean?
+ * Expose interface startup through a kado.js file in the application the same
+ way modules are handled.
+ * Remove the default modules other than the kado module. This will remove
+ the addons that must be built and make installation more global along with
+ giving the user more choices over how to build the application.
+ * Continue to abstract from actually being a web engine and focus on being a
+ programming organization engine. We didnt quite know or understand this at the
+ beginning, however Kado is more about organizing code.
+ * Write upgrade documentation on conversion from Kado 3.x to Kado 4.x which
+ will mostly involve adding to a kado.js within the application to restore
+ default routing functionality.
+ * No longer start two interfaces by default, move to a single interface model.
+ Using two interfaces just served to complicate all matters, using a single
+ interface with enhanced routing makes the most sense. In instances where the
+ panels need to be split in however many places this can be done by simply,
+ starting multiple instances and using webserver rules to deny or allow urls.
+
 ### 3.10.0 (planned)
+
+### 3.9.7 (staged)
 
 ### 3.9.6
 *Released 11/10/2019*
