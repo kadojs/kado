@@ -115,5 +115,5 @@ program
       })
   })
 program.version(config.version)
-let cli = program.parse(process.argv)
-if(!cli.args.length) program.help()
+if(process.argv.length - 3 < 0) program.help()
+else program.parse(process.argv)

@@ -1,6 +1,9 @@
 ### 3.10.0 (planned)
 
-### 3.9.6 (staged)
+### 3.9.6
+*Released 11/10/2019*
+* Update to the latest dependencies and change help handling on CLI scripts
+for modules and generation template.
 
 ### 3.9.5
 *Released 10/12/2019*
