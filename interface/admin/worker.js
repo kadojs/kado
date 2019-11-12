@@ -242,10 +242,14 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
         next()
       }
     })
-    //home page
-    app.get('/',(req,res) => {
-      res.render(app.view.get('home'))
-    })
+    if(!K.config.interface.admin.homeRouteFile){
+      //home page
+      app.get('/',(req,res) => {
+        res.render(app.view.get('home'))
+      })
+    } else {
+      app.get('/',require(K.config.interface.admin.homeRouteFile).home)
+    }
     //add default navbar entries
     app.nav.addGroup('/','Dashboard','home')
     //enable search

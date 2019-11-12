@@ -1,4 +1,4 @@
-### 4.0.0 (planning)
+### 4.0.0 (planning, request for comments)
 * Redesign startup API this means exposing more of the interface start process
  into user space so that the application itself can define routes etc from the
  ground up, drop the default modules and move them into a kado-ui pack that
@@ -24,9 +24,12 @@
  panels need to be split in however many places this can be done by simply,
  starting multiple instances and using webserver rules to deny or allow urls.
 
-### 3.10.0 (planned)
-
-### 3.9.7 (staged)
+### 3.10.0
+*Release 11/12/2019*
+* Add new interface configuration option `homeRouteFile` when specified this
+file will be loaded in a method like `exports.home = (req,res)=>{}` where.
+This allows custom definition of homepage files, when this route does not
+exist, the system will load the canned homepage routes and views.
 
 ### 3.9.6
 *Released 11/10/2019*

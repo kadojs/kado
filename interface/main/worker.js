@@ -150,19 +150,24 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) =>{
         }
       }
     })
-    //home page
-    app.get('/',(req,res) =>{
-      if(K.config.module.blog.enabled){
-       K.db.sequelize.models.Blog.findAll({
-         where: {active: true}, order: [['datePosted','DESC']], limit: 3
-       })
-         .then((result) => {
-           res.render(app.view.get('home'),{blogList: result})
-         })
-      } else {
-        res.render(app.view.get('home'))
-      }
-    })
+    if(!K.config.interface.main.homeRouteFile){
+      //home page
+      app.get('/',(req,res) =>{
+        if(K.config.module.blog.enabled){
+          K.db.sequelize.models.Blog.findAll({
+            where: {active: true}, order: [['datePosted','DESC']], limit: 3
+          })
+            .then((result) => {
+              res.render(app.view.get('home'),{blogList: result})
+            })
+        } else {
+          res.render(app.view.get('home'))
+        }
+      })
+    } else {
+      app.get('/',require(K.config.interface.main.homeRouteFile).home)
+    }
+
     //enable searching
     app.get(app.uri.add('/search'),worker.enableSearch(app))
     //add default navbar entries
