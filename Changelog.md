@@ -1,4 +1,5 @@
 ### 4.0.0 (planning, request for comments)
+*NOT RELEASED*
 * Redesign startup API this means exposing more of the interface start process
  into user space so that the application itself can define routes etc from the
  ground up, drop the default modules and move them into a kado-ui pack that
@@ -24,8 +25,19 @@
  panels need to be split in however many places this can be done by simply,
  starting multiple instances and using webserver rules to deny or allow urls.
 
+### 3.10.1
+* Released 11/23/2019*
+* Update to latest dependencies
+  * bcrypt       ^3.0.6  →   ^3.0.7
+  * commander    ^4.0.0  →   ^4.0.1
+  * mysql2       ^2.0.0  →   ^2.0.1
+  * nodemon     ^1.19.4  →   ^2.0.1
+  * qs           ^6.9.0  →   ^6.9.1
+  * tui-editor   ^1.4.7  →   ^1.4.8
+  * validator   ^12.0.0  →  ^12.1.0
+
 ### 3.10.0
-*Release 11/12/2019*
+*Released 11/12/2019*
 * Add new interface configuration option `homeRouteFile` when specified this
 file will be loaded in a method like `exports.home = (req,res)=>{}` where.
 This allows custom definition of homepage files, when this route does not
