@@ -11,7 +11,7 @@ const { expect } = require('chai')
 const Logger = require('../lib/Logger')
 let logger = new Logger()
 
-describe('Event',()=> {
+describe('Logger',()=> {
   it('should construct',() => {
     let testLogger = new Logger()
     expect(testLogger).to.be.an('object')
