@@ -1,8 +1,8 @@
 {
   "author": "Bryan Tong <bryan@nullivex.com>",
   "name": "kado",
-  "description": "Web Application Engine",
-  "version": "3.10.1",
+  "description": "Enhanced MVC Web Server",
+  "version": "4.0.0",
   "homepage": "https://kado.org",
   "license": "MIT",
   "repository": {
@@ -11,19 +11,18 @@
   },
   "keywords": [
     "kado",
-    "web engine",
+    "web server",
     "wordpress",
     "drupal",
     "modular",
     "mvc framework",
     "cascading",
-    "foss"
+    "foss",
+    "express",
+    "framework"
   ],
   "engines": {
     "node": ">=6"
-  },
-  "bin": {
-    "kado": "./cli.js"
   },
   "main": "./index.js",
   "dependencies": {

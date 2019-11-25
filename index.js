@@ -9,7 +9,7 @@
 
 
 /**
- * Cascade kado helper into main object
+ * Load Kado
  * @type {object}
  */
-module.exports = exports = require('./helpers/kado')
+module.exports = require('./lib/Kado')
