@@ -1,5 +1,10 @@
 ### 4.0.0 (planning, request for comments)
 *NOT RELEASED*
+* BREAKING CHANGES, not compatible with Kado 3.x out of the box, see
+https://kado.org/content/upgrading-4.x for more.
+* No interfaces a provided by default.
+* No frameworks are provided by default.
+* Interface startup is now handled in user space.
 * Redesign startup API this means exposing more of the interface start process
  into user space so that the application itself can define routes etc from the
  ground up, drop the default modules and move them into a kado-ui pack that
