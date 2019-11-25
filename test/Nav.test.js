@@ -32,7 +32,6 @@ describe('Nav',()=> {
   })
   it('should return built nav entries' , () => {
     expect(Object.keys(nav.all()).length).to.equal(1)
-  console.log(nav.all())
   })
 })
 
