@@ -49,7 +49,11 @@ describe('Database',()=> {
         throw new Error('should not have connected')
       })
       .catch((e)=>{
-        expect(e.message).to.match(/Access denied for user/)
+        if(e.message.match(/access/i)){
+          expect(e.message).to.match(/Access denied for user/)
+        } else {
+          expect(e.message).to.match(/ECONNREFUSED/)
+        }
       })
   })
 })

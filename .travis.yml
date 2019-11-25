@@ -4,7 +4,5 @@ node_js:
   - "10"
   - "12"
   - "13"
-services:
-  - mysql
 env:
   - TRAVIS=travis
