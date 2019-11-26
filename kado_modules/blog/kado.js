@@ -136,8 +136,8 @@ exports.main = (K,app) => {
 /**
  * CLI Access
  */
-exports.cli = () => {
-  require('./cli/blog')
+exports.cli = (K) => {
+  require('./cli/blog')(K)
 }
 
 

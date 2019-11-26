@@ -19,6 +19,6 @@ exports._kado ={
 /**
  * CLI Access
  */
-exports.cli = () => {
-  require('./bin/util')
+exports.cli = (K) => {
+  require('./bin/util')(K)
 }
