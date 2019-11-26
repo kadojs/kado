@@ -7,7 +7,9 @@
  *
  * This file is part of Kado and bound to the MIT license distributed within.
  */
-const K = require('../../../index')
+const Kado = require('../../../lib/Kado')
+const K = new Kado()
+const P = require('bluebird')
 const program = require('commander')
 const fs = require('fs')
 const mkdirp = require('mkdirp-then')
@@ -15,12 +17,12 @@ const Mustache = require('mustache')
 const path = require('path')
 const readlineSync = require('readline-sync').question
 const readdir = require('recursive-readdir')
-const rmdir = K.bluebird.promisify(require('rimraf'))
+const rmdir = P.promisify(require('rimraf'))
 
 const log = K.log
 
 //make some promises
-K.bluebird.promisifyAll(fs)
+P.promisifyAll(fs)
 
 program.version(K.config.version)
 
@@ -72,7 +74,6 @@ program.command('dbreload')
       log.info('Force mode engaged, welcome Rambo')
     }
     log.info('Beginning to dump current database.')
-    let childProcess = require('child_process')
     let cfg = K.config.db.sequelize
     let kadoRoot = process.env.KADO_USER_ROOT
     if(kadoRoot === '0') kadoRoot = process.env.KADO_ROOT
@@ -90,7 +91,7 @@ program.command('dbreload')
     if(K.fs.existsSync(backupFileCopy)) K.fs.unlinkSync(backupFileCopy)
     if(K.fs.existsSync(backupFile)) K.fs.renameSync(backupFile,backupFileCopy)
     let dumpFile = K.path.resolve(kadoRoot + '/.dbreloadDump.sql')
-    K.bluebird.try(()=>{
+    P.try(()=>{
       return mysqldump({
         connection: {
           host: cfg.host,
@@ -257,7 +258,7 @@ program.command('generate')
     let templateFolder = path.resolve(__dirname + '/../../../helpers/_template')
     let fileCount = 0
     if(!cmd.app) cmd.app = 'myapp'
-    K.bluebird.try(() => {
+    P.try(() => {
       let folderExists = fs.existsSync(moduleFolder)
       if(folderExists && !cmd.stomp){
         log.error('Module folder already exits')
@@ -444,6 +445,7 @@ program.command('bundle')
     /**
      * Bundle an interface for distribution
      * @param {string} ifaceName
+     * @param {string} configFile path to config file
      */
     const bundleInterface = function bundleInterface(ifaceName,configFile){
       const childProcess = require('child_process')
@@ -611,7 +613,7 @@ program.command('bundle')
       log.info('Starting webpack for ' + ifaceName)
       log.debug(ifaceName + ' options: ' + JSON.stringify(packOptions))
       let pack = webpack(packOptions)
-      pack.run = K.bluebird.promisify(pack.run)
+      pack.run = P.promisify(pack.run)
       return pack.run()
         .then((result)=>{
           return {stat: result, statJson: result.toJson(), ifaceName: ifaceName}
@@ -623,7 +625,7 @@ program.command('bundle')
     }
     let systemConfigFile = 'webpack.config.js'
     //interfaces so hmm
-    K.bluebird.try(()=> {
+    P.try(()=> {
       return Object.keys(K.interfaces)
     })
       .filter((ifaceName)=>{
@@ -633,7 +635,7 @@ program.command('bundle')
       .map((ifaceName)=>{
         let promises = []
         promises.push(bundleInterface(ifaceName,systemConfigFile))
-        return K.bluebird.all(promises)
+        return P.all(promises)
       })
       .each((results)=>{
         results.map((result) => {

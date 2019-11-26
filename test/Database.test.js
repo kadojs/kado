@@ -8,12 +8,9 @@
  */
 
 const { expect } = require('chai')
-const Sequelize = require('sequelize')
+const SequelizeDb = require('../lib/db/sequelize')
 const Database = require('../lib/Database')
 let db = new Database()
-let instanceOptions = {
-  dialect: 'mysql'
-}
 
 describe('Database',()=> {
   it('should construct',() => {
@@ -23,12 +20,12 @@ describe('Database',()=> {
   it('should accept a new database',() => {
     expect(db.addDatabase(
       'sequelize',
-      new Sequelize('test','test','test',instanceOptions)
+      new SequelizeDb()
     ))
-      .to.be.instanceof(Sequelize)
+      .to.be.instanceof(SequelizeDb)
   })
   it('should have the new database instance',()=>{
-    expect(db.sequelize).to.be.instanceof(Sequelize)
+    expect(db.sequelize).to.be.instanceof(SequelizeDb)
   })
   it('should remove database instance',()=>{
     expect(db.removeDatabase('sequelize')).to.equal('sequelize')
@@ -39,9 +36,9 @@ describe('Database',()=> {
   it('should accept a new database instance',()=>{
     expect(db.addDatabase(
       'sequelize',
-      new Sequelize('test','test','test',instanceOptions)
+      new SequelizeDb()
     ))
-      .to.be.instanceof(Sequelize)
+      .to.be.instanceof(SequelizeDb)
   })
   it('should attempt db connect and fail',()=>{
     return db.connect('sequelize')
