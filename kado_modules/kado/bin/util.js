@@ -244,8 +244,12 @@ module.exports = (K)=>{
           )
         }
       }
+      let moduleFolderName = 'kado_modules'
+      if(K.config.userModuleFolderName){
+        moduleFolderName = K.config.userModuleFolderName
+      }
       let moduleFolder = path.resolve(
-        folder + '/kado_modules/' + modconf.moduleName)
+        folder + '/' + moduleFolderName + '/' + modconf.moduleName)
       let templateFolder = path.resolve(
         __dirname + '/../../../lib/_moduleTemplate')
       let fileCount = 0
