@@ -9,12 +9,11 @@ app.get('/',(req,res)=>{
 
 app.start()
   .then((result)=>{
-    if(result !== 'CLI Mode'){
-      app.listen(port,(err)=>{
-        if(err) throw err
-        app.log.info('Kado Started on port ' + port)
-      })
-    }
+    if(result === 'CLI Mode') return
+    app.listen(port,(err)=>{
+      if(err) throw err
+      app.log.info('Kado Started on port ' + port)
+    })
   })
   .catch((e)=>{
     app.log.error('Startup failed: ' + e.message)
