@@ -247,7 +247,7 @@ module.exports = (K)=>{
       let moduleFolder = path.resolve(
         folder + '/kado_modules/' + modconf.moduleName)
       let templateFolder = path.resolve(
-        __dirname + '/../../../helpers/_template')
+        __dirname + '/../../../lib/_moduleTemplate')
       let fileCount = 0
       if(!cmd.app) cmd.app = 'myapp'
       P.try(() => {
