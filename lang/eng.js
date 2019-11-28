@@ -19,7 +19,7 @@ module.exports = {
   '_pack_flag': 'us',
   'admin_panel': 'Panel',
   'kado': 'Kado',
-  'kado_description': 'Web Application System',
+  'kado_description': 'Web Server, Node.JS Framework, Express.JS + Sequelize + Mustache',
   'version': 'Version',
   'welcome_to': 'Welcome to',
   'an_error_occurred': 'An error has occurred :(',
