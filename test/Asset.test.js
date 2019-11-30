@@ -23,14 +23,20 @@ describe('Asset',()=>{
   it('should add an asset',()=>{
     expect(asset.add('/test','text/javascript')).to.equal('/test')
   })
-  it('should show an asset exists',()=>{
-    expect(asset.exists('/test')[0].uri).to.equal('/test')
+  it('should add a second asset',()=>{
+    expect(asset.add('/test2','text/css')).to.equal('/test2')
+  })
+  it('should show both assets exists',()=>{
+    expect(asset.exists('/test').uri).to.equal('/test')
+    expect(asset.exists('/test2').uri).to.equal('/test2')
+    //remove the 2nd asset
+    expect(asset.remove('/test2').uri).to.equal('/test2')
   })
   it('should add an asset once',()=>{
     expect(asset.addOnce('/test-once','image/png')).to.equal('/test-once')
   })
   it('should show an asset exists once',()=>{
-    expect(asset.existsOnce('/test-once')[0].uri).to.equal('/test-once')
+    expect(asset.existsOnce('/test-once').uri).to.equal('/test-once')
   })
   it('should show all',()=>{
     expect(asset.all().length).to.equal(2)
