@@ -45,13 +45,13 @@ describe('Asset',()=>{
     expect(asset.addOnce('/test-once')).to.equal('/test-once')
   })
   it('should remove asset',()=>{
-    expect(asset.remove('/test')).to.equal(true)
+    expect(asset.remove('/test').uri).to.equal('/test')
   })
   it('should have no assets',()=>{
     expect(asset.get().length).to.equal(0)
   })
   it('should remove one time asset',()=>{
-    expect(asset.removeOnce('/test-once')).to.equal(true)
+    expect(asset.removeOnce('/test-once').uri).to.equal('/test-once')
   })
   it('should have no assets',()=>{
     expect(asset.get().length).to.equal(0)
