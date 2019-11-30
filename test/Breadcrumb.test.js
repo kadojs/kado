@@ -35,7 +35,8 @@ describe('Breadcrumb',()=>{
   })
   it('should accept middleware request',()=>{
     let Nav = require('../lib/Nav')
-    let app = {nav: new Nav()}
+    let Util = require('../lib/Util')
+    let app = {nav: new Nav(), util: new Util()}
     app.nav.addGroup('/test','Test','fa-fa-plus')
     let req = {session: {}, url: '/test', method: 'GET'}
     expect(breadcrumb.middleware(app,req)).to.be.an('Array')
