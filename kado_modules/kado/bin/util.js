@@ -37,7 +37,7 @@ module.exports = (K)=>{
           log.info('Force mode engaged, welcome Rambo')
         }
       }
-      K.db.sequelize.connect({sync: true, syncForce: cmd.force})
+      K.database.sequelize.connect({sync: true, syncForce: cmd.force})
         .then(() => {
           log.info('Database connected, initializing...')
         })
@@ -112,7 +112,7 @@ module.exports = (K)=>{
         .then(()=>{
           log.info('Database dump complete')
           log.info('Starting to sync to newest models...')
-          return K.db.sequelize.doConnect({sync: true, syncForce: true})
+          return K.database.sequelize.connect({sync: true, syncForce: true})
         })
         .then(() => {
           log.info('Database restructure complete, applying database dump.')
@@ -134,7 +134,7 @@ module.exports = (K)=>{
       log.info('Connecting to sequelize')
       let sql
       let statements = []
-      K.db.sequelize.doConnect({sync: true})
+      K.database.sequelize.connect({sync: true})
         .then(() => {
           log.info('Database connected, initializing...')
         })
