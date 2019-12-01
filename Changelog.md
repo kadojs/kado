@@ -25,8 +25,14 @@
  panels need to be split in however many places this can be done by simply,
  starting multiple instances and using webserver rules to deny or allow urls.
 
+### 3.10.2
+*Released 12/1/2019*
+* Update to latest dependencies
+  * bluebird   ^3.7.1  →  ^3.7.2
+  * bootstrap  ^4.3.1  →  ^4.4.1
+
 ### 3.10.1
-* Released 11/23/2019*
+*Released 11/23/2019*
 * Update to latest dependencies
   * bcrypt       ^3.0.6  →   ^3.0.7
   * commander    ^4.0.0  →   ^4.0.1
