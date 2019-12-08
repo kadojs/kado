@@ -28,7 +28,7 @@
 UPDATE: As of December 8th 2019, all of the above are complete. Kado 4 is in
 final staging for release pending a thorough code review.
 
-### 3.10.2
+### 3.10.3
 *Released 12/8/2019*
 * Update to solve security vulnerabilities
  * bluebird               ^3.7.1  →  ^3.7.2
@@ -38,6 +38,12 @@ final staging for release pending a thorough code review.
  * tui-editor             ^1.4.8  →  ^1.4.9
 
 More information here: https://github.com/KadoOrg/kado/network/alert/package-lock.json/serialize-javascript/open
+
+### 3.10.2
+*Released 12/1/2019*
+* Update to latest dependencies
+  * bluebird   ^3.7.1  →  ^3.7.2
+  * bootstrap  ^4.3.1  →  ^4.4.1
 
 ### 3.10.1
 *Released 11/23/2019*
