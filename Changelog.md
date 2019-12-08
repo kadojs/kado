@@ -25,11 +25,19 @@
  panels need to be split in however many places this can be done by simply,
  starting multiple instances and using webserver rules to deny or allow urls.
 
+UPDATE: As of December 8th 2019, all of the above are complete. Kado 4 is in
+final staging for release pending a thorough code review.
+
 ### 3.10.2
-*Released 12/1/2019*
-* Update to latest dependencies
-  * bluebird   ^3.7.1  →  ^3.7.2
-  * bootstrap  ^4.3.1  →  ^4.4.1
+*Released 12/8/2019*
+* Update to solve security vulnerabilities
+ * bluebird               ^3.7.1  →  ^3.7.2
+ * bootstrap              ^4.3.1  →  ^4.4.1
+ * mysql2                 ^2.0.1  →  ^2.0.2
+ * terser-webpack-plugin  ^2.2.1  →  ^2.2.2
+ * tui-editor             ^1.4.8  →  ^1.4.9
+
+More information here: https://github.com/KadoOrg/kado/network/alert/package-lock.json/serialize-javascript/open
 
 ### 3.10.1
 *Released 11/23/2019*
