@@ -9,6 +9,8 @@
 
 const { expect } = require('chai')
 const View = require('../lib/View')
+const ViewHelper = require('../lib/view/mustache.js')
+const handlerName = 'mustache'
 let view = new View()
 
 describe('View',()=> {
@@ -18,6 +20,28 @@ describe('View',()=> {
   })
   it('should be empty',()=>{
     expect(Object.keys(view.all()).length).to.equal(0)
+  })
+  it('should error getting an engine with no active handler',()=>{
+    expect(view.getEngine).to.throw(Error)
+  })
+  it('should add a handler',()=>{
+    let instance = new ViewHelper()
+    expect(view.addHandler(handlerName,instance)).to.equal(handlerName)
+  })
+  it('should get a handler',()=>{
+    expect(view.getHandler(handlerName)).to.be.an('object')
+  })
+  it('should activate a handler',()=>{
+    expect(view.activateHandler(handlerName)).to.equal(handlerName)
+  })
+  it('should provide an engine now',()=>{
+    expect(view.getEngine()).to.be.an('object')
+  })
+  it('should show in all handlers',()=>{
+    expect(Object.keys(view.allHandlers()).length).to.equal(1)
+  })
+  it('should remove a handler',()=>{
+    expect(view.removeHandler(handlerName)).to.equal(handlerName)
   })
   it('should add a view',()=>{
     expect(view.add('home','home')).to.equal('home')

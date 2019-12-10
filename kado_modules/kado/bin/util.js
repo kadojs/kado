@@ -71,6 +71,14 @@ module.exports = (K)=>{
       if(kadoRoot === '0') kadoRoot = process.env.KADO_ROOT
       let backupFile = K.path.resolve(kadoRoot + '/.dbreloadBackup.sql')
       let backupFileCopy = backupFile + '2'
+      try{
+        require.resolve('mysqldump')
+        require.resolve('mysql-import')
+      } catch(e){
+        log.error('Missing MySQL helper packages try: ' +
+          'npm install mysqldump mysql-import --save-dev')
+        process.exit(1)
+      }
       let mysqldump = require('mysqldump')
       let mysqlImport = require('mysql-import')
       let mImport = mysqlImport.config({
