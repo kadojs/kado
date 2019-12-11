@@ -43,12 +43,12 @@ describe('kado',function(){
   //test a loaded server
   describe('main',()=>{
     this.timeout(20000)
-    //start servers and create a staff
+    //start server
     before(() => {
       server.listen(config.port || 3000, config.host || null)
       return app.start()
     })
-    //remove staff and stop services
+    //stop services
     after(() => {
       app.stop()
       server.close()
