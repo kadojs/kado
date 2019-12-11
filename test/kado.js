@@ -8,19 +8,19 @@
  */
 const Kado = require('../index')
 const P = require('bluebird')
-const chai = require('chai')
-chai.use(require('chai-match'))
-const { expect } = chai
+const { expect } = require('chai')
 const request = require('request')
 const config = require('./config.test.js')
 const app = new Kado(config)
 const server = require('http').createServer(app.express)
 
+//setup a test route
+app.get('/',(req,res)=>{res.send('Hello')})
+
 //make some promises
 P.promisifyAll(request)
 
 describe('kado',function(){
-  this.timeout(20000)
   //load the subsystem tests
   require('./Asset.test')
   require('./Breadcrumb.test')
@@ -42,6 +42,7 @@ describe('kado',function(){
   require('./View.test')
   //test a loaded server
   describe('main',()=>{
+    this.timeout(20000)
     //start servers and create a staff
     before(() => {
       server.listen(config.port || 3000, config.host || null)
@@ -55,7 +56,7 @@ describe('kado',function(){
     it('should be online',()=>{
       return request.getAsync('http://localhost:3000/')
         .then((result)=>{
-          expect(result.body).to.match(/Cannot GET \//)
+          expect(result.body).to.equal('Hello')
         })
     })
     it('should have database access',()=>{
