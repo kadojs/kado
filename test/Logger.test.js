@@ -9,7 +9,9 @@
 
 const { expect } = require('chai')
 const Logger = require('../lib/Logger')
-let logger = new Logger()
+const loggerName = 'winston'
+const LogHelper = require('../lib/logger/winston')
+const logger = new Logger()
 
 describe('Logger',()=> {
   it('should construct',() => {
@@ -19,10 +21,28 @@ describe('Logger',()=> {
   it('should have no logger',() => {
     expect(logger.getLogger()).to.equal(null)
   })
-  it('should setup a logger',() => {
-    expect(logger.setup('kado','mm:hh:ss MM-DD-YYY')).to.be.an('object')
+  it('should have no handlers',()=>{
+    expect(Object.keys(logger.allHandlers()).length).to.equal(0)
   })
-  it('should have a logger',() => {
+  it('should add a handler',()=>{
+    expect(logger.addHandler(loggerName,new LogHelper())).to.equal(loggerName)
+  })
+  it('should get the handler',()=>{
+    expect(logger.getHandler(loggerName)).to.be.an('object')
+  })
+  it('should activate the handler',()=>{
+    expect(logger.activateHandler(loggerName)).to.equal(loggerName)
+  })
+  it('should return the active handler',()=>{
+    expect(logger.getLogger()).to.be.an('object')
+  })
+  it('should remove the handler',()=>{
+    expect(logger.removeHandler(loggerName)).to.equal(loggerName)
+  })
+  it('should no longer have the handler',()=>{
+    expect(logger.getHandler(loggerName)).to.equal(false)
+  })
+  it('should still have an activated instance',()=>{
     expect(logger.getLogger()).to.be.an('object')
   })
   it('should reset',() => {
