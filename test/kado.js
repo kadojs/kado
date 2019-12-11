@@ -59,8 +59,8 @@ describe('kado',function(){
           expect(result.body).to.equal('Hello')
         })
     })
-    it('should have database access',()=>{
-      expect(app.db.sequelize).to.be.an('object')
+    it('should have not have database access',()=>{
+      expect(app.db.sequelize).to.equal(undefined)
     })
     it('should have a logger installed',()=>{
       expect(app.log.info).to.be.a('function')

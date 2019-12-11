@@ -5,11 +5,8 @@ module.exports = {
   host: null,
   db: {
     sequelize: {
-      load: true,
-      enabled: true,
-      user: 'kado',
-      password: 'kado',
-      name: 'kado'
+      load: false,
+      enabled: false
     }
   }
 }
