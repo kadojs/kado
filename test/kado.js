@@ -24,6 +24,7 @@ describe('kado',function(){
   //load the subsystem tests
   require('./Asset.test')
   require('./Breadcrumb.test')
+  require('./CommandLine.test')
   require('./Connector.test')
   require('./Cron.test')
   require('./Database.test')
