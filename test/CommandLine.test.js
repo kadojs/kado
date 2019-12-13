@@ -18,7 +18,7 @@ const testCommand = {
     {definition: '-t, --test <s>', description: 'Test'}
   ],
   action: (app,opts)=>{
-    app.log.debug(opts.test)
+    return opts.test
   }
 }
 const testArgs = [
@@ -51,6 +51,12 @@ describe('CommandLine',()=> {
   })
   it('should show in all commands',() => {
     expect(cli.all().test).to.be.an('object')
+  })
+  it('should run a command programtically',() => {
+    return cli.run('test test -t test')
+      .then((result) => {
+        expect(result).to.equal('test')
+      })
   })
   it('should execute the program',() => {
     expect(cli.execute(testArgs,false)).to.be.an('object')
