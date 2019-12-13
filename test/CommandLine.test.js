@@ -52,6 +52,6 @@ describe('CommandLine',()=> {
     expect(cli.all().test).to.be.an('object')
   })
   it('should execute the program',() => {
-    expect(cli.execute(testArgs)).to.be.an('object')
+    expect(cli.execute(testArgs,false)).to.be.an('object')
   })
 })
