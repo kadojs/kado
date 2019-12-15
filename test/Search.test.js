@@ -53,7 +53,7 @@ describe('Search',()=> {
     expect(search.addModule('test',ourModule).title).to.equal('test')
   })
   it('should search by phrase',()=>{
-    return search.byPhrase('some foo',0,10)
+    return search.byPhrase({},'some foo',{start: 0,limit: 10})
       .then((result)=>{
         expect(result.resultCount).to.equal(2)
         expect(result.results.length).to.equal(1)
