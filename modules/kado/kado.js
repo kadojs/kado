@@ -44,7 +44,7 @@ exports.cli = (app) => {
           app.log.info('Force mode engaged, welcome Rambo')
         }
       }
-      app.database.sequelize.connect({sync: true, syncForce: opts.force})
+      return app.database.sequelize.connect({sync: true, syncForce: opts.force})
         .then(() => {
           app.log.info('Database connected, initializing...')
         })
@@ -105,7 +105,7 @@ exports.cli = (app) => {
       if(fs.existsSync(backupFileCopy)) fs.unlinkSync(backupFileCopy)
       if(fs.existsSync(backupFile)) fs.renameSync(backupFile,backupFileCopy)
       let dumpFile = path.resolve(kadoRoot + '/.dbreloadDump.sql')
-      P.try(()=>{
+      return P.try(()=>{
         return mysqldump({
           connection: {
             host: cfg.host,
@@ -158,7 +158,7 @@ exports.cli = (app) => {
       app.log.info('Connecting to sequelize')
       let sql
       let statements = []
-      app.database.sequelize.connect({sync: true})
+      return app.database.sequelize.connect({sync: true})
         .then(() => {
           app.log.info('Database connected, initializing...')
         })
@@ -297,7 +297,7 @@ exports.cli = (app) => {
         __dirname + '/../../../lib/_moduleTemplate')
       let fileCount = 0
       if(!opts.app) opts.app = 'myapp'
-      P.try(() => {
+      return P.try(() => {
         let folderExists = fs.existsSync(moduleFolder)
         if(folderExists && !opts.stomp){
           app.log.error('Module folder already exits')
