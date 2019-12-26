@@ -8,7 +8,7 @@
  */
 
 const { expect } = require('chai')
-const SequelizeDb = require('../lib/db/sequelize')
+const SequelizeDb = require('../lib/database/sequelize')
 const Database = require('../lib/Database')
 let db = new Database()
 
