@@ -7,11 +7,10 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const Asset = require('../lib/Asset')
-let asset = new Asset()
-
 describe('Asset',()=>{
+  const { expect } = require('chai')
+  const Asset = require('../lib/Asset')
+  let asset = new Asset()
   it('should construct',()=>{
     let testAsset = new Asset()
     expect(testAsset).to.be.an('object')

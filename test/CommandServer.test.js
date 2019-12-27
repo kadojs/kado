@@ -7,24 +7,22 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const Kado = require('../lib/Kado')
-const app = new Kado()
-const CommandLine = require('../lib/CommandServer')
-const cli = new CommandLine(app)
-const testCommand = {
-  description: 'test',
-  options: [
-    {definition: '-t, --test <s>', description: 'Test'}
-  ],
-  action: (opts)=>{
-    return opts.test || opts.t
+describe('CommandServer',()=> {
+  const { expect } = require('chai')
+  const CommandServer = require('../lib/CommandServer')
+  const cli = new CommandServer()
+  cli.setVersion(require('../package.json').version)
+  const testCommand = {
+    description: 'test',
+    options: [
+      {definition: '-t, --test <s>', description: 'Test'}
+    ],
+    action: (opts)=>{
+      return opts.test || opts.t
+    }
   }
-}
-
-describe('CommandLine',()=> {
   it('should construct',() => {
-    let testCli = new CommandLine(app)
+    let testCli = new CommandServer()
     expect(testCli).to.be.an('object')
   })
   it('should have no commands',() => {

@@ -7,22 +7,21 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const Language = require('../lib/Language')
-let language = new Language()
-let eng = {
-  '_pack_name': 'English',
-  '_pack_version': '1.0',
-  '_pack_author': 'Nullivex',
-  '_pack_system': 'Kado',
-  '_pack_module': 'none',
-  '_pack_code': 'eng',
-  '_pack_sc': 'en',
-  '_pack_flag': 'us',
-  'something': 'Something'
-}
-
 describe('Language',()=> {
+  const { expect } = require('chai')
+  const Language = require('../lib/Language')
+  let language = new Language()
+  let eng = {
+    '_pack_name': 'English',
+    '_pack_version': '1.0',
+    '_pack_author': 'Nullivex',
+    '_pack_system': 'Kado',
+    '_pack_module': 'none',
+    '_pack_code': 'eng',
+    '_pack_sc': 'en',
+    '_pack_flag': 'us',
+    'something': 'Something'
+  }
   it('should construct',() => {
     let testLanguage = new Language()
     expect(testLanguage).to.be.an('object')

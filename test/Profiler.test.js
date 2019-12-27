@@ -7,13 +7,10 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const chai = require('chai')
-chai.use(require('chai-match'))
-const { expect } = chai
-const Profiler = require('../lib/Profiler')
-let profiler = new Profiler()
-
 describe('Profiler',()=> {
+  const { expect } = require('chai')
+  const Profiler = require('../lib/Profiler')
+  let profiler = new Profiler()
   it('should construct',() => {
     let testProfiler = new Profiler()
     expect(testProfiler).to.be.an('object')

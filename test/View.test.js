@@ -7,13 +7,13 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const View = require('../lib/View')
-const ViewHelper = require('../lib/view/mustache.js')
-const handlerName = 'mustache'
-let view = new View()
-
 describe('View',()=> {
+  const { expect } = require('chai')
+  const View = require('../lib/View')
+  //const ViewHelper = require('../lib/view/mustache.js')
+  const ViewHelper = class {}
+  const handlerName = 'mustache'
+  let view = new View()
   it('should construct',() => {
     let testView = new View()
     expect(testView).to.be.an('object')

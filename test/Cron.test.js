@@ -7,11 +7,10 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const Cron = require('../lib/Cron')
-let cron = new Cron()
-
 describe('Cron',()=>{
+  const { expect } = require('chai')
+  const Cron = require('../lib/Cron')
+  let cron = new Cron()
   it('should construct',()=>{
     let testCron = new Cron()
     expect(testCron).to.be.an('object')

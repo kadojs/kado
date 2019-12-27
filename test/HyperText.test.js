@@ -7,68 +7,66 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const Kado = require('../lib/Kado')
-const app = new Kado()
-const HyperText = require('../lib/HyperText')
-const hyperText = new HyperText(app)
-class OurEngine extends hyperText.HyperTextEngine {
-  constructor(){
-    super()
-    this.express = require('express')()
-    this.http = require('http').createServer(this.express)
-  }
-  start(port,host){
-    super.start()
-    super.checkPort(port)
-    super.checkHost(host)
-    const that = this
-    return new Promise((resolve,reject)=> {
-      that.http.listen(port,host,(err) => {
-        if(err) return reject(err)
-        resolve(that.http)
-      })
-    })
-  }
-  stop(){
-    super.stop()
-    const that = this
-    return new Promise((resolve,reject)=> {
-      that.http.close((err) => {
-        if(err) return reject(err)
-        resolve(true)
-      })
-    })
-  }
-}
-function checkServer(port,host,uri){
-  const http = require('http')
-  return new Promise((resolve,reject)=>{
-    const params = {
-      port: port,
-      host: host,
-      method: 'GET',
-      path: uri
-    }
-    const req = http.request(params)
-    req.end()
-    req.on('response',(res)=> {
-      let data = null
-      res.setEncoding(('utf8'))
-      res.on('data',(chunk)=>{ data += chunk })
-      res.on('end',()=>{
-        resolve(expect(data).to.match(/Cannot GET \//))
-      })
-      res.on('error',reject)
-    })
-    req.on('error',reject)
-  })
-}
-
-
 describe('HyperText',()=> {
+  const { expect } = require('chai')
+  const HyperText = require('../lib/HyperText')
+  const hyperText = new HyperText()
+  class OurEngine extends hyperText.HyperTextEngine {
+    constructor(){
+      super()
+      this.http = require('http').createServer((req,res)=>{
+        res.statusCode = 404
+        res.end('Cannot GET ' + req.url)
+      })
+    }
+    start(port,host){
+      super.start()
+      super.checkPort(port)
+      super.checkHost(host)
+      const that = this
+      return new Promise((resolve,reject)=> {
+        that.http.listen(port,host,(err) => {
+          if(err) return reject(err)
+          resolve(that.http)
+        })
+      })
+    }
+    stop(){
+      super.stop()
+      const that = this
+      return new Promise((resolve,reject)=> {
+        that.http.close((err) => {
+          if(err) return reject(err)
+          resolve(true)
+        })
+      })
+    }
+  }
+  function checkServer(port,host,uri){
+    const http = require('http')
+    return new Promise((resolve,reject)=>{
+      const params = {
+        port: port,
+        host: host,
+        method: 'GET',
+        path: uri
+      }
+      const req = http.request(params)
+      req.end()
+      req.on('response',(res)=> {
+        let data = null
+        res.setEncoding(('utf8'))
+        res.on('data',(chunk)=>{ data += chunk })
+        res.on('end',()=>{
+          resolve(expect(data).to.match(/Cannot GET \//))
+        })
+        res.on('error',reject)
+      })
+      req.on('error',reject)
+    })
+  }
   it('should construct',() => {
-    let testHyperText = new HyperText(app)
+    let testHyperText = new HyperText()
     expect(testHyperText).to.be.an('object')
   })
   it('should have no handlers',() => {

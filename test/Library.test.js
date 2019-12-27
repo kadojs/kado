@@ -7,11 +7,10 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const Library = require('../lib/Library')
-let library = new Library()
-
 describe('Library',() => {
+  const { expect } = require('chai')
+  const Library = require('../lib/Library')
+  let library = new Library()
   it('should construct',() => {
     let testLibrary = new Library()
     expect(testLibrary).to.be.an('object')

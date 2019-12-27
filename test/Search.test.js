@@ -6,29 +6,29 @@
  *
  * This file is part of Kado and bound to the MIT license distributed within.
  */
-const { expect } = require('chai')
-const Search = require('../lib/Search')
-let search = new Search()
-let ourModule = ()=>{
-  return new Promise((resolve)=>{
-    resolve([
-      {
-        uri: '/foo',
-        title: 'foo',
-        description: 'some Foo',
-        updatedAt: new Date()
-      },
-      {
-        uri: '/foo1',
-        title: 'foo1',
-        description: 'some Foo1',
-        updatedAt: new Date()
-      }
-    ])
-  })
-}
 
 describe('Search',()=> {
+  const { expect } = require('chai')
+  const Search = require('../lib/Search')
+  let search = new Search()
+  let ourModule = ()=>{
+    return new Promise((resolve)=>{
+      resolve([
+        {
+          uri: '/foo',
+          title: 'foo',
+          description: 'some Foo',
+          updatedAt: new Date()
+        },
+        {
+          uri: '/foo1',
+          title: 'foo1',
+          description: 'some Foo1',
+          updatedAt: new Date()
+        }
+      ])
+    })
+  }
   it('should construct',() => {
     let testSearch = new Search()
     expect(testSearch).to.be.an('object')

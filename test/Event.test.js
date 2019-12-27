@@ -7,11 +7,10 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const Event = require('../lib/Event')
-let event = new Event()
-
 describe('Event',()=>{
+  const { expect } = require('chai')
+  const Event = require('../lib/Event')
+  let event = new Event()
   it('should construct',()=>{
     let testEvent = new Event()
     expect(testEvent).to.be.an('object')

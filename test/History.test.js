@@ -7,11 +7,10 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const History = require('../lib/History')
-let history = new History()
-
 describe('History',()=>{
+  const { expect } = require('chai')
+  const History = require('../lib/History')
+  let history = new History()
   it('should construct',()=>{
     let testBreadcrumb = new History()
     expect(testBreadcrumb).to.be.an('object')
@@ -34,7 +33,7 @@ describe('History',()=>{
     expect(history.all().length).to.equal(1)
   })
   it('should accept middleware request',()=>{
-    let Nav = require('../lib/Nav')
+    let Nav = require('../lib/Navigation')
     let Util = require('../lib/Util')
     let app = {nav: new Nav(), util: new Util()}
     app.nav.addGroup('/test','Test','fa-fa-plus')

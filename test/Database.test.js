@@ -7,12 +7,16 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const SequelizeDb = require('../lib/database/sequelize')
-const Database = require('../lib/Database')
-let db = new Database()
-
 describe('Database',()=> {
+  const { expect } = require('chai')
+  //const SequelizeDb = require('../lib/database/sequelize')
+  const SequelizeDb = class {
+    connect(){ return new Promise((resolve,reject)=>{
+      reject(new Error('ECONNREFUSED'))
+    })}
+  }
+  const Database = require('../lib/Database')
+  let db = new Database()
   it('should construct',() => {
     let testDatabase = new Database()
     expect(testDatabase).to.be.an('object')

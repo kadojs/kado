@@ -7,13 +7,12 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const Nav = require('../lib/Nav')
-let nav = new Nav()
-
 describe('Nav',()=> {
+  const { expect } = require('chai')
+  const Navigtation = require('../lib/Navigation')
+  let nav = new Navigtation()
   it('should construct',() => {
-    let testAsset = new Nav()
+    let testAsset = new Navigtation()
     expect(testAsset).to.be.an('object')
   })
   it('should be empty',() => {
@@ -34,4 +33,3 @@ describe('Nav',()=> {
     expect(Object.keys(nav.all()).length).to.equal(1)
   })
 })
-

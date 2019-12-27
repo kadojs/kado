@@ -7,11 +7,10 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const Router = require('../lib/Router')
-let router = new Router()
-
 describe('Route',()=> {
+  const { expect } = require('chai')
+  const Router = require('../lib/Router')
+  let router = new Router()
   it('should construct',() => {
     let testRouter = new Router()
     expect(testRouter).to.be.an('object')

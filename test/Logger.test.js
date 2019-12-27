@@ -7,13 +7,13 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const Logger = require('../lib/Logger')
-const loggerName = 'winston'
-const LogHelper = require('../lib/logger/winston')
-const logger = new Logger()
-
 describe('Logger',()=> {
+  const { expect } = require('chai')
+  const Logger = require('../lib/Logger')
+  const loggerName = 'winston'
+  //const LogHelper = require('../lib/logger/winston')
+  const LogHelper = class {}
+  const logger = new Logger()
   it('should construct',() => {
     let testLogger = new Logger()
     expect(testLogger).to.be.an('object')

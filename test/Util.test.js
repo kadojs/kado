@@ -7,12 +7,11 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 
-const { expect } = require('chai')
-const Util = require('../lib/Util')
-const util = new Util()
-const render = (s)=>{return s}
-
 describe('Util',()=>{
+  const { expect } = require('chai')
+  const Util = require('../lib/Util')
+  const util = new Util()
+  const render = (s)=>{return s}
   it('should construct',()=>{
     let testUtil = new Util()
     expect(testUtil).to.be.an('object')
