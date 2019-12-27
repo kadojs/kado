@@ -9,7 +9,6 @@
 
 const { expect } = require('chai')
 const Email = require('../lib/Email')
-const EmailJs = Email.EmailJs
 let email = new Email()
 
 describe('Email',()=> {
@@ -20,12 +19,12 @@ describe('Email',()=> {
   it('should accept a new handler',() => {
     expect(email.addHandler(
       'emailjs',
-      new EmailJs())
+      new email.EmailJs())
     )
-      .to.be.instanceof(EmailJs)
+      .to.be.instanceof(email.EmailJs)
   })
   it('should have the new handler instance',()=>{
-    expect(email.emailjs).to.be.instanceof(EmailJs)
+    expect(email.emailjs).to.be.instanceof(email.EmailJs)
   })
   it('should remove handler instance',()=>{
     expect(email.removeHandler('emailjs')).to.equal('emailjs')
@@ -36,9 +35,9 @@ describe('Email',()=> {
   it('should accept a new handler instance',()=>{
     expect(email.addHandler(
       'emailjs',
-      new EmailJs())
+      new email.EmailJs())
     )
-      .to.be.instanceof(EmailJs)
+      .to.be.instanceof(email.EmailJs)
   })
   it('should attempt connect and fail',()=>{
     let result = email.emailjs.connect()

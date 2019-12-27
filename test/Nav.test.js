@@ -17,8 +17,8 @@ describe('Nav',()=> {
     expect(testAsset).to.be.an('object')
   })
   it('should be empty',() => {
-    expect(Object.keys(nav.all()).length).to.equal(0)
-    expect(nav.allGroups().length).to.equal(0)
+    expect(nav.all().length).to.equal(0)
+    expect(Object.keys(nav.allNav()).length).to.equal(0)
   })
   it('should add a nav group',() => {
     expect(nav.addGroup('/test','Test', 'fa fa-plus').uri).to.equal('/test')

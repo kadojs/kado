@@ -8,30 +8,30 @@
  */
 
 const { expect } = require('chai')
-const Breadcrumb = require('../lib/Breadcrumb')
-let breadcrumb = new Breadcrumb()
+const History = require('../lib/History')
+let history = new History()
 
-describe('Breadcrumb',()=>{
+describe('History',()=>{
   it('should construct',()=>{
-    let testBreadcrumb = new Breadcrumb()
+    let testBreadcrumb = new History()
     expect(testBreadcrumb).to.be.an('object')
   })
   it('should be empty',()=>{
-    expect(breadcrumb.all().length).to.equal(0)
+    expect(history.all().length).to.equal(0)
   })
   it('should add crumb entry',()=>{
-    expect(breadcrumb.add('/test','Test','fa fa-plus').name).to.equal('Test')
+    expect(history.add('/test','Test','fa fa-plus').name).to.equal('Test')
   })
   it('should save the entries',()=>{
     let req = {session: {}}
-    breadcrumb.save(req)
+    history.save(req)
     expect(req.session.breadcrumb).to.be.an('Array')
   })
   it('should restore the entries',()=>{
     let req = {session: {}}
     req.session.breadcrumb = [{uri: '/test', name: 'Test', icon: 'fa fa-plus'}]
-    breadcrumb.restore(req)
-    expect(breadcrumb.all().length).to.equal(1)
+    history.restore(req)
+    expect(history.all().length).to.equal(1)
   })
   it('should accept middleware request',()=>{
     let Nav = require('../lib/Nav')
@@ -39,7 +39,7 @@ describe('Breadcrumb',()=>{
     let app = {nav: new Nav(), util: new Util()}
     app.nav.addGroup('/test','Test','fa-fa-plus')
     let req = {session: {}, url: '/test', method: 'GET'}
-    expect(breadcrumb.middleware(app,req)).to.be.an('Array')
-    expect(breadcrumb.all()[0].name).to.equal('Test')
+    expect(history.middleware(app,req)).to.be.an('Array')
+    expect(history.all()[0].name).to.equal('Test')
   })
 })

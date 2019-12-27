@@ -6,12 +6,11 @@
  *
  * This file is part of Kado and bound to the MIT license distributed within.
  */
-const P = require('bluebird')
 const { expect } = require('chai')
 const Search = require('../lib/Search')
 let search = new Search()
 let ourModule = ()=>{
-  return new P((resolve)=>{
+  return new Promise((resolve)=>{
     resolve([
       {
         uri: '/foo',

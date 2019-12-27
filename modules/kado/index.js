@@ -22,7 +22,6 @@ exports._kado ={
  */
 exports.cli = (app) => {
   const fs = require('fs')
-  const P = require('bluebird')
   const path = require('path')
   const readlineSync = require('readline-sync').question
   app.cli.command('kado','dbsetup',{
@@ -105,7 +104,7 @@ exports.cli = (app) => {
       if(fs.existsSync(backupFileCopy)) fs.unlinkSync(backupFileCopy)
       if(fs.existsSync(backupFile)) fs.renameSync(backupFile,backupFileCopy)
       let dumpFile = path.resolve(kadoRoot + '/.dbreloadDump.sql')
-      return P.try(()=>{
+      return Promise.resolve().then(()=>{
         return mysqldump({
           connection: {
             host: cfg.host,
@@ -214,7 +213,7 @@ exports.cli = (app) => {
       const mkdirp = require('mkdirp-then')
       const Mustache = require('mustache')
       const readdir = require('recursive-readdir')
-      const rmdir = P.promisify(require('rimraf'))
+      const rmdir = require('rimraf')
       let fileHeaderPath = __dirname + '/header.txt'
       let fileHeader = 'KADO GENERATOR\n'
       //get our file header
@@ -297,14 +296,19 @@ exports.cli = (app) => {
         __dirname + '/../../../lib/_moduleTemplate')
       let fileCount = 0
       if(!opts.app) opts.app = 'myapp'
-      return P.try(() => {
+      return Promise.resolve().then(() => {
         let folderExists = fs.existsSync(moduleFolder)
         if(folderExists && !opts.stomp){
           app.log.error('Module folder already exits')
           process.exit(1)
         } else if(folderExists && opts.stomp){
           app.log.info('Removing existing module folder')
-          return rmdir(moduleFolder)
+          return new Promise((resolve,reject)=> {
+            rmdir(moduleFolder,(err) => {
+              if(err) return reject(err)
+              resolve()
+            })
+          })
         } else {
           app.log.info('Creating module folder')
         }

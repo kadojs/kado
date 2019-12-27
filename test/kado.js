@@ -7,7 +7,6 @@
  * This file is part of Kado and bound to the MIT license distributed within.
  */
 const Kado = require('../index')
-const P = require('bluebird')
 const { expect } = require('chai')
 const request = require('request')
 const config = require('./config.test.js')
@@ -17,13 +16,10 @@ const server = require('http').createServer(app.express)
 //setup a test route
 app.get('/',(req,res)=>{res.send('Hello')})
 
-//make some promises
-P.promisifyAll(request)
-
 describe('kado',function(){
   //load the subsystem tests
   require('./Asset.test')
-  require('./Breadcrumb.test')
+  require('./History.test')
   require('./CommandServer.test')
   require('./Connector.test')
   require('./Cron.test')
@@ -55,10 +51,13 @@ describe('kado',function(){
       server.close()
     })
     it('should be online',()=>{
-      return request.getAsync('http://localhost:3000/')
-        .then((result)=>{
+      return new Promise((resolve,reject)=> {
+        request.get('http://localhost:3000/',(err,result) => {
+          if(err) return reject(err)
           expect(result.body).to.equal('Hello')
+          resolve()
         })
+      })
     })
     it('should have not have database access',()=>{
       expect(app.db.sequelize).to.equal(undefined)
