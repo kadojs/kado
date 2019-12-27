@@ -42,7 +42,6 @@
   "dependencies": {
     "cron": "^1.7.2",
     "minimist": "^1.2.0",
-    "object-manage": "^1.1.0",
     "pretty-bytes": "^5.3.0"
   },
   "devDependencies": {
