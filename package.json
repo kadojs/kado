@@ -31,7 +31,6 @@
   "dependencies": {
     "bluebird": "^3.7.2",
     "cli-table": "^0.3.1",
-    "commander": "^4.0.1",
     "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "connect-session-sequelize": "^6.0.0",
@@ -42,6 +41,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "locale": "^0.1.0",
+    "minimist": "^1.2.0",
     "mkdirp-then": "^1.2.0",
     "moment": "^2.24.0",
     "morgan": "^1.9.1",

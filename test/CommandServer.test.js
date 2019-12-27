@@ -10,24 +10,17 @@
 const { expect } = require('chai')
 const Kado = require('../lib/Kado')
 const app = new Kado()
-const CommandLine = require('../lib/CommandLine')
+const CommandLine = require('../lib/CommandServer')
 const cli = new CommandLine(app)
 const testCommand = {
   description: 'test',
   options: [
     {definition: '-t, --test <s>', description: 'Test'}
   ],
-  action: (app,opts)=>{
-    return opts.test
+  action: (opts)=>{
+    return opts.test || opts.t
   }
 }
-const testArgs = [
-  process.argv[0],
-  process.argv[1],
-  'test',
-  'test',
-  '-t','test'
-]
 
 describe('CommandLine',()=> {
   it('should construct',() => {
@@ -52,13 +45,10 @@ describe('CommandLine',()=> {
   it('should show in all commands',() => {
     expect(cli.all().test).to.be.an('object')
   })
-  it('should run a command programtically',() => {
-    return cli.run('test test -t test')
-      .then((result) => {
-        expect(result).to.equal('test')
-      })
+  it('should run a command programtically',async () => {
+    return expect(await cli.run('test test -t test')).to.equal('test')
   })
-  it('should execute the program',() => {
-    expect(cli.execute(testArgs,false)).to.be.an('object')
+  it('should run a command with a full switch',async () => {
+    return expect(await cli.run('test test --test test')).to.equal('test')
   })
 })
