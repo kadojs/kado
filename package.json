@@ -1,7 +1,7 @@
 {
   "author": "Bryan Tong <bryan@nullivex.com>",
   "name": "kado",
-  "description": "High Quality JavasScript Libraries, using ES2016/ES6+",
+  "description": "High Quality JavasScript Libraries based on ES6+",
   "version": "4.0.0",
   "homepage": "https://kado.org",
   "license": "LGPL-v3",
@@ -11,7 +11,7 @@
   },
   "keywords": [
     "Kado High Quality JavaScript Libraries",
-    "Static Asset Library",
+    "Asset Library",
     "Command Line Server Library",
     "Connector Library",
     "Cron Library",
