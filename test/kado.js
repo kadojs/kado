@@ -43,4 +43,5 @@ describe('kado',function(){
   require('./Search.test')
   require('./Util.test')
   require('./View.test')
+  require('./Validate.test')
 })
