@@ -34,6 +34,7 @@ describe('kado',function(){
   require('./Language.test')
   require('./Library.test')
   require('./Logger.test')
+  require('./Mapper.test')
   require('./Message.test')
   require('./Navigation.test')
   require('./Permission.test')
