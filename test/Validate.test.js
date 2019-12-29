@@ -32,55 +32,59 @@ describe('Validate',()=>{
     Validate.assert(Validate.eqDeep([],{}),false)
   })
   it('should check for Boolean',() => {
-    expect(Validate.eq(true,true)).to.equal(true)
-    expect(Validate.eq(true,false)).to.equal(false)
+    Validate.eq(Validate.eqDeep(true,true),true)
+    Validate.eq(Validate.eqDeep(true,false),false)
   })
   it('should check for Date',() => {
     const date = new Date()
-    expect(Validate.assert(date,date)).to.equal(true)
+    Validate.assert(Validate.eqDeep(date,date),true)
   })
   it('should check for Error',() => {
-    expect(Validate.assert(new Error('foo'),new Error('foo'))).to.equal(true)
+    Validate.assert(Validate.eqDeep(new Error('foo'),new Error('foo')),true)
   })
   it('should check for Function',() => {
+    //Line 47 fails with validation.assert // passes w/ validate.eq
     expect(Validate.assert(() => {},() => {})).to.equal(true)
   })
   it('should check for Generator')
   it('should check for GeneratorFunction')
   it('should check for Infinity',() => {
-    expect(Validate.assert(Infinity,Infinity)).to.equal(true)
+    Validate.assert(Validate.eqDeep(Infinity,Infinity),true)
   })
   it('should check for InternalError')
   it('should check for JSON')
   it('should check for Map')
   //Equality comparison with NaN always evaluates to false
   it('should check for NaN',() => {
-    expect(Validate.eq(NaN,NaN)).to.equal(false)
+    Validate.eq(Validate.eqDeep(NaN,NaN),false)
   })
   it('should check for null', () => {
-    expect(Validate.assert(null,null)).to.equal(true)
-    expect(Validate.assert.bind(null,null,undefined)).to.throw('Assertion failed null does not equal undefined')
+    Validate.assert(Validate.eqDeep(null,null),true)
+    // ***ASK BRYAN ABOUT LINE 63***
+    Validate.assert.bind(Validate.eqDeep(null,null,undefined),'Assertion failed null does not equal undefined')
   })
   it('should check for Number', () => {
-    expect(Validate.assert(1,1)).to.equal(true)
-    expect(Validate.eq(1,'')).to.equal(false)
-    expect(Validate.eq(1,true)).to.equal(false)
+    Validate.assert(Validate.eqDeep(1,1),true)
+    Validate.eq(Validate.eqDeep(1,''),false)
+    Validate.eq(Validate.eqDeep(1,true),false)
   })
   it('should check for Promise')
   it('should check for RangeError')
   it('should check for ReferenceError')
   it('should check for RegExp')
   it('should check for String',() => {
-    expect(Validate.assert('','')).to.equal(true)
-    expect(Validate.assert('foo','foo')).to.equal(true)
-    expect(Validate.assert.bind(null,'foo','bar')).to.throw('Assertion failed foo does not equal bar')
+    Validate.assert(Validate.eqDeep('',''),true)
+    Validate.assert(Validate.eqDeep('foo','foo'),true)
+    // ***Have Bryan check line 78 syntax***
+    Validate.assert.bind(Validate.eqDeep(null,'foo','bar'),'Assertion failed foo does not equal bar')
   })
   it('should check for Symbol')
   it('should check for SyntaxError')
   it('should check for TypedArray')
   it('should check for TypeError')
   it('should check for Undefined', () => {
-    expect(Validate.assert(undefined,undefined)).to.equal(true)
-    expect(Validate.assert.bind(null,undefined,null)).to.throw('Assertion failed undefined does not equal null')
+    Validate.assert(Validate.eqDeep(undefined,undefined),true)
+    // ***Have Bryan check line 87 syntax***
+    Validate.assert.bind(Validate.eqDeep(null,undefined,null),'Assertion failed undefined does not equal null')
   })
 })
