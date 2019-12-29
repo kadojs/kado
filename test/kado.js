@@ -28,6 +28,7 @@ describe('kado',function(){
   require('./Database.test')
   require('./Email.test')
   require('./Event.test')
+  require('./Format.test')
   require('./GetOpt.test')
   require('./History.test')
   require('./HyperText.test')
