@@ -21,15 +21,93 @@
 
 describe('Validate',()=>{
   const { expect } = require('chai')
-  const Validate = require('../lib/Validate')
-  const validate = new Validate([])
+  const Val = require('../lib/Validate')
+  describe('assert',()=>{
+    it('should assert an array')
+    it('should assert an object')
+    it('should assert an date')
+    it('should assert an error')
+    it('should assert an function')
+    it('should assert an string')
+    it('should assert an number')
+    it('should assert an null')
+    it('should assert an undefined')
+    it('should assert an boolean')
+  })
+  describe('eq',()=>{
+    it('should eq string')
+    it('should eq null')
+    it('should eq boolean')
+    it('should eq array')
+    it('should eq object')
+  })
+  describe('eqDeep',()=>{
+    it('should eq an object')
+    it('should eq an array')
+  })
+  describe('getType',()=>{
+    it('should get a string')
+    it('should get a number')
+    it('should get a array')
+    it('should get a object')
+    it('should get a null')
+    it('should get a undefined')
+    it('should get a boolean')
+  })
+  describe('isType',()=>{
+    it('should identify a string')
+    it('should identify a number')
+    it('should identify a array')
+    it('should identify a object')
+    it('should identify a null')
+    it('should identify a undefined')
+  })
+  describe('isAbove',()=>{
+    it('should fail on invalid input')
+    it('should be true if a number is above base')
+    it('should be false if a number is below a base')
+  })
+  describe('isBelow',()=>{
+    it('should fail on invalid input')
+    it('should be true if a number is below a base')
+    it('should be false if a number is above a base')
+  })
+  describe('minimum',()=>{
+    it('should fail on invalid input')
+    it('should be true if a number is above or equal to a base')
+    it('should be false if a number is below a base')
+  })
+  describe('maximum',()=>{
+    it('should fail on invalid input')
+    it('should be true if a number is below or equal to a base')
+    it('should be false if a number is above a base')
+  })
+  describe('neq',()=>{
+    it('should be false on true neq true')
+  })
+  describe('getInstance',()=>{
+    it('should return an instance')
+  })
+  describe('with instance',()=>{
+    it('should check above',()=>{
+      Val.assert(new Val(5).above(4),true)
+    })
+    it('should check below',()=>{
+      Val.assert(new Val(5).below(6),true)
+    })
+    it('should check equal')
+    it('should check is type')
+    it('should check min')
+    it('should check max')
+    it('should check not')
+  })
   it('should construct',() =>{
-    let testValidate = new Validate()
-    Validate.assert(Validate.getType(testValidate),'Validate')
+    let testValidate = new Val()
+    Val.assert(Val.getType(testValidate),'Validate')
   })
   it('should check for Array',() => {
-    Validate.assert(Validate.eqDeep([],[]), true)
-    Validate.assert(Validate.eqDeep([],{}),false)
+    Val.assert(Val.eqDeep([],[]), true)
+    Val.assert(Val.eqDeep([],{}),false)
   })
   it('should check for Boolean',() => {
     Validate.eq(Validate.eqDeep(true,true),true)
