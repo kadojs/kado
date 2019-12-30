@@ -233,7 +233,7 @@ describe('Validate',()=>{
   it('should check for Map')
   //Equality comparison with NaN always evaluates to false
   it('should check for NaN',() => {
-    expect.eqDeep(NaN,NaN)
+    expect.isType('NaN',NaN)
   })
   it('should check for null', () => {
     expect.eqDeep(null,null)
