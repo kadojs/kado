@@ -20,40 +20,39 @@
  */
 
 describe('Event',()=>{
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Event = require('../lib/Event')
   let event = new Event()
   it('should construct',()=>{
-    let testEvent = new Event()
-    expect(testEvent).to.be.an('object')
+    expect.isType('Event',new Event())
   })
   it('should have no handlers',()=>{
-    expect(Object.keys(event.allHandlers()).length).to.equal(0)
+    expect.eq(Object.keys(event.allHandlers()).length,0)
   })
-  it('should accept our tast handler',()=>{
-    expect(event.addHandler('test',(options)=>{
-      expect(options).to.be.an('object')
-      expect(options.to).to.be.a('string')
-      expect(options.text).to.be.a('string')
-      expect(options.level).to.be.a('number')
-      expect(options.levelInfo).to.be.an('object')
+  it('should accept our test handler',()=>{
+    expect.eq(event.addHandler('test',(options)=>{
+      expect.isType('Object',options)
+      expect.isType('string',options.to)
+      expect.isType('string',options.text)
+      expect.isType('number',options.level)
+      expect.isType('Object',options.levelInfo)
       return options
-    })).to.equal('test')
+    }),'test')
   })
   it('should add a handler',()=>{
-    expect(event.addHandler('test2',()=>{})).to.equal('test2')
+    expect.eq(event.addHandler('test2',()=>{}),'test2')
   })
   it('should show a handler exists',()=>{
-    expect(event.getHandler('test2').name).to.equal('test2')
+    expect.eq(event.getHandler('test2').name,'test2')
   })
   it('should show the handler exists in the list',()=>{
-    expect(Object.keys(event.allHandlers()).length).to.equal(2)
+    expect.eq(Object.keys(event.allHandlers()).length,2)
   })
   it('should remove a handler',()=>{
-    expect(event.removeHandler('test2')).to.equal('test2')
+    expect.eq(event.removeHandler('test2'),'test2')
   })
   it('should show all handlers',()=>{
-    expect(Object.keys(event.allHandlers()).length).to.equal(1)
+    expect.eq(Object.keys(event.allHandlers()).length,1)
   })
   it('should create an event an call our handler',()=>{
     let levelInfo = event.getLevelInfo(3)
@@ -66,70 +65,70 @@ describe('Event',()=>{
     }).then((result)=>{
       //since many modules could have been processed only keep one
       result = result[0]
-      expect(result).to.be.an('object')
-      expect(result.text).to.equal('some thing happened')
+      expect.isType('Object',result)
+      expect.eq(result.text,'some thing happened')
     })
   })
   it('should create using the digest method directly',()=>{
     return event.create(event.digest(3,'dude','some thing happened'))
       .then((result)=>{
         result = result[0]
-        expect(result).to.be.an('object')
-        expect(result.text).to.equal('some thing happened')
+        expect.isType('Object',result)
+        expect.eq(result.text,'some thing happened')
       })
   })
   it('should call using the error method',()=>{
     return event.error('foo','some thing happened')
       .then((result)=>{
         result = result[0]
-        expect(result).to.be.an('object')
-        expect(result.level).to.equal(0)
-        expect(result.text).to.equal('some thing happened')
+        expect.isType('Object',result)
+        expect.eq(result.level,0)
+        expect.eq(result.text,'some thing happened')
       })
   })
   it('should call using the warn method',()=>{
     return event.warn('foo','some thing happened')
       .then((result)=>{
         result = result[0]
-        expect(result).to.be.an('object')
-        expect(result.level).to.equal(1)
-        expect(result.text).to.equal('some thing happened')
+        expect.isType('Object',result)
+        expect.eq(result.level,1)
+        expect.eq(result.text,'some thing happened')
       })
   })
   it('should call using the info method',()=>{
     return event.info('foo','some thing happened')
       .then((result)=>{
         result = result[0]
-        expect(result).to.be.an('object')
-        expect(result.level).to.equal(2)
-        expect(result.text).to.equal('some thing happened')
+        expect.isType('Object',result)
+        expect.eq(result.level,2)
+        expect.eq(result.text,'some thing happened')
       })
   })
   it('should call using the verbose method',()=>{
     return event.verbose('foo','some thing happened')
       .then((result)=>{
         result = result[0]
-        expect(result).to.be.an('object')
-        expect(result.level).to.equal(3)
-        expect(result.text).to.equal('some thing happened')
+        expect.isType('Object',result)
+        expect.eq(result.level,3)
+        expect.eq(result.text,'some thing happened')
       })
   })
   it('should call using the debug method',()=>{
     return event.debug('foo','some thing happened')
       .then((result)=>{
         result = result[0]
-        expect(result).to.be.an('object')
-        expect(result.level).to.equal(4)
-        expect(result.text).to.equal('some thing happened')
+        expect.isType('Object',result)
+        expect.eq(result.level,4)
+        expect.eq(result.text,'some thing happened')
       })
   })
   it('should call using the silly method',()=>{
     return event.silly('foo','some thing happened')
       .then((result)=>{
         result = result[0]
-        expect(result).to.be.an('object')
-        expect(result.level).to.equal(5)
-        expect(result.text).to.equal('some thing happened')
+        expect.isType('Object',result)
+        expect.eq(result.level,5)
+        expect.eq(result.text,'some thing happened')
       })
   })
 })

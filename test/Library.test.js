@@ -20,42 +20,41 @@
  */
 
 describe('Library',() => {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Library = require('../lib/Library')
   let library = new Library()
   it('should construct',() => {
-    let testLibrary = new Library()
-    expect(testLibrary).to.be.an('object')
+    expect.isType('Library',new Library())
   })
   it('should be empty',() => {
-    expect(Object.keys(library.paths).length).to.equal(0)
-    expect(Object.keys(library.libraries).length).to.equal(0)
+    expect.eq(Object.keys(library.paths).length,0)
+    expect.eq(Object.keys(library.libraries).length,0)
   })
   it('should add a search path',() => {
-    expect(library.addPath('/test')).to.equal('/test')
+    expect.eq(library.addPath('/test'),'/test')
   })
   it('should show a path exists',() => {
-    expect(library.existsPath('/test')).to.equal('/test')
+    expect.eq(library.existsPath('/test'),'/test')
   })
   it('should remove a path',() => {
-    expect(library.removePath('/test')).to.equal('/test')
+    expect.eq(library.removePath('/test'),'/test')
   })
   it('should add a library',() => {
-    expect(library.add('test','/test')).to.equal('/test')
+    expect.eq(library.add('test','/test'),'/test')
   })
   it('should show the library exists',() => {
-    expect(library.exists('test')).to.equal('/test')
+    expect.eq(library.exists('test'),'/test')
   })
   it('should error when no library is found',() => {
-    expect(library.exists('test2')).to.equal(false)
+    expect.eq(library.exists('test2'),false)
   })
   it('should search for a library',() => {
-    expect(library.search('test')).to.equal('/test')
+    expect.eq(library.search('test'),'/test')
   })
   it('should remove a library',() => {
-    expect(library.remove('test')).to.equal('test')
+    expect.eq(library.remove('test'),'test')
   })
   it('should not have the library',() => {
-    expect(library.exists('test')).to.equal(false)
+    expect.eq(library.exists('test'),false)
   })
 })

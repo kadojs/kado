@@ -20,36 +20,35 @@
  */
 
 describe('Util',()=>{
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Util = require('../lib/Util')
   const util = new Util()
   const render = (s)=>{return s}
   it('should construct',()=>{
-    let testUtil = new Util()
-    expect(testUtil).to.be.an('object')
+    expect.isType('Util',new Util())
   })
   it('should have the short timezone',()=>{
-    expect(util.timezoneShort).to.be.a('string')
+    expect.isType('string',util.timezoneShort)
   })
   it('should capitalize a string',()=>{
-    expect(util.capitalize('test')).to.equal('Test')
+    expect.eq(util.capitalize('test'),'Test')
   })
   it('should print a date',()=>{
-    expect(util.printDate(new Date())).to.be.a('string')
+    expect.isType('string',util.printDate(new Date()))
   })
   it('should escape and truncate a string',()=>{
-    expect(util.escapeAndTruncate()(
-      '2,<span>fooo bar</span>',render)).to.equal('fo')
+    expect.eq(util.escapeAndTruncate()(
+      '2,<span>fooo bar</span>',render),'fo')
   })
   it('should check for bool true',()=>{
-    expect(util.is()('true,1,2',render)).to.equal('1')
-    expect(util.is()('false,1,2',render)).to.equal('2')
+    expect.eq(util.is()('true,1,2',render),'1')
+    expect.eq(util.is()('false,1,2',render),'2')
   })
   it('should check for comparison',()=>{
-    expect(util.compare()('1,1,1,2',render)).to.equal('1')
-    expect(util.compare()('1,2,1,2',render)).to.equal('2')
+    expect.eq(util.compare()('1,1,1,2',render),'1')
+    expect.eq(util.compare()('1,2,1,2',render),'2')
   })
   it('should expose pretty bytes',()=>{
-    expect(util.prettyBytes(1000000)).to.equal('1 MB')
+    expect.eq(util.prettyBytes(1000000),'1 MB')
   })
 })

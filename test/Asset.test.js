@@ -20,58 +20,57 @@
  */
 
 describe('Asset',()=>{
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Asset = require('../lib/Asset')
   let asset = new Asset()
   it('should construct',()=>{
-    let testAsset = new Asset()
-    expect(testAsset).to.be.an('object')
+    expect.isType('Asset',new Asset())
   })
   it('should be empty',()=>{
-    expect(asset.get().length).to.equal(0)
-    expect(asset.getOnce().length).to.equal(0)
+    expect.eq(asset.get().length,0)
+    expect.eq(asset.getOnce().length,0)
   })
   it('should add an asset',()=>{
-    expect(asset.add('/test','text/javascript')).to.equal('/test')
+    expect.eq(asset.add('/test','text/javascript'),'/test')
   })
   it('should add a second asset',()=>{
-    expect(asset.add('/test2','text/css')).to.equal('/test2')
+    expect.eq(asset.add('/test2','text/css'),'/test2')
   })
   it('should show both assets exists',()=>{
-    expect(asset.exists('/test').uri).to.equal('/test')
-    expect(asset.exists('/test2').uri).to.equal('/test2')
+    expect.eq(asset.exists('/test').uri,'/test')
+    expect.eq(asset.exists('/test2').uri,'/test2')
     //remove the 2nd asset
-    expect(asset.remove('/test2').uri).to.equal('/test2')
+    expect.eq(asset.remove('/test2').uri,'/test2')
   })
   it('should add an asset once',()=>{
-    expect(asset.addOnce('/test-once','image/png')).to.equal('/test-once')
+    expect.eq(asset.addOnce('/test-once','image/png'),'/test-once')
   })
   it('should show an asset exists once',()=>{
-    expect(asset.existsOnce('/test-once').uri).to.equal('/test-once')
+    expect.eq(asset.existsOnce('/test-once').uri,'/test-once')
   })
   it('should show all',()=>{
-    expect(asset.all().length).to.equal(2)
+    expect.eq(asset.all().length,2)
   })
   it('should work with filter on all',()=>{
-    expect(asset.all('text/plain').length).to.equal(0)
+    expect.eq(asset.all('text/plain').length,0)
   })
   it('should have emptied one time assets',()=>{
-    expect(asset.getOnce().length).to.equal(0)
+    expect.eq(asset.getOnce().length,0)
   })
   it('should add another one off asset',()=>{
-    expect(asset.addOnce('/test-once')).to.equal('/test-once')
+    expect.eq(asset.addOnce('/test-once'),'/test-once')
   })
   it('should remove asset',()=>{
-    expect(asset.remove('/test').uri).to.equal('/test')
+    expect.eq(asset.remove('/test').uri,'/test')
   })
   it('should have no assets',()=>{
-    expect(asset.get().length).to.equal(0)
+    expect.eq(asset.get().length,0)
   })
   it('should remove one time asset',()=>{
-    expect(asset.removeOnce('/test-once').uri).to.equal('/test-once')
+    expect.eq(asset.removeOnce('/test-once').uri,'/test-once')
   })
   it('should have no assets',()=>{
-    expect(asset.get().length).to.equal(0)
-    expect(asset.getOnce().length).to.equal(0)
+    expect.eq(asset.get().length,0)
+    expect.eq(asset.getOnce().length,0)
   })
 })

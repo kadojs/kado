@@ -20,35 +20,34 @@
  */
 
 describe('Cron',()=>{
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Cron = require('../lib/Cron')
   let cron = new Cron()
   it('should construct',()=>{
-    let testCron = new Cron()
-    expect(testCron).to.be.an('object')
+    expect.isType('Cron',new Cron())
   })
   it('should be empty',()=>{
-    expect(Object.keys(cron.all()).length).to.equal(0)
+    expect.eq(Object.keys(cron.all()).length,0)
   })
   it('should add a cron',()=>{
-    expect(cron.create('test','0 * * * *',()=>{},{})).to.be.an('object')
+    expect.isType('CronJob',cron.create('test','0 * * * *',()=>{},{}))
   })
   it('should show a cron exists',()=>{
-    expect(cron.get('test')).to.be.an('object')
+    expect.isType('CronJob',cron.get('test'))
   })
   it('should show the cron in the list',()=>{
-    expect(Object.keys(cron.all()).length).to.equal(1)
+    expect.eq(Object.keys(cron.all()).length,1)
   })
   it('should show the cron via count',()=>{
-    expect(cron.count()).to.equal(1)
+    expect.eq(cron.count(),1)
   })
   it('should start the cron',()=>{
-    expect(cron.start()).to.equal(1)
+    expect.eq(cron.start(),1)
   })
   it('should stop the cron',()=>{
-    expect(cron.stop()).to.equal(1)
+    expect.eq(cron.stop(),1)
   })
   it('should destroy the cron',()=>{
-    expect(cron.destroy()).to.equal(1)
+    expect.eq(cron.destroy(),1)
   })
 })

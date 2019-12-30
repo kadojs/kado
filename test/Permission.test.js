@@ -20,35 +20,34 @@
  */
 
 describe('Permission',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Permission = require('../lib/Permission')
   let permission = new Permission()
   it('should construct',() => {
-    let testPermission = new Permission()
-    expect(testPermission).to.be.an('object')
+    expect.isType('Permission',new Permission())
   })
   it('should be empty',()=>{
-    expect(permission.all().length).to.equal(0)
+    expect.eq(permission.all().length,0)
   })
   it('should add a permission',()=>{
-    expect(permission.add('foo','foo')).to.equal('foo')
+    expect.eq(permission.add('foo','foo'),'foo')
   })
   it('should show the permission exists',()=>{
-    expect(permission.exists('foo')).to.equal(true)
+    expect.eq(permission.exists('foo'),true)
   })
   it('should get the permission',()=>{
-    expect(permission.get('foo').name).to.equal('foo')
+    expect.eq(permission.get('foo').name,'foo')
   })
   it('should be allowed',()=>{
-    expect(permission.allowed('foo')).to.equal(true)
+    expect.eq(permission.allowed('foo'),true)
   })
   it('should not be allowed against a set',()=>{
-    expect(permission.allowed('foo',[])).to.equal(false)
+    expect.eq(permission.allowed('foo',[]),false)
   })
   it('should digest keys from per set',()=>{
-    expect(permission.digest().length).to.equal(1)
+    expect.eq(permission.digest().length,1)
   })
   it('should return all permissions',()=>{
-    expect(permission.all().length).to.equal(1)
+    expect.eq(permission.all().length,1)
   })
 })

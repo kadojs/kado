@@ -20,7 +20,7 @@
  */
 
 describe('Connector',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   //const stretchfs = require('stretchfs-sdk')
   //const Prism = stretchfs.Prism
   const Prism = class {
@@ -31,36 +31,33 @@ describe('Connector',()=> {
   const Connector = require('../lib/Connector')
   let connector = new Connector()
   it('should construct',() => {
-    let testConnector = new Connector()
-    expect(testConnector).to.be.an('object')
+    expect.isType('Connector',new Connector())
   })
   it('should accept a new connector',() => {
-    expect(connector.addConnector(
+    expect.isType('Prism',connector.addConnector(
       'stretchfs',
       new Prism('test','test','localhost')
     ))
-      .to.be.instanceof(Prism)
   })
   it('should have the new connector instance',()=>{
-    expect(connector.stretchfs).to.be.instanceof(Prism)
+    expect.isType('Prism',connector.stretchfs)
   })
   it('should remove connector instance',()=>{
-    expect(connector.removeConnector('stretchfs')).to.equal('stretchfs')
+    expect.eq(connector.removeConnector('stretchfs'),'stretchfs')
   })
   it('should no longer have the connector handle',()=>{
-    expect(connector.stretchfs).to.equal(undefined)
+    expect.eq(connector.stretchfs,undefined)
   })
   it('should accept a new connector instance',()=>{
-    expect(connector.addConnector(
+    expect.isType('Prism',connector.addConnector(
       'stretchfs',
       new Prism('test','test','localhost')
     ))
-      .to.be.instanceof(Prism)
   })
   it('should attempt connect and fail',()=>{
     return connector.connect('stretchfs')
       .then((result)=>{
-        expect(result).to.equal('cdn.stretchfs.com')
+        expect.eq(result,'cdn.stretchfs.com')
       })
   })
 })

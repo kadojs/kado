@@ -109,6 +109,14 @@ describe('Validate',()=>{
       expect.eq(Val.eqDeep({},[]),false)
     })
   })
+  describe('match',()=>{
+    it('should match a string',()=>{
+      expect.eq(Val.match(/foo/,'somefoostring'))
+      expect.eq(Val.match(/bar/,'somefoostring'),false)
+    })
+    it('should match an array containing strings')
+    it('should match an object containing strings')
+  })
   describe('getType',()=>{
     it('should get a array',()=>{
       expect.eq(Val.getType([]),'Array')
@@ -203,7 +211,7 @@ describe('Validate',()=>{
   })
   it('should construct',() =>{
     let testValidate = new Val()
-    expect.eq(Val.getType(testValidate),'Validate')
+    expect.isType('Validate',testValidate)
   })
   it('should check for Array',() => {
     expect.eq(Val.eqDeep([],[]), true)

@@ -21,112 +21,112 @@
 
 
 describe('GetOpt',()=>{
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const GetOpt = require('../lib/GetOpt')
   let parser, result, arg
   it('should parse optstr=\'\' with ARGV=[]',()=>{
     parser = new GetOpt('',[])
-    expect(parser.gop_silent).to.equal(false)
-    expect(parser.gop_options).to.deep.equal({})
-    expect(parser.gop_aliases).to.deep.equal({})
+    expect.eq(parser.gop_silent,false)
+    expect.eqDeep(parser.gop_options,{})
+    expect.eqDeep(parser.gop_aliases,{})
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([])
+    expect.eqDeep(result,[])
   })
   it('should parse optstr=\':\' with ARGV=[]',()=>{
     parser = new GetOpt(':',[])
-    expect(parser.gop_silent).to.equal(true)
-    expect(parser.gop_options).to.deep.equal({})
-    expect(parser.gop_aliases).to.deep.equal({})
+    expect.eq(parser.gop_silent,true)
+    expect.eqDeep(parser.gop_options,{})
+    expect.eqDeep(parser.gop_aliases,{})
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([])
+    expect.eqDeep(result,[])
   })
   it('should parse optstr=\':l\' with ARGV=[]',()=>{
     parser = new GetOpt(':l',[])
-    expect(parser.gop_silent).to.equal(true)
-    expect(parser.gop_options).to.deep.equal({l:false})
-    expect(parser.gop_aliases).to.deep.equal({})
+    expect.eq(parser.gop_silent,true)
+    expect.eqDeep(parser.gop_options,{l:false})
+    expect.eqDeep(parser.gop_aliases,{})
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([])
+    expect.eqDeep(result,[])
   })
   it('should parse optstr=\':l:\' with ARGV=[]',()=>{
     parser = new GetOpt(':l:',[])
-    expect(parser.gop_silent).to.equal(true)
-    expect(parser.gop_options).to.deep.equal({l:true})
-    expect(parser.gop_aliases).to.deep.equal({})
+    expect.eq(parser.gop_silent,true)
+    expect.eqDeep(parser.gop_options,{l:true})
+    expect.eqDeep(parser.gop_aliases,{})
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([])
+    expect.eqDeep(result,[])
   })
   it('should parse optstr=\':las\' with ARGV=[]',()=>{
     parser = new GetOpt(':las',[])
-    expect(parser.gop_silent).to.equal(true)
-    expect(parser.gop_options).to.deep.equal({l:false,a:false,s:false})
-    expect(parser.gop_aliases).to.deep.equal({})
+    expect.eq(parser.gop_silent,true)
+    expect.eqDeep(parser.gop_options,{l:false,a:false,s:false})
+    expect.eqDeep(parser.gop_aliases,{})
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([])
+    expect.eqDeep(result,[])
   })
   it('should parse optstr=\':l:a:s:\' with ARGV=[]',()=>{
     parser = new GetOpt(':l:a:s:',[])
-    expect(parser.gop_silent).to.equal(true)
-    expect(parser.gop_options).to.deep.equal({l:true,a:true,s:true})
-    expect(parser.gop_aliases).to.deep.equal({})
+    expect.eq(parser.gop_silent,true)
+    expect.eqDeep(parser.gop_options,{l:true,a:true,s:true})
+    expect.eqDeep(parser.gop_aliases,{})
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([])
+    expect.eqDeep(result,[])
   })
   it('should parse optstr=\':l(long)\' with ARGV=[]',()=>{
     parser = new GetOpt(':l(long)',[])
-    expect(parser.gop_silent).to.equal(true)
-    expect(parser.gop_options).to.deep.equal({l:false})
-    expect(parser.gop_aliases).to.deep.equal({long:'l'})
+    expect.eq(parser.gop_silent,true)
+    expect.eqDeep(parser.gop_options,{l:false})
+    expect.eqDeep(parser.gop_aliases,{long:'l'})
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([])
+    expect.eqDeep(result,[])
   })
   it('should parse optstr=\':l:(long)\'' +
     ' with ARGV=[\'cmd\',\'script\',\'-l\',\'arg1\',\'--long=q\',\'b\',\'--long\',\'foo\']',()=>{
     parser = new GetOpt(':l:(long)',['cmd','script','-l','arg1','--long=q','b','--long','foo'])
-    expect(parser.gop_silent).to.equal(true)
-    expect(parser.gop_options).to.deep.equal({l:true})
-    expect(parser.gop_aliases).to.deep.equal({long:'l'})
+    expect.eq(parser.gop_silent,true)
+    expect.eqDeep(parser.gop_options,{l:true})
+    expect.eqDeep(parser.gop_aliases,{long:'l'})
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([
+    expect.eqDeep(result,[
       {option:'l',optarg:'arg1'},
       {option:'l',optarg:'q'}
     ])
   })
   it('should parse optstr=\'l:(long)(longer)\' with ARGV=[]',()=>{
     parser = new GetOpt('l:(long)(longer)',[])
-    expect(parser.gop_silent).to.equal(false)
-    expect(parser.gop_options).to.deep.equal({l:true})
-    expect(parser.gop_aliases).to.deep.equal({long:'l',longer:'l'})
+    expect.eq(parser.gop_silent,false)
+    expect.eqDeep(parser.gop_options,{l:true})
+    expect.eqDeep(parser.gop_aliases,{long:'l',longer:'l'})
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([])
+    expect.eqDeep(result,[])
   })
   it('should parse optstr=\':la:r(recurse)(recur)f:(file)(filename)q\' with ARGV=[]',()=>{
     parser = new GetOpt(':la:r(recurse)(recur)f:(file)(filename)q',[])
-    expect(parser.gop_silent).to.equal(true)
-    expect(parser.gop_options).to.deep.equal({l:false,a:true,r:false,f:true,q:false})
-    expect(parser.gop_aliases).to.deep.equal({recurse:'r',recur:'r',file:'f',filename:'f'})
+    expect.eq(parser.gop_silent,true)
+    expect.eqDeep(parser.gop_options,{l:false,a:true,r:false,f:true,q:false})
+    expect.eqDeep(parser.gop_aliases,{recurse:'r',recur:'r',file:'f',filename:'f'})
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([])
+    expect.eqDeep(result,[])
   })
   it('should parse optstr=\'\u1000(help)\u1001(version)\'' +
     ' with ARGV=[\'cmd\',\'script\',\'--help\']',()=>{
@@ -134,7 +134,7 @@ describe('GetOpt',()=>{
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([
+    expect.eqDeep(result,[
       {option:'\u1000'},
     ])
   })
@@ -144,7 +144,7 @@ describe('GetOpt',()=>{
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([
+    expect.eqDeep(result,[
       {option:'\u1001'},
     ])
   })
@@ -154,7 +154,7 @@ describe('GetOpt',()=>{
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([
+    expect.eqDeep(result,[
       {option:'\u1000',optarg:'100'},
     ])
   })
@@ -164,7 +164,7 @@ describe('GetOpt',()=>{
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([
+    expect.eqDeep(result,[
       {option:'h'},
     ])
   })
@@ -174,7 +174,7 @@ describe('GetOpt',()=>{
     result = []
     while (undefined !== (arg = parser.getopt()))
       result.push(arg)
-    expect(result).to.deep.equal([
+    expect.eqDeep(result,[
       {option:'h'},
       {option:'v'},
     ])
