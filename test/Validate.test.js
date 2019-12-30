@@ -20,9 +20,7 @@
  */
 
 describe('Validate',()=>{
-  const Val = require('../lib/Validate')
-  const expect = Val.Assert
-  const AssertionError = Val.AssertionError
+  const { Val, expect, AssertionError } = require('../lib/Validate')
   describe('assert',()=>{
     it('should assert an array', () => {
       expect.assert([],[])

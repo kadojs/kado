@@ -20,7 +20,7 @@
  */
 
 describe('Mapper',()=>{
-  const expect = require('../lib/Validate').Assert
+  const { expect } = require('../lib/Validate')
   const Mapper = require('../lib/Mapper')
   const mapper = new Mapper()
   it('should construct',()=>{
