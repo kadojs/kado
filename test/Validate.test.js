@@ -20,20 +20,19 @@
  */
 
 describe('Validate',()=>{
-  const { expect } = require('chai')
   const Val = require('../lib/Validate')
   const Assert = Val.Assert
   const AssertionError = Val.AssertionError
   describe('assert',()=>{
     it('should assert an array', () => {
-      Assert.eqDeep([],[])
-      Assert.eqDeep.catch([],[1],'Array() does not deep equal Array(1)')
-      Assert.eq.catch([],{},
-        'Array() does not reference equal Object([object Object])')
+      Assert.assert([],[])
+      Assert.assert.catch([],[1],'Array() does not equal Array(1)')
+      Assert.assert.catch([],{},
+        'Array() does not equal Object([object Object])')
     })
     it('should assert a boolean',() => {
-      Assert.eq(true,true)
-      Assert.eq.catch(true,false,'boolean(true) does not equal boolean(false)')
+      Assert.assert(true,true)
+      Assert.assert.catch(true,false,'boolean(true) does not equal boolean(false)')
     })
     it('should assert a date',() => {
       Assert.assert(new Date(), new Date())
@@ -45,30 +44,30 @@ describe('Validate',()=>{
       Assert.assert.catch(new Date(), await getDate(),AssertionError)
     })
     it('should assert an error', () => {
-      Val.assert(Error, Error)
+      Assert.assert(Error,Error)
     })
     it('should assert a function',() => {
-      Val.assert(() => {}, () => {})
+      Assert.assert(() => {}, () => {})
     })
     it('should assert a null',() => {
-      Val.assert(null,null)
-      Val.catch(Val.assert.bind(null,null,undefined),
-        'Assertion failed null does not equal undefined')
+      Assert.assert(null,null)
+      Assert.assert.catch(null,undefined,
+        'null(null) does not equal undefined(undefined)')
     })
     it('should assert a number',() => {
-      Val.assert(1,1)
+      Assert.assert(1,1)
     })
     it('should assert an object',() => {
-      Val.assert({},{})
+      Assert.assert({},{})
     })
     it('should assert a string',() => {
-      Val.assert('','')
-      Val.assert('foo','foo')
+      Assert.assert('','')
+      Assert.assert('foo','foo')
     })
     it('should assert an undefined',() => {
-      Val.assert(undefined,undefined)
-      Val.catch(Val.assert.bind(null,undefined,null),
-        'Assertion failed undefined does not equal null')
+      Assert.assert(undefined,undefined)
+      Assert.assert.catch(undefined,null,
+        'undefined(undefined) does not equal null(null)')
     })
   })
   describe('eq',()=>{
@@ -83,23 +82,22 @@ describe('Validate',()=>{
         'Array() does not reference equal Object([object Object])')
     })
     it('should eq boolean',() => {
-      Val.eq(true,true)
-      Val.catch(Val.eq.bind(null,true,false),
-        'Assertion failed true does not equal false')
+      Assert.eq(true,true)
+      Assert.eq.catch(true,false,'boolean(true) does not equal boolean(false)')
     })
     it('should eq null',() => {
-      Val.eq(null,null)
-      Val.catch(Val.eq.bind(null,null,undefined),
-        'Assertion failed null does not equal undefined')
+      Assert.eq(null,null)
+      Assert.eq.catch(null,undefined,'null(null) does not equal boolean(true)')
     })
     it('should eq object',() => {
-      Val.eq({},{})
-      Val.catch(Val.eq.bind(null,{},[]),
-        'Assertion failed {} does not equal []')
+      const obj1 = {}
+      Assert.eq(obj1,obj1)
+      Assert.eq.catch(obj1,[],
+        'Object([object Object]) does not reference equal Array()')
     })
     it('should eq string',() =>{
-    Val.eq('','')
-    Val.eq('foo','foo')
+      Assert.eq('','')
+      Assert.eq('foo','foo')
     })
   })
   describe('eqDeep',()=>{
@@ -206,68 +204,63 @@ describe('Validate',()=>{
   })
   it('should construct',() =>{
     let testValidate = new Val()
-    Val.assert(Val.getType(testValidate),'Validate')
+    Assert.eq(Val.getType(testValidate),'Validate')
   })
   it('should check for Array',() => {
-    Val.assert(Val.eqDeep([],[]), true)
-    Val.assert(Val.eqDeep([],{}),false)
+    Assert.eq(Val.eqDeep([],[]), true)
+    Assert.eq(Val.eqDeep([],{}),false)
   })
   it('should check for Boolean',() => {
-    Val.eq(Val.eqDeep(true,true),true)
-    Val.eq(Val.eqDeep(true,false),false)
+    Assert.eq(true)
+    Assert.eq.catch(true,false,'boolean(true) does not equal boolean(false)')
   })
   it('should check for Date',() => {
     const date = new Date()
-    Val.assert(Val.eqDeep(date,date),true)
+    Assert.assert(date,date)
   })
   it('should check for Error',() => {
-    Val.assert(Val.eqDeep(new Error('foo'),new Error('foo')),true)
+    Assert.eqDeep(new Error('foo'),new Error('foo'))
   })
   it('should check for Function',() => {
-    //Line 47 fails with validation.assert // passes w/ validate.eq
-    expect(Val.assert(() => {},() => {})).to.equal(true)
+    Assert.assert(() => {},() => {})
   })
   it('should check for Generator')
   it('should check for GeneratorFunction')
   it('should check for Infinity',() => {
-    Val.assert(Val.eqDeep(Infinity,Infinity),true)
+    Assert.eq(Infinity,Infinity)
   })
   it('should check for InternalError')
   it('should check for JSON')
   it('should check for Map')
   //Equality comparison with NaN always evaluates to false
   it('should check for NaN',() => {
-    Val.eq(Val.eqDeep(NaN,NaN),false)
+    Assert.eqDeep(NaN,NaN)
   })
   it('should check for null', () => {
-    Val.assert(Val.eqDeep(null,null),true)
-    // ***ASK BRYAN ABOUT LINE 63***
-    Val.assert.bind(Val.eqDeep(null,null,undefined),'Assertion failed null does not equal undefined')
+    Assert.eqDeep(null,null)
+    Assert.eqDeep.catch(null,undefined,
+      'null(null) does not deep equal undefined(undefined)')
   })
   it('should check for Number', () => {
-    Val.assert(Val.eqDeep(1,1),true)
-    Val.eq(Val.eqDeep(1,''),false)
-    Val.eq(Val.eqDeep(1,true),false)
+    Assert.eq(1,1)
+    Assert.eq.catch(1,'',AssertionError)
+    Assert.eq.catch(1,true,AssertionError)
   })
   it('should check for Promise')
   it('should check for RangeError')
   it('should check for ReferenceError')
   it('should check for RegExp')
   it('should check for String',() => {
-    Val.assert(Val.eqDeep('',''),true)
-    Val.assert(Val.eqDeep('foo','foo'),true)
-    // ***Have Bryan check line 78 syntax***
-    Val.assert.bind(Val.eqDeep(null,'foo','bar'),
-      'Assertion failed foo does not equal bar')
+    Assert.eq('','')
+    Assert.eq('foo','foo')
+    Assert.eq.catch('foo','bar',AssertionError)
   })
   it('should check for Symbol')
   it('should check for SyntaxError')
   it('should check for TypedArray')
   it('should check for TypeError')
   it('should check for Undefined', () => {
-    Val.assert(Val.eqDeep(undefined,undefined),true)
-    // ***Have Bryan check line 87 syntax***
-    Val.assert.bind(Val.eqDeep(null,undefined,null),
-      'Assertion failed undefined does not equal null')
+    Assert.eq(undefined,undefined)
+    Assert.eq.catch(undefined,null,AssertionError)
   })
 })
