@@ -167,27 +167,59 @@ describe('Validate',()=>{
     })
   })
   describe('isAbove',()=>{
-    it('should fail on invalid input')
-    it('should be true if a number is above base')
-    it('should be false if a number is below a base')
+    it('should fail on invalid input',()=>{
+      expect.eq.catch(Val.isAbove(3),'foo',
+        'boolean(false) does not equal string(foo)')
+    })
+    it('should be true if a number is above base',()=>{
+      expect.eq(Val.isAbove(3,10))
+    })
+    it('should be false if a number is below a base',()=>{
+      expect.eq(Val.isAbove(10,3),false)
+    })
   })
   describe('isBelow',()=>{
-    it('should fail on invalid input')
-    it('should be true if a number is below a base')
-    it('should be false if a number is above a base')
+    it('should fail on invalid input',()=>{
+      expect.eq.catch(Val.isBelow(3),'foo',
+        'boolean(false) does not equal string(foo)')
+    })
+    it('should be true if a number is below a base',()=>{
+      expect.eq(Val.isBelow(7,5))
+    })
+    it('should be false if a number is above a base',()=>{
+      expect.neq(Val.isBelow(7, 4))
+    })
   })
   describe('minimum',()=>{
-    it('should fail on invalid input')
-    it('should be true if a number is above or equal to a base')
-    it('should be false if a number is below a base')
+    it('should fail on invalid input',()=>{
+      expect.eq.catch(Val.minimum(3),'foo',
+        'boolean(false) does not equal string(foo)')
+    })
+    it('should be true if a number is above or equal to a base',()=>{
+      expect.eq(Val.minimum(3,3))
+      expect.eq(Val.minimum(3,5))
+    })
+    it('should be false if a number is below a base',()=>{
+      expect.eq(Val.minimum(10,9),false)
+    })
   })
   describe('maximum',()=>{
-    it('should fail on invalid input')
-    it('should be true if a number is below or equal to a base')
-    it('should be false if a number is above a base')
+    it('should fail on invalid input',()=>{
+      expect.eq.catch(Val.maximum(3),'foo',
+        'boolean(false) does not equal string(foo)')
+    })
+    it('should be true if a number is below or equal to a base',()=>{
+      expect.eq(Val.maximum(3,2))
+      expect.eq(Val.maximum(3,3))
+    })
+    it('should be false if a number is above a base',()=>{
+      expect.eq(Val.maximum(3,211),false)
+    })
   })
   describe('neq',()=>{
-    it('should be false on true neq true')
+    it('should be false on true neq true',()=>{
+      expect.eq(Val.neq(true,true),false)
+    })
   })
   describe('getInstance',()=>{
     it('should return an instance',()=>{
