@@ -100,35 +100,18 @@ describe('Validate',()=>{
     })
   })
   describe('eqDeep',()=>{
-    it('should eq an object',() => {
-      expect.eq(Val.eqDeep({},{}))
-      expect.eq(Val.eqDeep({},[]),false)
-    })
     it('should eq an array',()=>{
       expect.eq(Val.eqDeep([],[]))
       expect.eq(Val.eqDeep([],{}),false)
     })
+    it('should eq an object',() => {
+      expect.eq(Val.eqDeep({},{}))
+      expect.eq(Val.eqDeep({},[]),false)
+    })
   })
   describe('getType',()=>{
-    it('should get a string',()=>{
-      expect.eq(Val.getType(''),'string')
-    })
-    it('should get a number',()=>{
-      expect.eq(Val.getType(1),'number')
-    })
     it('should get a array',()=>{
       expect.eq(Val.getType([]),'Array')
-    })
-    it('should get a object',()=>{
-      expect.eq(Val.getType({}),'Object')
-    })
-    it('should get a null',()=>{
-      expect.eq(Val.getType(null),'null')
-    })
-    it('should get a undefined',()=>{
-      expect.eq(Val.getType(),'undefined')
-      expect.eq.catch(Val.getType(''),'undefined',
-        'string(string) does not equal string(undefined)')
     })
     it('should get a boolean',()=>{
       expect.eq(Val.getType(true),'boolean')
@@ -137,22 +120,39 @@ describe('Validate',()=>{
       expect.eq.catch(Val.getType('+00000000'),'boolean',
         'string(string) does not equal string(boolean)')
     })
+    it('should get a null',()=>{
+      expect.eq(Val.getType(null),'null')
+    })
+    it('should get a number',()=>{
+      expect.eq(Val.getType(1),'number')
+    })
+    it('should get a object',()=>{
+      expect.eq(Val.getType({}),'Object')
+    })
+    it('should get a string',()=>{
+      expect.eq(Val.getType(''),'string')
+    })
+    it('should get a undefined',()=>{
+      expect.eq(Val.getType(),'undefined')
+      expect.eq.catch(Val.getType(''),'undefined',
+        'string(string) does not equal string(undefined)')
+    })
   })
   describe('isType',()=>{
-    it('should identify a string',()=>{
-      expect.eq(Val.isType('string',''))
+    it('should identify a array',()=>{
+      expect.eq(Val.isType('Array',[]))
+    })
+    it('should identify a null',()=>{
+      expect.eq(Val.isType('null',null))
     })
     it('should identify a number',()=>{
       expect.eq(Val.isType('number',1))
     })
-    it('should identify a array',()=>{
-      expect.eq(Val.isType('Array',[]))
-    })
     it('should identify a object',()=>{
       expect.eq(Val.isType('Object',{}))
     })
-    it('should identify a null',()=>{
-      expect.eq(Val.isType('null',null))
+    it('should identify a string',()=>{
+      expect.eq(Val.isType('string',''))
     })
     it('should identify an undefined',()=>{
       expect.eq(Val.isType('undefined',undefined))
