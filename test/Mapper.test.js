@@ -66,4 +66,19 @@ describe('Mapper',()=>{
   it('should list all values',()=>{
     expect(mapper.all().foo1).to.equal('bap')
   })
+  it('should merge an object in',()=>{
+    expect(mapper.merge({foo5: 'bar'}).foo5).to.equal('bar')
+  })
+  it('should merge in a 2 level object',()=>{
+    expect(mapper.merge({foo6: {foo7: 'bar'}}).foo6.foo7).to.equal('bar')
+  })
+  it('should merge into the 2 level object',()=>{
+    expect(mapper.merge({foo6: {foo8: 'bar'}}).foo6.foo8).to.equal('bar')
+    expect(mapper.foo6.foo7).to.equal('bar')
+  })
+  it('should merge a 3rd level into the 2nd',()=>{
+    expect(mapper.merge({foo6: {foo9: {foo10: {pies: ['apple']}}}}))
+      .to.be.an('object')
+    expect(mapper.foo6.foo9.foo10.pies).to.be.an('Array')
+  })
 })
