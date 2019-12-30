@@ -20,65 +20,64 @@
  */
 
 describe('Mapper',()=>{
-  const { expect } = require('chai')
+  const Assert = require('../lib/Validate').Assert
   const Mapper = require('../lib/Mapper')
   const mapper = new Mapper()
   it('should construct',()=>{
-    const testMapper = new Mapper()
-    expect(testMapper).to.be.instanceof(Mapper)
+    Assert.isType('Mapper',new Mapper())
   })
   it('should set a value with a string',()=>{
-    expect(mapper.set('foo1','bar')).to.equal('bar')
+    Assert.eq(mapper.set('foo1','bar'),'bar')
   })
   it('should set a value with an array',()=>{
-    expect(mapper.set(['foo2'],'bar')).to.equal('bar')
+    Assert.eq(mapper.set(['foo2'],'bar'),'bar')
   })
   it('should set deep value with an array',()=>{
-    expect(mapper.set(['foo3','bar'],'baz')).to.equal('baz')
+    Assert.eq(mapper.set(['foo3','bar'],'baz'),'baz')
   })
   it('should set deep value with a string',()=>{
-    expect(mapper.set('foo4.bar.baz.boo','bap')).to.equal('bap')
+    Assert.eq(mapper.set('foo4.bar.baz.boo','bap'),'bap')
   })
   it('should get a value with a string',()=>{
-    expect(mapper.get('foo1')).to.equal('bar')
+    Assert.eq(mapper.get('foo1'),'bar')
   })
   it('should get a value with an array',()=>{
-    expect(mapper.get(['foo2'])).to.equal('bar')
+    Assert.eq(mapper.get(['foo2']),'bar')
   })
   it('should get a deep value with an array',()=>{
-    expect(mapper.get(['foo3','bar'])).to.equal('baz')
+    Assert.eq(mapper.get(['foo3','bar']),'baz')
   })
   it('should get a deep value with a string',()=>{
-    expect(mapper.get('foo4.bar.baz.boo')).to.equal('bap')
+    Assert.eq(mapper.get('foo4.bar.baz.boo'),'bap')
   })
   it('should delete a value with a string',()=>{
-    expect(mapper.delete('foo1')).to.equal('foo1')
+    Assert.eq(mapper.delete('foo1'),'foo1')
   })
   it('should delete a value with an array',()=>{
-    expect(mapper.delete(['foo2'])).to.equal('foo2')
+    Assert.eq(mapper.delete(['foo2']),'foo2')
   })
   it('should delete a deep value with an array',()=>{
-    expect(mapper.delete(['foo3','bar'])).to.equal('bar')
+    Assert.eq(mapper.delete(['foo3','bar']),'bar')
   })
   it('should set a value',()=>{
-    expect(mapper.set('foo1','bap')).to.equal('bap')
+    Assert.eq(mapper.set('foo1','bap'),'bap')
   })
   it('should list all values',()=>{
-    expect(mapper.all().foo1).to.equal('bap')
+    Assert.eq(mapper.all().foo1,'bap')
   })
   it('should merge an object in',()=>{
-    expect(mapper.merge({foo5: 'bar'}).foo5).to.equal('bar')
+    Assert.eq(mapper.merge({foo5: 'bar'}).foo5,'bar')
   })
   it('should merge in a 2 level object',()=>{
-    expect(mapper.merge({foo6: {foo7: 'bar'}}).foo6.foo7).to.equal('bar')
+    Assert.eq(mapper.merge({foo6: {foo7: 'bar'}}).foo6.foo7,'bar')
   })
   it('should merge into the 2 level object',()=>{
-    expect(mapper.merge({foo6: {foo8: 'bar'}}).foo6.foo8).to.equal('bar')
-    expect(mapper.foo6.foo7).to.equal('bar')
+    Assert.eq(mapper.merge({foo6: {foo8: 'bar'}}).foo6.foo8,'bar')
+    Assert.eq(mapper.foo6.foo7,'bar')
   })
   it('should merge a 3rd level into the 2nd',()=>{
-    expect(mapper.merge({foo6: {foo9: {foo10: {pies: ['apple']}}}}))
-      .to.be.an('object')
-    expect(mapper.foo6.foo9.foo10.pies).to.be.an('Array')
+    Assert.isType('Mapper',
+      mapper.merge({foo6: {foo9: {foo10: {pies: ['apple']}}}}))
+    Assert.isType('Array',mapper.foo6.foo9.foo10.pies)
   })
 })
