@@ -20,51 +20,54 @@
  */
 
 describe('View',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const View = require('../lib/View')
   //const ViewHelper = require('../lib/view/mustache.js')
   const ViewHelper = class {}
   const handlerName = 'mustache'
   let view = new View()
   it('should construct',() => {
-    let testView = new View()
-    expect(testView).to.be.an('object')
+    expect.isType('View',new View())
   })
   it('should be empty',()=>{
-    expect(Object.keys(view.all()).length).to.equal(0)
+    expect.eq(Object.keys(view.all()).length,0)
   })
   it('should error getting an engine with no active handler',()=>{
-    expect(view.getEngine).to.throw(Error)
+    try {
+      view.getEngine()
+    } catch(e){
+      expect.match(/no rendering handlers/,e.message)
+    }
   })
   it('should add a handler',()=>{
     let instance = new ViewHelper()
-    expect(view.addHandler(handlerName,instance)).to.equal(handlerName)
+    expect.eq(view.addHandler(handlerName,instance),handlerName)
   })
   it('should get a handler',()=>{
-    expect(view.getHandler(handlerName)).to.be.an('object')
+    expect.isType('ViewHelper',view.getHandler(handlerName))
   })
   it('should activate a handler',()=>{
-    expect(view.activateHandler(handlerName)).to.equal(handlerName)
+    expect.eq(view.activateHandler(handlerName),handlerName)
   })
   it('should provide an engine now',()=>{
-    expect(view.getEngine()).to.be.an('object')
+    expect.isType('ViewHelper',view.getEngine())
   })
   it('should show in all handlers',()=>{
-    expect(Object.keys(view.allHandlers()).length).to.equal(1)
+    expect.eq(Object.keys(view.allHandlers()).length,1)
   })
   it('should remove a handler',()=>{
-    expect(view.removeHandler(handlerName)).to.equal(handlerName)
+    expect.eq(view.removeHandler(handlerName),handlerName)
   })
   it('should add a view',()=>{
-    expect(view.add('home','home')).to.equal('home')
+    expect.eq(view.add('home','home'),'home')
   })
   it('should get the view',()=>{
-    expect(view.get('home')).to.equal('home')
+    expect.eq(view.get('home'),'home')
   })
   it('should list the view',()=>{
-    expect(Object.keys(view.all()).length).to.equal(1)
+    expect.eq(Object.keys(view.all()).length,1)
   })
   it('should remove the view',()=>{
-    expect(view.remove('home')).to.equal('home')
+    expect.eq(view.remove('home'),'home')
   })
 })

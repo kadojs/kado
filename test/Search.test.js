@@ -20,7 +20,7 @@
  */
 
 describe('Search',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Search = require('../lib/Search')
   let search = new Search()
   let ourModule = ()=>{
@@ -42,34 +42,33 @@ describe('Search',()=> {
     })
   }
   it('should construct',() => {
-    let testSearch = new Search()
-    expect(testSearch).to.be.an('object')
+    expect.isType('Search',new Search())
   })
   it('should have no modules',()=>{
-    expect(Object.keys(search.allModules()).length).to.equal(0)
+    expect.eq(Object.keys(search.allModules()).length,0)
   })
   it('should add a module',()=>{
-    expect(search.addModule('test',ourModule).title).to.equal('test')
+    expect.eq(search.addModule('test',ourModule).title,'test')
   })
   it('should get the module',()=>{
-    expect(search.getModule('test').title).to.equal('test')
+    expect.eq(search.getModule('test').title,'test')
   })
   it('should remove the module',()=>{
-    expect(search.removeModule('test')).to.equal('test')
+    expect.eq(search.removeModule('test'),'test')
   })
   it('should the module as removed',()=>{
-    expect(Object.keys(search.allModules()).length).to.equal(0)
+    expect.eq(Object.keys(search.allModules()).length,0)
   })
   it('should add a new module',()=>{
-    expect(search.addModule('test',ourModule).title).to.equal('test')
+    expect.eq(search.addModule('test',ourModule).title,'test')
   })
   it('should search by phrase',()=>{
     return search.byPhrase({},'some foo',{start: 0,limit: 10})
       .then((result)=>{
-        expect(result.resultCount).to.equal(2)
-        expect(result.results.length).to.equal(1)
-        expect(result.results[0].moduleTitle).to.equal('test')
-        expect(result.results[0].moduleResults[0].uri).to.equal('/foo')
+        expect.eq(result.resultCount,2)
+        expect.eq(result.results.length,1)
+        expect.eq(result.results[0].moduleTitle,'test')
+        expect.eq(result.results[0].moduleResults[0].uri,'/foo')
       })
   })
 })

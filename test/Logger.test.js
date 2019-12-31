@@ -20,47 +20,46 @@
  */
 
 describe('Logger',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Logger = require('../lib/Logger')
   const loggerName = 'winston'
   //const LogHelper = require('../lib/logger/winston')
   const LogHelper = class {}
   const logger = new Logger()
   it('should construct',() => {
-    let testLogger = new Logger()
-    expect(testLogger).to.be.an('object')
+    expect.isType('Logger',new Logger())
   })
   it('should have no logger',() => {
-    expect(logger.getLogger()).to.equal(null)
+    expect.eq(logger.getLogger(),null)
   })
   it('should have no handlers',()=>{
-    expect(Object.keys(logger.allHandlers()).length).to.equal(0)
+    expect.eq(Object.keys(logger.allHandlers()).length,0)
   })
   it('should add a handler',()=>{
-    expect(logger.addHandler(loggerName,new LogHelper())).to.equal(loggerName)
+    expect.eq(logger.addHandler(loggerName,new LogHelper()),loggerName)
   })
   it('should get the handler',()=>{
-    expect(logger.getHandler(loggerName)).to.be.an('object')
+    expect.isType('LogHelper',logger.getHandler(loggerName))
   })
   it('should activate the handler',()=>{
-    expect(logger.activateHandler(loggerName)).to.equal(loggerName)
+    expect.eq(logger.activateHandler(loggerName),loggerName)
   })
   it('should return the active handler',()=>{
-    expect(logger.getLogger()).to.be.an('object')
+    expect.isType('LogHelper',logger.getLogger())
   })
   it('should remove the handler',()=>{
-    expect(logger.removeHandler(loggerName)).to.equal(loggerName)
+    expect.eq(logger.removeHandler(loggerName),loggerName)
   })
   it('should no longer have the handler',()=>{
-    expect(logger.getHandler(loggerName)).to.equal(false)
+    expect.eq(logger.getHandler(loggerName),false)
   })
   it('should still have an activated instance',()=>{
-    expect(logger.getLogger()).to.be.an('object')
+    expect.isType('LogHelper',logger.getLogger())
   })
   it('should reset',() => {
-    expect(logger.reset()).to.equal(true)
+    expect.eq(logger.reset(),true)
   })
   it('should now not have a logger',() => {
-    expect(logger.getLogger()).to.equal(null)
+    expect.eq(logger.getLogger(),null)
   })
 })

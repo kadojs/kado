@@ -20,7 +20,7 @@
  */
 
 describe('Database',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   //const SequelizeDb = require('../lib/database/sequelize')
   const SequelizeDb = class {
     connect(){ return new Promise((resolve,reject)=>{
@@ -30,31 +30,27 @@ describe('Database',()=> {
   const Database = require('../lib/Database')
   let db = new Database()
   it('should construct',() => {
-    let testDatabase = new Database()
-    expect(testDatabase).to.be.an('object')
+    expect.isType('Database',new Database())
   })
   it('should accept a new database',() => {
-    expect(db.addDatabase(
-      'sequelize',
-      new SequelizeDb()
-    ))
-      .to.be.instanceof(SequelizeDb)
+    expect.isType('SequelizeDb',
+      db.addDatabase('sequelize',new SequelizeDb())
+    )
   })
   it('should have the new database instance',()=>{
-    expect(db.sequelize).to.be.instanceof(SequelizeDb)
+    expect.isType('SequelizeDb',db.sequelize)
   })
   it('should remove database instance',()=>{
-    expect(db.removeDatabase('sequelize')).to.equal('sequelize')
+    expect.eq(db.removeDatabase('sequelize'),'sequelize')
   })
   it('should no longer have the database handle',()=>{
-    expect(db.sequelize).to.equal(undefined)
+    expect.eq(db.sequelize,undefined)
   })
   it('should accept a new database instance',()=>{
-    expect(db.addDatabase(
+    expect.isType('SequelizeDb',db.addDatabase(
       'sequelize',
       new SequelizeDb()
     ))
-      .to.be.instanceof(SequelizeDb)
   })
   it('should attempt db connect and fail',()=>{
     return db.connect('sequelize')
@@ -63,9 +59,9 @@ describe('Database',()=> {
       })
       .catch((e)=>{
         if(e.message.match(/access/i)){
-          expect(e.message).to.match(/Access denied for user/)
+          expect.match(/Access denied for user/,e.message)
         } else {
-          expect(e.message).to.match(/ECONNREFUSED/)
+          expect.match(/ECONNREFUSED/,e.message)
         }
       })
   })

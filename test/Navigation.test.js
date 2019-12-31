@@ -20,28 +20,26 @@
  */
 
 describe('Nav',()=> {
-  const { expect } = require('chai')
-  const Navigtation = require('../lib/Navigation')
-  let nav = new Navigtation()
+  const { expect } = require('../lib/Validate')
+  const Nav = require('../lib/Navigation')
+  let nav = new Nav()
   it('should construct',() => {
-    let testAsset = new Navigtation()
-    expect(testAsset).to.be.an('object')
+    expect.isType('Nav',new Nav())
   })
   it('should be empty',() => {
-    expect(nav.all().length).to.equal(0)
-    expect(Object.keys(nav.allNav()).length).to.equal(0)
+    expect.eq(nav.all().length,0)
+    expect.eq(Object.keys(nav.allNav()).length,0)
   })
   it('should add a nav group',() => {
-    expect(nav.addGroup('/test','Test', 'fa fa-plus').uri).to.equal('/test')
-
+    expect.eq(nav.addGroup('/test','Test', 'fa fa-plus').uri,'/test')
   })
   it('should get nav entry by name', () => {
-    expect(Object.keys(nav.all()).length).to.equal(1)
+    expect.eq(Object.keys(nav.all()).length,1)
   })
   it('should add Nav Item', () => {
-    expect(nav.addItem('Test','/test', 'Test').uri).to.equal('/test')
+    expect.eq(nav.addItem('Test','/test', 'Test').uri,'/test')
   })
   it('should return built nav entries' , () => {
-    expect(Object.keys(nav.all()).length).to.equal(1)
+    expect.eq(Object.keys(nav.all()).length,1)
   })
 })

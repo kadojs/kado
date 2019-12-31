@@ -20,45 +20,44 @@
  */
 
 describe('Route',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Router = require('../lib/Router')
   let router = new Router()
   it('should construct',() => {
-    let testRouter = new Router()
-    expect(testRouter).to.be.an('object')
+    expect.isType('Router',new Router())
   })
   it('should have no routes',()=>{
-    expect(Object.keys(router.all()).length).to.equal(0)
+    expect.eq(Object.keys(router.all()).length,0)
   })
   it('should add a route',()=>{
-    expect(router.add('home','/')).to.equal('/')
+    expect.eq(router.add('home','/'),'/')
   })
   it('should have a route',()=>{
-    expect(router.get('home')).to.equal('/')
+    expect.eq(router.get('home'),'/')
   })
   it('should accept a route update',()=>{
-    expect(router.update('home','/home')).to.equal('/home')
+    expect.eq(router.update('home','/home'),'/home')
   })
   it('should show the route update',()=>{
-    expect(router.get('home')).to.equal('/home')
+    expect.eq(router.get('home'),'/home')
   })
   it('should remove the route',()=>{
-    expect(router.remove('home')).to.equal('/home')
+    expect.eq(router.remove('home'),'/home')
   })
   it('should not have the route',()=>{
     try {
       router.get('home')
     } catch(e){
-      expect(e.message).to.equal('Requested undefined URI: home')
+      expect.eq(e.message,'Requested undefined URI: home')
     }
   })
   it('should add a route via passthrough',()=>{
-    expect(router.p('/home')).to.equal('/home')
+    expect.eq(router.p('/home'),'/home')
   })
   it('should show the route in all',()=>{
-    expect(Object.keys(router.all()).length).to.equal(1)
+    expect.eq(Object.keys(router.all()).length,1)
   })
   it('should export the routes for template usage',()=>{
-    expect(router.allForTemplate()._home).to.equal('/home')
+    expect.eq(router.allForTemplate()._home,'/home')
   })
 })

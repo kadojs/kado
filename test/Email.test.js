@@ -20,7 +20,7 @@
  */
 
 describe('Email',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Email = require('../lib/Email')
   const EmailConnector = require('../lib/EmailConnector')
   class OurEmail extends EmailConnector {
@@ -39,30 +39,27 @@ describe('Email',()=> {
   }
   let email = new Email()
   it('should construct',() => {
-    let testEmail = new Email()
-    expect(testEmail).to.be.an('object')
+    expect.isType('Email',new Email())
   })
   it('should accept a new handler',() => {
-    expect(email.addHandler('test',new OurEmail()))
-      .to.be.instanceof(OurEmail)
+    expect.isType('OurEmail',email.addHandler('test',new OurEmail()))
   })
   it('should have the new handler instance',()=>{
-    expect(email.test).to.be.instanceof(OurEmail)
+    expect.isType('OurEmail',email.test)
   })
   it('should remove handler instance',()=>{
-    expect(email.removeHandler('test')).to.equal('test')
+    expect.eq(email.removeHandler('test'),'test')
   })
   it('should no longer have the handler',()=>{
-    expect(email.test).to.equal(undefined)
+    expect.eq(email.test,undefined)
   })
   it('should accept a new handler instance',()=>{
-    expect(email.addHandler('test',new OurEmail()))
-      .to.be.instanceof(OurEmail)
+    expect.isType('OurEmail',email.addHandler('test',new OurEmail()))
   })
   it('should attempt connect and fail',()=>{
     let result = email.test.connect()
-    expect(result.sending).to.equal(false)
-    expect(result.ready).to.equal(false)
-    expect(result.smtp).to.be.an('object')
+    expect.eq(result.sending,false)
+    expect.eq(result.ready,false)
+    expect.isType('Object',result.smtp)
   })
 })

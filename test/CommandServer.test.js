@@ -20,7 +20,7 @@
  */
 
 describe('CommandServer',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const CommandServer = require('../lib/CommandServer')
   const cli = new CommandServer()
   cli.setVersion(require('../package.json').version)
@@ -34,31 +34,30 @@ describe('CommandServer',()=> {
     }
   }
   it('should construct',() => {
-    let testCli = new CommandServer()
-    expect(testCli).to.be.an('object')
+    expect.isType('CommandServer',new CommandServer())
   })
   it('should have no commands',() => {
-    expect(Object.keys(cli.all()).length).to.equal(0)
+    expect.eq(Object.keys(cli.all()).length,0)
   })
   it('should add a command',() => {
-    expect(cli.command('test','test',testCommand)).to.equal('test')
+    expect.eq(cli.command('test','test',testCommand),'test')
   })
   it('should have the command',() => {
-    expect(cli.getCommand('test','test')).to.be.an('object')
+    expect.isType('Command',cli.getCommand('test','test'))
   })
   it('should remove the command',() => {
-    expect(cli.removeCommand('test','test')).to.equal('test')
+    expect.eq(cli.removeCommand('test','test'),'test')
   })
   it('should should add a new command',() => {
-    expect(cli.command('test','test',testCommand)).to.equal('test')
+    expect.eq(cli.command('test','test',testCommand),'test')
   })
   it('should show in all commands',() => {
-    expect(cli.all().test).to.be.an('object')
+    expect.isType('Object',cli.all().test)
   })
-  it('should run a command programtically',async () => {
-    return expect(await cli.run('test test -t test')).to.equal('test')
+  it('should run a command programmatically',async () => {
+    return expect.eq(await cli.run('test test -t test'),'test')
   })
   it('should run a command with a full switch',async () => {
-    return expect(await cli.run('test test --test test')).to.equal('test')
+    return expect.eq(await cli.run('test test --test test'),'test')
   })
 })

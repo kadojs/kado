@@ -20,7 +20,7 @@
  */
 
 describe('Language',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Language = require('../lib/Language')
   let language = new Language()
   let eng = {
@@ -35,31 +35,30 @@ describe('Language',()=> {
     'something': 'Something'
   }
   it('should construct',() => {
-    let testLanguage = new Language()
-    expect(testLanguage).to.be.an('object')
+    expect.isType('Language',new Language())
   })
   it('should be empty',()=>{
-    expect(Object.keys(language.all()).length).to.equal(0)
+    expect.eq(Object.keys(language.all()).length,0)
   })
   it('should add a pack',()=>{
-    expect(language.addPack('eng',eng)).to.equal('eng')
+    expect.eq(language.addPack('eng',eng),'eng')
   })
   it('should get the pack',()=>{
-    expect(language.getPack('eng')._pack_name).to.equal('English')
+    expect.eq(language.getPack('eng')._pack_name,'English')
   })
   it('should add a module to the pack',()=>{
-    expect(language.addModule('eng','blog',{blog_name: 'Blog Name'}))
+    expect.eq(language.addModule('eng','blog',{blog_name: 'Blog Name'}),'blog')
   })
   it('should have the module def',()=>{
-    expect(language.getPack('eng').blog.blog_name).to.equal('Blog Name')
+    expect.eq(language.getPack('eng').blog.blog_name,'Blog Name')
   })
   it('should remove a module',()=>{
-    expect(language.removeModule('eng','blog')).to.equal('blog')
+    expect.eq(language.removeModule('eng','blog'),'blog')
   })
   it('should remove a pack',()=>{
-    expect(language.removePack('eng')).to.equal('eng')
+    expect.eq(language.removePack('eng'),'eng')
   })
   it('should have no packs',()=>{
-    expect(Object.keys(language.all()).length).to.equal(0)
+    expect.eq(Object.keys(language.all()).length,0)
   })
 })

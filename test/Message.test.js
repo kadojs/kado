@@ -20,32 +20,31 @@
  */
 
 describe('Message',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Message = require('../lib/Message')
   let message = new Message()
   it('should construct',() => {
-    let testMessage = new Message()
-    expect(testMessage).to.be.an('object')
+    expect.isType('Message',new Message())
   })
   it('should have no handlers',()=>{
-    expect(Object.keys(message.allHandlers()).length).to.equal(0)
+    expect.eq(Object.keys(message.allHandlers()).length,0)
   })
   it('should add a handler',()=>{
-    expect(message.addHandler('test',(options)=>{
+    expect.eq(message.addHandler('test',(options)=>{
       return options
     }))
   })
   it('should have a handler',()=>{
-    expect(message.getHandler('test')).to.be.an('object')
+    expect.isType('Object',message.getHandler('test'))
   })
   it('should remove a handler',()=>{
-    expect(message.removeHandler('test')).to.equal('test')
+    expect.eq(message.removeHandler('test'),'test')
   })
   it('should have no handlers',()=>{
-    expect(Object.keys(message.allHandlers()).length).to.equal(0)
+    expect.eq(Object.keys(message.allHandlers()).length,0)
   })
   it('should accept a new handler',()=>{
-    expect(message.addHandler('test',(options)=>{
+    expect.eq(message.addHandler('test',(options)=>{
       return options
     }))
   })
@@ -53,8 +52,8 @@ describe('Message',()=> {
     return message.send('foo@foo.com','something to do')
       .then((result)=>{
         result = result[0]
-        expect(result.to).to.equal('foo@foo.com')
-        expect(result.text).to.equal('something to do')
+        expect.eq(result.to,'foo@foo.com')
+        expect.eq(result.text,'something to do')
       })
   })
 })

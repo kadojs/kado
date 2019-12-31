@@ -20,7 +20,7 @@
  */
 
 describe('HyperText',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const HyperText = require('../lib/HyperText')
   const hyperText = new HyperText()
   class OurEngine extends hyperText.HyperTextEngine {
@@ -70,7 +70,7 @@ describe('HyperText',()=> {
         res.setEncoding(('utf8'))
         res.on('data',(chunk)=>{ data += chunk })
         res.on('end',()=>{
-          resolve(expect(data).to.match(/Cannot GET \//))
+          resolve(expect.match(/Cannot GET \//,data))
         })
         res.on('error',reject)
       })
@@ -78,43 +78,42 @@ describe('HyperText',()=> {
     })
   }
   it('should construct',() => {
-    let testHyperText = new HyperText()
-    expect(testHyperText).to.be.an('object')
+    expect.isType('HyperText',new HyperText())
   })
   it('should have no handlers',() => {
-    expect(Object.keys(hyperText.allHandlers()).length).to.equal(0)
+    expect.eq(Object.keys(hyperText.allHandlers()).length,0)
   })
   it('should add a handler',() => {
-    expect(hyperText.addHandler('express',new OurEngine())).to.equal('express')
+    expect.eq(hyperText.addHandler('express',new OurEngine()),'express')
   })
   it('should have a handler',() => {
-    expect(hyperText.getHandler('express')).to.be.an('object')
+    expect.isType('OurEngine',hyperText.getHandler('express'))
   })
   it('should have 1 total handlers',() => {
-    expect(Object.keys(hyperText.allHandlers()).length).to.equal(1)
+    expect.eq(Object.keys(hyperText.allHandlers()).length,1)
   })
   it('should remove a handler',() => {
-    expect(hyperText.removeHandler('express')).to.equal('express')
+    expect.eq(hyperText.removeHandler('express'),'express')
   })
   it('should have no handlers',() => {
-    expect(Object.keys(hyperText.allHandlers()).length).to.equal(0)
+    expect.eq(Object.keys(hyperText.allHandlers()).length,0)
   })
   it('should accept a new handler',() => {
-    expect(hyperText.addHandler('ex',new OurEngine())).to.equal('ex')
+    expect.eq(hyperText.addHandler('ex',new OurEngine()),'ex')
   })
   it('should have the new handler',() => {
-    expect(hyperText.getHandler('ex')).to.be.an('object')
+    expect.isType('OurEngine',hyperText.getHandler('ex'))
   })
   it('should activate the new handler',() => {
-    expect(hyperText.activateHandler('ex')).to.equal('ex')
+    expect.eq(hyperText.activateHandler('ex'),'ex')
   })
   it('should start the engine',async () => {
-    expect(await hyperText.start(3000,'localhost')).to.be.an('object')
+    expect.isType('Server',await hyperText.start(3000,'localhost'))
   })
   it('should be listening with the engine',async () => {
-    expect(await checkServer(3000,'localhost','/'))
+    expect.eq(await checkServer(3000,'localhost','/'))
   })
   it('should stop the engine',async () => {
-    expect(await hyperText.stop()).to.equal(true)
+    expect.eq(await hyperText.stop(),true)
   })
 })

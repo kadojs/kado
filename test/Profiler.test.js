@@ -20,21 +20,20 @@
  */
 
 describe('Profiler',()=> {
-  const { expect } = require('chai')
+  const { expect } = require('../lib/Validate')
   const Profiler = require('../lib/Profiler')
   let profiler = new Profiler()
   it('should construct',() => {
-    let testProfiler = new Profiler()
-    expect(testProfiler).to.be.an('object')
+    expect.isType('Profiler',new Profiler())
   })
   it('should accept query addition',()=>{
-    expect(profiler.addQuery('SELECT * FROM FOO',1001)).to.equal(1)
+    expect.eq(profiler.addQuery('SELECT * FROM FOO',1001),1)
   })
   it('should start the rendering timer',()=>{
     let now = + new Date()
-    expect(profiler.startRender()).to.be.gte(now)
+    expect.isAbove(profiler.startRender(),now,true)
   })
   it('should build a profile',()=>{
-    expect(profiler.build().HTML).to.match(/<div id="kado-profiler">/)
+    expect.match(/<div id="kado-profiler">/,profiler.build().HTML)
   })
 })
