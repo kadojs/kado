@@ -103,4 +103,20 @@ describe('Format',()=> {
   it('should Format.ip(\'1:2:3::4\',\'\') === \'1:2:3:0:0:0:0:4\'',()=>{
     expect.eq(Format.ip('1:2:3::4',''),'1:2:3:0:0:0:0:4')
   })
+
+  it('should Format.color(\'foo\') === \'\\u001b[0;49;39mfoo\\u001b[0m\'',()=>{
+    expect.eq(Format.color('foo'),'\u001b[0;49;39mfoo\u001b[0m')
+  })
+  it('should Format.color(\'foo\',\'Cyan\') === \'\\u001b[0;49;36mfoo\\u001b[0m\'',()=>{
+    expect.eq(Format.color('foo','Cyan'),'\u001b[0;49;36mfoo\u001b[0m')
+  })
+  it('should Format.color(\'foo\',\'Green\',\'Red\') === \'\\u001b[0;41;32mfoo\\u001b[0m\'',()=>{
+    expect.eq(Format.color('foo','Green','Red'),'\u001b[0;41;32mfoo\u001b[0m')
+  })
+  it('should Format.color(\'foo\',\'Blue\',\'Magenta\',\'Bold\') === \'\\u001b[1;45;34mfoo\\u001b[0m\'',()=>{
+    expect.eq(Format.color('foo','Blue','Magenta','Bold'),'\u001b[1;45;34mfoo\u001b[0m')
+  })
+  it('should Format.color(\'foo\',0,0,0,\'Blink\') === \'\\u001b[0;49;39mfoo\\u001b[25m\'',()=>{
+    expect.eq(Format.color('foo',0,0,0,'Blink'),'\u001b[0;49;39mfoo\u001b[25m')
+  })
 })
