@@ -31,7 +31,7 @@ describe('Profiler',()=> {
   })
   it('should start the rendering timer',()=>{
     let now = + new Date()
-    expect.isAbove(profiler.startRender(),now,true)
+    expect.maximum(profiler.startRender(),now)
   })
   it('should build a profile',()=>{
     expect.match(/<div id="kado-profiler">/,profiler.build().HTML)
