@@ -21,28 +21,22 @@
 
 describe('kado',function(){
   //load the subsystem tests
-  require('./Asset.test')
-  require('./CommandServer.test')
-  require('./Connector.test')
-  require('./Cron.test')
-  require('./Database.test')
-  require('./Email.test')
-  require('./Event.test')
-  require('./Format.test')
-  require('./GetOpt.test')
-  require('./History.test')
-  require('./HyperText.test')
-  require('./Language.test')
-  require('./Library.test')
-  require('./Logger.test')
-  require('./Mapper.test')
-  require('./Message.test')
-  require('./Navigation.test')
-  require('./Permission.test')
-  require('./Profiler.test')
-  require('./Router.test')
-  require('./Search.test')
-  require('./Util.test')
-  require('./View.test')
-  require('./Validate.test')
+  const focus = new RegExp((process.env.FOCUS || '.')+'','i')
+  for(const test of [
+    'Asset',
+    'CommandServer','Connector','Cron',
+    'Database',
+    'Email','Event',
+    'Format',
+    'GetOpt',
+    'History','HyperText',
+    'Language','Library','Logger',
+    'Mapper','Message',
+    'Navigation',
+    'Permission','Profiler',
+    'Router',
+    'Search',
+    'Util',
+    'View','Validate',
+  ].filter(fn => (-1 < fn.search(focus)))) require('./' + test + '.test')
 })
