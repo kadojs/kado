@@ -13,7 +13,8 @@ runner.after(()=>{ console.log('some stuff after the tests') })
 test.it('should do stuff',()=>{ expect.eq(true) })
 test.it('should do stuff 1',()=>{ expect.eq('true','true') })
 test.it('should do stuff 2',async ()=>{ expect.eq(await getOne(),1) })
-test.it('should do stuff 3',()=>{
+test.it('should do stuff 3',function(){
+  this.timeout(5)
   return new Promise((resolve)=>{ setTimeout(()=>{
     resolve(expect.eq(null,null))
   },15) })
@@ -30,7 +31,7 @@ runner.test('something out of band',()=>{ expect.eq(false,false) })
 runner.test('something out of band 2',()=>{ expect.eq(false,true) })
 runner.execute()
   .then(code => {
-    expect.eq(code,3)
+    expect.eq(code,4)
     console.log('TestRunner test passing!')
   })
   .catch((e)=>{
