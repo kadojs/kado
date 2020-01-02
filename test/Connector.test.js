@@ -19,8 +19,10 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Connector = require('../lib/Connector')
 runner.suite('Connector',(it)=> {
-  const { expect } = require('../lib/Validate')
+  let connector = new Connector()
   //const stretchfs = require('stretchfs-sdk')
   //const Prism = stretchfs.Prism
   const Prism = class {
@@ -28,8 +30,6 @@ runner.suite('Connector',(it)=> {
       return Promise.resolve('cdn.stretchfs.com')
     }
   }
-  const Connector = require('../lib/Connector')
-  let connector = new Connector()
   it('should construct',() => {
     expect.isType('Connector',new Connector())
   })

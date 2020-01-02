@@ -19,16 +19,16 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Database = require('../lib/Database')
 runner.suite('Database',(it)=> {
-  const { expect } = require('../lib/Validate')
+  let db = new Database()
   //const SequelizeDb = require('../lib/database/sequelize')
   const SequelizeDb = class {
     connect(){ return new Promise((resolve,reject)=>{
       reject(new Error('ECONNREFUSED'))
     })}
   }
-  const Database = require('../lib/Database')
-  let db = new Database()
   it('should construct',() => {
     expect.isType('Database',new Database())
   })

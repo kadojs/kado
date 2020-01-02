@@ -19,9 +19,9 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Cron = require('../lib/Cron')
 runner.suite('Cron',(it)=>{
-  const { expect } = require('../lib/Validate')
-  const Cron = require('../lib/Cron')
   let cron = new Cron()
   it('should construct',()=>{
     expect.isType('Cron',new Cron())

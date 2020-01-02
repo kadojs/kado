@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Message',()=> {
-  const { expect } = require('../lib/Validate')
-  const Message = require('../lib/Message')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Message = require('../lib/Message')
+runner.suite('Message',(it)=>{
   let message = new Message()
   it('should construct',() => {
     expect.isType('Message',new Message())
@@ -57,3 +57,4 @@ describe('Message',()=> {
       })
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

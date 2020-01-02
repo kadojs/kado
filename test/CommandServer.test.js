@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('CommandServer',()=> {
-  const { expect } = require('../lib/Validate')
-  const CommandServer = require('../lib/CommandServer')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const CommandServer = require('../lib/CommandServer')
+runner.suite('CommandServer',(it)=>{
   const cli = new CommandServer()
   cli.setVersion(require('../package.json').version)
   const testCommand = {
@@ -61,3 +61,4 @@ describe('CommandServer',()=> {
     return expect.eq(await cli.run('test test --test=test'),'test')
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

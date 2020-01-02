@@ -30,7 +30,7 @@ runner.test('something out of band 2',()=>{ expect.eq(false,true) })
 runner.execute({hideFailed: true})
   .then(code => {
     expect.eq(code,4)
-    console.log('TestRunner test passing!')
+    console.log('TestRunner test passing!\n\n\n')
   })
   .catch((e)=>{
     console.log(`TestRunner testing failed: ${e.message}`)

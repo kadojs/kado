@@ -18,14 +18,14 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Logger',()=> {
-  const { expect } = require('../lib/Validate')
-  const Logger = require('../lib/Logger')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Logger = require('../lib/Logger')
+runner.suite('Logger',(it)=>{
+  const logger = new Logger()
   const loggerName = 'winston'
   //const LogHelper = require('../lib/logger/winston')
   const LogHelper = class {}
-  const logger = new Logger()
   it('should construct',() => {
     expect.isType('Logger',new Logger())
   })
@@ -63,3 +63,4 @@ describe('Logger',()=> {
     expect.eq(logger.getLogger(),null)
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

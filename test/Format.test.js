@@ -18,11 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-
-describe('Format',()=> {
-  const { expect } = require('../lib/Validate')
-  const Format = require('../lib/Format')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Format = require('../lib/Format')
+runner.suite('Format',(it)=>{
   //all static no constructor needed
   it('should Format.toFixedFix(1.236,2) === 1.24',()=>{
     expect.eq(Format.toFixedFix(1.236,2),1.24)
@@ -120,3 +119,4 @@ describe('Format',()=> {
     expect.eq(Format.color('foo',0,0,0,'Blink'),'\u001b[0;49;39mfoo\u001b[25m')
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

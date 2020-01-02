@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Nav',()=> {
-  const { expect } = require('../lib/Validate')
-  const Nav = require('../lib/Navigation')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Nav = require('../lib/Navigation')
+runner.suite('Nav',(it)=>{
   let nav = new Nav()
   it('should construct',() => {
     expect.isType('Nav',new Nav())
@@ -43,3 +43,4 @@ describe('Nav',()=> {
     expect.eq(Object.keys(nav.all()).length,1)
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

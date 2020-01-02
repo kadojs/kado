@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Language',()=> {
-  const { expect } = require('../lib/Validate')
-  const Language = require('../lib/Language')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Language = require('../lib/Language')
+runner.suite('Language',(it)=>{
   let language = new Language()
   let eng = {
     '_pack_name': 'English',
@@ -62,3 +62,4 @@ describe('Language',()=> {
     expect.eq(Object.keys(language.all()).length,0)
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

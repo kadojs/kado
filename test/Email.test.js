@@ -19,10 +19,11 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Email = require('../lib/Email')
+const EmailConnector = require('../lib/EmailConnector')
 runner.suite('Email',(it)=> {
-  const { expect } = require('../lib/Validate')
-  const Email = require('../lib/Email')
-  const EmailConnector = require('../lib/EmailConnector')
+  let email = new Email()
   class OurEmail extends EmailConnector {
     constructor(options){
       super(options)
@@ -37,7 +38,6 @@ runner.suite('Email',(it)=> {
       return this.server
     }
   }
-  let email = new Email()
   it('should construct',() => {
     expect.isType('Email',new Email())
   })

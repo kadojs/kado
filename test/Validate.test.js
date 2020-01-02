@@ -20,15 +20,16 @@
  */
 const {Val,expect,AssertionError} = require('../lib/Validate')
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const validate = runner.suite('Validate')
-validate.it('should construct',()=>{
-  expect.isType('Validate',new Val(5))
-})
-validate.it('should return an instance',() => {
-  expect.isType('Validate',Val.getInstance())
-})
-validate.it('should be false on true neq true',() => {
-  expect.eq(Val.neq(true,true),false)
+const validate = runner.suite('Validate',(it)=>{
+  it('should construct',()=>{
+    expect.isType('Validate',new Val(5))
+  })
+  it('should return an instance',() => {
+    expect.isType('Validate',Val.getInstance())
+  })
+  it('should be false on true neq true',() => {
+    expect.eq(Val.neq(true,true),false)
+  })
 })
 validate.suite('assert',(it)=>{
   it('should assert an array',() => {
@@ -353,3 +354,4 @@ validate.suite('withInstance',(it)=>{
     expect.eq(v.not(8),false)
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

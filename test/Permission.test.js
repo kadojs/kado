@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Permission',()=> {
-  const { expect } = require('../lib/Validate')
-  const Permission = require('../lib/Permission')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Permission = require('../lib/Permission')
+runner.suite('Permission',(it)=>{
   let permission = new Permission()
   it('should construct',() => {
     expect.isType('Permission',new Permission())
@@ -51,3 +51,4 @@ describe('Permission',()=> {
     expect.eq(permission.all().length,1)
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

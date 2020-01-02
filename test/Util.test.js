@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Util',()=>{
-  const { expect } = require('../lib/Validate')
-  const Util = require('../lib/Util')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Util = require('../lib/Util')
+runner.suite('Util',(it)=>{
   const util = new Util()
   const render = (s)=>{return s}
   it('should construct',()=>{
@@ -52,3 +52,4 @@ describe('Util',()=>{
     expect.eq(util.prettyBytes(1000000),'1 MB')
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

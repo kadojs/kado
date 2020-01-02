@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Route',()=> {
-  const { expect } = require('../lib/Validate')
-  const Router = require('../lib/Router')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Router = require('../lib/Router')
+runner.suite('Router',(it)=>{
   let router = new Router()
   it('should construct',() => {
     expect.isType('Router',new Router())
@@ -61,3 +61,4 @@ describe('Route',()=> {
     expect.eq(router.allForTemplate()._home,'/home')
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

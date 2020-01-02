@@ -22,12 +22,20 @@ const runner = require('../lib/TestRunner').getInstance('Kado')
 const focus = new RegExp((process.env.FOCUS || '.')+'','i')
 const suites = [
   'Asset',
-  'Cron',
-  'Connector',
+  'CommandServer','Connector','Cron',
   'Database',
-  'Email',
-  'Event',
-  'Validate'
+  'Email','Event',
+  'Format',
+  'GetOpt',
+  'History','HyperText',
+  'Language','Library','Logger',
+  'Mapper','Message',
+  'Navigation',
+  'Permission','Profiler',
+  'Router',
+  'Search',
+  'Util',
+  'Validate','View',
 ]
 const runnableSuites = suites.filter(fn => (-1 < fn.search(focus)))
 for(const suite of runnableSuites) require(`./${suite}.test.js`)
