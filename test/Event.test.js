@@ -132,3 +132,4 @@ runner.suite('Event',(it)=>{
       })
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

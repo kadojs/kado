@@ -51,3 +51,4 @@ runner.suite('Cron',(it)=>{
     expect.eq(cron.destroy(),1)
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

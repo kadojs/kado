@@ -74,3 +74,4 @@ runner.suite('Asset',(it)=>{
     expect.eq(asset.getOnce().length,0)
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

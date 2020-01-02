@@ -63,3 +63,4 @@ runner.suite('Email',(it)=> {
     expect.isType('Object',result.smtp)
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))
