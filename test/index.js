@@ -21,6 +21,7 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const focus = new RegExp((process.env.FOCUS || '.')+'','i')
 const suites = [
+  'TestRunner',
   'Asset',
   'CommandServer','Connector','Cron',
   'Database',
