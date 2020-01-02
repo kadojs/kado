@@ -2,12 +2,15 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Validate')
 const test = runner.suite('suite1')
+const getOne = function(){ return new Promise((resolve)=>{
+  setTimeout(()=>{ resolve(1) },5)
+}) }
 runner.before(()=>{ console.log('stuff before running tests') })
 test.after(()=>{ console.log('some stuff after the suite ') })
 runner.after(()=>{ console.log('some stuff after the tests') })
 test.it('should do stuff',()=>{ expect.eq(true) })
 test.it('should do stuff 1',()=>{ expect.eq('true','true') })
-test.it('should do stuff 2',()=>{ expect.eq(1,1) })
+test.it('should do stuff 2',async ()=>{ expect.eq(await getOne(),1) })
 test.it('should do stuff 3',()=>{
   return new Promise((resolve)=>{ setTimeout(()=>{
     resolve(expect.eq(null,null))
