@@ -118,5 +118,28 @@ runner.suite('Format',(it)=>{
   it('should Format.color(\'foo\',0,0,0,\'Blink\') === \'\\u001b[0;49;39mfoo\\u001b[25m\'',()=>{
     expect.eq(Format.color('foo',0,0,0,'Blink'),'\u001b[0;49;39mfoo\u001b[25m')
   })
+
+  it('should Format.prettyBytes(1337) === \'1.34 kB\'',()=>{
+    expect.eq(Format.prettyBytes(1337),'1.34 kB')
+  })
+  it('should Format.prettyBytes(100) === \'100 B\'',()=>{
+    expect.eq(Format.prettyBytes(100),'100 B')
+  })
+  it('should Format.prettyBytes(1337,{bits:true}) === \'1.34 kbit\'',()=>{
+    expect.eq(Format.prettyBytes(1337,{bits:true}),'1.34 kbit')
+  })
+  it('should Format.prettyBytes(42,{signed:true}) === \'+42 B\'',()=>{
+    expect.eq(Format.prettyBytes(42,{signed:true}),'+42 B')
+  })
+  // international does not work when small_icu used in nodejs build
+  if((()=>{try{
+    return (new Intl.DateTimeFormat('es',{month:'long'}))
+      .format(new Date(9e8)) === 'enero'
+    } catch(err){return false}})()
+  ){
+    it('should Format.prettyBytes(1337,{locale:\'de\'}) === \'1,34 kB\'',() => {
+      expect.eq(Format.prettyBytes(1337,{locale: 'de'}),'1,34 kB')
+    })
+  }
 })
 if(require.main === module) runner.execute().then(code => process.exit(code))
