@@ -19,10 +19,10 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-describe('Validate',()=>{
-  const { Val, expect, AssertionError } = require('../lib/Validate')
-  describe('assert',()=>{
-    it('should assert an array', () => {
+describe('Validate',()=> {
+  const {Val,expect,AssertionError} = require('../lib/Validate')
+  describe('assert',() => {
+    it('should assert an array',() => {
       expect.assert([],[])
       expect.assert.catch([],[1],'Array() does not equal Array(1)')
       expect.assert.catch([],{},
@@ -34,19 +34,26 @@ describe('Validate',()=>{
         'boolean(true) does not equal boolean(false)')
     })
     it('should assert a date',() => {
-      expect.assert(new Date(), new Date())
+      expect.assert(new Date(),new Date())
     })
-    it('should fail two new dates over time',async ()=>{
-      function getDate(){ return new Promise((resolve)=>{
-        setTimeout(()=>{ resolve(new Date()) },2)
-      }) }
-      expect.assert.catch(new Date(), await getDate(),AssertionError)
+    it('should fail two new dates over time',async () => {
+      function getDate(){
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(new Date())
+          },2)
+        })
+      }
+
+      expect.assert.catch(new Date(),await getDate(),AssertionError)
     })
-    it('should assert an error', () => {
+    it('should assert an error',() => {
       expect.assert(Error,Error)
     })
     it('should assert a function',() => {
-      expect.assert(() => {}, () => {})
+      expect.assert(() => {
+      },() => {
+      })
     })
     it('should assert a null',() => {
       expect.assert(null,null)
@@ -69,7 +76,7 @@ describe('Validate',()=>{
         'undefined(undefined) does not equal null(null)')
     })
   })
-  describe('eq',()=>{
+  describe('eq',() => {
     it('should eq array',() => {
       const arr1 = []
       expect.eq(arr1,arr1)
@@ -94,13 +101,13 @@ describe('Validate',()=>{
       expect.eq.catch(obj1,[],
         'Object([object Object]) does not reference equal Array()')
     })
-    it('should eq string',() =>{
+    it('should eq string',() => {
       expect.eq('','')
       expect.eq('foo','foo')
     })
   })
-  describe('eqDeep',()=>{
-    it('should eq an array',()=>{
+  describe('eqDeep',() => {
+    it('should eq an array',() => {
       expect.eq(Val.eqDeep([],[]))
       expect.eq(Val.eqDeep([],{}),false)
     })
@@ -109,197 +116,247 @@ describe('Validate',()=>{
       expect.eq(Val.eqDeep({},[]),false)
     })
   })
-  describe('match',()=>{
-    it('should match a string',()=>{
+  describe('match',() => {
+    it('should match a string',() => {
       expect.eq(Val.match(/foo/,'somefoostring'))
       expect.eq(Val.match(/bar/,'somefoostring'),false)
     })
-    it('should match an array containing strings')
-    it('should match an object containing strings')
+    it('should match an array containing strings',() => {
+      expect.eq(Val.match(new RegExp('foo'),['foo']))
+    })
+    it('should match an array within array containing strings',() => {
+      expect.eq(Val.match(new RegExp('foo'),[[1,2],['foo','bar'],{foo: 'foo'}]))
+    })
+    it('should match an object containing strings',() => {
+      expect.eq(Val.match(new RegExp('foo'),[[1,2],['bar'],{foo: 'foo'}]))
+    })
   })
-  describe('getType',()=>{
-    it('should get a array',()=>{
+  describe('getType',() => {
+    it('should get a array',() => {
       expect.eq(Val.getType([]),'Array')
     })
-    it('should get a boolean',()=>{
+    it('should get a boolean',() => {
       expect.eq(Val.getType(true),'boolean')
       expect.eq.catch(Val.getType('false'),'boolean',
         'string(string) does not equal string(boolean)')
       expect.eq.catch(Val.getType('+00000000'),'boolean',
         'string(string) does not equal string(boolean)')
     })
-    it('should get a null',()=>{
+    it('should get a null',() => {
       expect.eq(Val.getType(null),'null')
     })
-    it('should get a number',()=>{
+    it('should get a number',() => {
       expect.eq(Val.getType(1),'number')
     })
-    it('should get a object',()=>{
+    it('should get a object',() => {
       expect.eq(Val.getType({}),'Object')
     })
-    it('should get a string',()=>{
+    it('should get a string',() => {
       expect.eq(Val.getType(''),'string')
     })
-    it('should get a undefined',()=>{
+    it('should get a undefined',() => {
       expect.eq(Val.getType(),'undefined')
       expect.eq.catch(Val.getType(''),'undefined',
         'string(string) does not equal string(undefined)')
     })
   })
-  describe('isType',()=>{
-    it('should identify a array',()=>{
+  describe('isType',() => {
+    it('should identify a array',() => {
       expect.eq(Val.isType('Array',[]))
     })
-    it('should identify a null',()=>{
+    it('should identify a null',() => {
       expect.eq(Val.isType('null',null))
     })
-    it('should identify a number',()=>{
+    it('should identify a number',() => {
       expect.eq(Val.isType('number',1))
     })
-    it('should identify a object',()=>{
+    it('should identify a object',() => {
       expect.eq(Val.isType('Object',{}))
     })
-    it('should identify a string',()=>{
+    it('should identify a string',() => {
       expect.eq(Val.isType('string',''))
     })
-    it('should identify an undefined',()=>{
+    it('should identify an undefined',() => {
       expect.eq(Val.isType('undefined',undefined))
     })
   })
-  describe('isAbove',()=>{
-    it('should fail on invalid input',()=>{
+  describe('isAbove',() => {
+    it('should fail on invalid input',() => {
       expect.eq.catch(Val.isAbove(3),'foo',
         'boolean(false) does not equal string(foo)')
     })
-    it('should be true if a number is above base',()=>{
+    it('should be true if a number is above base',() => {
       expect.eq(Val.isAbove(3,10))
     })
-    it('should be false if a number is below a base',()=>{
+    it('should be false if a number is below a base',() => {
       expect.eq(Val.isAbove(10,3),false)
     })
   })
-  describe('isBelow',()=>{
-    it('should fail on invalid input',()=>{
+  describe('isBelow',() => {
+    it('should fail on invalid input',() => {
       expect.eq.catch(Val.isBelow(3),'foo',
         'boolean(false) does not equal string(foo)')
     })
-    it('should be true if a number is below a base',()=>{
+    it('should be true if a number is below a base',() => {
       expect.eq(Val.isBelow(7,5))
     })
-    it('should be false if a number is above a base',()=>{
-      expect.neq(Val.isBelow(7, 4))
+    it('should be false if a number is above a base',() => {
+      expect.neq(Val.isBelow(7,4))
     })
   })
-  describe('minimum',()=>{
-    it('should fail on invalid input',()=>{
+  describe('minimum',() => {
+    it('should fail on invalid input',() => {
       expect.eq.catch(Val.minimum(3),'foo',
         'boolean(false) does not equal string(foo)')
     })
-    it('should be true if a number is above or equal to a base',()=>{
+    it('should be true if a number is above or equal to a base',() => {
       expect.eq(Val.minimum(3,3))
       expect.eq(Val.minimum(3,5))
     })
-    it('should be false if a number is below a base',()=>{
+    it('should be false if a number is below a base',() => {
       expect.eq(Val.minimum(10,9),false)
     })
   })
-  describe('maximum',()=>{
-    it('should fail on invalid input',()=>{
+  describe('maximum',() => {
+    it('should fail on invalid input',() => {
       expect.eq.catch(Val.maximum(3),'foo',
         'boolean(false) does not equal string(foo)')
     })
-    it('should be true if a number is below or equal to a base',()=>{
+    it('should be true if a number is below or equal to a base',() => {
       expect.eq(Val.maximum(3,2))
       expect.eq(Val.maximum(3,3))
     })
-    it('should be false if a number is above a base',()=>{
+    it('should be false if a number is above a base',() => {
       expect.eq(Val.maximum(3,211),false)
     })
   })
-  describe('neq',()=>{
-    it('should be false on true neq true',()=>{
+  describe('neq',() => {
+    it('should be false on true neq true',() => {
       expect.eq(Val.neq(true,true),false)
     })
   })
-  describe('getInstance',()=>{
-    it('should return an instance',()=>{
+  describe('getInstance',() => {
+    it('should return an instance',() => {
       expect.isType('Validate',Val.getInstance())
     })
   })
-  describe('with instance',()=>{
-    it('should check above',()=>{
+  describe('with instance',() => {
+    it('should check above',() => {
       expect.eq(new Val(5).above(4))
     })
-    it('should check below',()=>{
+    it('should check below',() => {
       expect.eq(new Val(5).below(6))
     })
-    it('should check equal',()=>{
+    it('should check equal',() => {
       expect.eq(new Val(1).equal(1))
     })
-    it('should check is type')
-    it('should check min')
-    it('should check max')
-    it('should check not')
+    it('should check is type',()=>{
+      expect.eq(new Val('foo').is('string'))
+    })
+    it('should check min',()=>{
+      const v = new Val(3)
+      expect.eq(v.min(3))
+      expect.eq(v.min(5),false)
+    })
+    it('should check max',()=>{
+      const v = new Val(7)
+      expect.eq(v.max(7))
+      expect.eq(v.max(5),false)
+    })
+    it('should check not',()=>{
+      const v = new Val(8)
+      expect.eq(v.not(7))
+      expect.eq(v.not(8),false)
+    })
   })
-  it('should construct',() =>{
+  it('should construct',() => {
     let testValidate = new Val()
     expect.isType('Validate',testValidate)
   })
-  it('should check for Array',() => {
-    expect.eq(Val.eqDeep([],[]), true)
-    expect.eq(Val.eqDeep([],{}),false)
-  })
-  it('should check for Boolean',() => {
-    expect.eq(true)
-    expect.eq.catch(true,false,'boolean(true) does not equal boolean(false)')
-  })
-  it('should check for Date',() => {
-    const date = new Date()
-    expect.assert(date,date)
-  })
-  it('should check for Error',() => {
-    expect.eqDeep(new Error('foo'),new Error('foo'))
-  })
-  it('should check for Function',() => {
-    expect.assert(() => {},() => {})
-  })
-  it('should check for Generator')
-  it('should check for GeneratorFunction')
-  it('should check for Infinity',() => {
-    expect.eq(Infinity,Infinity)
-  })
-  it('should check for InternalError')
-  it('should check for JSON')
-  it('should check for Map')
-  //Equality comparison with NaN always evaluates to false
-  it('should check for NaN',() => {
-    expect.isType('NaN',NaN)
-  })
-  it('should check for null', () => {
-    expect.eqDeep(null,null)
-    expect.eqDeep.catch(null,undefined,
-      'null(null) does not deep equal undefined(undefined)')
-  })
-  it('should check for Number', () => {
-    expect.eq(1,1)
-    expect.eq.catch(1,'',AssertionError)
-    expect.eq.catch(1,true,AssertionError)
-  })
-  it('should check for Promise')
-  it('should check for RangeError')
-  it('should check for ReferenceError')
-  it('should check for RegExp')
-  it('should check for String',() => {
-    expect.eq('','')
-    expect.eq('foo','foo')
-    expect.eq.catch('foo','bar',AssertionError)
-  })
-  it('should check for Symbol')
-  it('should check for SyntaxError')
-  it('should check for TypedArray')
-  it('should check for TypeError')
-  it('should check for Undefined', () => {
-    expect.eq(undefined,undefined)
-    expect.eq.catch(undefined,null,AssertionError)
+  describe('Types',() => {
+    it('should check for Array',() => {
+      expect.eq(Val.eqDeep([],[]),true)
+      expect.eq(Val.eqDeep([],{}),false)
+    })
+    it('should check for Boolean',() => {
+      expect.eq(true)
+      expect.eq.catch(true,false,'boolean(true) does not equal boolean(false)')
+    })
+    it('should check for Date',() => {
+      const date = new Date()
+      expect.assert(date,date)
+    })
+    it('should check for Error',() => {
+      expect.eqDeep(new Error('foo'),new Error('foo'))
+    })
+    it('should check for Function',() => {
+      expect.assert(() => {
+      },() => {
+      })
+    })
+    //it('should check for Generator')
+    //it('should check for GeneratorFunction')
+    it('should check for Infinity',() => {
+      expect.eq(Infinity,Infinity)
+    })
+    it('should check for Map',()=>{
+      const map = new Map([[1,'one'],[2,'two']])
+      expect.eq(map,map)
+    })
+    //Equality comparison with NaN always evaluates to false
+    it('should check for NaN',() => {
+      expect.isType('NaN',NaN)
+    })
+    it('should check for null',() => {
+      expect.eqDeep(null,null)
+      expect.eqDeep.catch(null,undefined,
+        'null(null) does not deep equal undefined(undefined)')
+    })
+    it('should check for Number',() => {
+      expect.eq(1,1)
+      expect.eq.catch(1,'',AssertionError)
+      expect.eq.catch(1,true,AssertionError)
+    })
+    it('should check for Promise',() => {
+      const promise = new Promise(function(){
+      })
+      expect.eq(promise,promise)
+    })
+    it('should check for RangeError',() => {
+      const rangeErr = new RangeError('')
+      expect.eq(rangeErr,rangeErr)
+    })
+    it('should check for ReferenceError',() => {
+      const refErr = new ReferenceError('')
+      expect.eq(refErr,refErr)
+    })
+    it('should check for RegExp',() => {
+      const regExp = new RegExp('foo','ig')
+      expect.eq(regExp,regExp)
+    })
+    it('should check for String',() => {
+      expect.eq('','')
+      expect.eq('foo','foo')
+      expect.eq.catch('foo','bar',AssertionError)
+    })
+    it('should check for Symbol',() => {
+      expect.eq(Symbol,Symbol)
+    })
+    it('should check for SyntaxError',() => {
+      const synErr = new SyntaxError('')
+      expect.eq(synErr,synErr)
+    })
+    it('should check for TypedArray',() => {
+      const tyArray = new Int8Array()
+      expect.eq(tyArray,tyArray)
+    })
+    it('should check for TypeError',() => {
+      const tyErr = new TypeError('')
+      expect.eq(tyErr,tyErr)
+    })
+    it('should check for Undefined',() => {
+      expect.eq(undefined,undefined)
+      expect.eq.catch(undefined,null,AssertionError)
+    })
   })
 })
