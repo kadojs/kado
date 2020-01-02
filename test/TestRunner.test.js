@@ -18,19 +18,21 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-const runnerKado = require('../lib/TestRunner').getInstance('Kado')
+const TestRunner = require('../lib/TestRunner')
+const _runner = TestRunner.getInstance('Kado')
 const { expect } = require('../lib/Validate')
-runnerKado.suite('TestRunner',(it_main)=>{
+_runner.suite('TestRunner',(it_main)=>{
   const indent = ' | '
-  const runner = require('../lib/TestRunner').getInstance('Self',indent)
+  const runner = new TestRunner('Self')
+  runner.setReporter(new TestRunner.TestReporter(runner.name,{indent: indent}))
   it_main('should pass self-test',async ()=>{
     const suite1 = runner.suite('suite1')
     const getOne = function(){ return new Promise((resolve)=>{
       setTimeout(()=>{ resolve(1) },2)
     }) }
-    runner.before(()=>{ console.log(indent + 'stuff before running tests') })
-    suite1.after(()=>{ console.log(indent + ' some stuff after the suite ') })
-    runner.after(()=>{ console.log(indent + 'some stuff after the tests') })
+    runner.before((log)=>{ log.out('stuff before running tests') })
+    suite1.after((log)=>{ log.out('some stuff after the suite ') })
+    runner.after((log)=>{ log.out('some stuff after the tests') })
     suite1.it('should do stuff',()=>{ expect.eq(true) })
     suite1.it('should do stuff 1',()=>{ expect.eq('true','true') })
     suite1.it('should do stuff 2',async ()=>{ expect.eq(await getOne(),1) })
@@ -61,4 +63,4 @@ runnerKado.suite('TestRunner',(it_main)=>{
     undefined)
   })
 })
-if(require.main === module) runnerKado.execute().then(code => process.exit(code))
+if(require.main === module) _runner.execute().then(code => process.exit(code))
