@@ -79,7 +79,7 @@ describe('GetOpt',()=>{
     expect.eq(parser.gop_silent,true)
     expect.eqDeep(parser.gop_options,{l:true})
     expect.eqDeep(parser.gop_aliases,{long:'l'})
-    expect.eqDeep(parser.opts(),{l:['arg1','q'], long:['arg1','q']})
+    expect.eqDeep(parser.opts(),{l:['arg1','q','foo'], long:['arg1','q','foo'], __:['b']})
   })
   it('should parse optstr=\'l:(long)(longer)\' with ARGV=[]',()=>{
     parser = new GetOpt([],'l:(long)(longer)')
