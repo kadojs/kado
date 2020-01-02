@@ -3,6 +3,7 @@
   "bitwise": true,
   "eqeqeq": true,
   "esversion": 9,
+  "globals": {"Intl":false},
   "latedef": true,
   "mocha": false,
   "newcap": true,
