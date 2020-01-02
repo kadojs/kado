@@ -37,11 +37,10 @@
   },
   "main": "./lib/Util.js",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha ./test/kado.js && node ./test/TestRunner.js"
+    "test": "node ./node_modules/mocha/bin/mocha ./test/kado.js && node ./test/TestRunner.test.js && node ./test/Validate.test.js"
   },
   "dependencies": {
     "cron": "^1.7.2",
-    "minimist": "^1.2.0",
     "pretty-bytes": "^5.3.0"
   },
   "devDependencies": {

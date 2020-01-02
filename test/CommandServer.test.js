@@ -58,6 +58,6 @@ describe('CommandServer',()=> {
     return expect.eq(await cli.run('test test -t test'),'test')
   })
   it('should run a command with a full switch',async () => {
-    return expect.eq(await cli.run('test test --test test'),'test')
+    return expect.eq(await cli.run('test test --test=test'),'test')
   })
 })

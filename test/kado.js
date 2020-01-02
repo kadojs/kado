@@ -37,6 +37,6 @@ describe('kado',function(){
     'Router',
     'Search',
     'Util',
-    'View','Validate',
+    'View',
   ].filter(fn => (-1 < fn.search(focus)))) require('./' + test + '.test')
 })
