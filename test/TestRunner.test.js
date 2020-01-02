@@ -15,7 +15,7 @@ suite1.it('should do stuff 3',function(){
   this.timeout(2)
   return new Promise((resolve)=>{ setTimeout(()=>{
     resolve(expect.eq(null,null))
-  },5) })
+  },10) })
 })
 suite1.it('should do stuff 4',()=>{ expect.eq(false) })
 suite1.it('should do stuff 5',()=>{ throw new Error('foo') })
