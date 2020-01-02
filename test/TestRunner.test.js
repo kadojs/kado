@@ -1,7 +1,9 @@
 'use strict';
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Validate')
+//jshint -W079
 const test = runner.suite('suite1')
+//jshint +W079
 const getOne = function(){ return new Promise((resolve)=>{
   setTimeout(()=>{ resolve(1) },5)
 }) }
