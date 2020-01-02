@@ -37,7 +37,7 @@
   },
   "main": "./lib/Util.js",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha ./test/kado.js"
+    "test": "node ./node_modules/mocha/bin/mocha ./test/kado.js && node ./test/TestRunner.js"
   },
   "dependencies": {
     "cron": "^1.7.2",
