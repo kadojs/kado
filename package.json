@@ -37,7 +37,7 @@
   },
   "main": "./lib/Util.js",
   "scripts": {
-    "test": "node ./test/TestRunner.test.js && node ./test/index.js"
+    "test": "node ./test/index.js"
   },
   "dependencies": {
     "cron": "^1.7.2",
