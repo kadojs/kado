@@ -1,5 +1,5 @@
 'use strict';
-const runner = require('../lib/TestRunner').getInstance('Kado')
+const runner = require('../lib/TestRunner').getInstance('TestRunner')
 const { expect } = require('../lib/Validate')
 const suite1 = runner.suite('suite1')
 const getOne = function(){ return new Promise((resolve)=>{
@@ -27,7 +27,7 @@ const test3 = test2.suite('something really deep')
 test3.it('that is what she said',()=>{ expect.eq() })
 runner.test('something out of band',()=>{ expect.eq(false,false) })
 runner.test('something out of band 2',()=>{ expect.eq(false,true) })
-runner.execute()
+runner.execute({hideFailed: true})
   .then(code => {
     expect.eq(code,4)
     console.log('TestRunner test passing!')
