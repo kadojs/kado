@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Email',()=> {
+const runner = require('../lib/TestRunner').getInstance('Kado')
+runner.suite('Email',(it)=> {
   const { expect } = require('../lib/Validate')
   const Email = require('../lib/Email')
   const EmailConnector = require('../lib/EmailConnector')

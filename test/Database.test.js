@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Database',()=> {
+const runner = require('../lib/TestRunner').getInstance('Kado')
+runner.suite('Database',(it)=> {
   const { expect } = require('../lib/Validate')
   //const SequelizeDb = require('../lib/database/sequelize')
   const SequelizeDb = class {

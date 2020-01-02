@@ -19,6 +19,16 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-require('./Asset.test')
-require('./Validate.test')
+const focus = new RegExp((process.env.FOCUS || '.')+'','i')
+const suites = [
+  'Asset',
+  'Cron',
+  'Connector',
+  'Database',
+  'Email',
+  'Event',
+  'Validate'
+]
+const runnableSuites = suites.filter(fn => (-1 < fn.search(focus)))
+for(const suite of runnableSuites) require(`./${suite}.test.js`)
 runner.execute().then(code => process.exit(code))

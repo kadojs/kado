@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Connector',()=> {
+const runner = require('../lib/TestRunner').getInstance('Kado')
+runner.suite('Connector',(it)=> {
   const { expect } = require('../lib/Validate')
   //const stretchfs = require('stretchfs-sdk')
   //const Prism = stretchfs.Prism

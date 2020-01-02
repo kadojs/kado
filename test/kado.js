@@ -23,9 +23,7 @@ describe('kado',function(){
   //load the subsystem tests
   const focus = new RegExp((process.env.FOCUS || '.')+'','i')
   for(const test of [
-    'CommandServer','Connector','Cron',
-    'Database',
-    'Email','Event',
+    'CommandServer',
     'Format',
     'GetOpt',
     'History','HyperText',
