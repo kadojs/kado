@@ -18,24 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('kado',function(){
-  //load the subsystem tests
-  const focus = new RegExp((process.env.FOCUS || '.')+'','i')
-  for(const test of [
-    'CommandServer','Connector','Cron',
-    'Database',
-    'Email','Event',
-    'Format',
-    'GetOpt',
-    'History','HyperText',
-    'Language','Library','Logger',
-    'Mapper','Message',
-    'Navigation',
-    'Permission','Profiler',
-    'Router',
-    'Search',
-    'Util',
-    'View',
-  ].filter(fn => (-1 < fn.search(focus)))) require('./' + test + '.test')
-})
+const runner = require('../lib/TestRunner').getInstance('Kado')
+require('./Asset.test')
+require('./Validate.test')
+runner.execute().then(code => process.exit(code))

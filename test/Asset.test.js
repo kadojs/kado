@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Asset',()=>{
-  const { expect } = require('../lib/Validate')
-  const Asset = require('../lib/Asset')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Asset = require('../lib/Asset')
+runner.suite('Asset',(it)=>{
   let asset = new Asset()
   it('should construct',()=>{
     expect.isType('Asset',new Asset())

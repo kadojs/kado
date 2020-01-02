@@ -353,4 +353,3 @@ validate.suite('withInstance',(it)=>{
     expect.eq(v.not(8),false)
   })
 })
-runner.execute().then(code => process.exit(code))
