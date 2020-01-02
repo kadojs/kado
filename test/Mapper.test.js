@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Mapper',()=>{
-  const { expect } = require('../lib/Validate')
-  const Mapper = require('../lib/Mapper')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Mapper = require('../lib/Mapper')
+runner.suite('Mapper',(it)=>{
   const mapper = new Mapper()
   it('should construct',()=>{
     expect.isType('Mapper',new Mapper())
@@ -81,3 +81,4 @@ describe('Mapper',()=>{
     expect.isType('Array',mapper.foo6.foo9.foo10.pies)
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

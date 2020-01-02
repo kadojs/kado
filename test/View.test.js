@@ -18,14 +18,14 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('View',()=> {
-  const { expect } = require('../lib/Validate')
-  const View = require('../lib/View')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const View = require('../lib/View')
+runner.suite('View',(it)=>{
+  let view = new View()
   //const ViewHelper = require('../lib/view/mustache.js')
   const ViewHelper = class {}
   const handlerName = 'mustache'
-  let view = new View()
   it('should construct',() => {
     expect.isType('View',new View())
   })
@@ -71,3 +71,4 @@ describe('View',()=> {
     expect.eq(view.remove('home'),'home')
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

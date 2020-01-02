@@ -18,11 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-
-describe('GetOpt',()=>{
-  const { expect } = require('../lib/Validate')
-  const GetOpt = require('../lib/GetOpt')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const GetOpt = require('../lib/GetOpt')
+runner.suite('GetOpt',(it)=>{
   let parser
   it('should parse optstr=\'\' with ARGV=[]',()=>{
     parser = new GetOpt([],'')
@@ -141,3 +140,4 @@ describe('GetOpt',()=>{
     )
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

@@ -4,7 +4,7 @@
   "eqeqeq": true,
   "esversion": 9,
   "latedef": true,
-  "mocha": true,
+  "mocha": false,
   "newcap": true,
   "noarg": true,
   "node": true,

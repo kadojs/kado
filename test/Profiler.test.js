@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Profiler',()=> {
-  const { expect } = require('../lib/Validate')
-  const Profiler = require('../lib/Profiler')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Profiler = require('../lib/Profiler')
+runner.suite('Profiler',(it)=>{
   let profiler = new Profiler()
   it('should construct',() => {
     expect.isType('Profiler',new Profiler())
@@ -37,3 +37,4 @@ describe('Profiler',()=> {
     expect.match(/<div id="kado-profiler">/,profiler.build().HTML)
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

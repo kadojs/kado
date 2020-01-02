@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('History',()=>{
-  const { expect } = require('../lib/Validate')
-  const History = require('../lib/History')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const History = require('../lib/History')
+runner.suite('History',(it)=>{
   let history = new History()
   it('should construct',()=>{
     expect.isType('History',new History())
@@ -53,3 +53,4 @@ describe('History',()=>{
     expect.eq(history.all()[0].name,'Test')
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

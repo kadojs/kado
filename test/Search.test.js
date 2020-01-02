@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-describe('Search',()=> {
-  const { expect } = require('../lib/Validate')
-  const Search = require('../lib/Search')
+const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Search = require('../lib/Search')
+runner.suite('Search',(it)=>{
   let search = new Search()
   let ourModule = ()=>{
     return new Promise((resolve)=>{
@@ -72,3 +72,4 @@ describe('Search',()=> {
       })
   })
 })
+if(require.main === module) runner.execute().then(code => process.exit(code))

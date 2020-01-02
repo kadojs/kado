@@ -19,9 +19,9 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
+const { expect } = require('../lib/Validate')
+const Event = require('../lib/Event')
 runner.suite('Event',(it)=>{
-  const { expect } = require('../lib/Validate')
-  const Event = require('../lib/Event')
   let event = new Event()
   it('should construct',()=>{
     expect.isType('Event',new Event())
