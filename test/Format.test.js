@@ -20,6 +20,7 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Validate')
+const intlOk = require('../lib/Language').hasFullIntl()
 const Format = require('../lib/Format')
 const format = runner.suite('Format')
 //all static no constructor test needed
@@ -138,14 +139,10 @@ format.suite('.prettyBytes()',(it)=>{
   it('(42,{signed:true})   === \'+42 B\'',()=>{
     expect.eq(Format.prettyBytes(42,{signed:true}),'+42 B')
   })
-  // international does not work when small_icu used in nodejs build
-  let testName = '(1337,{locale:\'de\'}) === \'1,34 kB\''
-  if(Format.hasFullIntl()){
-    it(testName,()=>{
-      expect.eq(Format.prettyBytes(1337,{locale: 'de'}),'1,34 kB')
-    })
-  } else {
-    it('SKIPPED: ' + testName,()=>{})
-  }
+  it('(1337,{locale:\'de\'}) === \'1,34 kB\'',
+    // international does not work when small_icu used in nodejs build
+    (!intlOk) ? undefined : ()=>{
+    expect.eq(Format.prettyBytes(1337,{locale: 'de'}),'1,34 kB')
+  })
 })
 if(require.main === module) runner.execute().then(code => process.exit(code))
