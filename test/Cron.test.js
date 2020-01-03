@@ -30,7 +30,8 @@ runner.suite('Cron',(it)=>{
     expect.eq(Object.keys(cron.all()).length,0)
   })
   it('should add a cron',()=>{
-    expect.isType('CronJob',cron.create('test','0 * * * *',()=>{},{}))
+    const job = Cron.newJob().setSchedule('* * * * *').addHandler(()=>{})
+    expect.isType('CronJob',cron.add('test',job))
   })
   it('should show a cron exists',()=>{
     expect.isType('CronJob',cron.get('test'))
@@ -42,13 +43,13 @@ runner.suite('Cron',(it)=>{
     expect.eq(cron.count(),1)
   })
   it('should start the cron',()=>{
-    expect.eq(cron.start(),1)
+    expect.isType('Timeout',cron.start())
   })
   it('should stop the cron',()=>{
-    expect.eq(cron.stop(),1)
+    expect.eq(cron.stop())
   })
   it('should destroy the cron',()=>{
-    expect.eq(cron.destroy(),1)
+    expect.eq(cron.removeAll(),1)
   })
 })
 if(require.main === module) runner.execute().then(code => process.exit(code))
