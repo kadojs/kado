@@ -27,6 +27,8 @@ _runner.suite('TestRunner',(it_main)=>{
   runner.setReporter(new TestRunner.TestReporter(runner.name,{indent: indent}))
   it_main('should pass self-test',async ()=>{
     const suite1 = runner.suite('suite1')
+    const suite2 = runner.suite('suite2')
+    suite2.before(()=>{})
     const getOne = function(){ return new Promise((resolve)=>{
       setTimeout(()=>{ resolve(1) },2)
     }) }
@@ -35,6 +37,7 @@ _runner.suite('TestRunner',(it_main)=>{
     runner.after((log)=>{ log.out('some stuff after the tests') })
     suite1.it('should do stuff',()=>{ expect.eq(true) })
     suite1.it('should do stuff 1',()=>{ expect.eq('true','true') })
+    suite1.it('should be pending')
     suite1.it('should do stuff 2',async ()=>{ expect.eq(await getOne(),1) })
     suite1.it('should do stuff 3',function(){
       this.timeout(2)
