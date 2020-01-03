@@ -22,34 +22,24 @@ const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Validate')
 const Util = require('../lib/Util')
 runner.suite('Util',(it)=>{
-  const util = new Util()
   const render = (s)=>{return s}
-  it('should construct',()=>{
-    expect.isType('Util',new Util())
-  })
-  it('should have the short timezone',()=>{
-    expect.isType('string',util.timezoneShort)
-  })
   it('should capitalize a string',()=>{
-    expect.eq(util.capitalize('test'),'Test')
+    expect.eq(Util.capitalize('test'),'Test')
   })
   it('should print a date',()=>{
-    expect.isType('string',util.printDate(new Date()))
+    expect.isType('string',Util.printDate(new Date()))
   })
   it('should escape and truncate a string',()=>{
-    expect.eq(util.escapeAndTruncate()(
+    expect.eq(Util.escapeAndTruncate()(
       '2,<span>fooo bar</span>',render),'fo')
   })
   it('should check for bool true',()=>{
-    expect.eq(util.is()('true,1,2',render),'1')
-    expect.eq(util.is()('false,1,2',render),'2')
+    expect.eq(Util.is()('true,1,2',render),'1')
+    expect.eq(Util.is()('false,1,2',render),'2')
   })
   it('should check for comparison',()=>{
-    expect.eq(util.compare()('1,1,1,2',render),'1')
-    expect.eq(util.compare()('1,2,1,2',render),'2')
-  })
-  it('should expose pretty bytes',()=>{
-    expect.eq(util.prettyBytes(1000000),'1 MB')
+    expect.eq(Util.compare()('1,1,1,2',render),'1')
+    expect.eq(Util.compare()('1,2,1,2',render),'2')
   })
 })
 if(require.main === module) runner.execute().then(code => process.exit(code))
