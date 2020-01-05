@@ -49,5 +49,30 @@ against `Validate.eq(val1,val2)`
 * `err` {string} compare this to `Error.message` when caught.
 * Returns: {boolean} `true` when `err` matches caught `Error.message`
 
-### `static eq(val1,val2)
-`
+### static Validate.eq(val1,val2)
+this checks if val1 and the val2 matches and returns the value if it does
+
+### `static Validate.eqDeep(val1, val2)`
+```js
+const assert = require('assert').strict
+```
+* `{regex} to match against`
+* `{value} to match against` 
+* Returns: {boolean} `true` when matching
+* Returns: {boolean} `false` when not matching
+
+### `static Validate.getType(Val)`
+* Returns a type of string equal to the value
+### `static Validate.isType(type, value)`
+* Returns {boolean} true if type or value matches
+### `static Validate.isAbove(base, test)`
+* returns {boolean} true if test, is greater than base
+### `static Validate.isbelow(base, test)`
+* returns {boolean} true if test is less than base
+### `static Validate.minumum(base,test)`
+* returns {boolean} true if the test is greater than or equal to the base
+### `static Vaidate.maximum(base,test)`
+* returns {boolean} true if test is less than or equal to base
+### `static Validate.neq(val1,val2)`
+* returns {boolean} true if test val1 one is not equal to val2
+
