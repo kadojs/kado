@@ -1,41 +1,28 @@
-### 4.0.0 (planning, request for comments)
-*NOT RELEASED*
-* Redesign startup API this means exposing more of the interface start process
- into user space so that the application itself can define routes etc from the
- ground up, drop the default modules and move them into a kado-ui pack that
- comes with an admin panel and simple content management and blog publishing.
- This should help drop the weight of the core down but more importantly give
- Kado the true building block feel it should have came with all along. This
- will also allow Kado to come with even less packages and continue to provide
- the same consistent working environment. So what does this mean?
- * Expose interface startup through a kado.js file in the application the same
- way modules are handled.
- * Remove the default modules other than the kado module. This will remove
- the addons that must be built and make installation more global along with
- giving the user more choices over how to build the application.
- * Continue to abstract from actually being a web engine and focus on being a
- programming organization engine. We didnt quite know or understand this at the
- beginning, however Kado is more about organizing code.
- * Write upgrade documentation on conversion from Kado 3.x to Kado 4.x which
- will mostly involve adding to a kado.js within the application to restore
- default routing functionality.
- * No longer start two interfaces by default, move to a single interface model.
- Using two interfaces just served to complicate all matters, using a single
- interface with enhanced routing makes the most sense. In instances where the
- panels need to be split in however many places this can be done by simply,
- starting multiple instances and using webserver rules to deny or allow urls.
+### 3.10.4
+*Released 1/5/2020*
+* Update to solve security warnings
+   * codemirror             ^5.49.2  →  ^5.50.2
+   * commander               ^4.0.1  →   ^4.1.0
+   * highlight.js           ^9.16.2  →  ^9.17.1
+   * mocha                   ^6.2.2  →   ^7.0.0
+   * mustache                ^3.1.0  →   ^3.2.1
+   * mysql2                  ^2.0.2  →   ^2.1.0
+   * nodemon                 ^2.0.1  →   ^2.0.2
+   * pdfmake                ^0.1.62  →  ^0.1.63
+   * sequelize              ^5.21.2  →  ^5.21.3
+   * terser-webpack-plugin   ^2.2.2  →   ^2.3.1
+   * tui-editor              ^1.4.9  →  ^1.4.10
+   * webpack                ^4.41.2  →  ^4.41.5
 
-UPDATE: As of December 8th 2019, all of the above are complete. Kado 4 is in
-final staging for release pending a thorough code review.
 
 ### 3.10.3
 *Released 12/8/2019*
 * Update to solve security vulnerabilities
- * bluebird               ^3.7.1  →  ^3.7.2
- * bootstrap              ^4.3.1  →  ^4.4.1
- * mysql2                 ^2.0.1  →  ^2.0.2
- * terser-webpack-plugin  ^2.2.1  →  ^2.2.2
- * tui-editor             ^1.4.8  →  ^1.4.9
+   * bluebird               ^3.7.1  →  ^3.7.2
+   * bootstrap              ^4.3.1  →  ^4.4.1
+   * mysql2                 ^2.0.1  →  ^2.0.2
+   * terser-webpack-plugin  ^2.2.1  →  ^2.2.2
+   * tui-editor             ^1.4.8  →  ^1.4.9
 
 More information here: https://github.com/KadoOrg/kado/network/alert/package-lock.json/serialize-javascript/open
 
