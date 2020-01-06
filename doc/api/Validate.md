@@ -62,17 +62,36 @@ const assert = require('assert').strict
 * Returns: {boolean} `false` when not matching
 
 ### `static Validate.getType(Val)`
-* Returns a type of string equal to the value
+* Returns a type of `string` equal to the value
 ### `static Validate.isType(type, value)`
-* Returns {boolean} true if type or value matches
+* Returns {boolean} `true` if type or value matches
 ### `static Validate.isAbove(base, test)`
-* returns {boolean} true if test, is greater than base
+* returns {boolean} `true` if test, is greater than base
 ### `static Validate.isbelow(base, test)`
-* returns {boolean} true if test is less than base
+* returns {boolean} `true` if test is less than base
 ### `static Validate.minumum(base,test)`
-* returns {boolean} true if the test is greater than or equal to the base
+* returns {boolean} `true` if the test is greater than or equal to the base
 ### `static Vaidate.maximum(base,test)`
-* returns {boolean} true if test is less than or equal to base
+* returns {boolean} `true` if test is less than or equal to base
 ### `static Validate.neq(val1,val2)`
-* returns {boolean} true if test val1 one is not equal to val2
-
+* returns {boolean} `true` if test val1 one is not equal to val2
+### `static ValidategetInstance(data)` 
+* returns type of `data`
+### `Validate.constructor(data)`
+* identifies data when data is passed as an argument
+### `Validate.above(floor)`
+* returns {boolean} `true ` this.data must be greater than the above argument
+### `Validate.below(ceiling)`
+* returns {boolean} `true ` this.data must be less than the below argument
+### `Validate.equal(against)`
+* returns {boolean} `true ` this.data must be equal to against argument
+### `Validate.is(type)` 
+* returns {boolean} `true` this.data must match the type argument
+### `Validate.min(bottom)`
+* returns {boolean} `true` this.data must be greater than or equal to bottom argument
+### `Validate.max(top)`
+* returns {boolean} `true` this.data must be less than or equal to top argument
+### `Validate.not(val)`
+* returns {boolean} `true` this.data must not equal val
+#class Assert 
+extends the validate class and provides all the same methods except it returns false instead of throwing an error
