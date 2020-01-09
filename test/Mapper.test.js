@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -21,64 +21,64 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Mapper = require('../lib/Mapper')
-runner.suite('Mapper',(it)=>{
+runner.suite('Mapper', (it) => {
   const mapper = new Mapper()
-  it('should construct',()=>{
-    expect.isType('Mapper',new Mapper())
+  it('should construct', () => {
+    expect.isType('Mapper', new Mapper())
   })
-  it('should set a value with a string',()=>{
-    expect.eq(mapper.set('foo1','bar'),'bar')
+  it('should set a value with a string', () => {
+    expect.eq(mapper.set('foo1', 'bar'), 'bar')
   })
-  it('should set a value with an array',()=>{
-    expect.eq(mapper.set(['foo2'],'bar'),'bar')
+  it('should set a value with an array', () => {
+    expect.eq(mapper.set(['foo2'], 'bar'), 'bar')
   })
-  it('should set deep value with an array',()=>{
-    expect.eq(mapper.set(['foo3','bar'],'baz'),'baz')
+  it('should set deep value with an array', () => {
+    expect.eq(mapper.set(['foo3', 'bar'], 'baz'), 'baz')
   })
-  it('should set deep value with a string',()=>{
-    expect.eq(mapper.set('foo4.bar.baz.boo','bap'),'bap')
+  it('should set deep value with a string', () => {
+    expect.eq(mapper.set('foo4.bar.baz.boo', 'bap'), 'bap')
   })
-  it('should get a value with a string',()=>{
-    expect.eq(mapper.get('foo1'),'bar')
+  it('should get a value with a string', () => {
+    expect.eq(mapper.get('foo1'), 'bar')
   })
-  it('should get a value with an array',()=>{
-    expect.eq(mapper.get(['foo2']),'bar')
+  it('should get a value with an array', () => {
+    expect.eq(mapper.get(['foo2']), 'bar')
   })
-  it('should get a deep value with an array',()=>{
-    expect.eq(mapper.get(['foo3','bar']),'baz')
+  it('should get a deep value with an array', () => {
+    expect.eq(mapper.get(['foo3', 'bar']), 'baz')
   })
-  it('should get a deep value with a string',()=>{
-    expect.eq(mapper.get('foo4.bar.baz.boo'),'bap')
+  it('should get a deep value with a string', () => {
+    expect.eq(mapper.get('foo4.bar.baz.boo'), 'bap')
   })
-  it('should delete a value with a string',()=>{
-    expect.eq(mapper.delete('foo1'),'foo1')
+  it('should delete a value with a string', () => {
+    expect.eq(mapper.delete('foo1'), 'foo1')
   })
-  it('should delete a value with an array',()=>{
-    expect.eq(mapper.delete(['foo2']),'foo2')
+  it('should delete a value with an array', () => {
+    expect.eq(mapper.delete(['foo2']), 'foo2')
   })
-  it('should delete a deep value with an array',()=>{
-    expect.eq(mapper.delete(['foo3','bar']),'bar')
+  it('should delete a deep value with an array', () => {
+    expect.eq(mapper.delete(['foo3', 'bar']), 'bar')
   })
-  it('should set a value',()=>{
-    expect.eq(mapper.set('foo1','bap'),'bap')
+  it('should set a value', () => {
+    expect.eq(mapper.set('foo1', 'bap'), 'bap')
   })
-  it('should list all values',()=>{
-    expect.eq(mapper.all().foo1,'bap')
+  it('should list all values', () => {
+    expect.eq(mapper.all().foo1, 'bap')
   })
-  it('should merge an object in',()=>{
-    expect.eq(mapper.merge({foo5: 'bar'}).foo5,'bar')
+  it('should merge an object in', () => {
+    expect.eq(mapper.merge({ foo5: 'bar' }).foo5, 'bar')
   })
-  it('should merge in a 2 level object',()=>{
-    expect.eq(mapper.merge({foo6: {foo7: 'bar'}}).foo6.foo7,'bar')
+  it('should merge in a 2 level object', () => {
+    expect.eq(mapper.merge({ foo6: { foo7: 'bar' } }).foo6.foo7, 'bar')
   })
-  it('should merge into the 2 level object',()=>{
-    expect.eq(mapper.merge({foo6: {foo8: 'bar'}}).foo6.foo8,'bar')
-    expect.eq(mapper.foo6.foo7,'bar')
+  it('should merge into the 2 level object', () => {
+    expect.eq(mapper.merge({ foo6: { foo8: 'bar' } }).foo6.foo8, 'bar')
+    expect.eq(mapper.foo6.foo7, 'bar')
   })
-  it('should merge a 3rd level into the 2nd',()=>{
+  it('should merge a 3rd level into the 2nd', () => {
     expect.isType('Mapper',
-      mapper.merge({foo6: {foo9: {foo10: {pies: ['apple']}}}}))
-    expect.isType('Array',mapper.foo6.foo9.foo10.pies)
+      mapper.merge({ foo6: { foo9: { foo10: { pies: ['apple'] } } } }))
+    expect.isType('Array', mapper.foo6.foo9.foo10.pies)
   })
 })
-if(require.main === module) runner.execute().then(code => process.exit(code))
+if (require.main === module) runner.execute().then(code => process.exit(code))

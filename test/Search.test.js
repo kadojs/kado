@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -21,10 +21,10 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Search = require('../lib/Search')
-runner.suite('Search',(it)=>{
-  let search = new Search()
-  let ourModule = ()=>{
-    return new Promise((resolve)=>{
+runner.suite('Search', (it) => {
+  const search = new Search()
+  const ourModule = () => {
+    return new Promise((resolve) => {
       resolve([
         {
           uri: '/foo',
@@ -41,35 +41,35 @@ runner.suite('Search',(it)=>{
       ])
     })
   }
-  it('should construct',() => {
-    expect.isType('Search',new Search())
+  it('should construct', () => {
+    expect.isType('Search', new Search())
   })
-  it('should have no modules',()=>{
-    expect.eq(Object.keys(search.allModules()).length,0)
+  it('should have no modules', () => {
+    expect.eq(Object.keys(search.allModules()).length, 0)
   })
-  it('should add a module',()=>{
-    expect.eq(search.addModule('test',ourModule).title,'test')
+  it('should add a module', () => {
+    expect.eq(search.addModule('test', ourModule).title, 'test')
   })
-  it('should get the module',()=>{
-    expect.eq(search.getModule('test').title,'test')
+  it('should get the module', () => {
+    expect.eq(search.getModule('test').title, 'test')
   })
-  it('should remove the module',()=>{
-    expect.eq(search.removeModule('test'),'test')
+  it('should remove the module', () => {
+    expect.eq(search.removeModule('test'), 'test')
   })
-  it('should the module as removed',()=>{
-    expect.eq(Object.keys(search.allModules()).length,0)
+  it('should the module as removed', () => {
+    expect.eq(Object.keys(search.allModules()).length, 0)
   })
-  it('should add a new module',()=>{
-    expect.eq(search.addModule('test',ourModule).title,'test')
+  it('should add a new module', () => {
+    expect.eq(search.addModule('test', ourModule).title, 'test')
   })
-  it('should search by phrase',()=>{
-    return search.byPhrase({},'some foo',{start: 0,limit: 10})
-      .then((result)=>{
-        expect.eq(result.resultCount,2)
-        expect.eq(result.results.length,1)
-        expect.eq(result.results[0].moduleTitle,'test')
-        expect.eq(result.results[0].moduleResults[0].uri,'/foo')
+  it('should search by phrase', () => {
+    return search.byPhrase({}, 'some foo', { start: 0, limit: 10 })
+      .then((result) => {
+        expect.eq(result.resultCount, 2)
+        expect.eq(result.results.length, 1)
+        expect.eq(result.results[0].moduleTitle, 'test')
+        expect.eq(result.results[0].moduleResults[0].uri, '/foo')
       })
   })
 })
-if(require.main === module) runner.execute().then(code => process.exit(code))
+if (require.main === module) runner.execute().then(code => process.exit(code))

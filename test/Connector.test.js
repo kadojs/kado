@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -21,44 +21,44 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Connector = require('../lib/Connector')
-runner.suite('Connector',(it)=> {
-  let connector = new Connector()
-  //const stretchfs = require('stretchfs-sdk')
-  //const Prism = stretchfs.Prism
+runner.suite('Connector', (it) => {
+  const connector = new Connector()
+  // const stretchfs = require('stretchfs-sdk')
+  // const Prism = stretchfs.Prism
   const Prism = class {
-    connect(){
+    connect () {
       return Promise.resolve('cdn.stretchfs.com')
     }
   }
-  it('should construct',() => {
-    expect.isType('Connector',new Connector())
+  it('should construct', () => {
+    expect.isType('Connector', new Connector())
   })
-  it('should accept a new connector',() => {
-    expect.isType('Prism',connector.addConnector(
+  it('should accept a new connector', () => {
+    expect.isType('Prism', connector.addConnector(
       'stretchfs',
-      new Prism('test','test','localhost')
+      new Prism('test', 'test', 'localhost')
     ))
   })
-  it('should have the new connector instance',()=>{
-    expect.isType('Prism',connector.stretchfs)
+  it('should have the new connector instance', () => {
+    expect.isType('Prism', connector.stretchfs)
   })
-  it('should remove connector instance',()=>{
-    expect.eq(connector.removeConnector('stretchfs'),'stretchfs')
+  it('should remove connector instance', () => {
+    expect.eq(connector.removeConnector('stretchfs'), 'stretchfs')
   })
-  it('should no longer have the connector handle',()=>{
-    expect.eq(connector.stretchfs,undefined)
+  it('should no longer have the connector handle', () => {
+    expect.eq(connector.stretchfs, undefined)
   })
-  it('should accept a new connector instance',()=>{
-    expect.isType('Prism',connector.addConnector(
+  it('should accept a new connector instance', () => {
+    expect.isType('Prism', connector.addConnector(
       'stretchfs',
-      new Prism('test','test','localhost')
+      new Prism('test', 'test', 'localhost')
     ))
   })
-  it('should attempt connect and fail',()=>{
+  it('should attempt connect and fail', () => {
     return connector.connect('stretchfs')
-      .then((result)=>{
-        expect.eq(result,'cdn.stretchfs.com')
+      .then((result) => {
+        expect.eq(result, 'cdn.stretchfs.com')
       })
   })
 })
-if(require.main === module) runner.execute().then(code => process.exit(code))
+if (require.main === module) runner.execute().then(code => process.exit(code))

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -21,46 +21,46 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Logger = require('../lib/Logger')
-runner.suite('Logger',(it)=>{
+runner.suite('Logger', (it) => {
   const logger = new Logger()
   const loggerName = 'winston'
-  //const LogHelper = require('../lib/logger/winston')
+  // const LogHelper = require('../lib/logger/winston')
   const LogHelper = class {}
-  it('should construct',() => {
-    expect.isType('Logger',new Logger())
+  it('should construct', () => {
+    expect.isType('Logger', new Logger())
   })
-  it('should have no logger',() => {
-    expect.eq(logger.getLogger(),null)
+  it('should have no logger', () => {
+    expect.eq(logger.getLogger(), null)
   })
-  it('should have no handlers',()=>{
-    expect.eq(Object.keys(logger.allHandlers()).length,0)
+  it('should have no handlers', () => {
+    expect.eq(Object.keys(logger.allHandlers()).length, 0)
   })
-  it('should add a handler',()=>{
-    expect.eq(logger.addHandler(loggerName,new LogHelper()),loggerName)
+  it('should add a handler', () => {
+    expect.eq(logger.addHandler(loggerName, new LogHelper()), loggerName)
   })
-  it('should get the handler',()=>{
-    expect.isType('LogHelper',logger.getHandler(loggerName))
+  it('should get the handler', () => {
+    expect.isType('LogHelper', logger.getHandler(loggerName))
   })
-  it('should activate the handler',()=>{
-    expect.eq(logger.activateHandler(loggerName),loggerName)
+  it('should activate the handler', () => {
+    expect.eq(logger.activateHandler(loggerName), loggerName)
   })
-  it('should return the active handler',()=>{
-    expect.isType('LogHelper',logger.getLogger())
+  it('should return the active handler', () => {
+    expect.isType('LogHelper', logger.getLogger())
   })
-  it('should remove the handler',()=>{
-    expect.eq(logger.removeHandler(loggerName),loggerName)
+  it('should remove the handler', () => {
+    expect.eq(logger.removeHandler(loggerName), loggerName)
   })
-  it('should no longer have the handler',()=>{
-    expect.eq(logger.getHandler(loggerName),false)
+  it('should no longer have the handler', () => {
+    expect.eq(logger.getHandler(loggerName), false)
   })
-  it('should still have an activated instance',()=>{
-    expect.isType('LogHelper',logger.getLogger())
+  it('should still have an activated instance', () => {
+    expect.isType('LogHelper', logger.getLogger())
   })
-  it('should reset',() => {
-    expect.eq(logger.reset(),true)
+  it('should reset', () => {
+    expect.eq(logger.reset(), true)
   })
-  it('should now not have a logger',() => {
-    expect.eq(logger.getLogger(),null)
+  it('should now not have a logger', () => {
+    expect.eq(logger.getLogger(), null)
   })
 })
-if(require.main === module) runner.execute().then(code => process.exit(code))
+if (require.main === module) runner.execute().then(code => process.exit(code))

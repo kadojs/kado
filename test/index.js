@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -19,25 +19,25 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const focus = new RegExp((process.env.FOCUS || '.')+'','i')
+const focus = new RegExp((process.env.FOCUS || '.') + '', 'i')
 const suites = [
   'TestRunner',
-  'Asset','Assert',
-  'CommandServer','Connector','Cron',
+  'Asset', 'Assert',
+  'CommandServer', 'Connector', 'Cron',
   'Database',
-  'Email','Event',
+  'Email', 'Event',
   'Format',
   'GetOpt',
-  'History','HyperText',
-  'Language','Library','Logger',
-  'Mapper','Message',
+  'History', 'HyperText',
+  'Language', 'Library', 'Logger',
+  'Mapper', 'Message',
   'Navigation',
-  'Permission','Profiler',
+  'Permission', 'Profiler',
   'Router',
   'Search',
   'Util',
-  'Validate','View',
+  'Validate', 'View'
 ]
-const runnableSuites = suites.filter(fn => (-1 < fn.search(focus)))
-for(const suite of runnableSuites) require(`./${suite}.test.js`)
+const runnableSuites = suites.filter(fn => (fn.search(focus) > -1))
+for (const suite of runnableSuites) require(`./${suite}.test.js`)
 runner.execute().then(code => process.exit(code))
