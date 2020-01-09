@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Validate')
+const { expect } = require('../lib/Assert')
 const intlOk = require('../lib/Language').hasFullIntl()
 const Format = require('../lib/Format')
 const format = runner.suite('Format')

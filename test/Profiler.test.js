@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Validate')
+const { expect } = require('../lib/Assert')
 const Profiler = require('../lib/Profiler')
 runner.suite('Profiler',(it)=>{
   let profiler = new Profiler()
