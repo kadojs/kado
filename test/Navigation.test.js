@@ -20,11 +20,11 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Validate')
-const Nav = require('../lib/Navigation')
-runner.suite('Nav',(it)=>{
-  let nav = new Nav()
+const Navigation = require('../lib/Navigation')
+runner.suite('Navigation',(it)=>{
+  let nav = new Navigation()
   it('should construct',() => {
-    expect.isType('Nav',new Nav())
+    expect.isType('Navigation',new Navigation())
   })
   it('should be empty',() => {
     expect.eq(nav.all().length,0)
