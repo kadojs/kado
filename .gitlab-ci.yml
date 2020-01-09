@@ -3,4 +3,6 @@ image: node:latest
 test:
   script:
     - npm install
+    - npm install jshint --no-save
     - npm test
+    - node node_modules/jshint/bin/jshint -c .jshintrc .
