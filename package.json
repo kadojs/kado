@@ -43,7 +43,7 @@
   },
   "main": "./lib/Util.js",
   "scripts": {
-    "test": "node ./test/index.js"
+    "test": "standard && node ./test/index.js"
   },
   "dependencies": {},
   "devDependencies": {}
