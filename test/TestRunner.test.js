@@ -20,7 +20,7 @@
  */
 const TestRunner = require('../lib/TestRunner')
 const _runner = TestRunner.getInstance('Kado')
-const { expect } = require('../lib/Validate')
+const { expect } = require('../lib/Assert')
 _runner.suite('TestRunner',(it_main)=>{
   const indent = ' | '
   const runner = new TestRunner('Self')

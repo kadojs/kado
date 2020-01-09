@@ -18,21 +18,20 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-const Val = require('../lib/Validate')
-const {expect, AssertionError} = require('../lib/Assert')
+const {Assert,expect,AssertionError} = require('../lib/Assert')
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const validate = runner.suite('Validate',(it)=>{
+const assert = runner.suite('Assert',(it)=>{
   it('should construct',()=>{
-    expect.isType('Validate',new Val(5))
+    expect.isType('Assert',new Assert(5))
   })
   it('should return an instance',() => {
-    expect.isType('Validate',Val.getInstance())
+    expect.isType('Assert',Assert.getInstance())
   })
   it('should be false on true neq true',() => {
-    expect.eq(Val.neq(true,true),false)
+    expect.eq(Assert.neq.catch(true,true,AssertionError))
   })
 })
-validate.suite('assert',(it)=>{
+assert.suite('assert',(it)=>{
   it('should assert an array',() => {
     expect.assert([],[])
     expect.assert.catch([],[1],'Array() does not equal Array(1)')
@@ -86,7 +85,7 @@ validate.suite('assert',(it)=>{
       'undefined(undefined) does not equal null(null)')
   })
 })
-validate.suite('eq',(it)=>{
+assert.suite('eq',(it)=>{
   it('should eq array',() => {
     const arr1 = []
     expect.eq(arr1,arr1)
@@ -116,134 +115,130 @@ validate.suite('eq',(it)=>{
     expect.eq('foo','foo')
   })
 })
-validate.suite('eqDeep',(it)=>{
+assert.suite('eqDeep',(it)=>{
   it('should eq an array',() => {
-    expect.eq(Val.eqDeep([],[]))
-    expect.eq(Val.eqDeep([],{}),false)
+    expect.eq(Assert.eqDeep([],[]))
+    expect.eq(Assert.eqDeep.catch([],{},AssertionError))
   })
   it('should eq an object',() => {
-    expect.eq(Val.eqDeep({},{}))
-    expect.eq(Val.eqDeep({},[]),false)
+    expect.eq(Assert.eqDeep({},{}))
+    expect.eq(Assert.eqDeep.catch({},[],AssertionError))
   })
 })
-validate.suite('getType',(it)=>{
+assert.suite('getType',(it)=>{
   it('should get a array',() => {
-    expect.eq(Val.getType([]),'Array')
+    expect.eq(Assert.getType([]),'Array')
   })
   it('should get a boolean',() => {
-    expect.eq(Val.getType(true),'boolean')
-    expect.eq.catch(Val.getType('false'),'boolean',
+    expect.eq(Assert.getType(true),'boolean')
+    expect.eq.catch(Assert.getType('false'),'boolean',
       'string(string) does not equal string(boolean)')
-    expect.eq.catch(Val.getType('+00000000'),'boolean',
+    expect.eq.catch(Assert.getType('+00000000'),'boolean',
       'string(string) does not equal string(boolean)')
   })
   it('should get a null',() => {
-    expect.eq(Val.getType(null),'null')
+    expect.eq(Assert.getType(null),'null')
   })
   it('should get a number',() => {
-    expect.eq(Val.getType(1),'number')
+    expect.eq(Assert.getType(1),'number')
   })
   it('should get a object',() => {
-    expect.eq(Val.getType({}),'Object')
+    expect.eq(Assert.getType({}),'Object')
   })
   it('should get a string',() => {
-    expect.eq(Val.getType(''),'string')
+    expect.eq(Assert.getType(''),'string')
   })
   it('should get a undefined',() => {
-    expect.eq(Val.getType(),'undefined')
-    expect.eq.catch(Val.getType(''),'undefined',
+    expect.eq(Assert.getType(),'undefined')
+    expect.eq.catch(Assert.getType(''),'undefined',
       'string(string) does not equal string(undefined)')
   })
 })
-validate.suite('isType',(it)=>{
+assert.suite('isType',(it)=>{
   it('should identify a array',() => {
-    expect.eq(Val.isType('Array',[]))
+    expect.eq(Assert.isType('Array',[]))
   })
   it('should identify a null',() => {
-    expect.eq(Val.isType('null',null))
+    expect.eq(Assert.isType('null',null))
   })
   it('should identify a number',() => {
-    expect.eq(Val.isType('number',1))
+    expect.eq(Assert.isType('number',1))
   })
   it('should identify a object',() => {
-    expect.eq(Val.isType('Object',{}))
+    expect.eq(Assert.isType('Object',{}))
   })
   it('should identify a string',() => {
-    expect.eq(Val.isType('string',''))
+    expect.eq(Assert.isType('string',''))
   })
   it('should identify an undefined',() => {
-    expect.eq(Val.isType('undefined',undefined))
+    expect.eq(Assert.isType('undefined',undefined))
   })
 })
-validate.suite('isAbove',(it)=>{
+assert.suite('isAbove',(it)=>{
   it('should fail on invalid input',() => {
-    expect.eq.catch(Val.isAbove(3),'foo',
-      'boolean(false) does not equal string(foo)')
+    expect.eq(Assert.isAbove.catch('foo',AssertionError))
   })
   it('should be true if a number is above base',() => {
-    expect.eq(Val.isAbove(3,10))
+    expect.eq(Assert.isAbove(3,10))
   })
   it('should be false if a number is below a base',() => {
-    expect.eq(Val.isAbove(10,3),false)
+    expect.eq(Assert.isAbove.catch(10,3,AssertionError))
   })
 })
-validate.suite('isBelow',(it)=>{
+assert.suite('isBelow',(it)=>{
   it('should fail on invalid input',() => {
-    expect.eq.catch(Val.isBelow(3),'foo',
-      'boolean(false) does not equal string(foo)')
+    expect.eq(Assert.isBelow.catch('foo', AssertionError))
   })
   it('should be true if a number is below a base',() => {
-    expect.eq(Val.isBelow(7,5))
+    expect.eq(Assert.isBelow(7,5))
   })
   it('should be false if a number is above a base',() => {
-    expect.neq(Val.isBelow(7,4))
+    expect.neq(Assert.isBelow(7,4))
   })
 })
-validate.suite('match',(it)=>{
+assert.suite('match',(it)=>{
   it('should match an array containing strings',() => {
-    expect.eq(Val.match(new RegExp('foo'),['foo']))
+    expect.eq(Assert.match(new RegExp('foo'),['foo']))
   })
   it('should match an array within array containing strings',() => {
-    expect.eq(Val.match(new RegExp('foo'),[[1,2],['foo','bar'],{foo: 'foo'}]))
+    expect.eq(Assert.match(new RegExp('foo'),[[1,2],['foo','bar'],{foo: 'foo'}]))
   })
   it('should match an object containing strings',() => {
-    expect.eq(Val.match(new RegExp('foo'),[[1,2],['bar'],{foo: 'foo'}]))
+    expect.eq(Assert.match(new RegExp('foo'),[[1,2],['bar'],{foo: 'foo'}]))
   })
   it('should match a string',() => {
-    expect.eq(Val.match(/foo/,'somefoostring'))
-    expect.eq(Val.match(/bar/,'somefoostring'),false)
+    expect.eq(Assert.match(/foo/,'somefoostring'))
+    expect.eq(Assert.match(/bar/,'somefoostring'),false)
   })
 })
-validate.suite('maximum',(it)=>{
+assert.suite('maximum',(it)=>{
   it('should fail on invalid input',() => {
-    expect.eq.catch(Val.maximum(3),'foo',
-      'boolean(false) does not equal string(foo)')
+    expect.eq(Assert.maximum.catch('foo',AssertionError))
   })
   it('should be true if a number is below or equal to a base',() => {
-    expect.eq(Val.maximum(3,2))
-    expect.eq(Val.maximum(3,3))
+    expect.eq(Assert.maximum(3,2))
+    expect.eq(Assert.maximum(3,3))
   })
   it('should be false if a number is above a base',() => {
-    expect.eq(Val.maximum(3,211),false)
+    expect.eq(Assert.maximum.catch(3,211,AssertionError))
   })
 })
-validate.suite('minimum',(it)=>{
+assert.suite('minimum',(it)=>{
   it('should fail on invalid input',() => {
-    expect.eq.catch(Val.minimum(3),'foo',
-      'boolean(false) does not equal string(foo)')
+    expect.eq(Assert.minimum.catch('foo',AssertionError))
   })
   it('should be true if a number is above or equal to a base',() => {
-    expect.eq(Val.minimum(3,3))
-    expect.eq(Val.minimum(3,5))
+    expect.eq(Assert.minimum(3,3))
+    expect.eq(Assert.minimum(3,5))
   })
   it('should be false if a number is below a base',() => {
-    expect.eq(Val.minimum(10,9),false)
+    expect.eq(Assert.minimum.catch(10,9,AssertionError))
   })
 })
-validate.suite('types',(it)=>{
+assert.suite('types',(it)=>{
   it('should check for Array',() => {
-    expect.eq(Val.eqDeep([],[]),true)
-    expect.eq(Val.eqDeep([],{}),false)
+    expect.eq(Assert.eqDeep.catch([],[],AssertionError))
+    expect.eq(Assert.eqDeep.catch([],{},AssertionError))
   })
   it('should check for Boolean',() => {
     expect.eq(true)
@@ -326,33 +321,53 @@ validate.suite('types',(it)=>{
     expect.eq.catch(undefined,null,AssertionError)
   })
 })
-validate.suite('withInstance',(it)=>{
+assert.suite('withInstance',(it)=>{
   it('should check above',() => {
-    expect.eq(new Val(5).above(4))
+    try {
+      expect.eq(new Assert(5).above(4))
+    } catch(e) {
+      expect.isType('AssertionError',e)
+    }
   })
   it('should check below',() => {
-    expect.eq(new Val(5).below(6))
+    try{
+      expect.eq(new Assert(5).below(6))
+    } catch(e){
+      expect.isType('AssertionError',e)
+    }
   })
   it('should check equal',() => {
-    expect.eq(new Val(1).equal(1))
+    expect.eq(new Assert(1).equal(1))
   })
   it('should check is type',()=>{
-    expect.eq(new Val('foo').is('string'))
+    expect.eq(new Assert('foo').is('string'))
   })
   it('should check min',()=>{
-    const v = new Val(3)
+    const v = new Assert(3)
     expect.eq(v.min(3))
-    expect.eq(v.min(5),false)
+    try {
+      expect.eq(v.min(5),false)
+    } catch(e){
+      expect.isType('AssertionError',e)
+    }
   })
   it('should check max',()=>{
-    const v = new Val(7)
+    const v = new Assert(7)
     expect.eq(v.max(7))
-    expect.eq(v.max(5),false)
+    try {
+      expect.eq(v.max(5),false)
+    } catch(e){
+      expect.isType('AssertionError',e)
+    }
   })
   it('should check not',()=>{
-    const v = new Val(8)
+    const v = new Assert(8)
     expect.eq(v.not(7))
-    expect.eq(v.not(8),false)
+    try {
+      expect.eq(v.not(8),false)
+    } catch(e){
+      expect.isType('AssertionError',e)
+    }
   })
 })
 if(require.main === module) runner.execute().then(code => process.exit(code))
