@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -21,35 +21,35 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Cron = require('../lib/Cron')
-runner.suite('Cron',(it)=>{
-  let cron = new Cron()
-  it('should construct',()=>{
-    expect.isType('Cron',new Cron())
+runner.suite('Cron', (it) => {
+  const cron = new Cron()
+  it('should construct', () => {
+    expect.isType('Cron', new Cron())
   })
-  it('should be empty',()=>{
-    expect.eq(Object.keys(cron.all()).length,0)
+  it('should be empty', () => {
+    expect.eq(Object.keys(cron.all()).length, 0)
   })
-  it('should add a cron',()=>{
-    const job = Cron.newJob().setSchedule('* * * * *').addHandler(()=>{})
-    expect.isType('CronJob',cron.add('test',job))
+  it('should add a cron', () => {
+    const job = Cron.newJob().setSchedule('* * * * *').addHandler(() => {})
+    expect.isType('CronJob', cron.add('test', job))
   })
-  it('should show a cron exists',()=>{
-    expect.isType('CronJob',cron.get('test'))
+  it('should show a cron exists', () => {
+    expect.isType('CronJob', cron.get('test'))
   })
-  it('should show the cron in the list',()=>{
-    expect.eq(Object.keys(cron.all()).length,1)
+  it('should show the cron in the list', () => {
+    expect.eq(Object.keys(cron.all()).length, 1)
   })
-  it('should show the cron via count',()=>{
-    expect.eq(cron.count(),1)
+  it('should show the cron via count', () => {
+    expect.eq(cron.count(), 1)
   })
-  it('should start the cron',()=>{
-    expect.isType('Timeout',cron.start())
+  it('should start the cron', () => {
+    expect.isType('Timeout', cron.start())
   })
-  it('should stop the cron',()=>{
+  it('should stop the cron', () => {
     expect.eq(cron.stop())
   })
-  it('should destroy the cron',()=>{
-    expect.eq(cron.removeAll(),1)
+  it('should destroy the cron', () => {
+    expect.eq(cron.removeAll(), 1)
   })
 })
-if(require.main === module) runner.execute().then(code => process.exit(code))
+if (require.main === module) runner.execute().then(code => process.exit(code))

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -22,45 +22,42 @@ const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Email = require('../lib/Email')
 const EmailConnector = require('../lib/EmailConnector')
-runner.suite('Email',(it)=> {
-  let email = new Email()
+runner.suite('Email', (it) => {
+  const email = new Email()
   class OurEmail extends EmailConnector {
-    constructor(options){
-      super(options)
-    }
-    connect(){
+    connect () {
       this.server = {
         ready: false,
-        send: (options,cb)=>{ cb(null,true) },
+        send: (options, cb) => { cb(null, true) },
         sending: false,
         smtp: {}
       }
       return this.server
     }
   }
-  it('should construct',() => {
-    expect.isType('Email',new Email())
+  it('should construct', () => {
+    expect.isType('Email', new Email())
   })
-  it('should accept a new handler',() => {
-    expect.isType('OurEmail',email.addHandler('test',new OurEmail()))
+  it('should accept a new handler', () => {
+    expect.isType('OurEmail', email.addHandler('test', new OurEmail()))
   })
-  it('should have the new handler instance',()=>{
-    expect.isType('OurEmail',email.test)
+  it('should have the new handler instance', () => {
+    expect.isType('OurEmail', email.test)
   })
-  it('should remove handler instance',()=>{
-    expect.eq(email.removeHandler('test'),'test')
+  it('should remove handler instance', () => {
+    expect.eq(email.removeHandler('test'), 'test')
   })
-  it('should no longer have the handler',()=>{
-    expect.eq(email.test,undefined)
+  it('should no longer have the handler', () => {
+    expect.eq(email.test, undefined)
   })
-  it('should accept a new handler instance',()=>{
-    expect.isType('OurEmail',email.addHandler('test',new OurEmail()))
+  it('should accept a new handler instance', () => {
+    expect.isType('OurEmail', email.addHandler('test', new OurEmail()))
   })
-  it('should attempt connect and fail',()=>{
-    let result = email.test.connect()
-    expect.eq(result.sending,false)
-    expect.eq(result.ready,false)
-    expect.isType('Object',result.smtp)
+  it('should attempt connect and fail', () => {
+    const result = email.test.connect()
+    expect.eq(result.sending, false)
+    expect.eq(result.ready, false)
+    expect.isType('Object', result.smtp)
   })
 })
-if(require.main === module) runner.execute().then(code => process.exit(code))
+if (require.main === module) runner.execute().then(code => process.exit(code))

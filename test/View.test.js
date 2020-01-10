@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -21,54 +21,54 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const View = require('../lib/View')
-runner.suite('View',(it)=>{
-  let view = new View()
-  //const ViewHelper = require('../lib/view/mustache.js')
+runner.suite('View', (it) => {
+  const view = new View()
+  // const ViewHelper = require('../lib/view/mustache.js')
   const ViewHelper = class {}
   const handlerName = 'mustache'
-  it('should construct',() => {
-    expect.isType('View',new View())
+  it('should construct', () => {
+    expect.isType('View', new View())
   })
-  it('should be empty',()=>{
-    expect.eq(Object.keys(view.all()).length,0)
+  it('should be empty', () => {
+    expect.eq(Object.keys(view.all()).length, 0)
   })
-  it('should error getting an engine with no active handler',()=>{
+  it('should error getting an engine with no active handler', () => {
     try {
       view.getEngine()
-    } catch(e){
-      expect.match(/no rendering handlers/,e.message)
+    } catch (e) {
+      expect.match(/no rendering handlers/, e.message)
     }
   })
-  it('should add a handler',()=>{
-    let instance = new ViewHelper()
-    expect.eq(view.addHandler(handlerName,instance),handlerName)
+  it('should add a handler', () => {
+    const instance = new ViewHelper()
+    expect.eq(view.addHandler(handlerName, instance), handlerName)
   })
-  it('should get a handler',()=>{
-    expect.isType('ViewHelper',view.getHandler(handlerName))
+  it('should get a handler', () => {
+    expect.isType('ViewHelper', view.getHandler(handlerName))
   })
-  it('should activate a handler',()=>{
-    expect.eq(view.activateHandler(handlerName),handlerName)
+  it('should activate a handler', () => {
+    expect.eq(view.activateHandler(handlerName), handlerName)
   })
-  it('should provide an engine now',()=>{
-    expect.isType('ViewHelper',view.getEngine())
+  it('should provide an engine now', () => {
+    expect.isType('ViewHelper', view.getEngine())
   })
-  it('should show in all handlers',()=>{
-    expect.eq(Object.keys(view.allHandlers()).length,1)
+  it('should show in all handlers', () => {
+    expect.eq(Object.keys(view.allHandlers()).length, 1)
   })
-  it('should remove a handler',()=>{
-    expect.eq(view.removeHandler(handlerName),handlerName)
+  it('should remove a handler', () => {
+    expect.eq(view.removeHandler(handlerName), handlerName)
   })
-  it('should add a view',()=>{
-    expect.eq(view.add('home','home'),'home')
+  it('should add a view', () => {
+    expect.eq(view.add('home', 'home'), 'home')
   })
-  it('should get the view',()=>{
-    expect.eq(view.get('home'),'home')
+  it('should get the view', () => {
+    expect.eq(view.get('home'), 'home')
   })
-  it('should list the view',()=>{
-    expect.eq(Object.keys(view.all()).length,1)
+  it('should list the view', () => {
+    expect.eq(Object.keys(view.all()).length, 1)
   })
-  it('should remove the view',()=>{
-    expect.eq(view.remove('home'),'home')
+  it('should remove the view', () => {
+    expect.eq(view.remove('home'), 'home')
   })
 })
-if(require.main === module) runner.execute().then(code => process.exit(code))
+if (require.main === module) runner.execute().then(code => process.exit(code))

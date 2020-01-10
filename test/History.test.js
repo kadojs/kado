@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -21,36 +21,36 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const History = require('../lib/History')
-runner.suite('History',(it)=>{
-  let history = new History()
-  it('should construct',()=>{
-    expect.isType('History',new History())
+runner.suite('History', (it) => {
+  const history = new History()
+  it('should construct', () => {
+    expect.isType('History', new History())
   })
-  it('should be empty',()=>{
-    expect.eq(history.all().length,0)
+  it('should be empty', () => {
+    expect.eq(history.all().length, 0)
   })
-  it('should add crumb entry',()=>{
-    expect.eq(history.add('/test','Test','fa fa-plus').name,'Test')
+  it('should add crumb entry', () => {
+    expect.eq(history.add('/test', 'Test', 'fa fa-plus').name, 'Test')
   })
-  it('should save the entries',()=>{
-    let req = {session: {}}
+  it('should save the entries', () => {
+    const req = { session: {} }
     history.save(req)
-    expect.isType('Array',req.session.breadcrumb)
+    expect.isType('Array', req.session.breadcrumb)
   })
-  it('should restore the entries',()=>{
-    let req = {session: {}}
-    req.session.breadcrumb = [{uri: '/test', name: 'Test', icon: 'fa fa-plus'}]
+  it('should restore the entries', () => {
+    const req = { session: {} }
+    req.session.breadcrumb = [{ uri: '/test', name: 'Test', icon: 'fa fa-plus' }]
     history.restore(req)
-    expect.eq(history.all().length,1)
+    expect.eq(history.all().length, 1)
   })
-  it('should accept middleware request',()=>{
-    let Nav = require('../lib/Navigation')
-    let Util = require('../lib/Util')
-    let app = {nav: new Nav(), util: new Util()}
-    app.nav.addGroup('/test','Test','fa-fa-plus')
-    let req = {session: {}, url: '/test', method: 'GET'}
-    expect.isType('Array',history.middleware(app,req))
-    expect.eq(history.all()[0].name,'Test')
+  it('should accept middleware request', () => {
+    const Nav = require('../lib/Navigation')
+    const Util = require('../lib/Util')
+    const app = { nav: new Nav(), util: new Util() }
+    app.nav.addGroup('/test', 'Test', 'fa-fa-plus')
+    const req = { session: {}, url: '/test', method: 'GET' }
+    expect.isType('Array', history.middleware(app, req))
+    expect.eq(history.all()[0].name, 'Test')
   })
 })
-if(require.main === module) runner.execute().then(code => process.exit(code))
+if (require.main === module) runner.execute().then(code => process.exit(code))

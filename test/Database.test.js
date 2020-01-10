@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -21,49 +21,51 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Database = require('../lib/Database')
-runner.suite('Database',(it)=> {
-  let db = new Database()
-  //const SequelizeDb = require('../lib/database/sequelize')
+runner.suite('Database', (it) => {
+  const db = new Database()
+  // const SequelizeDb = require('../lib/database/sequelize')
   const SequelizeDb = class {
-    connect(){ return new Promise((resolve,reject)=>{
-      reject(new Error('ECONNREFUSED'))
-    })}
+    connect () {
+      return new Promise((resolve, reject) => {
+        reject(new Error('ECONNREFUSED'))
+      })
+    }
   }
-  it('should construct',() => {
-    expect.isType('Database',new Database())
+  it('should construct', () => {
+    expect.isType('Database', new Database())
   })
-  it('should accept a new database',() => {
+  it('should accept a new database', () => {
     expect.isType('SequelizeDb',
-      db.addDatabase('sequelize',new SequelizeDb())
+      db.addDatabase('sequelize', new SequelizeDb())
     )
   })
-  it('should have the new database instance',()=>{
-    expect.isType('SequelizeDb',db.sequelize)
+  it('should have the new database instance', () => {
+    expect.isType('SequelizeDb', db.sequelize)
   })
-  it('should remove database instance',()=>{
-    expect.eq(db.removeDatabase('sequelize'),'sequelize')
+  it('should remove database instance', () => {
+    expect.eq(db.removeDatabase('sequelize'), 'sequelize')
   })
-  it('should no longer have the database handle',()=>{
-    expect.eq(db.sequelize,undefined)
+  it('should no longer have the database handle', () => {
+    expect.eq(db.sequelize, undefined)
   })
-  it('should accept a new database instance',()=>{
-    expect.isType('SequelizeDb',db.addDatabase(
+  it('should accept a new database instance', () => {
+    expect.isType('SequelizeDb', db.addDatabase(
       'sequelize',
       new SequelizeDb()
     ))
   })
-  it('should attempt db connect and fail',()=>{
+  it('should attempt db connect and fail', () => {
     return db.connect('sequelize')
-      .then(()=>{
+      .then(() => {
         throw new Error('should not have connected')
       })
-      .catch((e)=>{
-        if(e.message.match(/access/i)){
-          expect.match(/Access denied for user/,e.message)
+      .catch((e) => {
+        if (e.message.match(/access/i)) {
+          expect.match(/Access denied for user/, e.message)
         } else {
-          expect.match(/ECONNREFUSED/,e.message)
+          expect.match(/ECONNREFUSED/, e.message)
         }
       })
   })
 })
-if(require.main === module) runner.execute().then(code => process.exit(code))
+if (require.main === module) runner.execute().then(code => process.exit(code))

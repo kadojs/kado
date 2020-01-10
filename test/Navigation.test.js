@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -22,26 +22,26 @@ const runner = require('../lib/TestRunner').getInstance('Kado')
 
 const { expect } = require('../lib/Assert')
 const Navigation = require('../lib/Navigation')
-runner.suite('Navigation',(it)=>{
-  let nav = new Navigation()
-  it('should construct',() => {
-    expect.isType('Navigation',new Navigation())
+runner.suite('Navigation', (it) => {
+  const nav = new Navigation()
+  it('should construct', () => {
+    expect.isType('Navigation', new Navigation())
   })
-  it('should be empty',() => {
-    expect.eq(nav.all().length,0)
-    expect.eq(Object.keys(nav.allNav()).length,0)
+  it('should be empty', () => {
+    expect.eq(nav.all().length, 0)
+    expect.eq(Object.keys(nav.allNav()).length, 0)
   })
-  it('should add a nav group',() => {
-    expect.eq(nav.addGroup('/test','Test', 'fa fa-plus').uri,'/test')
+  it('should add a nav group', () => {
+    expect.eq(nav.addGroup('/test', 'Test', 'fa fa-plus').uri, '/test')
   })
   it('should get nav entry by name', () => {
-    expect.eq(Object.keys(nav.all()).length,1)
+    expect.eq(Object.keys(nav.all()).length, 1)
   })
   it('should add Nav Item', () => {
-    expect.eq(nav.addItem('Test','/test', 'Test').uri,'/test')
+    expect.eq(nav.addItem('Test', '/test', 'Test').uri, '/test')
   })
-  it('should return built nav entries' , () => {
-    expect.eq(Object.keys(nav.all()).length,1)
+  it('should return built nav entries', () => {
+    expect.eq(Object.keys(nav.all()).length, 1)
   })
 })
-if(require.main === module) runner.execute().then(code => process.exit(code))
+if (require.main === module) runner.execute().then(code => process.exit(code))

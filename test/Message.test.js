@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
  * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
@@ -21,40 +21,40 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Message = require('../lib/Message')
-runner.suite('Message',(it)=>{
-  let message = new Message()
-  it('should construct',() => {
-    expect.isType('Message',new Message())
+runner.suite('Message', (it) => {
+  const message = new Message()
+  it('should construct', () => {
+    expect.isType('Message', new Message())
   })
-  it('should have no handlers',()=>{
-    expect.eq(Object.keys(message.allHandlers()).length,0)
+  it('should have no handlers', () => {
+    expect.eq(Object.keys(message.allHandlers()).length, 0)
   })
-  it('should add a handler',()=>{
-    expect.eq(message.addHandler('test',(options)=>{
+  it('should add a handler', () => {
+    expect.eq(message.addHandler('test', (options) => {
       return options
     }))
   })
-  it('should have a handler',()=>{
-    expect.isType('Object',message.getHandler('test'))
+  it('should have a handler', () => {
+    expect.isType('Object', message.getHandler('test'))
   })
-  it('should remove a handler',()=>{
-    expect.eq(message.removeHandler('test'),'test')
+  it('should remove a handler', () => {
+    expect.eq(message.removeHandler('test'), 'test')
   })
-  it('should have no handlers',()=>{
-    expect.eq(Object.keys(message.allHandlers()).length,0)
+  it('should have no handlers', () => {
+    expect.eq(Object.keys(message.allHandlers()).length, 0)
   })
-  it('should accept a new handler',()=>{
-    expect.eq(message.addHandler('test',(options)=>{
+  it('should accept a new handler', () => {
+    expect.eq(message.addHandler('test', (options) => {
       return options
     }))
   })
-  it('should send a message and see it in the handler',()=>{
-    return message.send('foo@foo.com','something to do')
-      .then((result)=>{
+  it('should send a message and see it in the handler', () => {
+    return message.send('foo@foo.com', 'something to do')
+      .then((result) => {
         result = result[0]
-        expect.eq(result.to,'foo@foo.com')
-        expect.eq(result.text,'something to do')
+        expect.eq(result.to, 'foo@foo.com')
+        expect.eq(result.text, 'something to do')
       })
   })
 })
-if(require.main === module) runner.execute().then(code => process.exit(code))
+if (require.main === module) runner.execute().then(code => process.exit(code))
