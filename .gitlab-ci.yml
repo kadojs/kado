@@ -4,6 +4,4 @@ test:
   script:
     - npm -g install standard
     - npm install
-    - npm install jshint --no-save
     - npm test
-    - node node_modules/jshint/bin/jshint -c .jshintrc .
