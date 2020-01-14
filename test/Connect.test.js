@@ -23,7 +23,12 @@ const { expect } = require('../lib/Assert')
 const Connect = require('../lib/Connect')
 const ConnectEngine = require('../lib/ConnectEngine')
 runner.suite('Connect', (it) => {
-  const cdn = new Connect()
+  class CDN extends Connect {
+    connect (name, options) {
+      return Connect.each(this, name, options, 'connect')
+    }
+  }
+  const cdn = new CDN()
   class Prism extends ConnectEngine {
     connect (opt) {
       if (!opt.user || !opt.pass || !opt.host) {

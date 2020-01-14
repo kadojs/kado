@@ -23,9 +23,9 @@ const { expect } = require('../lib/Assert')
 const ConnectEngine = require('../lib/ConnectEngine')
 const Search = require('../lib/Search')
 class OurSearch extends ConnectEngine {
-  search (app, options) {
-    expect.isType('Object', app)
+  search (options) {
     expect.isType('Object', options)
+    expect.isType('Object', options.app)
     return [
       {
         uri: '/foo',
