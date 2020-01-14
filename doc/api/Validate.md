@@ -1,5 +1,5 @@
 # Validate
-
+*Introduced in 4.0.0*
 > Stability: 2 - Stable
 
 The `Validate` library provides validation of data and data types. It
@@ -53,13 +53,12 @@ against `Validate.eq(val1,val2)`
 this checks if val1 and the val2 matches and returns the value if it does
 
 ### `static Validate.eqDeep(val1, val2)`
-```js
-const assert = require('assert').strict
-```
 * `{regex} to match against`
 * `{value} to match against` 
 * Return: {boolean} `true` when matching
 * Return: {boolean} `false` when not matching
+
+Note: Uses Node.JS->assert->deepStrictEqual for evaluations
 
 ### `static Validate.getType(Val)`
 * Return a type of `string` equal to the value
