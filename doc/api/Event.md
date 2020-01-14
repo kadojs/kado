@@ -13,6 +13,8 @@ Note: This is not to be confused with the core Node.JS `EventEmitter` which
 serves a much different programmable purpose.
 
 ## Class: Event
+`Event` extends `Connect` see [Connect.md](./Connect.md) for more engine
+management and more.
 
 ### static Event.getInstance()
 * Return {Event} new event system
@@ -27,25 +29,6 @@ serves a much different programmable purpose.
 * `level` {string} key of the level name such as `error`
 * Return {object} containing information about the said level or undefined if
 the level does not exist.
-
-### Event.addHandler(name, onEvent, opts)
-* `name` {string} name of the handler
-* `onEvent` {function} a function that possibly returns a {Promise}
-* `opts` {object} options defining the promise
-* Return {string} name of the newly added handler.
-
-The `onEvent` function will be triggered on each new event.
-
-### Event.getHandler(name)
-* `name` {string} key of the handler
-* Return {object} containing the handler
-
-### Event.allHandlers()
-* Return {object} containing all registered handlers.
-
-### Event.removeHandler(name)
-* `name` {string} name of the event handler to remove
-* Return {string} name of the event handler removed.
 
 ### Event.create(options)
 * `options` {object} containing the event definition.
@@ -102,3 +85,10 @@ handler can read.
 * `text` {string} The actual event message text.
 * `options` {object} Additional event options for handlers
 * Return {Promise} resolved after all handlers have finished `Event.create()`
+
+## Class: EventEngine
+`EventEngine` extends `ConnectEngine` see
+[ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
+
+### EventEngine.event()
+Must be extended and used to send to underlying event system.

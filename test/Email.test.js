@@ -21,10 +21,9 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Email = require('../lib/Email')
-const EmailConnector = require('../lib/EmailConnector')
 runner.suite('Email', (it) => {
   const email = new Email()
-  class OurEmail extends EmailConnector {
+  class OurEmail extends Email.EmailEngine {
     connect () {
       this.server = {
         ready: false,
@@ -38,23 +37,23 @@ runner.suite('Email', (it) => {
   it('should construct', () => {
     expect.isType('Email', new Email())
   })
-  it('should accept a new handler', () => {
-    expect.isType('OurEmail', email.addHandler('test', new OurEmail()))
+  it('should accept a new engine', () => {
+    expect.isType('OurEmail', email.addEngine('test', new OurEmail()))
   })
-  it('should have the new handler instance', () => {
-    expect.isType('OurEmail', email.test)
+  it('should have the new engine instance', () => {
+    expect.isType('OurEmail', email.getEngine('test'))
   })
-  it('should remove handler instance', () => {
-    expect.eq(email.removeHandler('test'), 'test')
+  it('should remove the engine', () => {
+    expect.eq(email.removeEngine('test'), true)
   })
-  it('should no longer have the handler', () => {
-    expect.eq(email.test, undefined)
+  it('should no longer have the engine', () => {
+    expect.eq(email.getEngine('test'), false)
   })
-  it('should accept a new handler instance', () => {
-    expect.isType('OurEmail', email.addHandler('test', new OurEmail()))
+  it('should accept a new engine instance', () => {
+    expect.isType('OurEmail', email.addEngine('test', new OurEmail()))
   })
   it('should attempt connect and fail', () => {
-    const result = email.test.connect()
+    const result = email.getEngine('test').connect()
     expect.eq(result.sending, false)
     expect.eq(result.ready, false)
     expect.isType('Object', result.smtp)

@@ -25,42 +25,36 @@ runner.suite('Log', (it) => {
   const logger = new Log()
   const loggerName = 'winston'
   // const LogHelper = require('../lib/logger/winston')
-  const LogHelper = class {}
+  class LogEngine extends Log.LogEngine {}
   it('should construct', () => {
     expect.isType('Log', new Log())
   })
   it('should have no logger', () => {
-    expect.eq(logger.getLog(), null)
+    expect.eq(logger.listEngines().length, 0)
   })
   it('should have no handlers', () => {
-    expect.eq(Object.keys(logger.allHandlers()).length, 0)
+    expect.eq(logger.listEngines().length, 0)
   })
-  it('should add a handler', () => {
-    expect.eq(logger.addHandler(loggerName, new LogHelper()), loggerName)
+  it('should add an engine', () => {
+    expect.isType('LogEngine', logger.addEngine(loggerName, new LogEngine()))
   })
   it('should get the handler', () => {
-    expect.isType('LogHelper', logger.getHandler(loggerName))
+    expect.isType('LogEngine', logger.getEngine(loggerName))
   })
   it('should activate the handler', () => {
-    expect.eq(logger.activateHandler(loggerName), loggerName)
+    expect.isType('LogEngine', logger.activateEngine(loggerName))
   })
   it('should return the active handler', () => {
-    expect.isType('LogHelper', logger.getLog())
+    expect.isType('LogEngine', logger.getActiveEngine())
   })
   it('should remove the handler', () => {
-    expect.eq(logger.removeHandler(loggerName), loggerName)
+    expect.eq(logger.removeEngine(loggerName), true)
   })
   it('should no longer have the handler', () => {
-    expect.eq(logger.getHandler(loggerName), false)
-  })
-  it('should still have an activated instance', () => {
-    expect.isType('LogHelper', logger.getLog())
-  })
-  it('should reset', () => {
-    expect.eq(logger.reset(), true)
+    expect.eq(logger.getEngine(loggerName), false)
   })
   it('should now not have a logger', () => {
-    expect.eq(logger.getLog(), null)
+    expect.eq(logger.getActiveEngine(), null)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

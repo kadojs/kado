@@ -23,7 +23,7 @@ const focus = new RegExp((process.env.FOCUS || '.') + '', 'i')
 const suites = [
   'TestRunner',
   'Asset', 'Assert',
-  'CommandServer', 'Connector', 'Cron',
+  'CommandServer', 'Connect', 'Cron',
   'Database',
   'Email', 'Event',
   'Format',

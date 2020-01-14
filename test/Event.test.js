@@ -21,38 +21,41 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Event = require('../lib/Event')
+class OurEvent extends Event.EventEngine {
+  event (options) {
+    expect.isType('Object', options)
+    expect.isType('string', options.to)
+    expect.isType('string', options.text)
+    expect.isType('number', options.level)
+    expect.isType('Object', options.levelInfo)
+    return Promise.resolve().then(() => { return options })
+  }
+}
 runner.suite('Event', (it) => {
   const event = new Event()
   it('should construct', () => {
     expect.isType('Event', new Event())
   })
-  it('should have no handlers', () => {
-    expect.eq(Object.keys(event.allHandlers()).length, 0)
+  it('should have no engines', () => {
+    expect.eq(event.listEngines().length, 0)
   })
-  it('should accept our test handler', () => {
-    expect.eq(event.addHandler('test', (options) => {
-      expect.isType('Object', options)
-      expect.isType('string', options.to)
-      expect.isType('string', options.text)
-      expect.isType('number', options.level)
-      expect.isType('Object', options.levelInfo)
-      return options
-    }), 'test')
+  it('should accept our test engine', () => {
+    expect.isType('OurEvent', event.addEngine('test', new OurEvent()))
   })
-  it('should add a handler', () => {
-    expect.eq(event.addHandler('test2', () => {}), 'test2')
+  it('should add another engine', () => {
+    expect.isType('OurEvent', event.addEngine('test2', new OurEvent()))
   })
-  it('should show a handler exists', () => {
-    expect.eq(event.getHandler('test2').name, 'test2')
+  it('should show an engine exists', () => {
+    expect.isType('OurEvent', event.getEngine('test2'))
   })
-  it('should show the handler exists in the list', () => {
-    expect.eq(Object.keys(event.allHandlers()).length, 2)
+  it('should show the engine exists in the list', () => {
+    expect.eq(event.listEngines().length, 2)
   })
-  it('should remove a handler', () => {
-    expect.eq(event.removeHandler('test2'), 'test2')
+  it('should remove an engine', () => {
+    expect.eq(event.removeEngine('test2'), true)
   })
-  it('should show all handlers', () => {
-    expect.eq(Object.keys(event.allHandlers()).length, 1)
+  it('should show all engines', () => {
+    expect.eq(event.listEngines().length, 1)
   })
   it('should create an event an call our handler', () => {
     const levelInfo = event.getLevelInfo(3)
@@ -64,7 +67,7 @@ runner.suite('Event', (it) => {
       levelInfo: levelInfo
     }).then((result) => {
       // since many modules could have been processed only keep one
-      result = result[0]
+      result = result.test
       expect.isType('Object', result)
       expect.eq(result.text, 'some thing happened')
     })
@@ -72,7 +75,7 @@ runner.suite('Event', (it) => {
   it('should create using the digest method directly', () => {
     return event.create(event.digest(3, 'dude', 'some thing happened'))
       .then((result) => {
-        result = result[0]
+        result = result.test
         expect.isType('Object', result)
         expect.eq(result.text, 'some thing happened')
       })
@@ -80,7 +83,7 @@ runner.suite('Event', (it) => {
   it('should call using the error method', () => {
     return event.error('foo', 'some thing happened')
       .then((result) => {
-        result = result[0]
+        result = result.test
         expect.isType('Object', result)
         expect.eq(result.level, 0)
         expect.eq(result.text, 'some thing happened')
@@ -89,7 +92,7 @@ runner.suite('Event', (it) => {
   it('should call using the warn method', () => {
     return event.warn('foo', 'some thing happened')
       .then((result) => {
-        result = result[0]
+        result = result.test
         expect.isType('Object', result)
         expect.eq(result.level, 1)
         expect.eq(result.text, 'some thing happened')
@@ -98,7 +101,7 @@ runner.suite('Event', (it) => {
   it('should call using the info method', () => {
     return event.info('foo', 'some thing happened')
       .then((result) => {
-        result = result[0]
+        result = result.test
         expect.isType('Object', result)
         expect.eq(result.level, 2)
         expect.eq(result.text, 'some thing happened')
@@ -107,7 +110,7 @@ runner.suite('Event', (it) => {
   it('should call using the verbose method', () => {
     return event.verbose('foo', 'some thing happened')
       .then((result) => {
-        result = result[0]
+        result = result.test
         expect.isType('Object', result)
         expect.eq(result.level, 3)
         expect.eq(result.text, 'some thing happened')
@@ -116,7 +119,7 @@ runner.suite('Event', (it) => {
   it('should call using the debug method', () => {
     return event.debug('foo', 'some thing happened')
       .then((result) => {
-        result = result[0]
+        result = result.test
         expect.isType('Object', result)
         expect.eq(result.level, 4)
         expect.eq(result.text, 'some thing happened')
@@ -125,7 +128,7 @@ runner.suite('Event', (it) => {
   it('should call using the silly method', () => {
     return event.silly('foo', 'some thing happened')
       .then((result) => {
-        result = result[0]
+        result = result.test
         expect.isType('Object', result)
         expect.eq(result.level, 5)
         expect.eq(result.text, 'some thing happened')

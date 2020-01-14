@@ -21,54 +21,56 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Search = require('../lib/Search')
+class OurSearch extends Search.SearchEngine {
+  search (options) {
+    expect.isType('Object', options)
+    expect.isType('Object', options.app)
+    return [
+      {
+        uri: '/foo',
+        title: 'foo',
+        description: 'some Foo',
+        updatedAt: new Date()
+      },
+      {
+        uri: '/foo1',
+        title: 'foo1',
+        description: 'some Foo1',
+        updatedAt: new Date()
+      }
+    ]
+  }
+}
 runner.suite('Search', (it) => {
   const search = new Search()
-  const ourModule = () => {
-    return new Promise((resolve) => {
-      resolve([
-        {
-          uri: '/foo',
-          title: 'foo',
-          description: 'some Foo',
-          updatedAt: new Date()
-        },
-        {
-          uri: '/foo1',
-          title: 'foo1',
-          description: 'some Foo1',
-          updatedAt: new Date()
-        }
-      ])
-    })
-  }
   it('should construct', () => {
     expect.isType('Search', new Search())
   })
   it('should have no modules', () => {
-    expect.eq(Object.keys(search.allModules()).length, 0)
+    expect.eq(search.listEngines().length, 0)
   })
   it('should add a module', () => {
-    expect.eq(search.addModule('test', ourModule).title, 'test')
+    expect.isType('OurSearch', search.addEngine('test', new OurSearch()))
   })
   it('should get the module', () => {
-    expect.eq(search.getModule('test').title, 'test')
+    expect.isType('OurSearch', search.getEngine('test'))
   })
   it('should remove the module', () => {
-    expect.eq(search.removeModule('test'), 'test')
+    expect.eq(search.removeEngine('test'), true)
   })
   it('should the module as removed', () => {
-    expect.eq(Object.keys(search.allModules()).length, 0)
+    expect.eq(search.listEngines().length, 0)
   })
   it('should add a new module', () => {
-    expect.eq(search.addModule('test', ourModule).title, 'test')
+    expect.isType('OurSearch', search.addEngine('test', new OurSearch()))
   })
   it('should search by phrase', () => {
     return search.byPhrase({}, 'some foo', { start: 0, limit: 10 })
       .then((result) => {
         expect.eq(result.resultCount, 2)
-        expect.eq(result.results.length, 1)
-        expect.eq(result.results[0].moduleTitle, 'test')
-        expect.eq(result.results[0].moduleResults[0].uri, '/foo')
+        expect.eq(Object.keys(result.results).length, 1)
+        expect.eq(Object.keys(result.results)[0], 'test')
+        expect.eq(result.results.test[0].uri, '/foo')
       })
   })
 })

@@ -8,21 +8,14 @@ This library provides a register for Email handlers to register and receive
 email messages through the system.
 
 ## Class: Email
+`Email` extends `Connect` see [Connect.md](./Connect.md) for more engine
+management and more.
 
 ### static Email.getInstance()
 * Return {Email} new instance of the Email system
 
 ### Email.constructor()
 * Return {Email} new instance of the Email system
-
-### Email.addHandler(name, instance)
-* `name` {string} name of the email system
-* `instance` {object} instance of the email handler
-Return {object} instance of the email handler
-
-### Email.removeHandler(name)
-* `name` {string} name of the email system to remove
-Return {string} name of the email system removed.
 
 ## Email.send(name, options)
 * `name` {string} name of the handler to send with
@@ -31,8 +24,9 @@ Return {Promise} that resolves when the message is sent.
 
 Note: when no `name` is provided all handlers are executed.
 
-### Email.reset(name)
-* `name` {string} name of the handler to reset.
-* Return {boolean} `true` when the handler has been reset.
+## Class: EmailEngine
+`EmailEngine` extends `ConnectEngine` see
+[ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
 
-Note: when no `name` is passed all handlers will be reset.
+### EmailEngine.send()
+Must be extended and used to send to underlying email system.
