@@ -8,6 +8,18 @@ This library provides logging abstraction to use different log transports
 for system level log messages.
 
 ## Class: Log
+`Log` extends `Connect` see [Connect.md](./Connect.md) for more engine
+management and more.
+
+### static Log.appendFile(path, data)
+* `path` {string} the path of the file to append text to
+* `data` {string} the data to append to the file
+* Return {string} the `data` appended to the file
+
+### static Log.tailFile(path)
+* `path` {string} the path to the file to tail
+* `lineCount` {number} number of lines to take from the file.
+* Return {string} last n lines from the specified file.
 
 ### static Log.getInstance()
 * Return {Log} new instance of the logger system
@@ -15,18 +27,6 @@ for system level log messages.
 ### Log.constructor()
 * Return {Log} new instance of the logger
 
-### Log.addHandler(name, instance)
-* `name` {string} name of the log handler
-* `instance` {object} instance of the log handler
-* Return {string} name of the log handler added
-
-### Log.getHandler(name)
-* `name` {string} name of the log handler to get
-* Return {object} the actual log handler
-
-### Log.activateHandler(name)
-* `name` {string} name of the handler to activate
-* Return {string} name of the activated handler
-
-### Log.allHandlers()
-* Return {object} of all the stored 
+## Class: LogEngine
+`LogEngine` extends `ConnectEngine` see
+[ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
