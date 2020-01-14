@@ -20,17 +20,17 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
-const Logger = require('../lib/Logger')
-runner.suite('Logger', (it) => {
-  const logger = new Logger()
+const Log = require('../lib/Log')
+runner.suite('Log', (it) => {
+  const logger = new Log()
   const loggerName = 'winston'
   // const LogHelper = require('../lib/logger/winston')
   const LogHelper = class {}
   it('should construct', () => {
-    expect.isType('Logger', new Logger())
+    expect.isType('Log', new Log())
   })
   it('should have no logger', () => {
-    expect.eq(logger.getLogger(), null)
+    expect.eq(logger.getLog(), null)
   })
   it('should have no handlers', () => {
     expect.eq(Object.keys(logger.allHandlers()).length, 0)
@@ -45,7 +45,7 @@ runner.suite('Logger', (it) => {
     expect.eq(logger.activateHandler(loggerName), loggerName)
   })
   it('should return the active handler', () => {
-    expect.isType('LogHelper', logger.getLogger())
+    expect.isType('LogHelper', logger.getLog())
   })
   it('should remove the handler', () => {
     expect.eq(logger.removeHandler(loggerName), loggerName)
@@ -54,13 +54,13 @@ runner.suite('Logger', (it) => {
     expect.eq(logger.getHandler(loggerName), false)
   })
   it('should still have an activated instance', () => {
-    expect.isType('LogHelper', logger.getLogger())
+    expect.isType('LogHelper', logger.getLog())
   })
   it('should reset', () => {
     expect.eq(logger.reset(), true)
   })
   it('should now not have a logger', () => {
-    expect.eq(logger.getLogger(), null)
+    expect.eq(logger.getLog(), null)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
