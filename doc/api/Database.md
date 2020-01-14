@@ -40,7 +40,7 @@ Note: when no `name` is provided all connections will be executed.
 
 Note: when no `name` is provided all connections will be closed.
 
-## Class DatabaseEngine
+## Class: DatabaseEngine
 `DatabaseEngine` extends `ConnectEngine` see
 [ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
 

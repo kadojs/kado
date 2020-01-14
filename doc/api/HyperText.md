@@ -26,7 +26,7 @@ management and more.
 ### HyperText.stop()
 * Return {Promise} resolved when the active engine stops
 
-## Class HyperTextEngine
+## Class: HyperTextEngine
 `HyperTextEngine` extends `ConnectEngine` see
 [ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
 

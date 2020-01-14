@@ -24,7 +24,7 @@ Return {Promise} that resolves when the message is sent.
 
 Note: when no `name` is provided all handlers are executed.
 
-## Class EmailEngine
+## Class: EmailEngine
 `EmailEngine` extends `ConnectEngine` see
 [ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
 

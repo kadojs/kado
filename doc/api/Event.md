@@ -86,7 +86,7 @@ handler can read.
 * `options` {object} Additional event options for handlers
 * Return {Promise} resolved after all handlers have finished `Event.create()`
 
-## Class EventEngine
+## Class: EventEngine
 `EventEngine` extends `ConnectEngine` see
 [ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
 
