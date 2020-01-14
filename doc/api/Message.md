@@ -2,7 +2,7 @@
 *Introduced in 3.0.0*
 > Stability: 2 - Stable
 ```js
-const Message = require('kado/lib/Email')
+const Message = require('kado/lib/Message')
 ```
 This library provides a register for Message handlers that may register to both
 send and receive messages through the system.
