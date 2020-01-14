@@ -8,21 +8,19 @@ This library manages Database connections that are stored through
 instances registered to this library.
 
 ## Class: Database
+`Database` extends `Connect` see [Connect.md](./Connect.md) for more engine
+management and more.
+
+### static Database.queryOptions(config, profiler)
+* `config` {object} application config looking for `{dev: {boolean}}`
+* `profiler` {Profiler} profiler instance to call against
+* Return {object} options safe with use building queries
 
 ### static Database.getInstance()
 * Return {Database} new instance of the database system
 
 ### Database.constructor()
 * Return {Database} new instance of the database system
-
-### Database.addDatabase(name, instance)
-* `name` {string} name of the database instance eg: `mysql`
-* `instance` {object} actual database connection instance
-* Return {object} instance of the new database connection
-
-### Database.removeDatabase(name)
-* `name` {string} name of the database connection to remove from management
-Return {string} name of the database connection removed
 
 ### Database.queryOptions(config, profiler)
 * `config` {object} current system configuration to check for `{dev: true}`
@@ -41,3 +39,14 @@ Note: when no `name` is provided all connections will be executed.
 * Return {boolean} `true` when the connection is closed.
 
 Note: when no `name` is provided all connections will be closed.
+
+## Class DatabaseEngine
+`DatabaseEngine` extends `ConnectEngine` see
+[ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
+
+### DatabaseEngine.connect()
+Must be extended and used to connect to underlying database.
+
+### DatabaseEngine.close()
+By default will try and call `engine.close()` and then call
+`ConnectEngine.resetEngine()`. Which should be sufficient for most underlays.
