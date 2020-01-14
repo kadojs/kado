@@ -25,6 +25,16 @@ into a Kado System.
 * `name` {string} name of the engine
 * Return {boolean} `true` when the engine is registered and available
 
+### Connect.activateEngine(name)
+* `name` {string} name of the engine
+* Return {ConnectEngine} the new active engine
+
+### Connect.deactivateEngine()
+* Return {boolean} `true` and the `activeEngine` value is returned to `null`
+
+### Connect.getActiveEngine()
+* Return {ConnectEngine} the active engine for `null` when none
+
 ### Connect.getEngine(name)
 * `name` {string} name of the engine
 * Return {ConnectEngine} the requested engine or false when no engine exists
@@ -33,10 +43,10 @@ into a Kado System.
 * `name` {string} name of the engine
 * Return {boolean} `true` when the engine by `name` is removed
 
-### Connect.all()
+### Connect.allEngines()
 * Return {object} registered engines
 
-### Connect.list()
+### Connect.listEngines()
 * Return {Array} list of engine names registered
 
 ### Connect.each(fn)
@@ -45,15 +55,31 @@ into a Kado System.
 * Return {Promise} each engine has the `fn(engine)` executed serially.
 
 ### Connect.connect(name, options)
-* `name` {string} name of the engine to connect
+* `name` {string} optional name of the engine to connect
 * `options` {object} options to be passed to the engine
 * Return {Promise} to be resolved when the engine connects
 
 This relies on the connector implementing a `connect()` method that returns
 a Promise.
 
-When no `name` is provided all connectors are connected.
+When no `name` is provided all engines are connected.
 
 ### Connect.close(name)
 * `name` {string} name of the engine to close
 * Return {Promise} to be resolved when the engine closes.
+
+### Connect.start(name, options)
+* `name` {string} optional name of the engine to start
+* `options` {object} options to be passed to the engine
+* Return {Promise} to be resolved when the engine starts
+
+This relies on the connector implementing a `start()` method that returns
+a Promise.
+
+When no `name` is provided all engines are started.
+
+### Connect.close(name)
+* `name` {string} optional name of the engine to close
+* Return {Promise} to be resolved when the engine closes.
+
+When no `name` is provided all engines are started.

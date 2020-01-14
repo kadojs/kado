@@ -20,11 +20,11 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
+const ConnectEngine = require('../lib/ConnectEngine')
 const Database = require('../lib/Database')
 runner.suite('Database', (it) => {
   const db = new Database()
-  // const SequelizeDb = require('../lib/database/sequelize')
-  const SequelizeDb = class {
+  class SequelizeDb extends ConnectEngine {
     connect () {
       return new Promise((resolve, reject) => {
         reject(new Error('ECONNREFUSED'))
@@ -35,21 +35,20 @@ runner.suite('Database', (it) => {
     expect.isType('Database', new Database())
   })
   it('should accept a new database', () => {
-    expect.isType('SequelizeDb',
-      db.addDatabase('sequelize', new SequelizeDb())
+    expect.isType('SequelizeDb', db.addEngine('sequelize', new SequelizeDb())
     )
   })
   it('should have the new database instance', () => {
-    expect.isType('SequelizeDb', db.sequelize)
+    expect.isType('SequelizeDb', db.getEngine('sequelize'))
   })
   it('should remove database instance', () => {
-    expect.eq(db.removeDatabase('sequelize'), 'sequelize')
+    expect.eq(db.removeEngine('sequelize'), true)
   })
   it('should no longer have the database handle', () => {
-    expect.eq(db.sequelize, undefined)
+    expect.eq(db.getEngine('sequelize'), false)
   })
   it('should accept a new database instance', () => {
-    expect.isType('SequelizeDb', db.addDatabase(
+    expect.isType('SequelizeDb', db.addEngine(
       'sequelize',
       new SequelizeDb()
     ))

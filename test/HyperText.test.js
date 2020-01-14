@@ -21,35 +21,49 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const HyperText = require('../lib/HyperText')
+const ConnectEngine = require('../lib/ConnectEngine')
 runner.suite('HyperText', (it) => {
   const hyperText = new HyperText()
-  class OurEngine extends hyperText.HyperTextEngine {
+  class OurEngine extends ConnectEngine {
     constructor () {
       super()
-      this.http = require('http').createServer((req, res) => {
+      this.engine = require('http').createServer((req, res) => {
         res.statusCode = 404
         res.end('Cannot GET ' + req.url)
       })
     }
 
-    start (port, host) {
-      super.start()
-      super.checkPort(port)
-      super.checkHost(host)
+    checkPort (port) {
+      if (typeof port === 'string') port = parseInt(port, 10)
+      if (!('' + port).match(/^\d+$/)) throw new Error(`Invalid port ${port}`)
+      if (port > 65536 || port < 0) throw new Error(`Port ${port} out of range`)
+    }
+
+    checkHost (host) {
+      if (typeof host !== 'string' && host !== null) {
+        throw new Error(`Invalid host type ${typeof host}`)
+      }
+    }
+
+    start (options) {
+      const { port, host } = options
+      this.checkEngine()
+      this.checkPort(port)
+      this.checkHost(host)
       const that = this
       return new Promise((resolve, reject) => {
-        that.http.listen(port, host, (err) => {
+        that.getEngine().listen(port, host, (err) => {
           if (err) return reject(err)
-          resolve(that.http)
+          resolve(that.getEngine())
         })
       })
     }
 
     stop () {
-      super.stop()
+      this.checkEngine()
       const that = this
       return new Promise((resolve, reject) => {
-        that.http.close((err) => {
+        that.getEngine().close((err) => {
           if (err) return reject(err)
           resolve(true)
         })
@@ -82,41 +96,43 @@ runner.suite('HyperText', (it) => {
   it('should construct', () => {
     expect.isType('HyperText', new HyperText())
   })
-  it('should have no handlers', () => {
-    expect.eq(Object.keys(hyperText.allHandlers()).length, 0)
+  it('should have no engines', () => {
+    expect.eq(Object.keys(hyperText.allEngines()).length, 0)
   })
-  it('should add a handler', () => {
-    expect.eq(hyperText.addHandler('express', new OurEngine()), 'express')
+  it('should add a engine', () => {
+    expect.isType('OurEngine', hyperText.addEngine('express', new OurEngine()))
   })
-  it('should have a handler', () => {
-    expect.isType('OurEngine', hyperText.getHandler('express'))
+  it('should have an engine', () => {
+    expect.isType('OurEngine', hyperText.getEngine('express'))
   })
-  it('should have 1 total handlers', () => {
-    expect.eq(Object.keys(hyperText.allHandlers()).length, 1)
+  it('should have 1 total engines', () => {
+    expect.eq(hyperText.listEngines().length, 1)
   })
   it('should remove a handler', () => {
-    expect.eq(hyperText.removeHandler('express'), 'express')
+    expect.eq(hyperText.removeEngine('express'), true)
   })
-  it('should have no handlers', () => {
-    expect.eq(Object.keys(hyperText.allHandlers()).length, 0)
+  it('should have no engines', () => {
+    expect.eq(hyperText.listEngines().length, 0)
   })
-  it('should accept a new handler', () => {
-    expect.eq(hyperText.addHandler('ex', new OurEngine()), 'ex')
+  it('should accept a new engine', () => {
+    expect.isType('OurEngine', hyperText.addEngine('ex', new OurEngine()))
   })
   it('should have the new handler', () => {
-    expect.isType('OurEngine', hyperText.getHandler('ex'))
+    expect.isType('OurEngine', hyperText.getEngine('ex'))
   })
-  it('should activate the new handler', () => {
-    expect.eq(hyperText.activateHandler('ex'), 'ex')
+  it('should activate the new engine', () => {
+    expect.isType('OurEngine', hyperText.activateEngine('ex'))
   })
   it('should start the engine', async () => {
-    expect.isType('Server', await hyperText.start(3000, 'localhost'))
+    const rv = await hyperText.start(null, { port: 3000, host: 'localhost' })
+    expect.isType('Server', rv.ex)
   })
   it('should be listening with the engine', async () => {
     expect.eq(await checkServer(3000, 'localhost', '/'))
   })
   it('should stop the engine', async () => {
-    expect.eq(await hyperText.stop(), true)
+    const rv = await hyperText.stop()
+    expect.eq(rv.ex)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

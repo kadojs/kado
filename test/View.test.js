@@ -20,43 +20,42 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
+const ConnectEngine = require('../lib/ConnectEngine')
 const View = require('../lib/View')
+class ViewHelper extends ConnectEngine {}
 runner.suite('View', (it) => {
   const view = new View()
-  // const ViewHelper = require('../lib/view/mustache.js')
-  const ViewHelper = class {}
   const handlerName = 'mustache'
   it('should construct', () => {
     expect.isType('View', new View())
   })
   it('should be empty', () => {
-    expect.eq(Object.keys(view.all()).length, 0)
+    expect.eq(view.listEngines().length, 0)
   })
   it('should error getting an engine with no active handler', () => {
     try {
-      view.getEngine()
+      view.getActiveEngine()
     } catch (e) {
-      expect.match(/no rendering handlers/, e.message)
+      expect.match(/no active engine/, e.message)
     }
   })
-  it('should add a handler', () => {
-    const instance = new ViewHelper()
-    expect.eq(view.addHandler(handlerName, instance), handlerName)
+  it('should add an engine', () => {
+    expect.isType('ViewHelper', view.addEngine(handlerName, new ViewHelper()))
   })
-  it('should get a handler', () => {
-    expect.isType('ViewHelper', view.getHandler(handlerName))
+  it('should get an engine', () => {
+    expect.isType('ViewHelper', view.getEngine(handlerName))
   })
-  it('should activate a handler', () => {
-    expect.eq(view.activateHandler(handlerName), handlerName)
+  it('should activate an engine', () => {
+    expect.isType('ViewHelper', view.activateEngine(handlerName))
   })
   it('should provide an engine now', () => {
-    expect.isType('ViewHelper', view.getEngine())
+    expect.isType('ViewHelper', view.getActiveEngine())
   })
   it('should show in all handlers', () => {
-    expect.eq(Object.keys(view.allHandlers()).length, 1)
+    expect.eq(view.listEngines().length, 1)
   })
   it('should remove a handler', () => {
-    expect.eq(view.removeHandler(handlerName), handlerName)
+    expect.eq(view.removeEngine(handlerName), true)
   })
   it('should add a view', () => {
     expect.eq(view.add('home', 'home'), 'home')

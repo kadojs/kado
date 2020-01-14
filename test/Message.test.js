@@ -20,38 +20,38 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
+const ConnectEngine = require('../lib/ConnectEngine')
 const Message = require('../lib/Message')
+class OurMessage extends ConnectEngine {
+  send (options) { return options }
+}
 runner.suite('Message', (it) => {
   const message = new Message()
   it('should construct', () => {
     expect.isType('Message', new Message())
   })
-  it('should have no handlers', () => {
-    expect.eq(Object.keys(message.allHandlers()).length, 0)
+  it('should have no engines', () => {
+    expect.eq(message.listEngines().length, 0)
   })
-  it('should add a handler', () => {
-    expect.eq(message.addHandler('test', (options) => {
-      return options
-    }))
+  it('should add a engine', () => {
+    expect.isType('OurMessage', message.addEngine('test', new OurMessage()))
   })
-  it('should have a handler', () => {
-    expect.isType('Object', message.getHandler('test'))
+  it('should have a engine', () => {
+    expect.isType('OurMessage', message.getEngine('test'))
   })
-  it('should remove a handler', () => {
-    expect.eq(message.removeHandler('test'), 'test')
+  it('should remove a engine', () => {
+    expect.eq(message.removeEngine('test'), true)
   })
-  it('should have no handlers', () => {
-    expect.eq(Object.keys(message.allHandlers()).length, 0)
+  it('should have no engines', () => {
+    expect.eq(message.listEngines().length, 0)
   })
-  it('should accept a new handler', () => {
-    expect.eq(message.addHandler('test', (options) => {
-      return options
-    }))
+  it('should accept a new engine', () => {
+    expect.isType('OurMessage', message.addEngine('test', new OurMessage()))
   })
   it('should send a message and see it in the handler', () => {
     return message.send('foo@foo.com', 'something to do')
       .then((result) => {
-        result = result[0]
+        result = result.test
         expect.eq(result.to, 'foo@foo.com')
         expect.eq(result.text, 'something to do')
       })
