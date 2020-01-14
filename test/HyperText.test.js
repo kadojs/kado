@@ -21,10 +21,9 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const HyperText = require('../lib/HyperText')
-const ConnectEngine = require('../lib/ConnectEngine')
 runner.suite('HyperText', (it) => {
   const hyperText = new HyperText()
-  class OurEngine extends ConnectEngine {
+  class OurEngine extends HyperText.HyperTextEngine {
     constructor () {
       super()
       this.engine = require('http').createServer((req, res) => {

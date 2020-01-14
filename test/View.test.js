@@ -20,9 +20,8 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
-const ConnectEngine = require('../lib/ConnectEngine')
 const View = require('../lib/View')
-class ViewHelper extends ConnectEngine {}
+const ViewEngine = View.ViewEngine
 runner.suite('View', (it) => {
   const view = new View()
   const handlerName = 'mustache'
@@ -40,16 +39,16 @@ runner.suite('View', (it) => {
     }
   })
   it('should add an engine', () => {
-    expect.isType('ViewHelper', view.addEngine(handlerName, new ViewHelper()))
+    expect.isType('ViewEngine', view.addEngine(handlerName, new ViewEngine()))
   })
   it('should get an engine', () => {
-    expect.isType('ViewHelper', view.getEngine(handlerName))
+    expect.isType('ViewEngine', view.getEngine(handlerName))
   })
   it('should activate an engine', () => {
-    expect.isType('ViewHelper', view.activateEngine(handlerName))
+    expect.isType('ViewEngine', view.activateEngine(handlerName))
   })
   it('should provide an engine now', () => {
-    expect.isType('ViewHelper', view.getActiveEngine())
+    expect.isType('ViewEngine', view.getActiveEngine())
   })
   it('should show in all handlers', () => {
     expect.eq(view.listEngines().length, 1)

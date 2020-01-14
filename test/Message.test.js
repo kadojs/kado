@@ -20,9 +20,8 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
-const ConnectEngine = require('../lib/ConnectEngine')
 const Message = require('../lib/Message')
-class OurMessage extends ConnectEngine {
+class OurMessage extends Message.MessageEngine {
   send (options) { return options }
 }
 runner.suite('Message', (it) => {

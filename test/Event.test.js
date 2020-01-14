@@ -20,9 +20,8 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
-const ConnectEngine = require('../lib/ConnectEngine')
 const Event = require('../lib/Event')
-class OurEvent extends ConnectEngine {
+class OurEvent extends Event.EventEngine {
   event (options) {
     expect.isType('Object', options)
     expect.isType('string', options.to)

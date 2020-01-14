@@ -20,9 +20,8 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
-const ConnectEngine = require('../lib/ConnectEngine')
 const Search = require('../lib/Search')
-class OurSearch extends ConnectEngine {
+class OurSearch extends Search.SearchEngine {
   search (options) {
     expect.isType('Object', options)
     expect.isType('Object', options.app)

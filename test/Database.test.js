@@ -20,11 +20,10 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
-const ConnectEngine = require('../lib/ConnectEngine')
 const Database = require('../lib/Database')
 runner.suite('Database', (it) => {
   const db = new Database()
-  class SequelizeDb extends ConnectEngine {
+  class SequelizeDb extends Database.DatabaseEngine {
     connect () {
       return new Promise((resolve, reject) => {
         reject(new Error('ECONNREFUSED'))

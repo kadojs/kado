@@ -21,10 +21,9 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Email = require('../lib/Email')
-const ConnectEngine = require('../lib/ConnectEngine')
 runner.suite('Email', (it) => {
   const email = new Email()
-  class OurEmail extends ConnectEngine {
+  class OurEmail extends Email.EmailEngine {
     connect () {
       this.server = {
         ready: false,
