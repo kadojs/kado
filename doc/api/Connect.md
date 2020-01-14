@@ -10,6 +10,15 @@ into a Kado System.
 
 ## Class: Connect
 
+### static Connect.each(that, name, options, method)
+* `that` {Connect} context to execute against should be instance of Connect
+* `name` {string} filter engines by this name for action
+* `options` {object} options object passed to engines for method
+* `method` {string} name of the method that should exist on the Connect instance
+
+Note: will throw an error when either the input is incomplete or the methods
+cannot be called.
+
 ### static Connect.getInstance()
 * Return {Connect} new instance of the connector
 
@@ -49,37 +58,7 @@ into a Kado System.
 ### Connect.listEngines()
 * Return {Array} list of engine names registered
 
-### Connect.each(fn)
+### Connect.eachEngine(fn)
 * `fn` {Function} called fn(engine) where engine is used to do an action, and
  can return a promise.
 * Return {Promise} each engine has the `fn(engine)` executed serially.
-
-### Connect.connect(name, options)
-* `name` {string} optional name of the engine to connect
-* `options` {object} options to be passed to the engine
-* Return {Promise} to be resolved when the engine connects
-
-This relies on the connector implementing a `connect()` method that returns
-a Promise.
-
-When no `name` is provided all engines are connected.
-
-### Connect.close(name)
-* `name` {string} name of the engine to close
-* Return {Promise} to be resolved when the engine closes.
-
-### Connect.start(name, options)
-* `name` {string} optional name of the engine to start
-* `options` {object} options to be passed to the engine
-* Return {Promise} to be resolved when the engine starts
-
-This relies on the connector implementing a `start()` method that returns
-a Promise.
-
-When no `name` is provided all engines are started.
-
-### Connect.close(name)
-* `name` {string} optional name of the engine to close
-* Return {Promise} to be resolved when the engine closes.
-
-When no `name` is provided all engines are started.
