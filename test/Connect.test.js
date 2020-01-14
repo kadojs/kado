@@ -20,42 +20,46 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
-const Connector = require('../lib/Connector')
-runner.suite('Connector', (it) => {
-  const connector = new Connector()
-  // const stretchfs = require('stretchfs-sdk')
-  // const Prism = stretchfs.Prism
-  const Prism = class {
-    connect () {
+const Connect = require('../lib/Connect')
+const ConnectEngine = require('../lib/ConnectEngine')
+runner.suite('Connect', (it) => {
+  const connector = new Connect()
+  class Prism extends ConnectEngine {
+    connect (opt) {
+      if (!opt.user || !opt.pass || !opt.host) {
+        throw new Error('missing parameters')
+      }
       return Promise.resolve('cdn.stretchfs.com')
     }
   }
   it('should construct', () => {
-    expect.isType('Connector', new Connector())
+    expect.isType('Connect', new Connect())
   })
   it('should accept a new connector', () => {
-    expect.isType('Prism', connector.addConnector(
+    expect.isType('Prism', connector.addEngine(
       'stretchfs',
       new Prism('test', 'test', 'localhost')
     ))
   })
   it('should have the new connector instance', () => {
-    expect.isType('Prism', connector.stretchfs)
+    expect.isType('Prism', connector.getEngine('stretchfs'))
   })
   it('should remove connector instance', () => {
-    expect.eq(connector.removeConnector('stretchfs'), 'stretchfs')
+    expect.eq(connector.removeEngine('stretchfs'))
   })
   it('should no longer have the connector handle', () => {
-    expect.eq(connector.stretchfs, undefined)
+    expect.eq(connector.getEngine('stretchfs'), false)
   })
   it('should accept a new connector instance', () => {
-    expect.isType('Prism', connector.addConnector(
+    expect.isType('Prism', connector.addEngine(
       'stretchfs',
       new Prism('test', 'test', 'localhost')
     ))
   })
   it('should attempt connect and fail', () => {
-    return connector.connect('stretchfs')
+    return connector.connect('stretchfs', {
+      user: 'test', pass: 'test', host: 'test'
+    })
       .then((result) => {
         expect.eq(result, 'cdn.stretchfs.com')
       })
