@@ -20,7 +20,7 @@ and provides an easier constructor.
 * `data` {mixed} Data to identify the assertion error.
   * When a {string} is passed `{message: data}` is passed below.
   * When an {Object} is passed it is preserved.
-* Returns: {void}
+* Return: {void}
 
 This constructor takes a string for easier setup.
 
@@ -31,7 +31,7 @@ Evaluates data and data types to {boolean}.
 ### `static Validate.assert(val1,val2)`
 * `val1` {mixed} Base data
 * `val2` {mixed} Data to assert against Base
-* Returns: {boolean} `true` when values match.
+* Return: {boolean} `true` when values match.
 
 Loosely asserts data types to okay and has logic
 to improve matching types:
@@ -47,7 +47,7 @@ against `Validate.eq(val1,val2)`
 ### `static Validate.catch(fn,err)`
 * `fn` {Function} function to execute in a try / catch
 * `err` {string} compare this to `Error.message` when caught.
-* Returns: {boolean} `true` when `err` matches caught `Error.message`
+* Return: {boolean} `true` when `err` matches caught `Error.message`
 
 ### static Validate.eq(val1,val2)
 this checks if val1 and the val2 matches and returns the value if it does
@@ -58,40 +58,53 @@ const assert = require('assert').strict
 ```
 * `{regex} to match against`
 * `{value} to match against` 
-* Returns: {boolean} `true` when matching
-* Returns: {boolean} `false` when not matching
+* Return: {boolean} `true` when matching
+* Return: {boolean} `false` when not matching
 
 ### `static Validate.getType(Val)`
-* Returns a type of `string` equal to the value
+* Return a type of `string` equal to the value
+
 ### `static Validate.isType(type, value)`
-* Returns {boolean} `true` if type or value matches
+* Return {boolean} `true` if type or value matches
+
 ### `static Validate.isAbove(base, test)`
-* returns {boolean} `true` if test, is greater than base
+* Return {boolean} `true` if test, is greater than base
+
 ### `static Validate.isbelow(base, test)`
-* returns {boolean} `true` if test is less than base
+* Return {boolean} `true` if test is less than base
+
 ### `static Validate.minumum(base,test)`
-* returns {boolean} `true` if the test is greater than or equal to the base
+* Return {boolean} `true` if the test is greater than or equal to the base
+
 ### `static Vaidate.maximum(base,test)`
-* returns {boolean} `true` if test is less than or equal to base
+* Return {boolean} `true` if test is less than or equal to base
+
 ### `static Validate.neq(val1,val2)`
-* returns {boolean} `true` if test val1 one is not equal to val2
+* Return {boolean} `true` if test val1 one is not equal to val2
+
 ### `static ValidategetInstance(data)` 
-* returns type of `data`
+* Return type of `data`
+
 ### `Validate.constructor(data)`
 * identifies data when data is passed as an argument
+
 ### `Validate.above(floor)`
-* returns {boolean} `true ` this.data must be greater than the above argument
+* Return {boolean} `true ` this.data must be greater than the above argument
+
 ### `Validate.below(ceiling)`
-* returns {boolean} `true ` this.data must be less than the below argument
+* Return {boolean} `true ` this.data must be less than the below argument
+
 ### `Validate.equal(against)`
-* returns {boolean} `true ` this.data must be equal to against argument
+* Return {boolean} `true ` this.data must be equal to against argument
+
 ### `Validate.is(type)` 
-* returns {boolean} `true` this.data must match the type argument
+* Return {boolean} `true` this.data must match the type argument
+
 ### `Validate.min(bottom)`
-* returns {boolean} `true` this.data must be greater than or equal to bottom argument
+* Return {boolean} `true` this.data must be greater than or equal to bottom argument
+
 ### `Validate.max(top)`
-* returns {boolean} `true` this.data must be less than or equal to top argument
+* Return {boolean} `true` this.data must be less than or equal to top argument
+
 ### `Validate.not(val)`
-* returns {boolean} `true` this.data must not equal val
-#class Assert 
-extends the validate class and provides all the same methods except it returns false instead of throwing an error
+* Return {boolean} `true` this.data must not equal val
