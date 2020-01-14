@@ -1,5 +1,5 @@
 # Assert
-
+*Introduced in 4.0.0*
 > Stability: 2 - Stable
 
 The `Assert` library provides validation of data and data types. It
