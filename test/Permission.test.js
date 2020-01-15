@@ -30,7 +30,10 @@ runner.suite('Permission', (it) => {
     expect.eq(permission.all().length, 0)
   })
   it('should add a permission', () => {
-    expect.eq(permission.add('foo', 'foo'), 'foo')
+    expect.eqDeep(
+      permission.add('foo', 'foo'),
+      { name: 'foo', description: 'foo' }
+    )
   })
   it('should show the permission exists', () => {
     expect.eq(permission.exists('foo'), true)
