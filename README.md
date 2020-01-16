@@ -7,6 +7,12 @@
 
 High Quality JavaScript Libraries based on ES6+
 
+## Motivations
+
+Kado provides a solution by combining all the common gaps in JavaScript into a
+consistent, well documented, thoroughly tested collection of libraries that have
+zero dependencies.
+
 ## Why use Kado?
 
 * Libraries for most common application needs.
@@ -17,21 +23,6 @@ High Quality JavaScript Libraries based on ES6+
 * Peer reviewed, openly developed, openly licensed.
 * Used by applications serving billions of page views.
 * Assertion, validation, and test running built in.
-
-## Motivations
-
-There are tons of packages on NPM to do any thing needed and this package is no
-different. However, we kept running into the same problem where our applications
-would rely on a similar set of packages but with variations. Also a good amount
-of those packages will forever contain ES5 code. At the end of the day, there
-were just too many places to look for docs, track updates, and most importantly
-those packages had dependencies that introduced the same headache at a greater
-magnitude.
-
-Thus, Kado provides solution to the gaps in core builds of JavaScript.
-In addition to the libraries that provide common uses, Kado also comes with a 
-Connect system and implementations of that system in order to provide a
-"Kado System" which when fully assembled mimics modern frameworks.
 
 ## Kado Library List
 
