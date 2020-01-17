@@ -17,7 +17,7 @@ providing internationalization helpers.
 * Return {Language} new instance of language system
 
 ### Language.constructor()
-* Return {Language} new instance of lanauage system
+* Return {Language} new instance of language system
 
 ### Language.getSupportedSC()
 * Return {array} of supported SC codes by this language system.
@@ -32,8 +32,8 @@ Return {object} compiled language pack for use
 * `pack` {object} the base language pack object
 Return {string} name of the newly added pack
 
-### Language.addModule(pack, module, content)
-* `pack` {string} key name of the pack to add a module to
+### Language.addModule(name, module, content)
+* `name` {string} key name of the pack to add a module to
 * `module` {string} name of the module to add
 * `content` {object} module language pack contents.
 Return {string} name of the module added
@@ -43,13 +43,13 @@ Return {string} name of the module added
 * `module` {string} key name of the module to load more content into
 * `content` {object} language pack to be loaded into module
 
-### Language.removeModule(pack, module)
-* `pack` {string} key name of the language pack
+### Language.removeModule(name, module)
+* `name` {string} key name of the language pack
 * `module` {string} key name of the module to remove.
 * Return {string} name of the module removed.
 
-### Language.removePack(pack)
-* `pack` {string} key name of the pack
+### Language.removePack(name)
+* `name` {string} key name of the pack
 * Return {string} name of the pack removed
 
 ### Language.all()
