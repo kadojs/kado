@@ -49,101 +49,166 @@ against `Assert.eq(val1,val2)`
 * Return: {boolean} `true` when `err` matches caught `Error.message`
 
 ### `static Assert.eq(val1,val2)`
-this checks if val1 and the val2 matches and returns the value if it does
-
+* `val1` {mixed} first argument to compare with
+* `val2` {mixed} second argument to compare with
+* Returns {boolean} `true` when matches otherwise throws `AssertionError`
 ### `static Assert.eqDeep(val1, val2)`
+* `val1` {mixed} first argument to compare with
+* `val2` {mixed} second argument to compare with
+* Return {boolean} true when matches otherwise throws `AssertionError`
 ```js
 const assert = require('assert').strict
 ```
-* `{regex} to match against`
-* `{value} to match against` 
-* Return: {boolean} `true` when matching
-* Return: {boolean} `false` when not matching
+*`val1` {mixed} value to match against
+*`val2` {mixed} value to test against
+* Return {boolean} `true` when `val1` deeply matches `val2` otherwise throws `AssertionError`
 
 ### `static Assert.getInstance(data)` 
+* `data` {mixed} value to be stored
 * Return type of `data`
 
 ### `static Assert.getType(Val)`
-* Return a type of `string` equal to the value
+`val` {mixed} value to query for type
+* Return a type of `string` equal to the value otherwise throws `AssertionError`
 
 ### `static Assert.isAbove(base, test)`
-* Return {boolean} `true` if test, is greater than base
+* `base` {number} to test against
+* `test` {number} to compare with
+* Return {boolean} `true` if test, is greater than base otherwise throws `AssertionError`
 
 ### `static Assert.isbelow(base, test)`
-* Return {boolean} `true` if test is less than base
+* `base` {number} to test against
+* `test` {number} to compare with
+* Return {boolean} `true` if test is less than base otherwise throws `AssertionError`
 
 ### `static Assert.isType(type, value)`
-* Return {boolean} `true` if type or value matches
+* `type` {string} name of type to test against
+* `value` {mixed} value to obtain type from
+* Return {boolean} `true` if type or value matches otherwise throws `AssertionError`
 
 ### `static Assert.maximum(base,test)`
-* Return {boolean} `true` if test is less than or equal to base
+* `base` {number} to test against
+* `test` {number} to compare with
+* Return {boolean} `true` if `test` is less than or equal to `base` otherwise throws `AssdertionError`
 
 ### `static Assert.minumum(base,test)`
-* Return {boolean} `true` if the test is greater than or equal to the base
+* `base` {number} to test against
+* `test` {number} to compare with
+* Return {boolean} `true` if the `test` is greater than or equal to the `base` otherwise throws `AssertionError`
 
 ### `static Assert.neq(val1,val2)`
-* Return {boolean} `true` if test val1 one is not equal to val2
+*`val1` {mixed} value to match against
+*`val2` {mixed} value to test against
+* Return {boolean} `true` if test `val1` one is not equal to `val2` otherwise throws `AssertionError`
 
 ### `Assert.constructor(data)`
-* identifies data when data is passed as an argument
+* `data` {mixed} value to be stored
+* identifies `data` when `data` is passed as an argument
 
 ### `Assert.above(floor)`
-* Return {boolean} `true ` this.data must be greater than the above argument
+* `floor` {number} that is below the stored value
+* Return {boolean} `true ` this.data must equal to below argument
 
 ### `Assert.below(ceiling)`
-* Return {boolean} `true ` this.data must be less than the below argument
+* `ceiling` {number} that is above the stored value 
+* Return {boolean} `true ` this.data must equal to against argument
 
 ### `Assert.equal(against)`
+* `against` {number} that equals the stored value
 * Return {boolean} `true ` this.data must be equal to against argument
 
 ### `Assert.is(type)` 
+* `type` {string} that equals the stored value
 * Return {boolean} `true` this.data must match the type argument
 
 ### `Assert.max(top)`
+* `top` {number} the maximum a stored value can be
 * Return {boolean} `true` this.data must be less than or equal to top argument
 
 ### `Assert.min(bottom)`
+* ` bottom` {number} the minimum a stored value can be
 * Return {boolean} `true` this.data must be greater than or equal to bottom argument
 
 ### `Assert.not(val)`
+* `val` {number} value that the stored value cannot equal
 * Return {boolean} `true` this.data must not equal val
 
-### `Assert.assert.catch` 
+### `Assert.assert.catch`
+* `val1` {mixed} first argument to compare with 
+* `val2` {mixed} second argument to compare with
+* `msg` {string} must match err.message or instance of Error or an
+`AssertionError` will be thrown.
 * Return {boolean} `true` When Assertion passes
 Throws AssertionError if the argument is't equal to or an instance of
 
 ### `Assert.eq.catch`
+* `val1` {mixed} first argument to compare with
+* `val2` {mixed} second argument to compare with
+* `msg` {string} must match err.message or instance of Error or an
+`AssertionError` will be thrown.
 * Return {boolean} `true` When Assertion passes
 Throws AssertionError if the argument is't equal to or an instance of
 
 ### `Assert.eqDeep.catch`
+* `val1` {mixed} first argument to compare with
+* `val2` {mixed} second argument to compare with
+* `msg` {string} must match err.message or instance of Error or an
+`AssertionError` will be thrown.
 * Return {boolean} `true` When Assertion passes
 Throws AssertionError if the argument is't equal to or an instance of
 
 ### `Assert.isType.catch`
+* `val1` {mixed} first argument to compare with
+* `val2` {mixed} second argument to compare with
+* `msg` {string} must match err.message or instance of Error or an
+`AssertionError` will be thrown.e
 * Return {boolean} `true` When Assertion passes
 Throws AssertionError if the argument is't equal to or an instance of
 
 ### `Assert.isAbove.catch`
+* `val1` {mixed} first argument to compare with
+* `val2` {mixed} second argument to compare with
+* `msg` {string} must match err.message or instance of Error or an
+`AssertionError` will be thrown.
 * Return {boolean} `true` When Assertion passes
 Throws AssertionError if the argument is't equal to or an instance of
 
 ### `Assert.isBelow.catch`
+* `val1` {mixed} first argument to compare with
+* `val2` {mixed} second argument to compare with
+* `msg` {string} must match err.message or instance of Error or an
+`AssertionError` will be thrown.
 * Return {boolean} `true` When Assertion passes
 Throws AssertionError if the argument is't equal to or an instance of
 
 ### `Assert.maximum.catch`
+* `val1` {mixed} first argument to compare with
+* `val2` {mixed} second argument to compare with
+* `msg` {string} must match err.message or instance of Error or an
+`AssertionError` will be thrown.
 * Return {boolean} `true` When Assertion passes
 Throws AssertionError if the argument is't equal to or an instance of
 
 ### `Assert.minimum.catch`
+* `val1` {mixed} first argument to compare with
+* `val2` {mixed} second argument to compare with
+* `msg` {string} must match err.message or instance of Error or an
+`AssertionError` will be thrown.
 * Return {boolean} `true` When Assertion passes
 Throws AssertionError if the argument is't equal to or an instance of
 
 ### `Assert.neq.catch`
+* `val1` {mixed} first argument to compare with
+* `val2` {mixed} second argument to compare with
+* `msg` {string} must match err.message or instance of Error or an
+`AssertionError` will be thrown.
 * Return {boolean} `true` When Assertion passes
 Throws AssertionError if the argument is't equal to or an instance of
 
 ### `Assert.AssertionError`
+* `val1` {mixed} first argument to compare with
+* `val2` {mixed} second argument to compare with
+* `msg` {string} must match err.message or instance of Error or an
+`AssertionError` will be thrown.
 * Return {boolean} `true` When Assertion passes
 Throws AssertionError if the argument is't equal to or an instance of
