@@ -3,27 +3,15 @@
 > Stability: 2 - Stable
 
 The `Assert` library provides validation of data and data types. It
-also comes bundled with an `Validate` library which extends `Assert` and
-throws `AssertionErrors`. The `Validate` library can be used for testing.
-While the `Assert` library is best suited for evaluations, eg: if statements.
+also comes bundled with a `Validate` library which `Assert` extends and
+throws `AssertionErrors`. The `Assert` library can be used for testing.
+While the `Valdation` library is best suited for evaluations, eg: if statements.
 
 ```js
-const AssertionError = require('./AssertionError')
-const Validate = require('kado/lib/Validate')
+const Assert = require('kado/lib/Assert')
 ```
 
 ## Class: Assert extends Validate
-
-
-### `AssertionError.constructor(data)`
-* `data` {mixed} Data to identify the assertion error.
-  * When a {string} is passed `{message: data}` is passed below.
-  * When an {Object} is passed it is preserved.
-* Return: {void}
-
-This constructor takes a string for easier setup.
-
-## Class: Assert
 
 Evaluates data and data types to {boolean}.
 
