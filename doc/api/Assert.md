@@ -101,6 +101,11 @@ const assert = require('assert').strict
 *`val2` {mixed} value to test against
 * Return {boolean} `true` if test `val1` one is not equal to `val2` otherwise throws `AssertionError`
 
+### `static Assert.isOk(value,message)`
+* `value` {mixed} value to match truthiness against
+* `message` {string} message used in throw
+* Return {boolean} `true` if `value` is truthy otherwise throws `AssertionError`
+
 ### `Assert.constructor(data)`
 * `data` {mixed} value to be stored
 * identifies `data` when `data` is passed as an argument
@@ -204,6 +209,12 @@ Throws AssertionError if the argument is't equal to or an instance of
 `AssertionError` will be thrown.
 * Return {boolean} `true` When Assertion passes
 Throws AssertionError if the argument is't equal to or an instance of
+
+### `Assert.isOk.catch(value,msg)`
+* `value` {mixed} value to match truthiness against
+* `msg` {string} must match err.message or an `AssertionError` will be thrown.
+* Return {boolean} `true` When Assertion passes
+Throws AssertionError if the `msg` is not returned
 
 ### `Assert.AssertionError`
 * `val1` {mixed} first argument to compare with

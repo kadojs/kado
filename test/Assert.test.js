@@ -30,6 +30,14 @@ const assert = runner.suite('Assert', (it) => {
   it('should be false on true neq true', () => {
     expect.eq(Assert.neq.catch(true, true, AssertionError))
   })
+  it('should have working isOk()', () => {
+    const msg = 'quick brown fox'
+    expect.eq(Assert.isOk(true, msg))
+    expect.eq(Assert.isOk.catch(false, msg))
+    expect.eq(Assert.isOk.catch(0, msg))
+    expect.eq(Assert.isOk.catch(undefined, msg))
+    expect.eq(Assert.isOk.catch(null, msg))
+  })
 })
 assert.suite('assert', (it) => {
   it('should assert an array', () => {
