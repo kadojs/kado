@@ -11,12 +11,13 @@ While the `Validate` library is best suited for evaluations, eg: if statements.
 const Validate = require('kado/lib/Validate')
 ```
 
-## Class: AssertionError
+## Class: AssertionError extends assert
 
-Error class describing assertion failures extends core `AssertionError`
-and provides an easier constructor.
+```js
+const { AssertionError } = require('kado/lib/Validate')
+```
 
-### `AssertionError.constructor(data)`
+### AssertionError.constructor(data)
 * `data` {mixed} Data to identify the assertion error.
   * When a {string} is passed `{message: data}` is passed below.
   * When an {Object} is passed it is preserved.
