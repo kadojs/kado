@@ -42,59 +42,54 @@ Return {function} requested handler function or undefined
 * `name` {string} key of the handler to remove
 * Return {string} name of the handler removed
 
-### CronJob.validateSecond(sec, against)
+### CronJob.isExecutableSecond(sec, against)
 * `sec` {number} our schedule second
 * `against` {Date} to validate against
 Return {boolean} `true` when second matches against date.
 
 Note: Always returns true when set to `*`
 
-### CronJob.validateMinute(min, against)
+### CronJob.isExecutableMinute(min, against)
 * `min` {number} our schedule minute
 * `against` {Date} to validate against
 Return {boolean} `true` when minute matches against date.
 
 Note: Always returns true when set to `*`
 
-### CronJob.validateHour(hour, against)
+### CronJob.isExecutableHour(hour, against)
 * `hour` {number} our schedule hour
 * `against` {Date} to validate against
 Return {boolean} `true` when hour matches against date.
 
 Note: Always returns true when set to `*`
 
-### CronJob.validateMonthDay(monthDay, against)
+### CronJob.isExecutableMonthDay(monthDay, against)
 * `monthDay` {number} our schedule monthDay
 * `against` {Date} to validate against
 Return {boolean} `true` when monthDay matches against date.
 
 Note: Always returns true when set to `*`
 
-### CronJob.validateMonth(month, against)
+### CronJob.isExecutableMonth(month, against)
 * `month` {number} our schedule month
 * `against` {Date} to validate against
 Return {boolean} `true` when month matches against date.
 
 Note: Always returns true when set to `*`
 
-### CronJob.validateWeekDay(weekDay, against)
+### CronJob.isExecutableWeekDay(weekDay, against)
 * `weekDay` {number} our schedule weekDay
 * `against` {Date} to validate against
 Return {boolean} `true` when weekDay matches against date.
 
 Note: Always returns true when set to `*`
 
-### CronJob.isRunnable(time, against)
-* `time` {object} containing the schedule
-* `against` {date} the date to test against
-* Return {boolean} `true` when the job has not been ran recently enough to be
-triggered again.
-
-### CronJob.isValid(valid, schedule, against)
-* `valid` {object} containing the schedule
+### CronJob.isExecutable(against)
 * `against` {date} the date to test against
 * Return {boolean} `true` when the job has a valid schedule and is available to
 run.
+
+Confirm the job is safe for execution based on currency and schedule.
 
 ### CronJob.testSchedule(againstDate)
 * `againstDate` {date} to test if the cron will run against
