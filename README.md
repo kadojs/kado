@@ -53,6 +53,7 @@ a session.
 * [Language](./doc/api/Language.md) - Internationalization helpers including
 loading, parsing, and displaying languages.
 * [Library](./doc/api/Library.md) - Dynamic library loader.
+* [Lifecycle](./doc/api/Lifecycle.md) - Start and stop systems with events.
 * [Log](./doc/api/Log.md) - Connect system made for Logs.
 * [Mapper](./doc/api/Mapper.md) - ECMA Map functionality on Objects.
 * [Message](./doc/api/Message.md) - Create, track and handle messages from
@@ -70,7 +71,7 @@ Kado internals.
 * [Validate](./doc/api/Validate.md) - Validate input.
 * [View](./doc/api/View.md) - Connect system made for rendering.
 
-## Questions or Crashes?
+## Questions or Problems?
 
 Please see our [bug tracker](https://git.nullivex.com/kado/kado/issues)
 

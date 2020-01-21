@@ -7,7 +7,7 @@ const Lifecycle = require('kado/lib/Lifecycle')
 The `Lifecycle` library provides an interface for registering call back
 methods for starting and stopping systems.
 
-## Class: Lifecycle
+## Class: Lifecycle extends EventEmitter
 
 ### Lifecycle.constructor()
 * Return {Lifecycle} new instance of the Lifecyle system
@@ -40,5 +40,9 @@ methods for starting and stopping systems.
 ### Lifecycle.start()
 * Return {Promise} resolved when all items have been started
 
+Note: each item will emit a `start` event.
+
 ### Lifecycle.stop()
 * Return {Promise} resolved when all items have been stopped
+
+Note: each item will emit a `stop` event.
