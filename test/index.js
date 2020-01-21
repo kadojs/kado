@@ -29,7 +29,7 @@ const suites = [
   'Format',
   'GetOpt',
   'History', 'HyperText',
-  'Language', 'Library', 'Log',
+  'Language', 'Library', 'Lifecycle', 'Log',
   'Mapper', 'Message',
   'Navigation',
   'Permission', 'Profiler',
