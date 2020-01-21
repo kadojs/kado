@@ -19,20 +19,20 @@ zero external dependencies.
 * 0 external dependencies. The buck stops here!
 * LGPL 3.0 License. Use Kado where you need it.
 * Thoroughly tested, continuously integrated, actively developed.
-* Make your own framework in a few minutes!
-* Peer reviewed, openly developed, openly licensed.
+* Make your own framework in just a few minutes!
+* Code is peer reviewed, openly developed, openly licensed.
 * Used by applications serving billions of page views.
 * Assertion, validation, and test running built in.
-* More.. check the library list below!
+* More! Check the library list below!
 
 ## Kado Library List
 
 * [Assert](./doc/api/Assert.md) - Make assertions on input or tests.
 * [Asset](./doc/api/Asset.md) - Store, filter, and query static application
 files.
-* [Command](./doc/api/Command.md) - Build a CLI applications quickly.
-* [CommandServer](./doc/api/CommandServer.md) - Register a suite of commands to
-be executed at run time.
+* [Command](./doc/api/Command.md) - Build CLI applications with ease.
+* [CommandServer](./doc/api/CommandServer.md) - Execute CLI applications like a
+web server.
 * [Connect](./doc/api/Connect.md) - Framework for housing external resource
 connections.
 * [ConnectEngine](./doc/api/ConnectEngine.md) - Interface for creating an engine
