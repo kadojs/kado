@@ -21,7 +21,9 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const focus = new RegExp((process.env.FOCUS || '.') + '', 'i')
 const suites = [
+  // early tests
   'TestRunner',
+  // normal tests
   'Asset', 'Assert',
   'CommandServer', 'Connect', 'Cron',
   'Database',
@@ -36,7 +38,9 @@ const suites = [
   'Router',
   'Search',
   'Util',
-  'Validate', 'View'
+  'Validate', 'View',
+  // late tests
+  'Application'
 ]
 const runnableSuites = suites.filter(fn => (fn.search(focus) > -1))
 for (const suite of runnableSuites) require(`./${suite}.test.js`)
