@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-const { Assert, expect, AssertionError } = require('../lib/Assert')
+const { Assert, expect } = require('../lib/Assert')
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const assert = runner.suite('Assert', (it) => {
   it('should construct', () => {
@@ -27,16 +27,26 @@ const assert = runner.suite('Assert', (it) => {
   it('should return an instance', () => {
     expect.isType('Assert', Assert.getInstance())
   })
-  it('should be false on true neq true', () => {
-    expect.eq(Assert.neq.catch(true, true, AssertionError))
+})
+assert.suite('catch', (it) => {
+  it('should catch by type', () => {
+    expect.eq(Assert.catch(true, true, Assert.Error, 'neq'))
   })
-  it('should have working isOk()', () => {
-    const msg = 'quick brown fox'
-    expect.eq(Assert.isOk(true, msg))
-    expect.eq(Assert.isOk.catch(false, msg))
-    expect.eq(Assert.isOk.catch(0, msg))
-    expect.eq(Assert.isOk.catch(undefined, msg))
-    expect.eq(Assert.isOk.catch(null, msg))
+  it('should catch by string', () => {
+    expect.eq(Assert.catch(true, true,
+      'true is not supposed to equal true', 'neq'))
+  })
+  it('should catch by RegEx', () => {
+    expect.eq(Assert.catch([], [1],
+      /Array.* does not equal Array.*/, 'assert'))
+  })
+  it('should catch by mixed Array of possibilities', () => {
+    expect.eq(Assert.catch([], [1], [
+      /foobar/,
+      Error,
+      / do3s n0t equ4l /,
+      Assert.Error
+    ], 'assert'))
   })
 })
 assert.suite('assert', (it) => {
@@ -62,7 +72,7 @@ assert.suite('assert', (it) => {
         }, 2)
       })
     }
-    expect.assert.catch(new Date(), await getDate(), AssertionError)
+    expect.assert.catch(new Date(), await getDate(), Assert.Error)
   })
   it('should assert an error', () => {
     expect.assert(Error, Error)
@@ -126,11 +136,58 @@ assert.suite('eq', (it) => {
 assert.suite('eqDeep', (it) => {
   it('should eq an array', () => {
     expect.eq(Assert.eqDeep([], []))
-    expect.eq(Assert.eqDeep.catch([], {}, AssertionError))
+    expect.eq(Assert.eqDeep.catch([], {}, Assert.Error))
   })
   it('should eq an object', () => {
     expect.eq(Assert.eqDeep({}, {}))
-    expect.eq(Assert.eqDeep.catch({}, [], AssertionError))
+    expect.eq(Assert.eqDeep.catch({}, [], Assert.Error))
+  })
+})
+assert.suite('neq', (it) => {
+  it('should neq array', () => {
+    expect.neq([], [1])
+    expect.neq.catch({}, { a: 1 },
+      'Object([object Object]) does not ' +
+      'reference equal Object([object Object])')
+    expect.neq.catch([], [1], 'Array() does not reference equal Array()')
+    expect.neq.catch([], [],
+      'Array() does not reference equal Object([object Object])')
+  })
+  it('should neq boolean', () => {
+    expect.neq(true, false)
+    expect.neq.catch(true, true, 'true is not supposed to equal true')
+  })
+  it('should neq null', () => {
+    expect.neq(null, undefined)
+    expect.neq.catch(null, null, 'null is not supposed to equal null')
+  })
+  it('should neq object', () => {
+    expect.neq({}, { a: 1 })
+    expect.neq.catch({}, {},
+      'Object([object Object]) does not reference equal Array()')
+  })
+  it('should neq string', () => {
+    expect.neq('', '1')
+    expect.neq('foo', '1')
+    expect.neq.catch('foo', 'foo', 'foo is not supposed to equal foo')
+  })
+})
+assert.suite('isOk', (it) => {
+  const msg = 'quick brown fox'
+  it('should be passing for true', () => {
+    expect.isOk(true, msg)
+  })
+  it('should throw for false', () => {
+    expect.eq(Assert.isOk.catch(false, msg))
+  })
+  it('should throw for 0', () => {
+    expect.eq(Assert.isOk.catch(0, msg))
+  })
+  it('should throw for undefined', () => {
+    expect.eq(Assert.isOk.catch(undefined, msg))
+  })
+  it('should throw for null', () => {
+    expect.eq(Assert.isOk.catch(null, msg))
   })
 })
 assert.suite('getType', (it) => {
@@ -184,18 +241,18 @@ assert.suite('isType', (it) => {
 })
 assert.suite('isAbove', (it) => {
   it('should fail on invalid input', () => {
-    expect.eq(Assert.isAbove.catch('foo', AssertionError))
+    expect.eq(Assert.isAbove.catch('foo', Assert.Error))
   })
   it('should be true if a number is above base', () => {
     expect.eq(Assert.isAbove(3, 10))
   })
   it('should be false if a number is below a base', () => {
-    expect.eq(Assert.isAbove.catch(10, 3, AssertionError))
+    expect.eq(Assert.isAbove.catch(10, 3, Assert.Error))
   })
 })
 assert.suite('isBelow', (it) => {
   it('should fail on invalid input', () => {
-    expect.eq(Assert.isBelow.catch('foo', AssertionError))
+    expect.eq(Assert.isBelow.catch('foo', Assert.Error))
   })
   it('should be true if a number is below a base', () => {
     expect.eq(Assert.isBelow(7, 5))
@@ -219,34 +276,34 @@ assert.suite('match', (it) => {
     expect.eq(Assert.match(/bar/, 'somefoostring'), false)
   })
 })
-assert.suite('maximum', (it) => {
-  it('should fail on invalid input', () => {
-    expect.eq(Assert.maximum.catch('foo', AssertionError))
-  })
-  it('should be true if a number is below or equal to a base', () => {
-    expect.eq(Assert.maximum(3, 2))
-    expect.eq(Assert.maximum(3, 3))
-  })
-  it('should be false if a number is above a base', () => {
-    expect.eq(Assert.maximum.catch(3, 211, AssertionError))
-  })
-})
 assert.suite('minimum', (it) => {
   it('should fail on invalid input', () => {
-    expect.eq(Assert.minimum.catch('foo', AssertionError))
+    expect.eq(Assert.minimum.catch('foo', Assert.Error))
   })
   it('should be true if a number is above or equal to a base', () => {
     expect.eq(Assert.minimum(3, 3))
     expect.eq(Assert.minimum(3, 5))
   })
   it('should be false if a number is below a base', () => {
-    expect.eq(Assert.minimum.catch(10, 9, AssertionError))
+    expect.eq(Assert.minimum.catch(10, 9, Assert.Error))
+  })
+})
+assert.suite('maximum', (it) => {
+  it('should fail on invalid input', () => {
+    expect.eq(Assert.maximum.catch('foo', Assert.Error))
+  })
+  it('should be true if a number is below or equal to a base', () => {
+    expect.eq(Assert.maximum(3, 2))
+    expect.eq(Assert.maximum(3, 3))
+  })
+  it('should be false if a number is above a base', () => {
+    expect.eq(Assert.maximum.catch(3, 211, Assert.Error))
   })
 })
 assert.suite('types', (it) => {
   it('should check for Array', () => {
-    expect.eq(Assert.eqDeep.catch([], [], AssertionError))
-    expect.eq(Assert.eqDeep.catch([], {}, AssertionError))
+    expect.eq(Assert.eqDeep.catch([], [], Assert.Error))
+    expect.eq(Assert.eqDeep.catch([], {}, Assert.Error))
   })
   it('should check for Boolean', () => {
     expect.eq(true)
@@ -284,8 +341,8 @@ assert.suite('types', (it) => {
   })
   it('should check for Number', () => {
     expect.eq(1, 1)
-    expect.eq.catch(1, '', AssertionError)
-    expect.eq.catch(1, true, AssertionError)
+    expect.eq.catch(1, '', Assert.Error)
+    expect.eq.catch(1, true, Assert.Error)
   })
   it('should check for Promise', () => {
     const promise = new Promise(function () {
@@ -307,7 +364,7 @@ assert.suite('types', (it) => {
   it('should check for String', () => {
     expect.eq('', '')
     expect.eq('foo', 'foo')
-    expect.eq.catch('foo', 'bar', AssertionError)
+    expect.eq.catch('foo', 'bar', Assert.Error)
   })
   it('should check for Symbol', () => {
     expect.eq(Symbol, Symbol)
@@ -326,7 +383,7 @@ assert.suite('types', (it) => {
   })
   it('should check for Undefined', () => {
     expect.eq(undefined, undefined)
-    expect.eq.catch(undefined, null, AssertionError)
+    expect.eq.catch(undefined, null, Assert.Error)
   })
 })
 assert.suite('withInstance', (it) => {
