@@ -30,15 +30,15 @@ edge cases that return strange results when the built-in is used directly.
 Reformat provided number in "human" style with commas and dots (or, dots and
 commas).
 
-### `static Format.bytes(val, opts)`
+### `static Format.magnitude(val, opts)`
 * `val` {mixed} number, or string containing parsable number-like data
-* `opts` {object} options, as [described below](#bytes-options)
+* `opts` {object} options, as [described below](#magnitude-options)
 * Returns: {string} input `n` reformatted as directed
 
 Converts input number to the best possible human-readable magnitude, at optional
 fixed width with `K`/`M`/`G`/`T`/`P`/`E`/`Z`/`Y` and suffix which defaults to `B`
 
-###### .bytes() Options
+###### .magnitude() Options
 * `'magnitudes'` {string} (Default: `'KMGTPEZY'`) string listing the displayed
   magnitude prefixes in ascending scale from 1000's to yotta's
 * `'force'` {mixed} (Default: `false`) force magnitude, disable automatic
@@ -50,16 +50,16 @@ fixed width with `K`/`M`/`G`/`T`/`P`/`E`/`Z`/`Y` and suffix which defaults to `B
   comma and dot usage; `undefined` uses system default locale
 
 
-### `static Format.prettyBytes(number, options)`
+### `static Format.bytes(number, options)`
 * `number` {mixed} number, or string containing parsable number-like data
-* `options` {object} options, as [described below](#prettybytes-options)
+* `options` {object} options, as [described below](#bytes-options)
 * Returns: {string} input `n` reformatted as directed
 
 Functionally similar to "prettyBytes", adapted here to reduce dependency.
-Calls `.bytes()` with unconditional upstream options:
+Calls `.magnitude()` with unconditional upstream options:
 * `{ space: true, round: false, magnitudes: 'kMGTPEZY' }`
 
-###### .prettyBytes() Options
+###### .bytes() Options
 * bits {boolean} add upstream option `{ suffix: 'bit' }`
 * locale {string} pass through to upstream option `locale`
 
