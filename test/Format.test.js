@@ -49,58 +49,58 @@ format.suite('.number()', (it) => {
     expect.eq(Format.number(1234.5605, 3), '1,234.561')
   })
 })
-format.suite('.bytes()', (it) => {
+format.suite('.magnitude()', (it) => {
   it('(1000000000000000000000000000) === \'1,000YB\'', () => {
-    expect.eq(Format.bytes(1000000000000000000000000000), '1,000YB')
+    expect.eq(Format.magnitude(1000000000000000000000000000), '1,000YB')
   })
   it('(1000000000000000000000000)    === \'1,000ZB\'', () => {
-    expect.eq(Format.bytes(1000000000000000000000000), '1,000ZB')
+    expect.eq(Format.magnitude(1000000000000000000000000), '1,000ZB')
   })
   it('(1000000000000000000000)       === \'1,000EB\'', () => {
-    expect.eq(Format.bytes(1000000000000000000000), '1,000EB')
+    expect.eq(Format.magnitude(1000000000000000000000), '1,000EB')
   })
   it('(1000000000000000000)          === \'1,000PB\'', () => {
-    expect.eq(Format.bytes(1000000000000000000), '1,000PB')
+    expect.eq(Format.magnitude(1000000000000000000), '1,000PB')
   })
   it('(1000000000000000)             === \'1,000TB\'', () => {
-    expect.eq(Format.bytes(1000000000000000), '1,000TB')
+    expect.eq(Format.magnitude(1000000000000000), '1,000TB')
   })
   it('(1000000000000)                === \'1,000GB\'', () => {
-    expect.eq(Format.bytes(1000000000000), '1,000GB')
+    expect.eq(Format.magnitude(1000000000000), '1,000GB')
   })
   it('(1000000000)                   === \'1,000MB\'', () => {
-    expect.eq(Format.bytes(1000000000), '1,000MB')
+    expect.eq(Format.magnitude(1000000000), '1,000MB')
   })
   it('(1000000)                      === \'1,000KB\'', () => {
-    expect.eq(Format.bytes(1000000), '1,000KB')
+    expect.eq(Format.magnitude(1000000), '1,000KB')
   })
   it('(1000)                         === \'1,000B\'', () => {
-    expect.eq(Format.bytes(1000), '1,000B')
+    expect.eq(Format.magnitude(1000), '1,000B')
   })
   it('(999,{force:\'k\'})              === \'1KB\'', () => {
-    expect.eq(Format.bytes(999, { force: 'k' }), '1KB')
+    expect.eq(Format.magnitude(999, { force: 'k' }), '1KB')
   })
   it('(999,{force:\'k\',suffix:\'bit\'}) === \'1Kbit\'', () => {
-    expect.eq(Format.bytes(999, { force: 'k', suffix: 'bit' }), '1Kbit')
+    expect.eq(Format.magnitude(999, { force: 'k', suffix: 'bit' }), '1Kbit')
   })
 })
-format.suite('.prettyBytes()', (it) => {
+format.suite('.bytes()', (it) => {
   it('(1337)               === \'1.34 kB\'', () => {
-    expect.eq(Format.prettyBytes(1337), '1.34 kB')
+    expect.eq(Format.bytes(1337), '1.34 kB')
   })
   it('(100)                === \'100 B\'', () => {
-    expect.eq(Format.prettyBytes(100), '100 B')
+    expect.eq(Format.bytes(100), '100 B')
   })
   it('(1337,{bits:true})   === \'1.34 kbit\'', () => {
-    expect.eq(Format.prettyBytes(1337, { bits: true }), '1.34 kbit')
+    expect.eq(Format.bytes(1337, { bits: true }), '1.34 kbit')
   })
   it('(42,{signed:true})   === \'+42 B\'', () => {
-    expect.eq(Format.prettyBytes(42, { signed: true }), '+42 B')
+    expect.eq(Format.bytes(42, { signed: true }), '+42 B')
   })
   it('(1337,{locale:\'de\'}) === \'1,34 kB\'',
     // international does not work when small_icu used in nodejs build
     (!intlOk) ? undefined : () => {
-      expect.eq(Format.prettyBytes(1337, { locale: 'de' }), '1,34 kB')
+      expect.eq(Format.bytes(1337, { locale: 'de' }), '1,34 kB')
     })
 })
 format.suite('.inetPtoN()', (it) => {
