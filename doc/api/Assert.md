@@ -166,21 +166,29 @@ Valid when type or class of `value` matches
 ### `static Assert.catch(v1, v2, msg, method)`
 * `v1` {mixed} first argument to `method` 
 * `v2` {mixed} second argument to `method`
-* `msg` {string} compare this to `Error.message` when caught.
+* `msg` {mixed} compare this to `Error.message` when caught.
 * `method` {string} class method to execute in try/catch
 * Returns: {boolean} `true` when `msg` matches caught `Error.message`
 * Throws: {AssertionError} when any other error (pass through)
 
+Comparison modes supported for `msg`:
+* {string} will be compared strictly
+* {RegExp} will be compared with `.search(msg)`
+* Anything else will be compared based on instanceof
+
+Also, `msg` can be an Array of any of the above supported types to allow for
+"any" style multi-matching.  At least one must match or the catch falls through.
+
 ---
 ## Catch Wrappers
 
-These methods allow for a single expected/approved throw to occur within the
-target method call.  These methods return `true`, otherwise they throw again in
-a pass through fashion.  These are generally used for anti-testing to ensure the
+These methods allow for expected/approved throw(s) to occur within the target
+method call.  These methods return `true`, otherwise they throw again in a pass
+through fashion.  These are generally used for anti-testing to ensure the
 bounds and type checks are working.
 
-The string that should match the Error `message` is passed via the `msg`
-argument.
+The `msg` argument is the same as documented in the
+[parent method](#static-assertcatchv1-v2-msg-method).
 
 ### `Assert.assert.catch(val1, val2, msg)`
 * arguments as in [assert method](#static-assertassertval1-val2)
@@ -209,5 +217,6 @@ argument.
 ### `Assert.neq.catch(val1, val2, msg)`
 * arguments as in [neq method](#static-assertneqval1-val2)
 
-### `Assert.isOk.catch(value, msg)`
+### `Assert.isOk.catch(value, message, msg)`
 * arguments as in [isOk method](#static-assertisokvalue-message)
+* With two args it will clone the second to the third
