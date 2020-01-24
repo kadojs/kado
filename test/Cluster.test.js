@@ -19,29 +19,11 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const focus = new RegExp((process.env.FOCUS || '.') + '', 'i')
-const suites = [
-  // early tests
-  'TestRunner',
-  // normal tests
-  'Asset', 'Assert',
-  'Cluster', 'CommandServer', 'Connect', 'Cron',
-  'Database',
-  'Email', 'Event',
-  'Format',
-  'GetOpt',
-  'History', 'HyperText',
-  'Language', 'Library', 'Lifecycle', 'Log',
-  'Mapper', 'Message', 'Module',
-  'Navigation',
-  'Permission', 'Profiler',
-  'Router',
-  'Search',
-  'Util',
-  'Validate', 'View',
-  // late tests
-  'Application'
-]
-const runnableSuites = suites.filter(fn => (fn.search(focus) > -1))
-for (const suite of runnableSuites) require(`./${suite}.test.js`)
-runner.execute().then(code => process.exit(code))
+const { expect } = require('../lib/Assert')
+const Cluster = require('../lib/Cluster')
+runner.suite('Cluster', (it) => {
+  it('should instantiate', () => {
+    expect.isType('Cluster', new Cluster())
+  })
+})
+if (require.main === module) runner.execute().then(code => process.exit(code))
