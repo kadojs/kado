@@ -24,6 +24,30 @@ which is used internally.
 * Return {object} currently compiled environment object to be passed to new
 calls to `cp.fork()`
 
+### ChildProcess.setPath(path)
+* `path` {string} set the child path to this new path.
+* Return {ChildProcess} this instance
+
+Change the path of the child process after instantiation.
+
+### ChildProcess.send(message, sendHandler, options)
+* `message` {mixed} data to send to the child
+* `sendHandler` {Handle} special handle used to pass sockets to workers, see
+the [core Node.JS documentation](https://nodejs.org/dist/latest-v13.x/docs/api/child_process.html#child_process_subprocess_send_message_sendhandle_options_callback)
+* `options` {object} available options `keepOpen` which is also use specially
+for sending sockets.
+* Return {object} of results indexed by the child pid.
+
+### ChildProcess.kill(signal = 'SIGTERM')
+* `signal` {string} signal to be sent to the child process for termination.
+* Return {object} result of `ChildProcess.onExit(signal)`
+
+### ChildProcess.start()
+* Return {Promise} resolved when all bound children have started.
+
+### ChildProcess.stop()
+* Return {Promise} resolved when all bound children have stopped.
+
 ### ChildProcess.setStatus(status)
 * `status` {string} set the current status of the system.
 * Return {ChildProcess} this instance
@@ -31,12 +55,6 @@ calls to `cp.fork()`
 Change the state of the child process instance.
 
 *Internal Use*
-
-### ChildProcess.setPath(path)
-* `path` {string} set the child path to this new path.
-* Return {ChildProcess} this instance
-
-Change the path of the child process after instantiation.
 
 ### ChildProcess.onExit(signal = 'SIGKILL')
 * Return {number} of processes killed by this method.
@@ -54,6 +72,8 @@ Change the path of the child process after instantiation.
 * Return {void}
 
 Passes the messages upwards via the `message` event.
+
+*Internal Use*
 
 ### ChildProcess.respawnChild()
 * Return {void}
@@ -77,20 +97,4 @@ the `ChildProcess` internals.
 * `proc` {cp} instance of core child_process object returned from fork.
 * Return {Promise} resolved when the `proc` instance is stopped.
 
-### ChildProcess.send(message, sendHandler, options)
-* `message` {mixed} data to send to the child
-* `sendHandler` {Handle} special handle used to pass sockets to workers, see
-the [core Node.JS documentation](https://nodejs.org/dist/latest-v13.x/docs/api/child_process.html#child_process_subprocess_send_message_sendhandle_options_callback)
-* `options` {object} available options `keepOpen` which is also use specially
-for sending sockets.
-* Return {object} of results indexed by the child pid.
-
-### ChildProcess.kill(signal = 'SIGTERM')
-* `signal` {string} signal to be sent to the child process for termination.
-* Return {object} result of `ChildProcess.onExit(signal)`
-
-### ChildProcess.start()
-* Return {Promise} resolved when all bound children have started.
-
-### ChildProcess.stop()
-* Return {Promise} resolved when all bound children have stopped.
+*Internal Use*
