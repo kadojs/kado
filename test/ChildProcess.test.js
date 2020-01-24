@@ -26,9 +26,15 @@ const child = new ChildProcess({
   path: path.join(__dirname, '/fixture/childProcess.js'),
   fork: { silent: true }
 })
+child.setEnv({ test: 'test' })
 runner.suite('ChildProcess', (it) => {
   it('should instantiate', () => {
     expect.isType('ChildProcess', new ChildProcess())
+  })
+  it('should have our env setting', () => {
+    const env = child.getEnv()
+    expect.isType('Object', env)
+    expect.eq(env.test, 'test')
   })
   it('should start', async () => {
     const rv = await child.start()
