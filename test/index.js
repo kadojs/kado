@@ -25,7 +25,7 @@ const suites = [
   'TestRunner',
   // normal tests
   'Asset', 'Assert',
-  'CommandServer', 'Connect', 'Cron',
+  'ChildProcess', 'CommandServer', 'Connect', 'Cron',
   'Database',
   'Email', 'Event',
   'Format',
