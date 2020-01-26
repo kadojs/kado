@@ -18,12 +18,37 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
+const path = require('path')
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const { expect } = require('../lib/Assert')
 const Cluster = require('../lib/Cluster')
+const cluster = new Cluster()
 runner.suite('Cluster', (it) => {
   it('should instantiate', () => {
     expect.isType('Cluster', new Cluster())
   })
+  it('should set env', () => {
+    const rv = cluster.setEnv({ test: 'test' })
+    expect.isType('Cluster', rv)
+  })
+  it('should have the set env', () => {
+    const rv = cluster.getEnv()
+    expect.isType('Object', rv)
+    expect.eq(rv.test, 'test')
+  })
+  it('should set path', () => {
+    const newPath = path.join(__dirname, '/fixture/worker.js')
+    const rv = cluster.setPath(newPath)
+    expect.isType('Cluster', rv)
+    expect.eq(rv.path, newPath)
+  })
+  it('should start')
+  it('should send messages')
+  it('should respawn crashed workers')
+  it('should stop')
+  it('should start again')
+  it('should restart')
+  it('should kill')
+  it('should exit')
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
