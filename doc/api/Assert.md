@@ -19,7 +19,8 @@ const { Assert, expect } = require('kado/lib/Assert')
 * `Assert` and `expect` are both synonyms for the
   [Assert](#class-assert) class itself
 * `Assert.Error` is the extended version of the standard
-  [`AssertionError`](#class-assert) and should be used instead (for readability)
+  [`AssertionError`](#class-assertionerror) and should be used instead
+  (for readability)
 
 ---
 ## Class: AssertionError
@@ -40,7 +41,8 @@ to be the standard method.
 ## Class: Assert
 
 Extends `Validate` class.
-Evaluates data, types, or other conditions to {boolean}.
+Evaluates data, types, or other conditions to either
+return boolean `true` or throw.
 
 ### `static Assert.getInstance(data)` 
 ### `Assert.constructor(data)`
@@ -119,6 +121,13 @@ Valid when `val1` equal to `val2`
 * `val2` {mixed} second value to compare
 
 Valid when `val1` deeply matches `val2`
+_Note: Uses Node.JS->assert->deepStrictEqual for evaluations_
+
+### `static Assert.neq(val1, val2)`
+* `val1` {mixed} value to match against
+* `val2` {mixed} value to test against
+
+Valid when `val1` not equal to `val2`
 
 ### `static Assert.getType(val)`
 * `val` {mixed} value to query for type
@@ -135,33 +144,32 @@ Valid when type or class of `value` matches
 ### `static Assert.isAbove(base, test)`
 * `base` {number} to test against
 * `test` {number} to compare with
-* Returns: {boolean} `true` if test, is greater than base otherwise throws `AssertionError`
+
+Valid when `test` is greater than `base`
 
 ### `static Assert.isBelow(base, test)`
 * `base` {number} to test against
 * `test` {number} to compare with
-* Returns: {boolean} `true` if `test` is less than `base` otherwise throws `AssertionError`
+
+Valid when `test` is less than `base`
 
 ### `static Assert.minimum(base, test)`
 * `base` {number} to test against
 * `test` {number} to compare with
-* Returns: {boolean} `true` if the `test` is greater than or equal to the `base` otherwise throws `AssertionError`
+
+Valid when `test` is greater than or equal to `base`
 
 ### `static Assert.maximum(base, test)`
 * `base` {number} to test against
 * `test` {number} to compare with
-* Returns: {boolean} `true` if `test` is less than or equal to `base` otherwise throws `AssdertionError`
 
-### `static Assert.neq(val1, val2)`
-* `val1` {mixed} value to match against
-* `val2` {mixed} value to test against
-* Returns: {boolean} `true` if test `val1` one is not equal to `val2` otherwise throws `AssertionError`
+Valid when `test` is less than or equal to `base`
 
 ### `static Assert.isOk(value, message)`
 * `value` {mixed} value to match truthiness against
 * `message` {string} message used in throw
 * Returns: {boolean} `true` if `value` is truthy
-* Throws: {AssertionError} otherwise
+* Throws: {AssertionError} otherwise, with `message` set as provided
 
 ### `static Assert.catch(v1, v2, msg, method)`
 * `v1` {mixed} first argument to `method` 
