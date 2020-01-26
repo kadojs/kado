@@ -73,5 +73,12 @@ runner.suite('Search', (it) => {
         expect.eq(result.results.test[0].uri, '/foo')
       })
   })
+  it('should throw for non-string phrase', () => {
+    try {
+      search.byPhrase({}, ['not-a-string'], {})
+    } catch (e) {
+      expect.match(/phrase must be string/, e.message)
+    }
+  })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
