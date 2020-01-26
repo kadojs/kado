@@ -31,25 +31,26 @@ The Utility Syntax Guidelines are described here:
 * http://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap12.html
 
 ### `static GetOpt.getInstance(argv, optstring, optind)`
-* _Options same as [main constructor, below](#getoptconstructorargv-optstring-optind)_
+* _Options same as main constructor,
+  [below](#getoptconstructorargv-optstring-optind)_
 * Returns: {GetOpt} current (or if none, new) instance of GetOpt
 
 ### `GetOpt.constructor(argv, optstring, optind)`
 * `argv` {Array} Arguments, usually directly from `process.argv`
 * `optstring` {string} See [Below](#format-of-optstring) (Default: result of
-  [`GetOpt.buildOptstring(argv)`](#getoptbuildoptstringargv))
+  [`GetOpt.buildOptionString(argv)`](#getoptbuildoptionstringargv))
 * `optind` {number} Offset within `argv` to begin parsing (Default: `2`)
 * Returns: {GetOpt} new instance of `GetOpt`
 
 Instantiates a new object for parsing the specified arguments using the
 specified option string.  This interface is closest to the traditional getopt()
 C function.  Callers first instantiate a GetOpt class and then invoke the
-`getopt()` method to iterate the options as they would in C, although this interface
-allows the same option to be specified multiple times.  The optional third
-argument to the constructor `optind` is the number of arguments from `argv` to
-skip.  By default `optind` is set to `2`, so the first two arguments in `argv`
-are ignored, since they generally denote the path to the node executable and
-the script being run.
+`getopt()` method to iterate the options as they would in C, although this
+interface allows the same option to be specified multiple times.  The optional
+third argument to the constructor `optind` is the number of arguments from
+`argv` to skip.  By default `optind` is set to `2`, so the first two arguments
+in `argv` are ignored, since they generally denote the path to the node
+executable and the script being run.
 
 ##### Format of `optstring` 
 The option string consists of an optional leading `:` (see below) followed by a
@@ -73,7 +74,20 @@ when an argument is not specified for an option which takes an argument.  See
 printed to stderr when invalid options, options with missing arguments, or
 options with unexpected arguments are encountered.
 
-### `GetOpt.buildOptstring(argv)`
+### `GetOpt.parseOptionString(optstring)`
+* `optstring` {string} Any string following the
+  [rules above](#format-of-optstring)
+* Returns {void}
+
+Parse the option string and update the following internal vars:
+* `gop_silent` {boolean} Whether to log errors to stderr.  Silent mode is
+  indicated by a leading ':' in the option string.
+* `gop_options` {Object} Maps valid single-letter-options to booleans indicating
+  whether each option is required.
+* `gop_aliases` {Object} Maps valid long options to the corresponding
+  single-letter short option.
+
+### `GetOpt.buildOptionString(argv)`
 * `argv` {Array} Arguments, usually directly from `process.argv`
 * Returns {string} an `optstring` inferred from `argv`
 
