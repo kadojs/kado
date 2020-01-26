@@ -61,6 +61,13 @@ Note: this will require the library and fail if it doesnt exists. Use
 This will setup and connect sub systems, then check for a command to execute,
 tests to run, or will default to starting any http servers.
 
+### Application.listen()
+* Return {Promise} resolved when all servers are listening.
+
+Note: When the application is `started` only connectors are setup. This method
+must be called to listen on ports. This is by design to support cleaner
+initialization for scripting.
+
 ### Application.stop()
 * Return {Promise} resolved when application is shutdown.
 
