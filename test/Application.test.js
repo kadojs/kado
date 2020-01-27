@@ -58,6 +58,10 @@ runner.suite('Application', (it) => {
     const rv = await app.start()
     expect.isType('undefined', rv)
   })
+  it('should listen', async () => {
+    const rv = await app.listen()
+    expect.isType('undefined', rv)
+  })
   it('should stop', async () => {
     const rv = await app.stop()
     expect.isType('undefined', rv)
