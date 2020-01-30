@@ -44,17 +44,15 @@ Emitted when a worker has respawned
 Emitted when a new worker path has been set
 * `path` {string} the new worker path
 
-### event 'starting'
-Emitted when the cluster is starting
+### event 'status'
+Emitted when the status of the cluster changes
+and will be one of the following values.
 
-### event 'started'
-Emitted when the cluster is started
-
-### event 'stopping'
-Emitted when the cluster is stopping
-
-### event 'stopped'
-Emitted when the cluster is stopped
+* starting - Emitted when the start() method is invoked
+* started - Emitted when the start() method is complete
+* stopping - Emitted when the stop() method is invoked
+* stopped - Emitted when the stop() method is complete
+* exiting - Emitted when exit() is invoked, not further events will be emitted
 
 ### event 'messageError'
 Emitted when an error occurs sending a worker a message
@@ -147,6 +145,19 @@ Used to setup the master process with the required options.
 
 *Internal Use*
 
+### Cluster.getMasterOptions()
+* Return {object} of options to be used with `cluster.setupMaster()`
+
+*Internal Use*
+
+### Cluster.prepareCluster()
+* Return {void}
+
+Called internally by `Cluster.start()` and will setup the master and start the
+heartbeat.
+
+*Internal Use*
+
 ### Cluster.each(fn)
 * `fn` {function} function to be called on by each worker `fn(worker)`
 * Return {object} of results indexed by cluster.workers index
@@ -154,6 +165,12 @@ Used to setup the master process with the required options.
 ### Cluster.kill(signal = 'SIGTERM')
 * `signal` {string} process signal to send the workers with a kill request
 * Return {object} of results from each worker killed
+
+### Cluster.destruct()
+* Return {Promise} resolved when all workers are offline and disconnected.
+
+This also tears down the master and the clears the master instance. Used for
+reusing the master process for other purposes.
 
 ### Cluster.exit(code)
 * `code` {number} code to exit by.
