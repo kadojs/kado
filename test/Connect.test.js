@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Connect = require('../lib/Connect')
 const ConnectEngine = require('../lib/ConnectEngine')
 runner.suite('Connect', (it) => {
@@ -38,43 +38,43 @@ runner.suite('Connect', (it) => {
     }
   }
   it('should construct', () => {
-    expect.isType('Connect', new Connect())
+    Assert.isType('Connect', new Connect())
   })
   it('should accept a new engine', () => {
-    expect.isType('Prism', cdn.addEngine(
+    Assert.isType('Prism', cdn.addEngine(
       'stretchfs',
       new Prism('test', 'test', 'localhost')
     ))
   })
   it('should have the new engine instance', () => {
-    expect.isType('Prism', cdn.getEngine('stretchfs'))
+    Assert.isType('Prism', cdn.getEngine('stretchfs'))
   })
   it('should have no active engine', () => {
-    expect.eq(cdn.getActiveEngine(), null)
+    Assert.eq(cdn.getActiveEngine(), null)
   })
   it('should activate an engine', () => {
-    expect.isType('Prism', cdn.activateEngine('stretchfs'))
+    Assert.isType('Prism', cdn.activateEngine('stretchfs'))
   })
   it('should get active engine', () => {
-    expect.isType('Prism', cdn.getActiveEngine())
+    Assert.isType('Prism', cdn.getActiveEngine())
   })
   it('should deactivate engine', () => {
-    expect.eq(cdn.deactivateEngine())
+    Assert.eq(cdn.deactivateEngine())
   })
   it('should have no active engine again', () => {
-    expect.eq(cdn.getActiveEngine(), null)
+    Assert.eq(cdn.getActiveEngine(), null)
   })
   it('should remove engine instance', () => {
-    expect.eq(cdn.removeEngine('stretchfs'))
+    Assert.eq(cdn.removeEngine('stretchfs'))
   })
   it('should have no active instance', () => {
-    expect.eq(cdn.getActiveEngine(), null)
+    Assert.eq(cdn.getActiveEngine(), null)
   })
   it('should no longer have the engine handle', () => {
-    expect.eq(cdn.getEngine('stretchfs'), false)
+    Assert.eq(cdn.getEngine('stretchfs'), false)
   })
   it('should accept a new engine instance', () => {
-    expect.isType('Prism', cdn.addEngine(
+    Assert.isType('Prism', cdn.addEngine(
       'stretchfs',
       new Prism('test', 'test', 'localhost')
     ))
@@ -84,7 +84,7 @@ runner.suite('Connect', (it) => {
       user: 'test', pass: 'test', host: 'test'
     })
       .then((result) => {
-        expect.eq(result, 'cdn.stretchfs.com')
+        Assert.eq(result, 'cdn.stretchfs.com')
       })
   })
 })

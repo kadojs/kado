@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const CommandServer = require('../lib/CommandServer')
 runner.suite('CommandServer', (it) => {
   const cli = new CommandServer()
@@ -34,31 +34,31 @@ runner.suite('CommandServer', (it) => {
     }
   }
   it('should construct', () => {
-    expect.isType('CommandServer', new CommandServer())
+    Assert.isType('CommandServer', new CommandServer())
   })
   it('should have no commands', () => {
-    expect.eq(Object.keys(cli.all()).length, 0)
+    Assert.eq(Object.keys(cli.all()).length, 0)
   })
   it('should add a command', () => {
-    expect.eq(cli.command('test', 'test', testCommand), 'test')
+    Assert.eq(cli.command('test', 'test', testCommand), 'test')
   })
   it('should have the command', () => {
-    expect.isType('Command', cli.getCommand('test', 'test'))
+    Assert.isType('Command', cli.getCommand('test', 'test'))
   })
   it('should remove the command', () => {
-    expect.eq(cli.removeCommand('test', 'test'), 'test')
+    Assert.eq(cli.removeCommand('test', 'test'), 'test')
   })
   it('should should add a new command', () => {
-    expect.eq(cli.command('test', 'test', testCommand), 'test')
+    Assert.eq(cli.command('test', 'test', testCommand), 'test')
   })
   it('should show in all commands', () => {
-    expect.isType('Object', cli.all().test)
+    Assert.isType('Object', cli.all().test)
   })
   it('should run a command programmatically', async () => {
-    return expect.eq(await cli.run('test test -t test'), 'test')
+    return Assert.eq(await cli.run('test test -t test'), 'test')
   })
   it('should run a command with a full switch', async () => {
-    return expect.eq(await cli.run('test test --test=test'), 'test')
+    return Assert.eq(await cli.run('test test --test=test'), 'test')
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

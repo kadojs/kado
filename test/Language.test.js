@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Language = require('../lib/Language')
 runner.suite('Language', (it) => {
   const language = new Language()
@@ -35,31 +35,31 @@ runner.suite('Language', (it) => {
     something: 'Something'
   }
   it('should construct', () => {
-    expect.isType('Language', new Language())
+    Assert.isType('Language', new Language())
   })
   it('should be empty', () => {
-    expect.eq(Object.keys(language.all()).length, 0)
+    Assert.eq(Object.keys(language.all()).length, 0)
   })
   it('should add a pack', () => {
-    expect.eq(language.addPack('eng', eng), 'eng')
+    Assert.eq(language.addPack('eng', eng), 'eng')
   })
   it('should get the pack', () => {
-    expect.eq(language.getPack('eng')._pack_name, 'English')
+    Assert.eq(language.getPack('eng')._pack_name, 'English')
   })
   it('should add a module to the pack', () => {
-    expect.eq(language.addModule('eng', 'blog', { blog_name: 'Blog Name' }), 'blog')
+    Assert.eq(language.addModule('eng', 'blog', { blog_name: 'Blog Name' }), 'blog')
   })
   it('should have the module def', () => {
-    expect.eq(language.getPack('eng').blog.blog_name, 'Blog Name')
+    Assert.eq(language.getPack('eng').blog.blog_name, 'Blog Name')
   })
   it('should remove a module', () => {
-    expect.eq(language.removeModule('eng', 'blog'), 'blog')
+    Assert.eq(language.removeModule('eng', 'blog'), 'blog')
   })
   it('should remove a pack', () => {
-    expect.eq(language.removePack('eng'), 'eng')
+    Assert.eq(language.removePack('eng'), 'eng')
   })
   it('should have no packs', () => {
-    expect.eq(Object.keys(language.all()).length, 0)
+    Assert.eq(Object.keys(language.all()).length, 0)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

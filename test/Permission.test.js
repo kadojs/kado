@@ -19,39 +19,39 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Permission = require('../lib/Permission')
 runner.suite('Permission', (it) => {
   const permission = new Permission()
   it('should construct', () => {
-    expect.isType('Permission', new Permission())
+    Assert.isType('Permission', new Permission())
   })
   it('should be empty', () => {
-    expect.eq(permission.all().length, 0)
+    Assert.eq(permission.all().length, 0)
   })
   it('should add a permission', () => {
-    expect.eqDeep(
+    Assert.eqDeep(
       permission.add('foo', 'foo'),
       { name: 'foo', description: 'foo' }
     )
   })
   it('should show the permission exists', () => {
-    expect.eq(permission.exists('foo'), true)
+    Assert.eq(permission.exists('foo'), true)
   })
   it('should get the permission', () => {
-    expect.eq(permission.get('foo').name, 'foo')
+    Assert.eq(permission.get('foo').name, 'foo')
   })
   it('should be allowed', () => {
-    expect.eq(permission.allowed('foo'), true)
+    Assert.eq(permission.allowed('foo'), true)
   })
   it('should not be allowed against a set', () => {
-    expect.eq(permission.allowed('foo', []), false)
+    Assert.eq(permission.allowed('foo', []), false)
   })
   it('should digest keys from per set', () => {
-    expect.eq(permission.digest().length, 1)
+    Assert.eq(permission.digest().length, 1)
   })
   it('should return all permissions', () => {
-    expect.eq(permission.all().length, 1)
+    Assert.eq(permission.all().length, 1)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

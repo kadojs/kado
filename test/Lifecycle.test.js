@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Lifecycle = require('../lib/Lifecycle')
 const lifecycle = new Lifecycle()
 let first = null
@@ -29,31 +29,31 @@ lifecycle.on('start', () => { tick = true })
 lifecycle.on('stop', () => { tick = false })
 runner.suite('Lifecycle', (it) => {
   it('should instantiate', () => {
-    expect.isType('Lifecycle', new Lifecycle())
+    Assert.isType('Lifecycle', new Lifecycle())
   })
   it('should have no items', () => {
-    expect.eq(lifecycle.list().length, 0)
+    Assert.eq(lifecycle.list().length, 0)
   })
   it('should add an item', () => {
-    expect.eq(lifecycle.add('test').title, 'test')
+    Assert.eq(lifecycle.add('test').title, 'test')
   })
   it('should get an item', () => {
-    expect.eq(lifecycle.get('test').title, 'test')
+    Assert.eq(lifecycle.get('test').title, 'test')
   })
   it('should remove an item', () => {
-    expect.eq(lifecycle.remove('test').title, 'test')
+    Assert.eq(lifecycle.remove('test').title, 'test')
   })
   it('should have no items now', () => {
-    expect.eq(lifecycle.list().length, 0)
+    Assert.eq(lifecycle.list().length, 0)
   })
   it('should add a new item', () => {
-    expect.eq(lifecycle.add('first',
+    Assert.eq(lifecycle.add('first',
       () => { first = true },
       () => { first = false }
     ).title, 'first')
   })
   it('should add another new item', () => {
-    expect.eq(lifecycle.add('second',
+    Assert.eq(lifecycle.add('second',
       () => { second = true },
       () => { second = false }
     ).title, 'second')
@@ -61,17 +61,17 @@ runner.suite('Lifecycle', (it) => {
   it('should start both items', () => {
     return lifecycle.start()
       .then(() => {
-        expect.eq(tick)
-        expect.eq(first)
-        expect.eq(second)
+        Assert.eq(tick)
+        Assert.eq(first)
+        Assert.eq(second)
       })
   })
   it('should stop both items', () => {
     return lifecycle.stop()
       .then(() => {
-        expect.eq(tick, false)
-        expect.eq(first, false)
-        expect.eq(second, false)
+        Assert.eq(tick, false)
+        Assert.eq(first, false)
+        Assert.eq(second, false)
       })
   })
 })

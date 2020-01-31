@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const HyperText = require('../lib/HyperText')
 runner.suite('HyperText', (it) => {
   const hyperText = new HyperText()
@@ -85,7 +85,7 @@ runner.suite('HyperText', (it) => {
         res.setEncoding(('utf8'))
         res.on('data', (chunk) => { data += chunk })
         res.on('end', () => {
-          resolve(expect.match(/Cannot GET \//, data))
+          resolve(Assert.match(/Cannot GET \//, data))
         })
         res.on('error', reject)
       })
@@ -93,45 +93,45 @@ runner.suite('HyperText', (it) => {
     })
   }
   it('should construct', () => {
-    expect.isType('HyperText', new HyperText())
+    Assert.isType('HyperText', new HyperText())
   })
   it('should have no engines', () => {
-    expect.eq(Object.keys(hyperText.allEngines()).length, 0)
+    Assert.eq(Object.keys(hyperText.allEngines()).length, 0)
   })
   it('should add a engine', () => {
-    expect.isType('OurEngine', hyperText.addEngine('express', new OurEngine()))
+    Assert.isType('OurEngine', hyperText.addEngine('express', new OurEngine()))
   })
   it('should have an engine', () => {
-    expect.isType('OurEngine', hyperText.getEngine('express'))
+    Assert.isType('OurEngine', hyperText.getEngine('express'))
   })
   it('should have 1 total engines', () => {
-    expect.eq(hyperText.listEngines().length, 1)
+    Assert.eq(hyperText.listEngines().length, 1)
   })
   it('should remove a handler', () => {
-    expect.eq(hyperText.removeEngine('express'), true)
+    Assert.eq(hyperText.removeEngine('express'), true)
   })
   it('should have no engines', () => {
-    expect.eq(hyperText.listEngines().length, 0)
+    Assert.eq(hyperText.listEngines().length, 0)
   })
   it('should accept a new engine', () => {
-    expect.isType('OurEngine', hyperText.addEngine('ex', new OurEngine()))
+    Assert.isType('OurEngine', hyperText.addEngine('ex', new OurEngine()))
   })
   it('should have the new handler', () => {
-    expect.isType('OurEngine', hyperText.getEngine('ex'))
+    Assert.isType('OurEngine', hyperText.getEngine('ex'))
   })
   it('should activate the new engine', () => {
-    expect.isType('OurEngine', hyperText.activateEngine('ex'))
+    Assert.isType('OurEngine', hyperText.activateEngine('ex'))
   })
   it('should start the engine', async () => {
     const rv = await hyperText.start(null, { port: 3000, host: 'localhost' })
-    expect.isType('Server', rv.ex)
+    Assert.isType('Server', rv.ex)
   })
   it('should be listening with the engine', async () => {
-    expect.eq(await checkServer(3000, 'localhost', '/'))
+    Assert.eq(await checkServer(3000, 'localhost', '/'))
   })
   it('should stop the engine', async () => {
     const rv = await hyperText.stop()
-    expect.eq(rv.ex)
+    Assert.eq(rv.ex)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

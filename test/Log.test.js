@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Log = require('../lib/Log')
 runner.suite('Log', (it) => {
   const logger = new Log()
@@ -27,34 +27,34 @@ runner.suite('Log', (it) => {
   // const LogHelper = require('../lib/logger/winston')
   class LogEngine extends Log.LogEngine {}
   it('should construct', () => {
-    expect.isType('Log', new Log())
+    Assert.isType('Log', new Log())
   })
   it('should have no logger', () => {
-    expect.eq(logger.listEngines().length, 0)
+    Assert.eq(logger.listEngines().length, 0)
   })
   it('should have no handlers', () => {
-    expect.eq(logger.listEngines().length, 0)
+    Assert.eq(logger.listEngines().length, 0)
   })
   it('should add an engine', () => {
-    expect.isType('LogEngine', logger.addEngine(loggerName, new LogEngine()))
+    Assert.isType('LogEngine', logger.addEngine(loggerName, new LogEngine()))
   })
   it('should get the handler', () => {
-    expect.isType('LogEngine', logger.getEngine(loggerName))
+    Assert.isType('LogEngine', logger.getEngine(loggerName))
   })
   it('should activate the handler', () => {
-    expect.isType('LogEngine', logger.activateEngine(loggerName))
+    Assert.isType('LogEngine', logger.activateEngine(loggerName))
   })
   it('should return the active handler', () => {
-    expect.isType('LogEngine', logger.getActiveEngine())
+    Assert.isType('LogEngine', logger.getActiveEngine())
   })
   it('should remove the handler', () => {
-    expect.eq(logger.removeEngine(loggerName), true)
+    Assert.eq(logger.removeEngine(loggerName), true)
   })
   it('should no longer have the handler', () => {
-    expect.eq(logger.getEngine(loggerName), false)
+    Assert.eq(logger.getEngine(loggerName), false)
   })
   it('should now not have a logger', () => {
-    expect.eq(logger.getActiveEngine(), null)
+    Assert.eq(logger.getActiveEngine(), null)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

@@ -19,29 +19,29 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Module = require('../lib/Module')
 const mod = new Module()
 class Application {}
 runner.suite('Module', (it) => {
   it('should instantiate', () => {
-    expect.isType('Module', new Module())
+    Assert.isType('Module', new Module())
   })
   it('should have a db method', () => {
-    expect.isType('Function', mod.db)
-    expect.isType('undefined', mod.db(new Application()))
+    Assert.isType('Function', mod.db)
+    Assert.isType('undefined', mod.db(new Application()))
   })
   it('should have a search method', () => {
-    expect.isType('Function', mod.search)
-    expect.isType('Object', mod.search(new Application(), ['foo'], 0, 10))
+    Assert.isType('Function', mod.search)
+    Assert.isType('Object', mod.search(new Application(), ['foo'], 0, 10))
   })
   it('should have a main method', () => {
-    expect.isType('Function', mod.main)
-    expect.isType('undefined', mod.main(new Application()))
+    Assert.isType('Function', mod.main)
+    Assert.isType('undefined', mod.main(new Application()))
   })
   it('should have a cli method', () => {
-    expect.isType('Function', mod.cli)
-    expect.isType('undefined', mod.cli(new Application()))
+    Assert.isType('Function', mod.cli)
+    Assert.isType('undefined', mod.cli(new Application()))
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

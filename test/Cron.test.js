@@ -19,37 +19,37 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Cron = require('../lib/Cron')
 runner.suite('Cron', (it) => {
   const cron = new Cron()
   it('should construct', () => {
-    expect.isType('Cron', new Cron())
+    Assert.isType('Cron', new Cron())
   })
   it('should be empty', () => {
-    expect.eq(Object.keys(cron.all()).length, 0)
+    Assert.eq(Object.keys(cron.all()).length, 0)
   })
   it('should add a cron', () => {
     const job = Cron.newJob().setSchedule('* * * * *').addHandler(() => {})
-    expect.isType('CronJob', cron.add('test', job))
+    Assert.isType('CronJob', cron.add('test', job))
   })
   it('should show a cron exists', () => {
-    expect.isType('CronJob', cron.get('test'))
+    Assert.isType('CronJob', cron.get('test'))
   })
   it('should show the cron in the list', () => {
-    expect.eq(Object.keys(cron.all()).length, 1)
+    Assert.eq(Object.keys(cron.all()).length, 1)
   })
   it('should show the cron via count', () => {
-    expect.eq(cron.count(), 1)
+    Assert.eq(cron.count(), 1)
   })
   it('should start the cron', () => {
-    expect.isType('Timeout', cron.start())
+    Assert.isType('Timeout', cron.start())
   })
   it('should stop the cron', () => {
-    expect.eq(cron.stop())
+    Assert.eq(cron.stop())
   })
   it('should destroy the cron', () => {
-    expect.eq(cron.removeAll(), 1)
+    Assert.eq(cron.removeAll(), 1)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

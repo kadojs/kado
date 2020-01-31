@@ -19,46 +19,46 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Router = require('../lib/Router')
 runner.suite('Router', (it) => {
   const router = new Router()
   it('should construct', () => {
-    expect.isType('Router', new Router())
+    Assert.isType('Router', new Router())
   })
   it('should have no routes', () => {
-    expect.eq(Object.keys(router.all()).length, 0)
+    Assert.eq(Object.keys(router.all()).length, 0)
   })
   it('should add a route', () => {
-    expect.eq(router.add('home', '/'), '/')
+    Assert.eq(router.add('home', '/'), '/')
   })
   it('should have a route', () => {
-    expect.eq(router.get('home'), '/')
+    Assert.eq(router.get('home'), '/')
   })
   it('should accept a route update', () => {
-    expect.eq(router.update('home', '/home'), '/home')
+    Assert.eq(router.update('home', '/home'), '/home')
   })
   it('should show the route update', () => {
-    expect.eq(router.get('home'), '/home')
+    Assert.eq(router.get('home'), '/home')
   })
   it('should remove the route', () => {
-    expect.eq(router.remove('home'), '/home')
+    Assert.eq(router.remove('home'), '/home')
   })
   it('should not have the route', () => {
     try {
       router.get('home')
     } catch (e) {
-      expect.eq(e.message, 'Requested undefined URI: home')
+      Assert.eq(e.message, 'Requested undefined URI: home')
     }
   })
   it('should add a route via passthrough', () => {
-    expect.eq(router.p('/home'), '/home')
+    Assert.eq(router.p('/home'), '/home')
   })
   it('should show the route in all', () => {
-    expect.eq(Object.keys(router.all()).length, 1)
+    Assert.eq(Object.keys(router.all()).length, 1)
   })
   it('should export the routes for template usage', () => {
-    expect.eq(router.allForTemplate()._home, '/home')
+    Assert.eq(router.allForTemplate()._home, '/home')
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

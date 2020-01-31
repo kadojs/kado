@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Email = require('../lib/Email')
 runner.suite('Email', (it) => {
   const email = new Email()
@@ -35,28 +35,28 @@ runner.suite('Email', (it) => {
     }
   }
   it('should construct', () => {
-    expect.isType('Email', new Email())
+    Assert.isType('Email', new Email())
   })
   it('should accept a new engine', () => {
-    expect.isType('OurEmail', email.addEngine('test', new OurEmail()))
+    Assert.isType('OurEmail', email.addEngine('test', new OurEmail()))
   })
   it('should have the new engine instance', () => {
-    expect.isType('OurEmail', email.getEngine('test'))
+    Assert.isType('OurEmail', email.getEngine('test'))
   })
   it('should remove the engine', () => {
-    expect.eq(email.removeEngine('test'), true)
+    Assert.eq(email.removeEngine('test'), true)
   })
   it('should no longer have the engine', () => {
-    expect.eq(email.getEngine('test'), false)
+    Assert.eq(email.getEngine('test'), false)
   })
   it('should accept a new engine instance', () => {
-    expect.isType('OurEmail', email.addEngine('test', new OurEmail()))
+    Assert.isType('OurEmail', email.addEngine('test', new OurEmail()))
   })
   it('should attempt connect and fail', () => {
     const result = email.getEngine('test').connect()
-    expect.eq(result.sending, false)
-    expect.eq(result.ready, false)
-    expect.isType('Object', result.smtp)
+    Assert.eq(result.sending, false)
+    Assert.eq(result.ready, false)
+    Assert.isType('Object', result.smtp)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

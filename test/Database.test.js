@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Database = require('../lib/Database')
 runner.suite('Database', (it) => {
   const db = new Database()
@@ -31,23 +31,23 @@ runner.suite('Database', (it) => {
     }
   }
   it('should construct', () => {
-    expect.isType('Database', new Database())
+    Assert.isType('Database', new Database())
   })
   it('should accept a new database', () => {
-    expect.isType('SequelizeDb', db.addEngine('sequelize', new SequelizeDb())
+    Assert.isType('SequelizeDb', db.addEngine('sequelize', new SequelizeDb())
     )
   })
   it('should have the new database instance', () => {
-    expect.isType('SequelizeDb', db.getEngine('sequelize'))
+    Assert.isType('SequelizeDb', db.getEngine('sequelize'))
   })
   it('should remove database instance', () => {
-    expect.eq(db.removeEngine('sequelize'), true)
+    Assert.eq(db.removeEngine('sequelize'), true)
   })
   it('should no longer have the database handle', () => {
-    expect.eq(db.getEngine('sequelize'), false)
+    Assert.eq(db.getEngine('sequelize'), false)
   })
   it('should accept a new database instance', () => {
-    expect.isType('SequelizeDb', db.addEngine(
+    Assert.isType('SequelizeDb', db.addEngine(
       'sequelize',
       new SequelizeDb()
     ))
@@ -59,9 +59,9 @@ runner.suite('Database', (it) => {
       })
       .catch((e) => {
         if (e.message.match(/access/i)) {
-          expect.match(/Access denied for user/, e.message)
+          Assert.match(/Access denied for user/, e.message)
         } else {
-          expect.match(/ECONNREFUSED/, e.message)
+          Assert.match(/ECONNREFUSED/, e.message)
         }
       })
   })
