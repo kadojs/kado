@@ -1,9 +1,0 @@
-{{>header}}
-  <main role="main" class="container">
-    <h1>Welcome to our Documentation</h1>
-    <p>Please select from our current projects.</p>
-    {{#projectList}}
-      <h5><a href="{{{_baseUrl}}}{{{_u._doc}}}/{{{uri}}}">{{name}}</a></h5>
-    {{/projectList}}
-  </main>
-{{>footer}}
