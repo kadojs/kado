@@ -30,6 +30,10 @@ zero external dependencies.
 * [Assert](./doc/api/Assert.md) - Make assertions on input or tests.
 * [Asset](./doc/api/Asset.md) - Store, filter, and query static application
 files.
+* [Child](./doc/api/Child.md) - Child process library adding convenience and
+functionality to the core child_process functions.
+* [Cluster](./doc/api/Cluster.md) - Cluster library for constructing and
+operating process clusters.
 * [Command](./doc/api/Command.md) - Build CLI applications with ease.
 * [CommandServer](./doc/api/CommandServer.md) - Execute CLI applications like a
 web server.
