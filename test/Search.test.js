@@ -19,12 +19,12 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Search = require('../lib/Search')
 class OurSearch extends Search.SearchEngine {
   search (options) {
-    expect.isType('Object', options)
-    expect.isType('Object', options.app)
+    Assert.isType('Object', options)
+    Assert.isType('Object', options.app)
     return [
       {
         uri: '/foo',
@@ -44,40 +44,40 @@ class OurSearch extends Search.SearchEngine {
 runner.suite('Search', (it) => {
   const search = new Search()
   it('should construct', () => {
-    expect.isType('Search', new Search())
+    Assert.isType('Search', new Search())
   })
   it('should have no modules', () => {
-    expect.eq(search.listEngines().length, 0)
+    Assert.eq(search.listEngines().length, 0)
   })
   it('should add a module', () => {
-    expect.isType('OurSearch', search.addEngine('test', new OurSearch()))
+    Assert.isType('OurSearch', search.addEngine('test', new OurSearch()))
   })
   it('should get the module', () => {
-    expect.isType('OurSearch', search.getEngine('test'))
+    Assert.isType('OurSearch', search.getEngine('test'))
   })
   it('should remove the module', () => {
-    expect.eq(search.removeEngine('test'), true)
+    Assert.eq(search.removeEngine('test'), true)
   })
   it('should the module as removed', () => {
-    expect.eq(search.listEngines().length, 0)
+    Assert.eq(search.listEngines().length, 0)
   })
   it('should add a new module', () => {
-    expect.isType('OurSearch', search.addEngine('test', new OurSearch()))
+    Assert.isType('OurSearch', search.addEngine('test', new OurSearch()))
   })
   it('should search by phrase', () => {
     return search.byPhrase({}, 'some foo', { start: 0, limit: 10 })
       .then((result) => {
-        expect.eq(result.resultCount, 2)
-        expect.eq(Object.keys(result.results).length, 1)
-        expect.eq(Object.keys(result.results)[0], 'test')
-        expect.eq(result.results.test[0].uri, '/foo')
+        Assert.eq(result.resultCount, 2)
+        Assert.eq(Object.keys(result.results).length, 1)
+        Assert.eq(Object.keys(result.results)[0], 'test')
+        Assert.eq(result.results.test[0].uri, '/foo')
       })
   })
   it('should throw for non-string phrase', () => {
     try {
       search.byPhrase({}, ['not-a-string'], {})
     } catch (e) {
-      expect.match(/phrase must be string/, e.message)
+      Assert.match(/phrase must be string/, e.message)
     }
   })
 })

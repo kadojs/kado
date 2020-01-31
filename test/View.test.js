@@ -19,54 +19,54 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const View = require('../lib/View')
 const ViewEngine = View.ViewEngine
 runner.suite('View', (it) => {
   const view = new View()
   const handlerName = 'mustache'
   it('should construct', () => {
-    expect.isType('View', new View())
+    Assert.isType('View', new View())
   })
   it('should be empty', () => {
-    expect.eq(view.listEngines().length, 0)
+    Assert.eq(view.listEngines().length, 0)
   })
   it('should error getting an engine with no active handler', () => {
     try {
       view.getActiveEngine()
     } catch (e) {
-      expect.match(/no active engine/, e.message)
+      Assert.match(/no active engine/, e.message)
     }
   })
   it('should add an engine', () => {
-    expect.isType('ViewEngine', view.addEngine(handlerName, new ViewEngine()))
+    Assert.isType('ViewEngine', view.addEngine(handlerName, new ViewEngine()))
   })
   it('should get an engine', () => {
-    expect.isType('ViewEngine', view.getEngine(handlerName))
+    Assert.isType('ViewEngine', view.getEngine(handlerName))
   })
   it('should activate an engine', () => {
-    expect.isType('ViewEngine', view.activateEngine(handlerName))
+    Assert.isType('ViewEngine', view.activateEngine(handlerName))
   })
   it('should provide an engine now', () => {
-    expect.isType('ViewEngine', view.getActiveEngine())
+    Assert.isType('ViewEngine', view.getActiveEngine())
   })
   it('should show in all handlers', () => {
-    expect.eq(view.listEngines().length, 1)
+    Assert.eq(view.listEngines().length, 1)
   })
   it('should remove a handler', () => {
-    expect.eq(view.removeEngine(handlerName), true)
+    Assert.eq(view.removeEngine(handlerName), true)
   })
   it('should add a view', () => {
-    expect.eq(view.add('home', 'home'), 'home')
+    Assert.eq(view.add('home', 'home'), 'home')
   })
   it('should get the view', () => {
-    expect.eq(view.get('home'), 'home')
+    Assert.eq(view.get('home'), 'home')
   })
   it('should list the view', () => {
-    expect.eq(Object.keys(view.all()).length, 1)
+    Assert.eq(Object.keys(view.all()).length, 1)
   })
   it('should remove the view', () => {
-    expect.eq(view.remove('home'), 'home')
+    Assert.eq(view.remove('home'), 'home')
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

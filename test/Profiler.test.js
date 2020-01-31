@@ -19,22 +19,22 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Profiler = require('../lib/Profiler')
 runner.suite('Profiler', (it) => {
   const profiler = new Profiler()
   it('should construct', () => {
-    expect.isType('Profiler', new Profiler())
+    Assert.isType('Profiler', new Profiler())
   })
   it('should accept query addition', () => {
-    expect.eq(profiler.addQuery('SELECT * FROM FOO', 1001), 1)
+    Assert.eq(profiler.addQuery('SELECT * FROM FOO', 1001), 1)
   })
   it('should start the rendering timer', () => {
     const now = +new Date()
-    expect.maximum(profiler.startRender(), now)
+    Assert.maximum(profiler.startRender(), now)
   })
   it('should build a profile', () => {
-    expect.match(/<div id="kado-profiler">/, profiler.build().HTML)
+    Assert.match(/<div id="kado-profiler">/, profiler.build().HTML)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

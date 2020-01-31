@@ -20,7 +20,7 @@
  */
 const TestRunner = require('../lib/TestRunner')
 const _runner = TestRunner.getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 _runner.suite('TestRunner', (main) => {
   const indent = ' | '
   const runner = new TestRunner('Self')
@@ -39,31 +39,31 @@ _runner.suite('TestRunner', (main) => {
     runner.before((log) => { log.out('stuff before running tests') })
     suite1.after((log) => { log.out('some stuff after the suite ') })
     runner.after((log) => { log.out('some stuff after the tests') })
-    suite1.it('should do stuff', () => { expect.eq(true) })
-    suite1.it('should do stuff 1', () => { expect.eq('true', 'true') })
+    suite1.it('should do stuff', () => { Assert.eq(true) })
+    suite1.it('should do stuff 1', () => { Assert.eq('true', 'true') })
     suite1.it('should be pending')
-    suite1.it('should do stuff 2', async () => { expect.eq(await getOne(), 1) })
+    suite1.it('should do stuff 2', async () => { Assert.eq(await getOne(), 1) })
     suite1.it('should do stuff 3', function () {
       this.timeout(2)
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(expect.eq(null, null))
+          resolve(Assert.eq(null, null))
         }, 10)
       })
     })
-    suite1.it('should do stuff 4', () => { expect.eq(false) })
+    suite1.it('should do stuff 4', () => { Assert.eq(false) })
     suite1.it('should do stuff 5', () => { throw new Error('foo') })
     // suites should recurse
     const test2 = suite1.suite('something nested')
-    test2.it('should do more stuff', () => { expect.eq() })
+    test2.it('should do more stuff', () => { Assert.eq() })
     // and again
     const test3 = test2.suite('something really deep')
-    test3.it('that is what she said', () => { expect.eq() })
-    runner.test('something out of band', () => { expect.eq(false, false) })
-    runner.test('something out of band 2', () => { expect.eq(false, true) })
-    expect.eq(await runner.execute({ indent: indent, hideFailed: true })
+    test3.it('that is what she said', () => { Assert.eq() })
+    runner.test('something out of band', () => { Assert.eq(false, false) })
+    runner.test('something out of band 2', () => { Assert.eq(false, true) })
+    Assert.eq(await runner.execute({ indent: indent, hideFailed: true })
       .then(code => {
-        expect.eq(code, 4)
+        Assert.eq(code, 4)
       })
       .catch((e) => {
         console.log(indent + `TestRunner testing failed: ${e.message}`)

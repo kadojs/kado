@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Message = require('../lib/Message')
 class OurMessage extends Message.MessageEngine {
   send (options) { return options }
@@ -27,32 +27,32 @@ class OurMessage extends Message.MessageEngine {
 runner.suite('Message', (it) => {
   const message = new Message()
   it('should construct', () => {
-    expect.isType('Message', new Message())
+    Assert.isType('Message', new Message())
   })
   it('should have no engines', () => {
-    expect.eq(message.listEngines().length, 0)
+    Assert.eq(message.listEngines().length, 0)
   })
   it('should add a engine', () => {
-    expect.isType('OurMessage', message.addEngine('test', new OurMessage()))
+    Assert.isType('OurMessage', message.addEngine('test', new OurMessage()))
   })
   it('should have a engine', () => {
-    expect.isType('OurMessage', message.getEngine('test'))
+    Assert.isType('OurMessage', message.getEngine('test'))
   })
   it('should remove a engine', () => {
-    expect.eq(message.removeEngine('test'), true)
+    Assert.eq(message.removeEngine('test'), true)
   })
   it('should have no engines', () => {
-    expect.eq(message.listEngines().length, 0)
+    Assert.eq(message.listEngines().length, 0)
   })
   it('should accept a new engine', () => {
-    expect.isType('OurMessage', message.addEngine('test', new OurMessage()))
+    Assert.isType('OurMessage', message.addEngine('test', new OurMessage()))
   })
   it('should send a message and see it in the handler', () => {
     return message.send('foo@foo.com', 'something to do')
       .then((result) => {
         result = result.test
-        expect.eq(result.to, 'foo@foo.com')
-        expect.eq(result.text, 'something to do')
+        Assert.eq(result.to, 'foo@foo.com')
+        Assert.eq(result.text, 'something to do')
       })
   })
 })

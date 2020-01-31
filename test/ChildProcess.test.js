@@ -20,7 +20,7 @@
  */
 const path = require('path')
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const ChildProcess = require('../lib/ChildProcess')
 const child = new ChildProcess({
   path: path.join(__dirname, '/fixture/childProcess.js'),
@@ -29,30 +29,30 @@ const child = new ChildProcess({
 child.setEnv({ test: 'test' })
 runner.suite('ChildProcess', (it) => {
   it('should instantiate', () => {
-    expect.isType('ChildProcess', new ChildProcess())
+    Assert.isType('ChildProcess', new ChildProcess())
   })
   it('should have our env setting', () => {
     const env = child.getEnv()
-    expect.isType('Object', env)
-    expect.eq(env.test, 'test')
+    Assert.isType('Object', env)
+    Assert.eq(env.test, 'test')
   })
   it('should start', async () => {
     const rv = await child.start()
-    expect.isType('ChildProcess', rv)
-    expect.isType('number', rv.pid)
+    Assert.isType('ChildProcess', rv)
+    Assert.isType('number', rv.pid)
   })
   it('should stop', () => {
     return child.stop()
       .then((rv) => {
-        expect.isType('Array', rv)
-        expect.eq(rv[0], 0)
+        Assert.isType('Array', rv)
+        Assert.eq(rv[0], 0)
       })
       .catch((e) => { console.log(e) })
   })
   it('should respawn', () => {
     return child.start()
       .then(() => {
-        child.once('child', (pid) => { expect.isType('number', pid) })
+        child.once('child', (pid) => { Assert.isType('number', pid) })
         child.kill()
       })
   })

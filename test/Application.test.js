@@ -19,7 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const { expect } = require('../lib/Assert')
+const Assert = require('../lib/Assert')
 const Application = require('../lib/Application')
 const app = new Application()
 class Module {
@@ -29,42 +29,42 @@ class Module {
 }
 runner.suite('Application', (it) => {
   it('should instantiate', () => {
-    expect.isType('Application', new Application())
+    Assert.isType('Application', new Application())
   })
   it('should set the name', () => {
-    expect.eq(app.setName('foo').name, 'foo')
+    Assert.eq(app.setName('foo').name, 'foo')
   })
   it('should set the version', () => {
-    expect.eq(app.setVersion('1.2.3').version, '1.2.3')
+    Assert.eq(app.setVersion('1.2.3').version, '1.2.3')
   })
   it('should set the config', () => {
-    expect.eq(app.setConfig({ name: 'bar' }).config.get('name'), 'bar')
+    Assert.eq(app.setConfig({ name: 'bar' }).config.get('name'), 'bar')
   })
   it('should add a module', () => {
-    expect.isType('Application', app.addModule(new Module()))
+    Assert.isType('Application', app.addModule(new Module()))
   })
   it('should get a module', () => {
-    expect.isType('Module', app.getModule('foo'))
+    Assert.isType('Module', app.getModule('foo'))
   })
   it('should remove a module', () => {
-    expect.isType('Module', app.removeModule('foo'))
+    Assert.isType('Module', app.removeModule('foo'))
   })
   it('should load a library', () => {
     app.library.addPath(`${__dirname}/../lib`)
     const Asset = app.lib('Asset')
-    expect.isType('Asset', new Asset())
+    Assert.isType('Asset', new Asset())
   })
   it('should start', async () => {
     const rv = await app.start()
-    expect.isType('undefined', rv)
+    Assert.isType('undefined', rv)
   })
   it('should listen', async () => {
     const rv = await app.listen()
-    expect.isType('undefined', rv)
+    Assert.isType('undefined', rv)
   })
   it('should stop', async () => {
     const rv = await app.stop()
-    expect.isType('undefined', rv)
+    Assert.isType('undefined', rv)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
