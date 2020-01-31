@@ -1,72 +1,86 @@
 # Kado
+[![pipeline status](https://git.nullivex.com/kado/kado/badges/4.x/pipeline.svg)](https://git.nullivex.com/kado/kado/commits/4.x)
 [![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
 [![npm version](https://badge.fury.io/js/kado.svg)](https://badge.fury.io/js/kado)
 [![Join the chat at https://gitter.im/KadoOrg/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/KadoOrg/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKadoOrg%2Fkado.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FKadoOrg%2Fkado?ref=badge_shield)
 
-Web Application System
+High Quality JavaScript Libraries based on ES6+
 
-## Why Kado?
+## Motivations
 
-Kado is a consistent curated development environment that aims to empower the
-modern developer. All you need is knowledge of HTML, CSS, JavaScript and then
-Node.JS helps too. Afterwards you can create stunning web products.
+Kado provides solutions by combining all the common gaps in JavaScript into a
+consistent, well documented, thoroughly tested collection of libraries that have
+zero external dependencies.
 
-## What is it?
+## Why use Kado?
 
-Kado is a development platform that provides the necessary features to build
-Web Applications. We consider Node.JS a great interpreter but it expects user
-space to bring all functionality which is good for Node.JS, however hard on the
-developer. Kado aims to ease that pain by bringing a curated set of features
-that make developing in Node.JS much like other first class web languages
-such as: PHP, Ruby, Django on Python, etc. 
+* Libraries for most common application needs.
+* 0 external dependencies. The buck stops here!
+* LGPL 3.0 License. Use Kado where you need it.
+* Thoroughly tested, continuously integrated, actively developed.
+* Make your own framework in just a few minutes!
+* Code is peer reviewed, openly developed, openly licensed.
+* Used by applications serving billions of page views.
+* Assertion, validation, and test running built in.
+* More! Check the library list below!
 
-## Features
+## Kado Library List
 
-* Provides all the needed tools to build websites.
-* Removes the hassle of searching NPM for each thing.
-* Easy to use and install, most websites need only HTML editing.
-* Extensive features and depth for building new modules.
-* Does not get in the way of your existing style.
-* Speeds up the time needed to get a project started.
-* Keeps development across multiple projects consistent.
-* Reuse code by introducing a completely modular structure.
-* Builds on top of favorite technologies like:
- Node.JS, Express, Sequelize, Mustache, etc
-* There are more! See [kado.org](https://kado.org/)
+* [Assert](./doc/api/Assert.md) - Make assertions on input or tests.
+* [Asset](./doc/api/Asset.md) - Store, filter, and query static application
+files.
+* [Command](./doc/api/Command.md) - Build CLI applications with ease.
+* [CommandServer](./doc/api/CommandServer.md) - Execute CLI applications like a
+web server.
+* [Connect](./doc/api/Connect.md) - Framework for housing external resource
+connections.
+* [ConnectEngine](./doc/api/ConnectEngine.md) - Interface for creating an engine
+to be used with a Connect system.
+* [Cron](./doc/api/Cron.md) - Execute functions on a schedule similar to UNIX
+cron jobs.
+* [Database](./doc/api/Database.md) - Connect system made for Databases.
+* [Email](./doc/api/Email.md) - Connect system made for Email.
+* [Event](./doc/api/Event.md) - Create, track and handle application events with
+log levels.
+* [Format](./doc/api/Format.md) - Commonly used String, Number, and Date format
+methods.
+* [GetOpt](./doc/api/GetOpt.md) - Parse command line string input into an
+object.
+* [History](./doc/api/History.md) - Track user navigation history throughout
+a session.
+* [HyperText](./doc/api/HyperText.md) - Connect system made for HTTP servers.
+* [Language](./doc/api/Language.md) - Internationalization helpers including
+loading, parsing, and displaying languages.
+* [Library](./doc/api/Library.md) - Dynamic library loader.
+* [Lifecycle](./doc/api/Lifecycle.md) - Start and stop systems with events.
+* [Log](./doc/api/Log.md) - Connect system made for Logs.
+* [Mapper](./doc/api/Mapper.md) - ECMA Map functionality on Objects.
+* [Message](./doc/api/Message.md) - Create, track and handle messages from
+various inputs and outputs.
+* [Navigation](./doc/api/Navigation.md) - Create and manage application menus.
+* [Permission](./doc/api/Permission.md) - Create and test permission sets to
+allow fine grained user control.
+* [Profiler](./doc/api/Profiler.md) - Track application resource usage and
+timing.
+* [Router](./doc/api/Router.md) - Store and process application route points.
+* [Search](./doc/api/Search.md) - Connect system for made for search.
+* [TestRunner](./doc/api/TestRunner.md) - Define and run Test Suites and Tests.
+* [Util](./doc/api/Util.md) - General purpose utilities for applications and
+Kado internals.
+* [Validate](./doc/api/Validate.md) - Validate input.
+* [View](./doc/api/View.md) - Connect system made for rendering.
 
-## Demo
+## Questions or Problems?
 
-Try out Kado locally its really easy to get going especially if you
-already develop web applications. See the
-[demo installation guide](https://kado.org/content/install-the-demo)
+Please see our [bug tracker](https://git.nullivex.com/kado/kado/issues)
 
-## Usage
+## Change Log
 
-Please [see the documentation](https://kado.org/doc/kado/3.x) for more
-
-## Thesis
-
-Take a look at [this thesis document](https://kado.org/content/thesis) for a
-more expanded look at why Kado was written and learn about how it will solve
-a problem for you or your company.
-
-## Bugs or Issues
-
-Please file an [issue report](https://github.com/KadoOrg/kado/issues)
-
-## Support
-
-Email hello [at] kado.org
-
-or 
-
-[![Join the chat at https://gitter.im/KadoOrg/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/KadoOrg/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-## Changelog
-
-Please see the changelog at [kado.org](https://kado.org/content/changelog)
-
+Please see the [CHANGELOG.md](./CHANGELOG.md)
 
 ## License
+Kado (C) 2013-2020 NULLIVEX LLC. All rights reserved. Is licensed under the
+Lesser GNU Public License version 3.0 see [LICENSE.md](./LICENSE.md) for more.
+
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKadoOrg%2Fkado.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FKadoOrg%2Fkado?ref=badge_large)
