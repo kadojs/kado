@@ -1,3 +1,17 @@
+### 3.10.5
+*Released 1/30/2020*
+* Update to latest dependencies
+   * codemirror             ^5.50.2  →  ^5.51.0
+   * cron                    ^1.7.2  →   ^1.8.2
+   * highlight.js           ^9.17.1  →  ^9.18.0
+   * mocha                   ^7.0.0  →   ^7.0.1
+   * mustache                ^3.2.1  →   ^4.0.0
+   * popper.js              ^1.16.0  →  ^1.16.1
+   * rimraf                  ^3.0.0  →   ^3.0.1
+   * terser-webpack-plugin   ^2.3.1  →   ^2.3.4
+   * validator              ^12.1.0  →  ^12.2.0
+
+
 ### 3.10.4
 *Released 1/5/2020*
 * Update to solve security warnings
