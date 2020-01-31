@@ -28,17 +28,17 @@ The Router library provides assistance for matching paths or URIs to real locati
 * Throws an ERROR if the route name you passed does't exist
 * Return {string} route name
 
-
-### Router.method(method, path)
-* `method` {string} HTTP METHOD
-* `path` {string} path URI of the route
-* Return {string} the path that you passed it
-
+### Router.addPath(name, uri)
+* `name` {string} name of the route
+* `uri` {string} uri path 
+* Return {string} name of route
 
 ### Router.p(name, uri)
 * `name` {string} name of the route
 * `uri` {string} uri path 
 * Return {string} name of route
+
+NOTE: Alias of `Router.addPath()`
 
 ### Router.all()
 * Return {object} all routes
