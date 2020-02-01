@@ -57,6 +57,13 @@ runner.suite('Application', (it) => {
   it('should start', async () => {
     const rv = await app.start()
     Assert.isType('undefined', rv)
+    Assert.isType('string', app.INTERFACE_ROOT)
+    Assert.isType('Asset', app.asset)
+    Assert.isType('Cron', app.cron)
+    Assert.isType('History', app.history)
+    Assert.isType('Permission', app.permission)
+    Assert.isType('Router', app.router)
+    Assert.isType('Util', app.util)
   })
   it('should listen', async () => {
     const rv = await app.listen()
