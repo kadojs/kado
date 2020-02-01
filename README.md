@@ -88,6 +88,6 @@ Please see the [CHANGELOG.md](./CHANGELOG.md)
 Please see the [Contribution Guidelines](./CONTRIBUTING.md)
 
 ## License
-Kado &copy; 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado is
-licensed under the Lesser GNU Public License version 3.0 or newer see
+Kado Copyright (C) 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado
+is licensed under the Lesser GNU Public License version 3.0 or newer see
 [LICENSE.md](./LICENSE.md) for a complete copy of applicable licenses.
