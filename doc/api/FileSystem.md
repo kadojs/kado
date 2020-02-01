@@ -149,6 +149,9 @@ Refer to [fs.opendirSync](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#
 ### FileSystem.openSync(path, flags, mode)
 Refer to [fs.openSync](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fs_opensync_path_flags_mode)
 
+### FileSystem.path
+This is an object the references the core [path module](https://nodejs.org/dist/latest-v12.x/docs/api/path.html)
+
 ### FileSystem.readdir(path, options)
 Refer to [fsPromises.readdir](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fspromises_readdir_path_options)
 
