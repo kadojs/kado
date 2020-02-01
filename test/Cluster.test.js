@@ -52,6 +52,23 @@ runner.suite('Cluster', (it) => {
     Assert.isType('Object', rv)
     Assert.eq(rv.test, 'test')
   })
+  it('should check if master', () => {
+    Assert.eq(cluster.isMaster())
+  })
+  it('should check if worker', () => {
+    Assert.eq(cluster.isWorker(), false)
+  })
+  it('should get scheduling policy', () => {
+    Assert.eq(cluster.getSchedulingPolicy(), cluster.cluster.SCHED_RR)
+  })
+  it('should set scheduling policy', () => {
+    cluster.setSchedulingPolicy(cluster.cluster.SCHED_NONE)
+    Assert.eq(cluster.getSchedulingPolicy(), cluster.cluster.SCHED_NONE)
+    cluster.setSchedulingPolicy(cluster.cluster.SCHED_RR)
+  })
+  it('should get settings', () => {
+    Assert.isType('Object', cluster.getSettings())
+  })
   it('should set path', () => {
     const newPath = path.join(__dirname, '/fixture/worker.js')
     const rv = cluster.setPath(newPath)
