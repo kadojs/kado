@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
 [![npm version](https://badge.fury.io/js/kado.svg)](https://badge.fury.io/js/kado)
 [![Join the chat at https://gitter.im/KadoOrg/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/KadoOrg/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKadoOrg%2Fkado.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FKadoOrg%2Fkado?ref=badge_shield)
 
 High Quality JavaScript Libraries based on ES6+
 
@@ -84,8 +83,11 @@ Please see our [bug tracker](https://git.nullivex.com/kado/kado/issues)
 
 Please see the [CHANGELOG.md](./CHANGELOG.md)
 
-## License
-Kado (C) 2013-2020 NULLIVEX LLC. All rights reserved. Is licensed under the
-Lesser GNU Public License version 3.0 see [LICENSE.md](./LICENSE.md) for more.
+## Contributing
 
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKadoOrg%2Fkado.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FKadoOrg%2Fkado?ref=badge_large)
+Please see the [Contribution Guidelines](./CONTRIBUTING.md)
+
+## License
+Kado &copy; 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado is
+licensed under the Lesser GNU Public License version 3.0 or newer see
+[LICENSE.md](./LICENSE.md) for a complete copy of applicable licenses.
