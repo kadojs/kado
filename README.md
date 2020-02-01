@@ -30,7 +30,7 @@ zero external dependencies.
 * [Assert](./doc/api/Assert.md) - Make assertions on input or tests.
 * [Asset](./doc/api/Asset.md) - Store, filter, and query static application
 files.
-* [Child](./doc/api/Child.md) - Child process library adding convenience and
+* [ChildProcess](./doc/api/ChildProcess.md) - Child process library adding convenience and
 functionality to the core child_process functions.
 * [Cluster](./doc/api/Cluster.md) - Cluster library for constructing and
 operating process clusters.
@@ -47,6 +47,7 @@ cron jobs.
 * [Email](./doc/api/Email.md) - Connect system made for Email.
 * [Event](./doc/api/Event.md) - Create, track and handle application events with
 log levels.
+* [FileSystem](./doc/api/FileSystem.md) - Consistent API for use with File System methods.
 * [Format](./doc/api/Format.md) - Commonly used String, Number, and Date format
 methods.
 * [GetOpt](./doc/api/GetOpt.md) - Parse command line string input into an

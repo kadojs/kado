@@ -34,6 +34,7 @@ const suites = [
   'Database',
   'Email',
   'Event',
+  'FileSystem',
   'Format',
   'GetOpt',
   'History',
