@@ -87,6 +87,22 @@ process.
 * `options` {object} Runtime options to configure the cluster
 * Return {Cluster} new cluster management object
 
+### Cluster.isMaster()
+* Return {boolean} `true` when this process is the master
+
+### Cluster.isWorker()
+* Return {boolean} `true` when this process is the worker
+
+### Cluster.getSchedulingPolicy()
+* Return {Symbol} the currently set scheduling policy
+
+### Cluster.setSchedulingPolicy(policy)
+* `policy` {Symbol} the new scheduling policy
+* Return {void}
+
+### Cluster.getSettings()
+* Return {object} containing current master settings
+
 ### Cluster.registerExitHandler()
 * Return {void}
 
