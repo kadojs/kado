@@ -7,27 +7,34 @@
   "license": "LGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/KadoOrg/kado.git"
+    "url": "https://git.nullivex.com/kado/kado.git"
   },
   "keywords": [
     "Kado High Quality JavaScript Libraries",
+    "Application Library for quickly building full service applications",
+    "Assert Library for making Assertions and throwing AssertionErrors",
     "Asset Library for managing static file delivery",
+    "Child Process Library for quickly running and managing child processes",
+    "Cluster Library for conveniently setting up and operating process clusters",
+    "Command Library for easily building CLI programs",
     "Command Line Server Library for running CLI against a virtual server",
-    "Connector Library for connecting thrid party systems into Kado",
+    "Connect Library for connecting third party systems into Kado",
+    "Connect Engine for building engines used with Connect for Kado",
     "Cron Library run handlers like UNIX cron at 1 second resolution",
     "Database Engine Library for connecting Databases",
     "Email Engine Library for handling Email sending",
     "Event Library with Levels and Handlers",
+    "FileSystem Library providing a clean consistent promise driven API",
     "Format Library for Bytes, Numbers, Dates, etc",
     "GetOpt Library for Parsing CLI Options",
     "History Library, User Navigation History",
     "HyperText Library for Managing HTTP Servers",
-    "HyperText Engine Library for implementing HTTP Servers",
     "Lanugage Pack Library for managing and displaying language packs",
     "Library Searching Library for finding libraries in various paths",
-    "Logger Engine Library for loading and using differnt log outputs",
+    "Log Engine Library for loading and using differnt log outputs",
     "Mapper Library for Map class functions on Objects",
     "Message Library for handling messages including outgoing email",
+    "Module Library super class for making new Kado modules",
     "Navigation Library for registering application navigation points",
     "Permission Library for checking permissions against a set and manage sets",
     "Profiler Library for tracking and display application performance",
@@ -35,13 +42,13 @@
     "Search Library for managing handlers and executing searches on them",
     "TestRunner Library for loading and running tests in a BDD interface",
     "Utility Library for Kado Internals",
-    "Validate Library for validating and asserting inputs",
+    "Validate Library for validating inputs",
     "View Library for managing and mapping views to view files"
   ],
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
-  "main": "./lib/Util.js",
+  "main": "./lib/Application.js",
   "scripts": {
     "test": "standard && node ./test/index.js"
   },
