@@ -21,13 +21,15 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
 const PathExp = require('../lib/PathExp')
-const path = new PathExp('/user/:name')
+const path = new PathExp('/user/{user}')
 runner.suite('PathExp', (it) => {
   it('should instantiate', () => {
     Assert.isType('PathExp', new PathExp('/'))
   })
   it('should match', () => {
-    Assert.eq(path.match('/user/1'), true)
+    const params = {}
+    Assert.eq(path.match('/user/1', params), true)
+    Assert.eq(params.user, '1')
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

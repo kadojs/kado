@@ -49,9 +49,10 @@ Adds a new route to the system with the specified handler.
 * `uri` {string} the uri of the route to remove
 * Return {boolean} `true` when a route is matched and deleted, otherwise `false`
 
-### Router.get(method, uri)
+### Router.get(method, uri, params)
 * `method` {string} the method of the route
 * `uri` {string} the uri of the route to get
+* `params` {object} blank object to be populated by found path keys
 * Return {object} when a route is found, otherwise {boolean} `false`
 
 ### Router.callMiddleware(req, res, middlewareKeys)
