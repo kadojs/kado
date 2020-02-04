@@ -23,23 +23,37 @@ const Assert = require('../lib/Assert')
 const Router = require('../lib/Router')
 runner.suite('Router', (it) => {
   const router = new Router()
+  const middlewareTest = () => { return 'test' }
+  const finalHandler = () => { return 'final' }
   it('should construct', () => {
     Assert.isType('Router', new Router())
   })
   it('should have no routes', () => {
     Assert.eq(Object.keys(router.all()).length, 0)
   })
+  it('should add middleware', () => {
+    router.use(middlewareTest)
+    Assert.assert(router.middleware[0].fn, middlewareTest)
+  })
+  it('should remove middleware', () => {
+    router.unuse(middlewareTest)
+    Assert.eq(router.middleware[0], undefined)
+  })
+  it('should replace final handler', () => {
+    router.final(finalHandler)
+    Assert.assert(router.finalHandler, finalHandler)
+  })
   it('should add a route', () => {
     Assert.eq(router.add('GET', '/', () => {}).uri, '/')
   })
   it('should have a route', () => {
-    Assert.eq(router.get('/').uri, '/')
+    Assert.eq(router.get('GET', '/').uri, '/')
   })
   it('should accept a route update', () => {
     Assert.eq(router.update('GET', '/', () => { return false }).uri, '/')
   })
   it('should show the route update', () => {
-    Assert.isOk(router.get('/').fn.toString().match('false'))
+    Assert.isOk(router.get('GET', '/').fn.toString().match('false'))
   })
   it('should show the route in all', () => {
     Assert.eq(Object.keys(router.all()).length, 1)
@@ -48,7 +62,7 @@ runner.suite('Router', (it) => {
     Assert.eq(router.allForTemplate()._, '/')
   })
   it('should remove the route', () => {
-    Assert.eq(router.remove('/'), true)
+    Assert.eq(router.remove('GET', '/'), true)
   })
   it('should not have the route', () => {
     Assert.eq(router.get('/'), false)

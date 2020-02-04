@@ -39,16 +39,18 @@ noop function.
 Adds a new route to the system with the specified handler.
 
 ### Router.update(method, uri, fn)
-* `method` {string} the new method of the route to use
+* `method` {string} the method of the route
 * `uri` {string} the uri of the route to modify
 * `name` {string} new name for pre-existing route
 * Return {string} with the updated URI
 
-### Router.remove(uri)
+### Router.remove(method, uri)
+* `method` {string} the method of the route
 * `uri` {string} the uri of the route to remove
 * Return {boolean} `true` when a route is matched and deleted, otherwise `false`
 
-### Router.get(uri)
+### Router.get(method, uri)
+* `method` {string} the method of the route
 * `uri` {string} the uri of the route to get
 * Return {object} when a route is found, otherwise {boolean} `false`
 
