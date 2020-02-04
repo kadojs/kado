@@ -15,12 +15,13 @@ expression cable of being used tested against request URIs.
 * `options` {object} Optional options object.
 * Return {PathExp} new instance.
 
-### PathExp.build()
+### PathExp.build(path)
+* `path` {string} A string with the new path declaration.
 * Return {void}
 
 Builds the regular express for testing against accessible through `PathExp.exp`
 
-*Internal Use*
+Calling this after the constructor resets the instance to a new path.
 
 ### PathExp.match(against, params)
 * `against` {string} A path string to try matching against
