@@ -19,45 +19,15 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const focus = new RegExp((process.env.FOCUS || '.') + '', 'i')
-const suites = [
-  // early tests
-  'TestRunner',
-  // normal tests
-  'Asset',
-  'Assert',
-  'ChildProcess',
-  'Cluster',
-  'CommandServer',
-  'Connect',
-  'Cron',
-  'Database',
-  'Email',
-  'Event',
-  'FileSystem',
-  'Format',
-  'GetOpt',
-  'History',
-  'HyperText',
-  'Language',
-  'Library',
-  'Lifecycle',
-  'Log',
-  'Mapper',
-  'Message',
-  'Module',
-  'Navigation',
-  'PathExp',
-  'Permission',
-  'Profiler',
-  'Router',
-  'Search',
-  'Util',
-  'Validate',
-  'View',
-  // late tests
-  'Application'
-]
-const runnableSuites = suites.filter(fn => (fn.search(focus) > -1))
-for (const suite of runnableSuites) require(`./${suite}.test.js`)
-runner.execute().then(code => process.exit(code))
+const Assert = require('../lib/Assert')
+const PathExp = require('../lib/PathExp')
+const path = new PathExp('/user/:name')
+runner.suite('PathExp', (it) => {
+  it('should instantiate', () => {
+    Assert.isType('PathExp', new PathExp('/'))
+  })
+  it('should match', () => {
+    Assert.eq(path.match('/user/1'), true)
+  })
+})
+if (require.main === module) runner.execute().then(code => process.exit(code))
