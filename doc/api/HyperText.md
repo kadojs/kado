@@ -35,3 +35,52 @@ Must be extended and used to start the underlying server.
 
 ### HyperTextEngine.stop()
 Must be extended and used to stop the underlying server.
+
+## Class: HyperTextServer
+`HyperTextServer` extends `HyperTextEngine` and provides a complete
+HTTP web server for use with `Application`
+
+### static HyperTextServer.finalHandler(req, res)
+* `req` {Request} HTTP Request object
+* `res` {Response} HTTP Response object
+* Return {void}
+
+Default finalHandler route.
+
+*Internal Use*
+
+### HyperTextServer.constructor()
+* Return {HyperTextServer} instance for use.
+
+### HyperTextServer.setHost(host)
+* `host` {string} or `null`, host to listen on such as `localhost` or
+`127.0.0.1`.
+* Return {HyperTextServer} this instance
+
+### HyperTextServer.setPort(port)
+* `port` {number} the port for the server to listen on by default uses `3000`
+* Return {HyperTextServer} this instance
+
+### HyperTextServer.setSSL(ssl)
+* `ssl` {object} containing properties `key` and `cert` which should be `Buffer`
+objects read from sources.
+* Return {HyperTextServer} this instance
+
+### HyperTextServer.setRouter(router)
+* `router` {Router} a Kado Router instance used to route requests.
+* Return {HyperTextServer} this instance
+
+This is typically called by `Application` during `setupHyperText()`
+
+### HyperTextServer.getRouter()
+* Return {Router} the set router instance or throws an error.
+
+### HyperTextServer.onRequest(req, res)
+* `req` {Request} HTTP Request object
+* `res` {Response} HTTP Response object
+* Return {Promise} resolved when the request has been fully handled by the
+router and its registered handlers.
+
+This method is set to the `request` event the server generates.
+
+*Internal Use*

@@ -30,35 +30,28 @@ runner.suite('Router', (it) => {
     Assert.eq(Object.keys(router.all()).length, 0)
   })
   it('should add a route', () => {
-    Assert.eq(router.add('home', '/'), '/')
+    Assert.eq(router.add('GET', '/', () => {}).uri, '/')
   })
   it('should have a route', () => {
-    Assert.eq(router.get('home'), '/')
+    Assert.eq(router.get('/').uri, '/')
   })
   it('should accept a route update', () => {
-    Assert.eq(router.update('home', '/home'), '/home')
+    Assert.eq(router.update('GET', '/', () => { return false }).uri, '/')
   })
   it('should show the route update', () => {
-    Assert.eq(router.get('home'), '/home')
-  })
-  it('should remove the route', () => {
-    Assert.eq(router.remove('home'), '/home')
-  })
-  it('should not have the route', () => {
-    try {
-      router.get('home')
-    } catch (e) {
-      Assert.eq(e.message, 'Requested undefined URI: home')
-    }
-  })
-  it('should add a route via passthrough', () => {
-    Assert.eq(router.p('/home'), '/home')
+    Assert.isOk(router.get('/').fn.toString().match('false'))
   })
   it('should show the route in all', () => {
     Assert.eq(Object.keys(router.all()).length, 1)
   })
   it('should export the routes for template usage', () => {
-    Assert.eq(router.allForTemplate()._home, '/home')
+    Assert.eq(router.allForTemplate()._, '/')
+  })
+  it('should remove the route', () => {
+    Assert.eq(router.remove('/'), true)
+  })
+  it('should not have the route', () => {
+    Assert.eq(router.get('/'), false)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
