@@ -70,7 +70,7 @@ runner.suite('Cluster', (it) => {
     Assert.isType('Object', cluster.getSettings())
   })
   it('should set path', () => {
-    const newPath = path.join(__dirname, '/fixture/worker.js')
+    const newPath = path.join(__dirname, '/fixture/clusterWorker.js')
     const rv = cluster.setPath(newPath)
     Assert.isType('Cluster', rv)
     Assert.eq(rv.path, newPath)
