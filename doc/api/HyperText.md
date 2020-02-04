@@ -63,7 +63,8 @@ Default finalHandler route.
 
 ### HyperTextServer.setSSL(ssl)
 * `ssl` {object} containing properties `key` and `cert` which should be `Buffer`
-objects read from sources.
+objects read from sources. Otherwise, it takes `pfx` and `passphrase` to use a
+secured certificate where `pfx` is a `Buffer` and `passphrase` is a `String`.
 * Return {HyperTextServer} this instance
 
 ### HyperTextServer.setRouter(router)
