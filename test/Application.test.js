@@ -73,5 +73,101 @@ runner.suite('Application', (it) => {
     const rv = await app.stop()
     Assert.isType('undefined', rv)
   })
+  it('should map acl routing', () => {
+    Assert.isType('Function', app.acl)
+  })
+  it('should map bind routing', () => {
+    Assert.isType('Function', app.bind)
+  })
+  it('should map checkout routing', () => {
+    Assert.isType('Function', app.checkout)
+  })
+  it('should map copy routing', () => {
+    Assert.isType('Function', app.copy)
+  })
+  it('should map delete routing', () => {
+    Assert.isType('Function', app.delete)
+  })
+  it('should map get routing', () => {
+    Assert.isType('Function', app.get)
+  })
+  it('should map head routing', () => {
+    Assert.isType('Function', app.head)
+  })
+  it('should map link routing', () => {
+    Assert.isType('Function', app.link)
+  })
+  it('should map lock routing', () => {
+    Assert.isType('Function', app.lock)
+  })
+  it('should map msearch routing', () => {
+    Assert.isType('Function', app.msearch)
+  })
+  it('should map merge routing', () => {
+    Assert.isType('Function', app.merge)
+  })
+  it('should map mkactivity routing', () => {
+    Assert.isType('Function', app.mkactivity)
+  })
+  it('should map mkcalendar routing', () => {
+    Assert.isType('Function', app.mkcalendar)
+  })
+  it('should map mkcol routing', () => {
+    Assert.isType('Function', app.mkcol)
+  })
+  it('should map move routing', () => {
+    Assert.isType('Function', app.move)
+  })
+  it('should map notify routing', () => {
+    Assert.isType('Function', app.notify)
+  })
+  it('should map options routing', () => {
+    Assert.isType('Function', app.options)
+  })
+  it('should map patch routing', () => {
+    Assert.isType('Function', app.patch)
+  })
+  it('should map post routing', () => {
+    Assert.isType('Function', app.post)
+  })
+  it('should map propfind routing', () => {
+    Assert.isType('Function', app.propfind)
+  })
+  it('should map proppatch routing', () => {
+    Assert.isType('Function', app.proppatch)
+  })
+  it('should map purge routing', () => {
+    Assert.isType('Function', app.purge)
+  })
+  it('should map put routing', () => {
+    Assert.isType('Function', app.put)
+  })
+  it('should map rebind routing', () => {
+    Assert.isType('Function', app.rebind)
+  })
+  it('should map report routing', () => {
+    Assert.isType('Function', app.report)
+  })
+  it('should map source routing', () => {
+    Assert.isType('Function', app.source)
+  })
+  it('should map subscribe routing', () => {
+    Assert.isType('Function', app.subscribe)
+  })
+  it('should map trace routing', () => {
+    Assert.isType('Function', app.trace)
+  })
+  it('should map unbind routing', () => {
+    Assert.isType('Function', app.unbind)
+  })
+  it('should map unlink routing', () => {
+    Assert.isType('Function', app.unlink)
+  })
+  it('should map unlock routing', () => {
+    Assert.isType('Function', app.unlock)
+  })
+  it('should map unsubscribe routing', () => {
+    Assert.isType('Function', app.unsubscribe)
+  })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
