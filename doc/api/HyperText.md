@@ -49,6 +49,12 @@ Default finalHandler route.
 
 *Internal Use*
 
+### static HyperTextServer.staticServer (root, options)
+* `root` {string} Root folder to serve paths from
+* `options` {object} Containing optional settings.
+* Return {function} that can be used as middleware that interacts with
+an instance of `StaticServer` instantiated with `root` and `options`.
+
 ### HyperTextServer.constructor()
 * Return {HyperTextServer} instance for use.
 
@@ -85,3 +91,22 @@ router and its registered handlers.
 This method is set to the `request` event the server generates.
 
 *Internal Use*
+
+## Class: StaticServer
+
+Provides a basic static file server to be used as middleware.
+
+### StaticServer.constructor(root, options)
+* `root` {string} Root folder to serve paths from
+* `options` {object} Containing optional settings.
+* Return {StaticServer} new instance
+
+### StaticServer.resolve(url)
+* `url` {string} url or `uri` to be appended to `root` to make a path.
+* Return {string} the newly joined path.
+
+### StaticServer.request(req, res)
+* `req` {Request} An HTTP Request object.
+* `res` {Response} An HTTP Response object.
+* Return {Promise} resolved when either a file is found or the stack should
+continue.
