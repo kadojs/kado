@@ -47,6 +47,7 @@ const suites = [
   'Message',
   'Module',
   'Navigation',
+  'Parser',
   'PathExp',
   'Permission',
   'Profiler',
