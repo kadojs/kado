@@ -43,6 +43,12 @@ runner.suite('Router', (it) => {
     router.final(finalHandler)
     Assert.assert(router.finalHandler, finalHandler)
   })
+  it('should set a preparer', () => {
+    router.setPreparer(Router.standardPreparer())
+    const preparer = router.getPreparer()
+    Assert.isType('Function', preparer)
+    Assert.eq('standardPreparer', preparer.name)
+  })
   it('should add a route', () => {
     Assert.eq(router.add('GET', '/', () => {}).uri, '/')
   })

@@ -63,14 +63,26 @@ Default finalHandler route.
 
 ### HyperTextServer.setSSL(ssl)
 * `ssl` {object} containing properties `key` and `cert` which should be `Buffer`
-objects read from sources.
+objects read from sources. Otherwise, it takes `pfx` and `passphrase` to use a
+secured certificate where `pfx` is a `Buffer` and `passphrase` is a `String`.
 * Return {HyperTextServer} this instance
 
+### HyperTextServer.createServer(router)
+* `router` {Router} a Kad Router instance used to route requests.
+* Return {HyperTextServer} this instance
+
+Use to create the actual underlying HTTP server after all settings have been
+applied.
+
+Will then set the provided router using the `setRouter(router)` method below.
+
 ### HyperTextServer.setRouter(router)
-* `router` {Router} a Kado Router instance used to route requests.
+* `router` {Router} a Kad Router instance used to route requests.
 * Return {HyperTextServer} this instance
 
 This is typically called by `Application` during `setupHyperText()`
+
+*Internal Use*
 
 ### HyperTextServer.getRouter()
 * Return {Router} the set router instance or throws an error.
@@ -84,3 +96,28 @@ router and its registered handlers.
 This method is set to the `request` event the server generates.
 
 *Internal Use*
+
+## Class: StaticServer
+
+Provides a basic static file server to be used as middleware.
+
+### static StaticServer.getMiddleware (root, options)
+* `root` {string} Root folder to serve paths from
+* `options` {object} Containing optional settings.
+* Return {function} that can be used as middleware that interacts with
+an instance of `StaticServer` instantiated with `root` and `options`.
+
+### StaticServer.constructor(root, options)
+* `root` {string} Root folder to serve paths from
+* `options` {object} Containing optional settings.
+* Return {StaticServer} new instance
+
+### StaticServer.resolve(url)
+* `url` {string} url or `uri` to be appended to `root` to make a path.
+* Return {string} the newly joined path.
+
+### StaticServer.request(req, res)
+* `req` {Request} An HTTP Request object.
+* `res` {Response} An HTTP Response object.
+* Return {Promise} resolved when either a file is found or the stack should
+continue.
