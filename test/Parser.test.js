@@ -19,46 +19,20 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const focus = new RegExp((process.env.FOCUS || '.') + '', 'i')
-const suites = [
-  // early tests
-  'TestRunner',
-  // normal tests
-  'Asset',
-  'Assert',
-  'ChildProcess',
-  'Cluster',
-  'CommandServer',
-  'Connect',
-  'Cron',
-  'Database',
-  'Email',
-  'Event',
-  'FileSystem',
-  'Format',
-  'GetOpt',
-  'History',
-  'HyperText',
-  'Language',
-  'Library',
-  'Lifecycle',
-  'Log',
-  'Mapper',
-  'Message',
-  'Module',
-  'Navigation',
-  'Parser',
-  'PathExp',
-  'Permission',
-  'Profiler',
-  'Router',
-  'Search',
-  'Util',
-  'Validate',
-  'View',
-  // late tests
-  'Application'
-]
-const runnableSuites = suites.filter(fn => (fn.search(focus) > -1))
-for (const suite of runnableSuites) require(`./${suite}.test.js`)
-runner.execute().then(code => process.exit(code))
+const Assert = require('../lib/Assert')
+const Parser = require('../lib/Parser')
+const cookieString = '_ga=GA1.2.637651231.1575923282;' +
+  ' mm2_cookieA=06bad8dd-ecda-4e00-abbe-1e641adde6f0; _ym_d=1586356006;' +
+  ' _ym_uid=1576356006128031579; __qca=P0-1332394709-1576356006094'
+runner.suite('Parser', (it) => {
+  it('should parse cookies', () => {
+    const rv = Parser.cookie(cookieString)
+    Assert.isType('Object', rv)
+    Assert.eq(rv._ga, 'GA1.2.637651231.1575923282')
+    Assert.eq(rv.mm2_cookieA, '06bad8dd-ecda-4e00-abbe-1e641adde6f0')
+    Assert.eq(rv._ym_d, '1586356006')
+    Assert.eq(rv._ym_uid, '1576356006128031579')
+    Assert.eq(rv.__qca, 'P0-1332394709-1576356006094')
+  })
+})
+if (require.main === module) runner.execute().then(code => process.exit(code))
