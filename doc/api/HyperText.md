@@ -67,11 +67,22 @@ objects read from sources. Otherwise, it takes `pfx` and `passphrase` to use a
 secured certificate where `pfx` is a `Buffer` and `passphrase` is a `String`.
 * Return {HyperTextServer} this instance
 
+### HyperTextServer.createServer(router)
+* `router` {Router} a Kad Router instance used to route requests.
+* Return {HyperTextServer} this instance
+
+Use to create the actual underlying HTTP server after all settings have been
+applied.
+
+Will then set the provided router using the `setRouter(router)` method below.
+
 ### HyperTextServer.setRouter(router)
-* `router` {Router} a Kado Router instance used to route requests.
+* `router` {Router} a Kad Router instance used to route requests.
 * Return {HyperTextServer} this instance
 
 This is typically called by `Application` during `setupHyperText()`
+
+*Internal Use*
 
 ### HyperTextServer.getRouter()
 * Return {Router} the set router instance or throws an error.
