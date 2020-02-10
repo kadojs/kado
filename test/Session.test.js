@@ -19,47 +19,26 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const focus = new RegExp((process.env.FOCUS || '.') + '', 'i')
-const suites = [
-  // early tests
-  'TestRunner',
-  // normal tests
-  'Asset',
-  'Assert',
-  'ChildProcess',
-  'Cluster',
-  'CommandServer',
-  'Connect',
-  'Cron',
-  'Database',
-  'Email',
-  'Event',
-  'FileSystem',
-  'Format',
-  'GetOpt',
-  'History',
-  'HyperText',
-  'Language',
-  'Library',
-  'Lifecycle',
-  'Log',
-  'Mapper',
-  'Message',
-  'Module',
-  'Navigation',
-  'Parser',
-  'PathExp',
-  'Permission',
-  'Profiler',
-  'Router',
-  'Search',
-  'Session',
-  'Util',
-  'Validate',
-  'View',
-  // late tests
-  'Application'
-]
-const runnableSuites = suites.filter(fn => (fn.search(focus) > -1))
-for (const suite of runnableSuites) require(`./${suite}.test.js`)
-runner.execute().then(code => process.exit(code))
+const Assert = require('../lib/Assert')
+const Session = require('../lib/Session')
+const session = new Session('test', new Session.SessionStoreMemory())
+runner.suite('Session', (it) => {
+  it('should instantiate', () => {
+    const inst = new Session('foo', new Session.SessionStoreMemory())
+    Assert.isType('Session', inst)
+  })
+  it('should restore by sid', async () => {
+    const rv = await session.restore()
+    Assert.isType('Object', rv)
+    Assert.eq(Object.keys(rv).length, 0)
+  })
+  it('should set and get a key', () => {
+    Assert.isType('Session', session.set('foo', 'bar'))
+    Assert.eq(session.get('foo'), 'bar')
+  })
+  it('should save the data to the store', async () => {
+    const rv = await session.save()
+    Assert.isType('SessionStoreMemory', rv)
+  })
+})
+if (require.main === module) runner.execute().then(code => process.exit(code))
