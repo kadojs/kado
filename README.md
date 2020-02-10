@@ -76,8 +76,7 @@ timing.
 * [Search](./doc/Search.md) - Connect system for made for search.
 * [Session](./doc/Session.md) - Session system for storing data against users.
 * [TestRunner](./doc/TestRunner.md) - Define and run Test Suites and Tests.
-* [Util](./doc/Util.md) - General purpose utilities for applications and
-Kado internals.
+* [Util](./doc/Util.md) - Misfit useful functions.
 * [Validate](./doc/Validate.md) - Validate input.
 * [View](./doc/View.md) - Connect system made for rendering.
 
