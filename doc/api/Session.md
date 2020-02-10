@@ -65,8 +65,10 @@ This class provides a server that can be used to store sessions made by the
 #### Example Usage
 
 ```js
-const Session = require('./lib/Session')
-const storage = new Session.SessionStorage()
+const fs = require('kado/lib/FileSystem')
+const Session = require('kado/lib/Session')
+const saveFile = fs.path.join(__dirname, '.session.json')
+const storage = new Session.SessionStorage({ saveFile: saveFile })
 storage.restoreFromDisk()
 storage.listen()
 ```
