@@ -21,9 +21,24 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
 const Session = require('../lib/Session')
+const session = new Session('test', new Session.SessionStoreMemory())
 runner.suite('Session', (it) => {
   it('should instantiate', () => {
-    Assert.isType('Session', new Session('foo'))
+    const inst = new Session('foo', new Session.SessionStoreMemory())
+    Assert.isType('Session', inst)
+  })
+  it('should restore by sid', async () => {
+    const rv = await session.restore()
+    Assert.isType('Object', rv)
+    Assert.eq(Object.keys(rv).length, 0)
+  })
+  it('should set and get a key', () => {
+    Assert.isType('Session', session.set('foo', 'bar'))
+    Assert.eq(session.get('foo'), 'bar')
+  })
+  it('should save the data to the store', async () => {
+    const rv = await session.save()
+    Assert.isType('SessionStoreMemory', rv)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

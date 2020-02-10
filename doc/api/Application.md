@@ -25,6 +25,11 @@ existing.
 * `name` {object} update the instance name of the application
 * Return {Application} this instance
 
+### Application.setTrustProxy(trustProxy)
+* `trustProxy` {boolean} Whether or not to use the X-Forwarded-For header when
+setting `req.ip` on `HyperTextServer` connections.
+* Return {Application} this instance
+
 ### Application.setVersion(version)
 * `version` {string} the version of the current application
 * Return {Application} this instance

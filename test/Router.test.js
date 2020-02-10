@@ -44,10 +44,10 @@ runner.suite('Router', (it) => {
     Assert.assert(router.finalHandler, finalHandler)
   })
   it('should set a preparer', () => {
-    router.setPreparer(Router.standardPreparer())
+    router.setPreparer(Router.standardPreparation())
     const preparer = router.getPreparer()
     Assert.isType('Function', preparer)
-    Assert.eq('standardPreparer', preparer.name)
+    Assert.eq('standardPreparation', preparer.name)
   })
   it('should add a route', () => {
     Assert.eq(router.add('GET', '/', () => {}).uri, '/')
