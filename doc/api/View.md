@@ -23,3 +23,19 @@ management and more.
 
 ### ViewEngine.render()
 Must be extended and used to render to the underlying system.
+
+## Class: ViewMustache
+
+An extension of `ViewEngine` made to work with the `Mustache` template system
+and implements a partial loader for working with a folder of templates.
+
+### Usage
+
+```js
+  // add a view engine
+  const fs = require('kado/lib/FileSystem')
+  const ViewMustache = require('kado/lib/View').ViewMustache
+  const viewFolder = fs.path.join(__dirname, 'main/views')
+  app.view.addEngine('mustache', new ViewMustache(viewFolder))
+  app.view.activateEngine('mustache')
+```
