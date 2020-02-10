@@ -38,7 +38,7 @@ runner.suite('Parser', (it) => {
   })
   it('should parse query strings', () => {
     const rv = Parser.queryString(queryString)
-    Assert.isType('Object', rv)
+    Assert.isType('object', rv)
     Assert.eq(rv.view, 'choose')
     Assert.eq(rv.term, '24')
     Assert.eq(rv.type, 'InternetPhone')
