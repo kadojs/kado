@@ -203,7 +203,7 @@ internal watch list.
 ### Cluster.watch(path1, path2...)
 * `path1` {string} path to file or folder to watch. As many arguments may be
 passed as needed.
-* `path` {array} Optionally pass an array or paths.
+* `path` {array} Optionally pass an array of paths.
 * Return {object} containing new watchers that have been created.
 
 This method will watch the given paths for changes or renames and when that
@@ -219,7 +219,7 @@ ignored.
 ### Cluster.unwatch(path1, path2...)
 * `path1` {string} path to file or folder to watch. As many arguments may be
 passed as needed.
-* `path` {array} Optionally pass an array or paths.
+* `path` {array} Optionally pass an array of paths.
 * Return {object} containing {boolean} values to properties of the paths
  removed.
 
