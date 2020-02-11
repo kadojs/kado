@@ -54,6 +54,9 @@ and will be one of the following values.
 * stopped - Emitted when the stop() method is complete
 * exiting - Emitted when exit() is invoked, not further events will be emitted
 
+### event 'restart'
+Emitted when the cluster has been restarted by the restart() method.
+
 ### event 'messageError'
 Emitted when an error occurs sending a worker a message
 * `error` {Error} the thrown error
