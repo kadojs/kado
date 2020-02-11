@@ -18,9 +18,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-const path = require('path')
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
+const fs = require('../lib/FileSystem')
 const Cluster = require('../lib/Cluster')
 const cluster = new Cluster({
   maxConnections: 2,
@@ -70,10 +70,35 @@ runner.suite('Cluster', (it) => {
     Assert.isType('Object', cluster.getSettings())
   })
   it('should set path', () => {
-    const newPath = path.join(__dirname, '/fixture/clusterWorker.js')
+    const newPath = fs.path.join(__dirname, '/fixture/clusterWorker.js')
     const rv = cluster.setPath(newPath)
     Assert.isType('Cluster', rv)
     Assert.eq(rv.path, newPath)
+  })
+  it('should watch a file', () => {
+    return cluster.start().then(() => {
+      return new Promise((resolve, reject) => {
+        // lower watch timeout
+        cluster.timeout.watch = 1
+        // set watcher
+        const watchPath = fs.path.join(__dirname, '/fixture/changeme.js')
+        const rv = cluster.watch(watchPath)
+        Assert.isType('Object', rv)
+        Assert.eq(rv[0].path, watchPath)
+        // change the file
+        const watchData = fs.readFileSync(watchPath)
+        fs.writeFileSync(watchPath, watchData + '\n')
+        cluster.once('restart', () => {
+          cluster.unwatch(watchPath)
+          fs.writeFileSync(watchPath, watchData)
+          cluster.stop().then(() => { return resolve() })
+        })
+        setTimeout(() => {
+          reject(new Error('Failed to restart cluster before' +
+            ' timeout of 1000ms'))
+        }, 1000)
+      })
+    })
   })
   it('should start', async () => {
     const rv = await cluster.start()
