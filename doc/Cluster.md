@@ -180,7 +180,7 @@ heartbeat.
 ### Cluster.handleWatchEvent(eventType, filename, path)
 * `eventType` {string} The type of event called such as `change` or `rename`
 * `filename` {string} The filename of the file changing.
-* `path` {string} THe original path that was provided to watch the file.
+* `path` {string} The original path that was provided to watch the file.
 * Return {Promise} resolved when the watch restart has completed. Or resolves
 `false` if another restart was already pending.
 
