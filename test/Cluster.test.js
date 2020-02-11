@@ -99,7 +99,7 @@ runner.suite('Cluster', (it) => {
         }, 1000)
       })
     })
-  }, it.ONLY)
+  })
   it('should start', async () => {
     const rv = await cluster.start()
     Assert.isType('undefined', rv)
