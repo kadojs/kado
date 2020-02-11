@@ -1,17 +1,21 @@
 {
-  "author": "Bryan Tong <bryan@nullivex.com>",
-  "name": "kado",
+  "author": "Bryan Tong <bryan@nullivex.com> (https://www.nullivex.com)",
+  "contributors": [
+    "Tony Butler <tony@nullivex.com> (https://www.nullivex.com)",
+    "Justin Fowner <justin@nullivex.com> (https://www.nullivex.com)",
+    "Drew Gordon <drew@nullivex.com> (https://www.nullivex.com)",
+    "George Martinez <george@mconsultors.com> (https://www.nullivex.com)",
+    "Chris Giguere <chris.giguere@nullivex.com> (https://www.nullivex.com)"
+  ],
+  "dependencies": {},
   "description": "High Quality JavasScript Libraries based on ES6+",
-  "version": "4.0.0",
-  "homepage": "https://kado.org",
-  "license": "LGPL-3.0",
-  "repository": {
-    "type": "git",
-    "url": "https://git.nullivex.com/kado/kado.git"
+  "devDependencies": {},
+  "engines": {
+    "node": ">=10"
   },
   "keywords": [
     "Kado High Quality JavaScript Libraries",
-    "Application Library for quickly building full service applications",
+    "Application Library  Create a new application containing most Kado features.",
     "Assert Library for making Assertions and throwing AssertionErrors",
     "Asset Library for managing static file delivery",
     "Child Process Library for quickly running and managing child processes",
@@ -31,27 +35,34 @@
     "HyperText Library for Managing HTTP Servers",
     "Lanugage Pack Library for managing and displaying language packs",
     "Library Searching Library for finding libraries in various paths",
+    "Lifecycle Library for Start and stop systems with events",
     "Log Engine Library for loading and using differnt log outputs",
     "Mapper Library for Map class functions on Objects",
     "Message Library for handling messages including outgoing email",
     "Module Library super class for making new Kado modules",
     "Navigation Library for registering application navigation points",
+    "Parser Library for parsing strings into variables such as objects",
+    "PathExp Library for parsing path notation into Regular Expressiions",
     "Permission Library for checking permissions against a set and manage sets",
     "Profiler Library for tracking and display application performance",
     "Router Library for managing and matching routes, such as URIs",
     "Search Library for managing handlers and executing searches on them",
+    "Session Library for handdling user sessions and saving them to a server",
     "TestRunner Library for loading and running tests in a BDD interface",
-    "Utility Library for Kado Internals",
+    "Util Library for misfits",
     "Validate Library for validating inputs",
     "View Library for managing and mapping views to view files"
   ],
-  "engines": {
-    "node": ">=10"
-  },
+  "homepage": "https://kado.org",
+  "license": "LGPL-3.0",
   "main": "./lib/Application.js",
+  "name": "kado",
+  "repository": {
+    "type": "git",
+    "url": "https://git.nullivex.com/kado/kado.git"
+  },
   "scripts": {
     "test": "standard && node ./test/index.js"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "version": "4.0.0"
 }
