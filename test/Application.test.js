@@ -18,8 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
+const libSizeTargetKB = 256
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
+const fs = require('../lib/FileSystem')
 const Application = require('../lib/Application')
 const app = new Application()
 class Module {
@@ -168,6 +170,23 @@ runner.suite('Application', (it) => {
   })
   it('should map unsubscribe routing', () => {
     Assert.isType('Function', app.unsubscribe)
+  })
+  it(`should have lib size below ${libSizeTargetKB}KB`, async () => {
+    let libSize = 0
+    async function walk (dir, fileList = []) {
+      const files = await fs.readdir(dir)
+      for (const file of files) {
+        const stat = await fs.stat(fs.path.join(dir, file))
+        if (stat.isDirectory()) fileList = await walk(fs.path.join(dir, file), fileList)
+        else {
+          fileList.push(fs.path.join(dir, file))
+          libSize += stat.size
+        }
+      }
+      return fileList
+    }
+    await walk(fs.path.join(__dirname, '../lib/'))
+    Assert.maximum(libSizeTargetKB, libSize / 1024)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
