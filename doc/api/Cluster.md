@@ -174,6 +174,54 @@ heartbeat.
 
 *Internal Use*
 
+### Cluster.handleWatchEvent(eventType, filename)
+* `eventType` {string} The type of event called such as `change` or `rename`
+* `filename` {string} The path of the file changing.
+* Return {Promise} resolved when the watch restart has completed. Or resolves
+`false` if another restart was already pending.
+
+This is actually an event handler for the `fs.watch()` and `fs.watchFile()`
+methods called by the `Cluster.addWatcher()` method.
+
+The public method is `Cluster.watch(file1, file2...)`
+
+*Internal Use*
+
+### Cluster.addWatcher(path, options)
+* `path` {string} Path to file to watch
+* `options` {object} containing `Fs.watch()` options
+* Return {object} newly created watch object.
+
+This adds a watcher for the given file with the options and adds them to the
+internal watch list.
+
+*Internal Use*
+
+### Cluster.watch(path1, path2...)
+* `path1` {string} path to file or folder to watch. As many arguments may be
+passed as needed.
+* `path` {array} Optionally pass an array or paths.
+* Return {object} containing new watchers that have been created.
+
+This method will watch the given paths for changes or renames and when that
+occurs the cluster processes will be restarted to make the new changes take
+effect.
+
+NOTE: This functionality is DISABLED when the `NODE_ENV=production` environment
+variable is set.
+
+NOTE: If an Array is passed as the first argument, all other arguments will be
+ignored.
+
+### Cluster.unwatch(path1, path2...)
+* `path1` {string} path to file or folder to watch. As many arguments may be
+passed as needed.
+* `path` {array} Optionally pass an array or paths.
+* Return {object} containing {boolean} values to properties of the paths
+ removed.
+
+This is the opposite of the `Cluster.watch()` method.
+
 ### Cluster.each(fn)
 * `fn` {function} function to be called on by each worker `fn(worker)`
 * Return {object} of results indexed by cluster.workers index
