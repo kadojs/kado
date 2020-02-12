@@ -20,9 +20,10 @@ Available Settings:
 * `name` {string} name of the session cookie, defaults to `session`
 * `store` {SessionStore} instance of SessionStore used to save session data.
 
-### static Session.generateId(ip, userAgent)
+### static Session.generateId(ip, userAgent, secret)
 * `ip` {string} The IP address to use for the session.
 * `userAgent` {string} The user agent of the session.
+* `secret` {string} A string secret to your application used to sign cookies.
 * Return {string} sha1 hexadecimal digest of a random timestamp + ip + userAgent
 
 *Internal Use*
