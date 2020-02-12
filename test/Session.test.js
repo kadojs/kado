@@ -27,6 +27,12 @@ runner.suite('Session', (it) => {
     const inst = new Session('foo', new Session.SessionStoreMemory())
     Assert.isType('Session', inst)
   })
+  it('should generate an sid', () => {
+    const rv = Session.generateId('127.0.0.1', 'local', 'foo')
+    Assert.isType('string', rv)
+    Assert.eq(rv.length, 40)
+    Assert.eq(rv.match(/^[0-9a-f]+$/).length, 1)
+  })
   it('should restore by sid', async () => {
     const rv = await session.restore()
     Assert.isType('Object', rv)
