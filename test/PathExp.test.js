@@ -52,7 +52,7 @@ runner.suite('PathExp', (it) => {
     Assert.eq(params.action, undefined)
   })
   it('should match against /user/list/:action?a=b&c=d after url.parse', () => {
-    path.build('/user/list/:action?a=b&c=d')
+    path.build('/user/list/:action')
     const params = {}
     const url = new URL('http://localhost/user/list/settings?a=bah&c=dah')
     Assert.eq(path.match(url.pathname, params), true)
