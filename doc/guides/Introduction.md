@@ -1,2 +1,57 @@
-#Introduction
-This is the introduction to Kado 4
+# Introduction
+
+Kado has been a long running idea of ours to help propel the JavaScript
+community forward. The first few versions of Kado were a lot of experimentation
+on how to better abstract the functionality of JavaScript applications in order
+to reduce development time.
+
+## History
+
+Throughout the prototype and development process we released several very usable
+versions that accomplished just that. Less work for the developer, and more time
+spent preparing application code. Next, we learned that we could take this step
+even further by changing Kado from a packaged application into a collection
+of libraries that could be used to build what Kado was using no dependencies.
+
+Now, after 6 months of work and 500+ commits Kado 4 is ready to see feedback
+from our wonderful community. We hope that Kado 4 will vastly improve the
+performance of your applications. Also, we hope that Kado 4 will reduce the
+amount of code you have to write. Most importantly, Kado 4 will significantly
+reduce the number of third party software your application will depend upon. Our
+goal is that Node.JS + Kado is a combination that puts the developer in control
+and provides enough tool and documentation depth to build applications with
+few to no outside dependencies.
+
+## Why Use Kado
+
+Why is all that important? Because the maintenance of those outside packages are
+vital to the continued success of your applications. Without quality maintenance
+packages are susceptible to incompatibilities with future versions of Node.JS
+as well as SECURITY VULNERABILITIES that may go unhandled! Furthermore, without
+being able to easily introspect which packages each named dependency relies on,
+it becomes a struggle making sure your application is compliant with the imposed
+licenses. 
+
+Kado relieves that pain by providing common functionality to provide
+command line applications and web servers without the need for external
+software. Of course, each application is different and we are certain it will
+rely on some external software, that is not completely the point, prior to Kado
+even basic web servers relied on hundreds of external dependencies just to say
+hello world!
+
+## The Future of Kado
+
+Moving forward Kado aims to achieve two primary mission goals, the first
+is to provide a stable environment for applications written on Kado by providing
+an LTS backed release schedule. Second, we aim to merge more common application
+functionality written on ES6+ and matching Kado standards into our package.
+It is key to note that the Kado team is backed by Esited hosting and Nullivex
+software, companies with a long standing history in the technology world dating
+back to 2003. Our commitment to quality software continues to grow as does our
+love for making easy to use libraries for your enjoyment.
+
+## Conclusion
+
+We hope this gives you some background so that you can be rest assured your
+efforts in Kado will not go in vein. Ready to get started? Head over to our
+[Quick Start](./QuickStart.md) guide and get going in a few minutes!
