@@ -62,7 +62,8 @@ assert.suite('assert', (it) => {
       'boolean(true) does not equal boolean(false)')
   })
   it('should assert a date', () => {
-    Assert.assert(new Date(), new Date())
+    const now = new Date()
+    Assert.assert(now, now)
   })
   it('should fail two new dates over time', async () => {
     function getDate () {
