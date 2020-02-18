@@ -27,3 +27,17 @@ those properties.
 ### static Parser.queryString(input)
 * `input` {string} The portion after the `?` on a URL
 Return {object} Where names are properties and values are assigned.
+
+### static Parser.replacer(map, input)
+* `map` {object} of keys that should be matched and values to replace those
+keys with.
+* `input` {string} containing the characters that should be replaced.
+* Return {string} of the input with the replaced characters from the map.
+
+### static Parser.htmlEscape(input)
+* `input` {string} containing HTML tags that will be escaped with HTML entities.
+* Return {string} containing replaced tags.
+
+### static Parser.htmlUnescape(input)
+* `input` {string} containing HTML entities to be turned back to HTML tags.
+* Return {string} containing replaced entities.

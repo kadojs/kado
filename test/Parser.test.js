@@ -26,6 +26,11 @@ const cookieString = '_ga=GA1.2.637651231.1575923282;' +
   ' _ym_uid=1576356006128031579; __qca=P0-1332394709-1576356006094'
 const queryString = 'view=choose&term=24&type=InternetPhone&configPage=true' +
   '&pageVisited=preBundlePage'
+const htmlString = '<!doctype HTML><html lang="en"><head><title>Hello World' +
+  '</title></head><body><h1>Hello World</h1></body></html>'
+const entityString = '&lt;!doctype HTML&gt;&lt;html lang=&quot;en&quot;&gt;' +
+  '&lt;head&gt;&lt;title&gt;Hello World&lt;/title&gt;&lt;/head&gt;' +
+  '&lt;body&gt;&lt;h1&gt;Hello World&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;'
 runner.suite('Parser', (it) => {
   it('should parse cookies', () => {
     const rv = Parser.cookie(cookieString)
@@ -44,6 +49,14 @@ runner.suite('Parser', (it) => {
     Assert.eq(rv.type, 'InternetPhone')
     Assert.eq(rv.configPage, 'true')
     Assert.eq(rv.pageVisited, 'preBundlePage')
+  })
+  it('should escape html tags', () => {
+    const rv = Parser.htmlEscape(htmlString)
+    Assert.eq(rv, entityString)
+  })
+  it('should unescape html tags', () => {
+    const rv = Parser.htmlUnescape(entityString)
+    Assert.eq(rv, htmlString)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
