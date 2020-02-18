@@ -38,9 +38,11 @@ code.
 const Application = require('kado')
 // make an application instance
 const app = Application.getInstance()
+// require package information
+const pkg = require('./package')
 // set some project details
-app.setName('myProject')
-app.setVersion(require('./package').version)
+app.setName(pkg.name)
+app.setVersion(pkg.version)
 // add an http server
 const http = new Application.HyperText.HyperTextServer()
 app.http.addEngine('http', http.createServer(app.router))
@@ -60,5 +62,5 @@ Once the code is running open your favorite web browser and navigate to
 
 Upon loading the page you should see the word `Hello` this will signify your
 new application is working! Great work! Now if you are ready to get more
-familiar with Kado see the [Make a Simple Website](./MakeSimpleWebsite.md) guide
+familiar with Kado see the [Hello World](./HellowWorld.md) guide
 to go to the next stage.
