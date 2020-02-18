@@ -1,4 +1,4 @@
-# Kado
+# Welcome To Kado
 [![pipeline status](https://git.nullivex.com/kado/kado/badges/4.x/pipeline.svg)](https://git.nullivex.com/kado/kado/commits/4.x)
 [![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
 [![npm version](https://badge.fury.io/js/kado.svg)](https://badge.fury.io/js/kado)
@@ -6,11 +6,25 @@
 
 High Quality JavaScript Libraries based on ES6+
 
+Install Kado quickly or see [Download](../guides/Download.md) for more details.
+
+```
+$ npm install kado
+```
+
 ## Motivations
 
 Kado provides solutions by combining all the common gaps in JavaScript into a
 consistent, well documented, thoroughly tested collection of libraries that have
 zero external dependencies.
+
+## What is Kado?
+
+  Kado provides High Quality JavaScript libraries written in ES6 or better
+standards. Our collection of libraries will provide most common needs for
+web servers or command line applications. To try Kado in your project simply
+install using the command below and see some of the documentation below
+about how Kado might help simplify your projects workflow.
 
 ## Why use Kado?
 
@@ -23,6 +37,40 @@ zero external dependencies.
 * Used by applications serving billions of page views.
 * Assertion, validation, and test running built in.
 * More! Check the library list below!
+
+## Get Started with our Guides
+
+Our guides provide a step by step experience to learn how to use Kado to go from
+saying "Hello" on a web port to writing a working administration panel. Once
+these guides are completed, building websites and applications using Kado should
+feel second nature. Each guide below is accompanied by a link to the full guide
+as well as a short description of what each guide provides.
+
+* [Introduction](../guides/Introduction.md) - Gain some background on the
+history of Kado and why it was created.
+* [Getting Started](../guides/GettingStarted.md) - Get started using Kado and
+create a simple project that says "Hello" via HTTP on localhost port 3000.
+* [HelloWorld](../guides/HelloWorld.md) - Building upon the
+[GettingStarted](../guides/GettingStarted) guide, this guide will introduce
+rendering and templates that say "Hello World" with HTML.
+* [Make a Simple Website](../guides/MakeSimpleWebsite.md) - Continuing from
+the [HelloWorld](../guides/HelloWorld.md) guide we add partials, static file
+serving, CSS, and navigation to create a simple working website.
+* [Build an Admin Panel](../guides/BuildAdminPanel.md) - Now with
+[Make a Simple Website](../guides/MakeSimpleWebsite.md) complete, we continue
+to explore how to build an administration panel on top of our simple website.
+* [Database Work Flows](../guides/DatabaseWorkFlow.md) - With a working
+[Admin Panel](../guides/BuildAdminPanel.md) the next step is to setup a
+connection to a database so we can store the data created by the application.
+* [Working With Email](../guides/WorkingWithEmail.md) - Explore sending
+emails using the Kado provided libraries and connecting to an email server.
+* [Views and Rendering](../guides/ViewsRendering.md) - Everything you need to
+know about the Kado view system and how to render views.
+* [Writing Tests](../guides/WritingTests.md) - Write tests against your
+application easily using the provided Kado library.
+* [Advanced Techniques](../guides/AdvancedTechniques.md) - Prepare your
+application for production with the introduction of clustered processes and
+command line applications.
 
 ## Kado Library List
 
@@ -83,20 +131,3 @@ timing.
 * [Util](./doc/Util.md) - Misfit useful functions.
 * [Validate](./doc/Validate.md) - Validate input.
 * [View](./doc/View.md) - Connect system made for rendering.
-
-## Questions or Problems?
-
-Please see our [bug tracker](https://git.nullivex.com/kado/kado/issues)
-
-## Change Log
-
-Please see the [CHANGELOG.md](./CHANGELOG.md)
-
-## Contributing
-
-Please see the [Contribution Guidelines](./CONTRIBUTING.md)
-
-## License
-Kado Copyright (C) 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado
-is licensed under the Lesser GNU Public License version 3.0 or newer see
-[LICENSE.md](./LICENSE.md) for a complete copy of applicable licenses.
