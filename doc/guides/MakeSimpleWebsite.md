@@ -31,7 +31,7 @@ app.view.addEngine('mustache', new Application.View.ViewMustache(viewFolder))
 app.view.activateEngine('mustache')
 // add a static server
 const staticRoot = fs.path.join(__dirname, 'public')
-app.use(HyperText.StaticServer.getMiddleware(staticRoot))
+app.use(Application.HyperText.StaticServer.getMiddleware(staticRoot))
 // add a route
 app.get('/', (req, res) => { res.render('index') })
 app.start().then(() => { return app.listen() })
@@ -45,7 +45,7 @@ This is done with the following code:
 
 ```js
 const staticRoot = fs.path.join(__dirname, 'public')
-app.use(HyperText.StaticServer.getMiddleware(staticRoot))
+app.use(Application.HyperText.StaticServer.getMiddleware(staticRoot))
 ``` 
 
 The `staticRoot` path determines where the CSS, image files etc are to be served
