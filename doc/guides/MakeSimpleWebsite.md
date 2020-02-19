@@ -70,7 +70,7 @@ h1 { color: purple; }
 
 This wont do much but it should make a noticeable difference to the page.
 
-Next, lets break our header and footer into partials that we can call more
+Next, lets break our header and footer into partials that we can call them more
 than once. So, within the `views` folder create a file named `header.html` and
 place the following code inside:
 
