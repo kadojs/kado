@@ -64,6 +64,14 @@ where the `activateEngine` method is called. We pass `mustache` as a string to
 this method to declare the label of the engine that should be activated, which
 should match the string we provided int the `addEngine` call on the line above.
 
+Now since we are using the mustache parsing system we are going to install an
+external library to the parsing. Execute the following command to include
+mustache into this project:
+
+```
+$ npm install mustache
+```
+
 Now that the view system has been activated we need to look at how the route has
 been modified to call into the view. Consider the following code:
 
