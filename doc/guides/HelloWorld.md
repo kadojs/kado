@@ -26,7 +26,7 @@ app.setVersion(pkg.version)
 const http = new Application.HyperText.HyperTextServer()
 app.http.addEngine('http', http.createServer(app.router))
 // add a view engine
-const viewFolder = fs.path.join(__dirname, 'main/views')
+const viewFolder = fs.path.join(__dirname, 'views')
 app.view.addEngine('mustache', new Application.View.ViewMustache(viewFolder))
 app.view.activateEngine('mustache')
 // add a route
