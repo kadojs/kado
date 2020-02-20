@@ -1,5 +1,5 @@
 # Installation
-> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
+> NOTICE: Kado 3 is **DEPRECATED**, see [kado.org](https://kado.org) for the latest version.
 
 Installation of Kado is simple as it relies on NPM, the Node.js core package
 management system. However, before installing Kado, MySQL and Node.js must both

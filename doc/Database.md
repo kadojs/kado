@@ -1,5 +1,5 @@
 # Database
-> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
+> NOTICE: Kado 3 is **DEPRECATED**, see [kado.org](https://kado.org) for the latest version.
 
 When designing a high level framework such as Kado. It comes time to make some
 tough decisions about certain technologies that must be used in order to make

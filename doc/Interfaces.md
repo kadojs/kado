@@ -1,5 +1,5 @@
 # Interfaces
-> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
+> NOTICE: Kado 3 is **DEPRECATED**, see [kado.org](https://kado.org) for the latest version.
 
 Kado implements a variety of interfaces than can be enabled optionally as they
 are needed. A brief list of these interfaces.

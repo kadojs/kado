@@ -1,5 +1,5 @@
 # Themes
-> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
+> NOTICE: Kado 3 is **DEPRECATED**, see [kado.org](https://kado.org) for the latest version.
 
 Kado ships with a very clean, modern and responsive template that works well on
 most any device. A style sheet can be applied to the default template to create
