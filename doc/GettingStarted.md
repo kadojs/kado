@@ -1,5 +1,5 @@
 # Getting Started
-> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
+> NOTICE: Kado 3 is **DEPRECATED**, see [kado.org](https://kado.org) for the latest version.
 
 Once [Installation](./Installation.md) has been completed, there are two ways to
 get started. First, go to [install the demo](./InstallTheDemo.md) and follow

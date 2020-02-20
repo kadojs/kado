@@ -1,5 +1,5 @@
 # Reference
-> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
+> NOTICE: Kado 3 is **DEPRECATED**, see [kado.org](https://kado.org) for the latest version.
 
 The primary Kado object comes with a wealth of resources to be used throughout
 your system without the need to grab extra dependencies.

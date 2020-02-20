@@ -1,5 +1,5 @@
 # API
-> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
+> NOTICE: Kado 3 is **DEPRECATED**, see [kado.org](https://kado.org) for the latest version.
 
 It is important to encourage interoperability with other software that is in use
 in your ecosystem.

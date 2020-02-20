@@ -1,5 +1,5 @@
 # Developer
-> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
+> NOTICE: Kado 3 is **DEPRECATED**, see [kado.org](https://kado.org) for the latest version.
 
 This document is intended to overview the development process involving Kado and
 Kado modules.

@@ -1,5 +1,5 @@
 # Templates
-> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
+> NOTICE: Kado 3 is **DEPRECATED**, see [kado.org](https://kado.org) for the latest version.
 
 The templating system in Kado relies upon `mustache` and `mustache-express` to
 learn about mustache [see here](https://mustache.github.io/mustache.5.html)

@@ -1,5 +1,5 @@
 # Website Cheat Sheet
-> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
+> NOTICE: Kado 3 is **DEPRECATED**, see [kado.org](https://kado.org) for the latest version.
 
 This document will help get a website up and running with the least amount of
 explanation possible. Therefore this is a great reference to start new projects.

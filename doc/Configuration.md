@@ -1,5 +1,5 @@
 # Configuration
-> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
+> NOTICE: Kado 3 is **DEPRECATED**, see [kado.org](https://kado.org) for the latest version.
 
 Kado is very extensible. As such requires a flexible configuration system. To
 help explain how the Kado configuration works it might be worth taking a look
