@@ -1,11 +1,15 @@
 # Templates
+> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
 
-The templating system in Kado relies upon `mustache` and `mustache-express` to learn about mustache [see here](https://mustache.github.io/mustache.5.html)
+The templating system in Kado relies upon `mustache` and `mustache-express` to
+learn about mustache [see here](https://mustache.github.io/mustache.5.html)
 
-Each interface in Kado shares a similar set of global template variables and then contextual variables will vary with module and page. It is important to note that global variables are denounced with `_something` underscore(`_`) specifying that this is a global variable and `something` being the name.
+Each interface in Kado shares a similar set of global template variables and
+then contextual variables will vary with module and page. It is important to
+note that global variables are denounced with `_something` underscore(`_`)
+specifying that this is a global variable and `something` being the name.
 
 ## Global Template Variables
-
 
 | Name | Description | Default | Notes |
 | --- | --- | --- | --- |

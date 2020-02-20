@@ -1,8 +1,14 @@
 # Configuration
+> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
 
-Kado is very extensible. As such requires a flexible configuration system. To help explain how the Kado configuration works it might be worth taking a look at [object manage](https://www.npmjs.com/package/object-manage#usage) which will overview the technical details of how the Kado configuration system processes parameters.
+Kado is very extensible. As such requires a flexible configuration system. To
+help explain how the Kado configuration works it might be worth taking a look
+at [object manage](https://www.npmjs.com/package/object-manage#usage) which
+will overview the technical details of how the Kado configuration system
+processes parameters.
 
-In order to illustrate the configuration of Kado please consider the example below:
+In order to illustrate the configuration of Kado please consider the example
+below:
 
 ```js
 const K = require('kado')
@@ -40,13 +46,25 @@ if(process.env.KADO_CONFIG) K.configure(process.env.KADO_CONFIG)
 K.go('kado-web')
 ```
 
-In the example above there is a lot going on, so I will break it down by section.
+In the example above there is a lot going on, so I will break it down by
+section.
 
-First, to understand how Kado configuration works, it is imperative to understand the configuration system cascades, meaning that there is a base schema which can be [viewed here](https://github.com/KadoOrg/kado/blob/master/helpers/kado.js#L106) after which the parameters are overridden continuously to arrive at a "run time configuration".
+First, to understand how Kado configuration works, it is imperative to
+understand the configuration system cascades, meaning that there is a base
+schema which can be
+[viewed here](https://git.nullivex.com/kado/kado/blob/3.x/helpers/kado.js#L106)
+after which the parameters are overridden continuously to arrive at a
+"run time configuration".
 
-Second, our `app.js` contains a set of configuration overrides that are passed to Kado using the `K.configure()` function. This method accepts an `object` to define configuration parameters. Or it will also accept a string which represents a file name that contains a JavaScript object that will override the Kado configuration parameters.
+Second, our `app.js` contains a set of configuration overrides that are passed
+to Kado using the `K.configure()` function. This method accepts an `object` to
+define configuration parameters. Or it will also accept a string which
+represents a file name that contains a JavaScript object that will override
+the Kado configuration parameters.
 
-Third, to load our private configuration details such as the actual database password and other system specific parameters the following code handles the task:
+Third, to load our private configuration details such as the actual database
+password and other system specific parameters the following code handles the
+task:
 
 ```js
 //load config file called 'config.local.js' from the application folder
@@ -54,24 +72,31 @@ let localConfig = __dirname + '/config.local.js'
 if(K.fs.existsSync(localConfig)) K.configure(require(localConfig))
 ```
 
-This code will check to see if we have defined a `config.local.js` in our application folder and then attempt to load that file in order override the Kado configuration. An example `config.local.js` may look like this.
+This code will check to see if we have defined a `config.local.js` in our
+application folder and then attempt to load that file in order override the
+Kado configuration. An example `config.local.js` may look like this.
 
 ```js
 module.exports = {db: {sequelize: {password: 'somethingnew'}}}
 ```
 
-Finally, the code checks to see if there is an environmental configuration asked for. This is typically used to run multiple instances of Kado off of the same base code and having the instances use different resources, databases, etc.
+Finally, the code checks to see if there is an environmental configuration asked
+for. This is typically used to run multiple instances of Kado off of the same
+base code and having the instances use different resources, databases, etc.
 
 ```js
 //load config file named by an environment variable
 if(process.env.KADO_CONFIG) K.configure(process.env.KADO_CONFIG)
 ```
 
-After checking for the existing of the `KADO_CONFIG` environment variable a call is made to `K.configure()` to process the environment variable and possibly load the configuration contained in the named file.
+After checking for the existing of the `KADO_CONFIG` environment variable a call
+is made to `K.configure()` to process the environment variable and possibly load
+the configuration contained in the named file.
 
 ## Configuration Reference
 
-Below is a sparse list of configuration variables contained within the Kado system.
+Below is a sparse list of configuration variables contained within the Kado
+system.
 
 
 | Path | Description | Default Value |
@@ -141,25 +166,35 @@ Below is a sparse list of configuration variables contained within the Kado syst
 
 ## Configuration Design
 
-One of the big challenges with a modular system is basically tackling the same challenges an operating system faces. Mostly with regards to how we share and use global resources.
+One of the big challenges with a modular system is basically tackling the same
+challenges an operating system faces. Mostly with regards to how we share and
+use global resources.
 
-Node.JS actually makes this possible. But it doesnt necessarily make it easy as there are still some broad scoping concerns and race conditions that need to be thought of.
+Node.JS actually makes this possible. But it doesnt necessarily make it easy as
+there are still some broad scoping concerns and race conditions that need to be
+thought of.
 
 Also important is how we load and execute modules.
 
-So, the first and biggest challenge is the configuration. First thing is that we want to be able to obtain a copy of the configuration from any module.
+So, the first and biggest challenge is the configuration. First thing is that
+we want to be able to obtain a copy of the configuration from any module.
 
 Second, modules need to be able to add to the config.
 
 Third, users need to be able to override the config through the admin interface.
 
-The basic idea is to treat the config like an interface however it is integrated with the system slightly different than the rest of the interfaces.
+The basic idea is to treat the config like an interface however it is integrated
+with the system slightly different than the rest of the interfaces.
 
-Access of the configuration is provided through the `K.configure()` function provided by the main Kado object.
+Access of the configuration is provided through the `K.configure()` function
+provided by the main Kado object.
 
 ### Loading Order
 
-Best to go over this early, the configuration is loaded and merged in the order below. It should be noted that any time you call the config through `require('kado').config` it will be fully overridden so keep that in mind when working with user overrides done from the panel.
+Best to go over this early, the configuration is loaded and merged in the order
+below. It should be noted that any time you call the config through
+`require('kado').config` it will be fully overridden so keep that in mind when
+working with user overrides done from the panel.
 
 * helpers/kado.js - Defaults and system wide config
 * Module config - loaded from each module for defaults
@@ -167,5 +202,7 @@ Best to go over this early, the configuration is loaded and merged in the order 
 * KADO_CONFIG - path to a config file using the KADO_CONFIG environment variable
 * User overrides - obtained from the `settings.json` table
 
-I understand that with node and many other apps configuration is half the battle to being able to work in multiple environments. This config loading order has been established over years of production work in a multitude of environments.
+I understand that with node and many other apps configuration is half the battle
+to being able to work in multiple environments. This config loading order has
+been established over years of production work in a multitude of environments.
 

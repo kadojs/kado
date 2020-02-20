@@ -1,6 +1,8 @@
 # Website Cheat Sheet
+> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
 
-This document will help get a website up and running with the least amount of explanation possible. Therefore this is a great reference to start new projects.
+This document will help get a website up and running with the least amount of
+explanation possible. Therefore this is a great reference to start new projects.
 
 ## Create the Project
 
@@ -14,7 +16,8 @@ To check a project out, you can use an editor or clone the repository.
 
 First we need a package.json then we can create a new project.
 
-You may either use `npm init` and answer the questions or copy and paste the file below and change the proper values.
+You may either use `npm init` and answer the questions or copy and paste the
+file below and change the proper values.
 
 ```json
 {
@@ -42,18 +45,21 @@ You may either use `npm init` and answer the questions or copy and paste the fil
 ```
 
 The variables needed are
-* [PROJECT NAME] - This is the name of your project and usually matches the repostiory name.
+* [PROJECT NAME] - This is the name of your project and usually matches the
+repository name.
 * [PROJECT DESCRIPTION] - Description of the project
 * [PROJECT FOLDER] - We will use this later to configure the project.
-* [GITHUB USERNAME] - Your username on github or the owner of the repostiory.
+* [GITHUB USERNAME] - Your username on github or the owner of the repository.
 * [YOUR NAME] - For author purposes Your Name.
 * [YOUR EMAIL] - Again for author purposes, Your Email Address.
 
-You can also change UNLICENSED for the "license" variable.  This is perfect for private projects that are not published.
+You can also change UNLICENSED for the "license" variable.  This is perfect for
+private projects that are not published.
 
 ## Install Kado
 
-Great!  So that painful step is over with and honestly its the hardest part. Now it is time to install Kado.
+Great!  So that painful step is over with and honestly its the hardest part. Now
+it is time to install Kado.
 
 ```
 npm install kado --save
@@ -65,7 +71,9 @@ Next, configure the Kado Web application.
 
 ## Create app.js
 
-Configuring Kado is done through `app.js`, which can technically be any name but this name works well for our purposes. To create this file without much hassle, use the following command:
+Configuring Kado is done through `app.js`, which can technically be any name but
+this name works well for our purposes. To create this file without much hassle,
+use the following command:
 
 For Unix/Linux
 ```
@@ -86,10 +94,12 @@ Once this command is complete, the output will read:
 
 ## Create a Database
 
-In order for Kado to save information, it will need a MySQL compatible database to utilize. Here are some short notes on how to create a database.
+In order for Kado to save information, it will need a MySQL compatible database
+to utilize. Here are some short notes on how to create a database.
 
 Make sure to create and write down the following variables:
-* [PROJECT NAME] - Your project name filtered of MySQL-confounding special characters such as "`-`" which do not work well in Database names
+* [PROJECT NAME] - Your project name filtered of MySQL-confounding special
+characters such as "`-`" which do not work well in Database names
 * [MYSQL PASSWORD] - The mysql password used to create the database user.
 
 ```
@@ -99,9 +109,11 @@ $ mysql
 > exit;
 ```
 
-Now, to make sure the application can connect to the database the `app.js` file will need to be updated.
+Now, to make sure the application can connect to the database the `app.js` file
+will need to be updated.
 
-Open the `app.js` file and locate the section titled `sequelize`. Add the following items to it:
+Open the `app.js` file and locate the section titled `sequelize`. Add the
+following items to it:
 
 * user - Database User Name, which matches our project name
 * password - [MYSQL PASSWORD] we recorded from earlier
@@ -109,7 +121,9 @@ Open the `app.js` file and locate the section titled `sequelize`. Add the follow
 
 ### Initialize Database
 
-Once the app.js has been adjusted, it will know how to connect to the database. Next, write the basic structure so that queries will work on the database. Thanks to Kado, this is a one part command!
+Once the app.js has been adjusted, it will know how to connect to the database.
+Next, write the basic structure so that queries will work on the database.
+Thanks to Kado, this is a one part command!
 
 ```
 node app kado dbsetup
@@ -127,13 +141,17 @@ The output should look like this:
 
 ## Create a Staff Account
 
-Now you need access to start using the Web interface within Kado. In order to do so, you need to create an admin account. Again this is a simple one line command.
+Now you need access to start using the Web interface within Kado. In order to
+do so, you need to create an admin account. Again this is a simple one line
+command.
 
 ```
 node app staff create -e [YOUR EMAIL] -n "[YOUR NAME]" -p changeme
 ```
 
-This will create an account with your e-mail address and name, the password will be **changeme** which means that you should change this password as soon as you login to the admin panel.
+This will create an account with your e-mail address and name, the password will
+be **changeme** which means that you should change this password as soon as you
+login to the admin panel.
 
 **NOTE** do not input real passwords through the CLI, this can be dangerous!!!
 
@@ -146,9 +164,11 @@ Now you should see output like this:
 
 ## Start Kado
 
-Before we start Kado there is one last change to make to `app.js`. Open the file.  At the bottom of the file, change **myapp** to [PROJECT NAME].
+Before we start Kado there is one last change to make to `app.js`. Open the
+file.  At the bottom of the file, change **myapp** to [PROJECT NAME].
 
-Wow, thats a lot.  It is finally time to get the application started! Lets get it going.
+Wow, thats a lot.  It is finally time to get the application started! Lets get
+it going.
 
 ```
 node app
@@ -168,8 +188,9 @@ To access the application, use the following URLs:
 * Admin Panel - [http://localhost:3000](http://localhost:3000)
 * Main Panel - [http://localhost:3001](http://localhost:3001)
 
-There is always more to do but this is a minimum configuration just to get started. Here are some other instructional pages to check out:
+There is always more to do but this is a minimum configuration just to get
+started. Here are some other instructional pages to check out:
 
-* Configuration - [https://kado.org/doc/kado/3.x/configuration](https://kado.org/doc/kado/3.x/configuration)
-* Template Variables - [https://kado.org/doc/kado/3.x/templates](https://kado.org/doc/kado/3.x/templates)
-* Module Guide - [https://kado.org/doc/kado/3.x/module-guide](https://kado.org/doc/kado/3.x/module-guide)
+* [Configuration](./Configuration.md)
+* [Template Variables](./Templates.md)
+* [Module Guide](./Module.md)

@@ -1,4 +1,5 @@
 # Release Cycle
+> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
 
 Kado will be released on the following release cycle:
 

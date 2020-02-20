@@ -1,6 +1,8 @@
 # Developer
+> NOTICE: Kado 3 is **DEPRECATED**, see https://kado.org for the latest version.
 
-This document is intended to overview the development process involving Kado and Kado modules.
+This document is intended to overview the development process involving Kado and
+Kado modules.
 
 ## Initial Checkout
 
@@ -15,11 +17,18 @@ $ git clone https://github.com/KadoOrg/kado
 
 ## Contributing
 
-In order to have your changes accepted into the main Kado system please fork the [KadoOrg/kado](https://github.com/KadoOrg/kado) repository and once you have finished your changes. Try to keep them in a single commit and then submit a pull request using Github.
+In order to have your changes accepted into the main Kado system please fork
+the [kado/kado](https://git.nullivex.com/kado/kado) repository and once you have
+finished your changes. Try to keep them in a single commit and then submit a
+pull request using Github.
 
-Kado has a set [release schedule](/doc/kado/3.x/release-cycle) please keep that in mind with contributing new features. In the meantime, please use your fork to operate systems with newer features.
+Kado has a set [release cycle](./Developer.md) please keep that in mind with
+contributing new features. In the meantime, please use your fork to operate
+systems with newer features.
 
-If your change is going to require changing the module format it may either be rejected or shelved for a Major LTS release. Kado attempts to protect the modules at all costs.
+If your change is going to require changing the module format it may either be
+rejected or shelved for a Major LTS release. Kado attempts to protect the
+modules at all costs.
 
 ## Pulling
 
@@ -39,15 +48,19 @@ $ git push
 
 ## Merging
 
-We will be accepting pull requests against the core and all of its modules respectively.
+We will be accepting pull requests against the core and all of its modules
+respectively.
 
-There is nothing special that I know of working with submodules and merging. If, though, something happens to come up I will add it here.
+There is nothing special that I know of working with submodules and merging.
+If, though, something happens to come up I will add it here.
 
 ## Modules
 
-Kado modules drive the entire user space system which comprises the actionable code.
+Kado modules drive the entire user space system which comprises the actionable
+code.
 
-The plugin format follows a rather loose format to provide agility with different progamming languages and non web based programs.
+The plugin format follows a rather loose format to provide agility with
+different programming languages and non web based programs.
 
 ### Example Module Structure
 
