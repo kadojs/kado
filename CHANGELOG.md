@@ -1,5 +1,9 @@
-### 4.0.0 (planning, request for comments)
-*NOT YET RELEASED*
+### 4.0.1
+*Released 2/20/2020*
+* Fix the PathExp system to properly handle matching against multiple inputs.
+
+### 4.0.0
+*Released 2/20/2020*
 * BREAKING CHANGES, not compatible with Kado 3.x out of the box, see
 https://kado.org/content/upgrading-4.x for more.
 * No interfaces a provided by default.

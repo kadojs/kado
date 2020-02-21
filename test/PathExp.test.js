@@ -21,38 +21,38 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
 const PathExp = require('../lib/PathExp')
-const path = new PathExp('/user/:user')
 runner.suite('PathExp', (it) => {
   it('should instantiate', () => {
     Assert.isType('PathExp', new PathExp('/'))
   })
   it('should match', () => {
+    const path = new PathExp('/user/:user')
     const params = {}
     Assert.eq(path.match('/user/1', params), true)
     Assert.eq(params.user, '1')
   })
   it('should match against /user/:name/profile/:action', () => {
-    path.build('/user/:name/profile/:action')
+    const path = new PathExp('/user/:name/profile/:action')
     const params = {}
     Assert.eq(path.match('/user/foo/profile/settings', params), true)
     Assert.eq(params.name, 'foo')
     Assert.eq(params.action, 'settings')
   })
   it('should match against /user/:name/:action', () => {
-    path.build('/user/:name/:action')
+    const path = new PathExp('/user/:name/:action')
     const params = {}
     Assert.eq(path.match('/user/foo/settings', params), true)
     Assert.eq(params.name, 'foo')
     Assert.eq(params.action, 'settings')
   })
   it('should not match against /user/list/:action?a=b&c=d', () => {
-    path.build('/user/list/:action?a=b&c=d')
+    const path = new PathExp('/user/list/:action?a=b&c=d')
     const params = {}
     Assert.eq(path.match('user/list/settings?a=bla&c=dah', params), false)
     Assert.eq(params.action, undefined)
   })
   it('should match against /user/list/:action?a=b&c=d after url.parse', () => {
-    path.build('/user/list/:action')
+    const path = new PathExp('/user/list/:action')
     const params = {}
     const url = new URL('http://localhost/user/list/settings?a=bah&c=dah')
     Assert.eq(path.match(url.pathname, params), true)
