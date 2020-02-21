@@ -16,12 +16,12 @@ expression cable of being used tested against request URIs.
 * Return {PathExp} new instance.
 
 ### PathExp.build(path)
-* `path` {string} A string with the new path declaration.
-* Return {void}
+* `path` {string} A string with a path exp to turn to an regular expression.
+* Return {string} that can be passed to `new RegExp()`
 
 Builds the regular express for testing against accessible through `PathExp.exp`
 
-Calling this after the constructor resets the instance to a new path.
+*Internal Use*
 
 ### PathExp.match(against, params)
 * `against` {string} A path string to try matching against
