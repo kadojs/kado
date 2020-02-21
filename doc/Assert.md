@@ -103,12 +103,27 @@ Loosely asserts data types to okay and has logic
 to improve matching types:
  * `Array` Will match all elements using `assert.deepStrictEqual()`
  * `Object` Will match all elements using `assert.deepStrictEqual()`
- * `Date` Will compare the numeric base
+ * `Date` Will compare the elements using `assert.date()`
  * `Error` Will compare the message
  * `Function` Will compare the string value
 
 If none of the above types are passed, the assertion will be tested
 against [`Assert.eq(val1, val2)`](#static-asserteqval1-val2)
+
+### `static Assert.date(val1, val2, options)`
+* `val1` {Date} Base date
+* `val2` {Date} Date to assert against Base
+* `options` {object} options:
+  * `granularity` {number} Milliseconds by which to subdivide time
+  * `distance` {number} Milliseconds of distance allowable between values
+
+With no options, valid when `val1` is the exact same date as `val2`
+
+When granularity is used, time is subdivided by the provided milliseconds and
+`val1` should be in the same subdivision as `val2` to be considered valid.
+
+When distance is used, `val1` difference from `val2` should be equal to or less
+than provided milliseconds to be considered valid.
 
 ### `static Assert.eq(val1, val2)`
 * `val1` {mixed} first value to compare

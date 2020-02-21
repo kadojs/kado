@@ -20,6 +20,15 @@
  */
 const Assert = require('../lib/Assert')
 const runner = require('../lib/TestRunner').getInstance('Kado')
+
+const getFutureDate = (timeoutDuration) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(new Date())
+    }, timeoutDuration || 2)
+  })
+}
+
 const assert = runner.suite('Assert', (it) => {
   it('should construct', () => {
     Assert.isType('Assert', new Assert(5))
@@ -66,14 +75,7 @@ assert.suite('assert', (it) => {
     Assert.assert(now, now)
   })
   it('should fail two new dates over time', async () => {
-    function getDate () {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(new Date())
-        }, 2)
-      })
-    }
-    Assert.assert.catch(new Date(), await getDate(), Assert.Error)
+    Assert.assert.catch(new Date(), await getFutureDate(2), Assert.Error)
   })
   it('should assert an error', () => {
     Assert.assert(Error, Error)
@@ -102,6 +104,14 @@ assert.suite('assert', (it) => {
     Assert.assert(undefined, undefined)
     Assert.assert.catch(undefined, null,
       'undefined(undefined) does not equal null(null)')
+  })
+})
+assert.suite('date', (it) => {
+  it('should date with granularity', async () => {
+    Assert.date(new Date(), await getFutureDate(2), { granularity: 1000 })
+  })
+  it('should date with distance', async () => {
+    Assert.date(new Date(), await getFutureDate(2), { distance: 333 })
   })
 })
 assert.suite('eq', (it) => {
