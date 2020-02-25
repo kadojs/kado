@@ -493,7 +493,7 @@ async function _fromTokenizer(tokenizer) {
     checkString('wOFF') &&
     (
       check([0x00, 0x01, 0x00, 0x00], {offset: 4}) ||
-      checkString('OTTO', {offset: 4})
+      checkString('OTTO', {offset: 4}, )
     )
   ) {
     return {
