@@ -8,7 +8,7 @@ the supporting code and documentation to prove it!
 
 ## History
 
-Throughout the prototype and development process we released several very usable
+Throughout the prototype and development process, we released several very usable
 versions that accomplished just that. Less work for the developer, and more time
 spent preparing application code. Next, we learned that we could take this step
 even further by changing Kado from a packaged application into a collection
@@ -21,12 +21,12 @@ performance of your applications. Also, we hope that Kado 4 will reduce the
 amount of code you have to write. Most importantly, Kado 4 will significantly
 reduce the amount of third party software your application will depend upon. Our
 goal is that Node.JS + Kado is a combination that puts the developer in control
-and provides enough tool and documentation depth to build applications with
+and provides enough tools and documentation depth to build applications with
 few to no outside dependencies.
 
 ## Why Use Kado
 
-Why is all that important? Because the maintenance of those outside packages are
+Why is all that of important? The maintenance of those outside packages are
 vital to the continued success of your applications. Without quality
 maintenance, packages are susceptible to incompatibilities with future versions
 of Node.JS as well as SECURITY VULNERABILITIES that may go unhandled!
@@ -36,13 +36,13 @@ compliant with the imposed licenses.
 
 Kado relieves that pain by providing common functionality to meet the needs of
 command line applications and web servers without the use of external
-software.Prior to Kado even basic web servers relied on hundreds of external
+software.Prior to Kado, even basic web servers relied on hundreds of external
 dependencies just to say hello world. We also believe Kado is just easier and
 more fun to work with. However, we will let you be the judge of that!
 
 ## The Future of Kado
 
-Moving forward Kado aims to achieve two primary mission goals. The first
+Moving forward, Kado aims to achieve two primary mission goals. The first
 is to provide a stable environment for applications written on Kado by using
 an LTS backed release schedule. Second, we aim to merge more common application
 functionality written on ES6+ and matching Kado standards into our package.

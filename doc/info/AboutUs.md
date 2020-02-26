@@ -1,6 +1,6 @@
 # About Us
 
-There is already a lot of information about Kado on this site. However this page will attempt to make Kado as short and concise as possible.
+There is already a lot of information about Kado on this site, this page will attempt to make Kado as short and concise as possible.
 
 * Have you been building websites since the internet started? Or just recently?
 * Do you find it difficult to get from an idea to a final product?
