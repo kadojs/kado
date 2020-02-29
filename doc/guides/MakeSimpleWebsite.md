@@ -37,7 +37,7 @@ app.get('/', (req, res) => { res.render('index') })
 app.start().then(() => { return app.listen() })
 ```
 
-There are a few portions of this code that require explanation. Lets start with
+There are a few portions of this code that require explanation let us start with
 what was added from the [Hello World](./HelloWorld) guide.
 
 We added the `StaticServer` instance to handle requests for static files.
@@ -49,7 +49,7 @@ app.use(Application.HyperText.StaticServer.getMiddleware(staticRoot))
 ``` 
 
 The `staticRoot` path determines where the CSS, image files etc are to be served
-from. In our example, this will be your project root. Then create the folder
+from. In our example, this will be your project root and then create the folder
 `public` within the project root.
 
 Next, we call `app.use(HyperText.StaticServer.getMiddleware(staticRoot))` to
@@ -58,8 +58,8 @@ When no file matches the the path, the request is passed on to other route
 handlers.
 
 Now, it is time to add some CSS to make things a little more eye pleasing. To do
-this, create a file within the `public` folder and
-call this new file `style.css`. Within the new `style.css`, file place the
+this create a file within the `public` folder that you should have created and
+calling this new file `style.css`. In the new `style.css` file place the
 following code:
 
 ```css
@@ -68,10 +68,10 @@ a { color: red; }
 h1 { color: purple; }
 ```
 
-This wont do much, but it should make a noticeable difference to the page.
+This wont do much but this should make a noticeable difference to the page.
 
 Next, lets break our header and footer into partials that we can call them more
-than once. Within the `views` folder, create a file named `header.html` and
+than once. So, within the `views` folder create a file named `header.html` and
 place the following code inside:
 
 ```html
@@ -109,9 +109,8 @@ terminal of your project root and run the following command.
 $ node app
 ```
 
-Considering that command executes and stays running without any errors, your
-web server is complete and serving "Hello World" HTML from
-[localhost:3000](http://localhost:3000); now with your partials being rendered
+This command should execute without error. Now, your web server is complete and serving "Hello World" HTML from
+[localhost:3000](http://localhost:3000) now with your partials being rendered
 as well as serving the new CSS.
 
 Congratulations! Another stage complete on learning Kado. Now advance to the

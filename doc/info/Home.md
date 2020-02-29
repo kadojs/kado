@@ -14,46 +14,47 @@ $ npm install kado
 
 ## Motivations
 
-Kado provides solutions for most development needs by combining all of the common gaps in JavaScript into a
-consistent, well documented, thoroughly tested collection of libraries, which have
+Kado provides solutions by combining all the common gaps in JavaScript into a
+consistent, well documented, thoroughly tested collection of libraries. Best of all Kado has
 zero external dependencies.
 
 ## What is Kado?
 
   Kado provides High Quality JavaScript libraries written in ES6 or better
 standards. Our collection of libraries will provide most common needs for
-web servers or command line applications. To try Kado in your project, view the doc below to see how Kado can help
-simplify your projects workflow.
+web servers or command line applications. To try Kado in your project simply
+install using the command below and see some of the documentation below
+about how Kado might help simplify your projects workflow.
 
 ## Why use Kado?
 
 * Libraries for most common application needs.
 * 0 external dependencies. The buck stops here!
 * LGPL 3.0 License. Use Kado where you need it.
-* Thoroughly tested, continuously integrated and actively developed.
+* Thoroughly tested, continuously integrated, actively developed.
 * Make your own framework in just a few minutes!
-* Code is peer reviewed, openly developed and openly licensed.
+* Code is peer reviewed, openly developed, openly licensed.
 * Used by applications serving billions of page views.
 * Assertion, validation, and test running built in.
 * More! Check the library list below!
 
 ## Get Started with our Guides
 
-Our guides provide a step by step experience to learn how to use Kado. Go from
+Our guides provide a step by step experience to learn how to use Kado to go from
 saying "Hello" on a web port to writing a working administration panel. Once
 these guides are completed, building websites and applications using Kado should
-feel like second nature. Each guide below is accompanied by a link to the full guide
+feel second nature. Each guide below is accompanied by a link to the full guide
 as well as a short description of what each guide provides.
 
 * [Introduction](../guides/Introduction.md) - Gain some background on the
 history of Kado and why it was created.
 * [Getting Started](../guides/GettingStarted.md) - Get started using Kado and
 create a simple project that says "Hello" via HTTP on localhost port 3000.
-* [Hello World](../guides/HelloWorld.md) - Building upon the
-[Getting Started](../guides/GettingStarted.md) guide, this guide will introduce
+* [HelloWorld](../guides/HelloWorld.md) - Building upon the
+[GettingStarted](../guides/GettingStarted) guide, this guide will introduce
 rendering and templates that say "Hello World" with HTML.
 * [Make a Simple Website](../guides/MakeSimpleWebsite.md) - Continuing from
-the [Hello World](../guides/HelloWorld.md) guide, we add partials, static file
+the [HelloWorld](../guides/HelloWorld.md) guide we add partials, static file
 serving, CSS, and navigation to create a simple working website.
 * [Build an Admin Panel](../guides/BuildAdminPanel.md) - Now with
 [Make a Simple Website](../guides/MakeSimpleWebsite.md) complete, we continue
