@@ -1,7 +1,7 @@
 # Quick Start
 
 This guide will illustrate the steps to make a new repository with a basic Kado
-Hello World application which will be an easy point to start from.
+Hello World application,     which will be an easy point to start from.
 
 Some features of the Hello World base line:
 * Clustered application with workers for resilience and scaling.
@@ -19,7 +19,7 @@ remote to Git -> Remotes
 5) Add any extra initial commits.
 6) Push to new repository.
 
-Once these steps are completed the code is ready to for dependency resolution.
+Once these steps are completed, the code is ready for dependency resolution.
 
 From the project root:
 ```
@@ -35,7 +35,7 @@ $ node app
 
 Now the project can be accessed at [http://localhost:3000](http://localhost:3000)
 
-Some possible next steps would be adding some more routes, or changing the
+Some possible next steps would be adding some more routes, or changing
 the `index.html` file to be more to your liking.
 
 It might also be worthwhile to experiment with the provided API.

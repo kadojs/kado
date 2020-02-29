@@ -80,11 +80,11 @@ app.get('/', (req, res) => { res.render('index') })
 ```
 
 By calling `res.render('index')` we invoke the view system to look for a view
-named `index.html` and then render that view with no provided parameters other
+named `index.html`. Then render that view with no provided parameters other
 than system globals which are stored in the `res.locals` object.
 
 Next you need to create a view folder in your project root called `views` and
-then within that folder create a file named `index.html`. Within that new file
+then within that folder create a file named `index.html`. In the new file
 place the following HTML code:
 
 ```html
@@ -102,10 +102,10 @@ terminal of your project root and run the following command.
 $ node app
 ```
 
-Considering that command executes and stays running without any errors your
+That command should execute without error. Now, your
 web server is complete and serving "Hello World" HTML from
 [localhost:3000](http://localhost:3000)
 
 Congratulations! You are one stage further to creating amazing web applications
 using Kado. To learn more see the [Make a Simple Website](./MakeSimpleWebsite.md)
-where we explore using partials and routes to create a basic website.
+In this guide we explore using partials and routes to create a basic website.

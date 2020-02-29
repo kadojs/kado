@@ -15,7 +15,7 @@ $ npm install kado
 ## Motivations
 
 Kado provides solutions by combining all the common gaps in JavaScript into a
-consistent, well documented, thoroughly tested collection of libraries that have
+consistent, well documented, thoroughly tested collection of libraries. Best of all Kado has
 zero external dependencies.
 
 ## What is Kado?

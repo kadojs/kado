@@ -6,11 +6,11 @@ code.
 
 First, you should have created project somewhere, whether it be a Git repository
 or a new project in your code editor. Also you should have a `package.json` file
-to contain information about your project. If not, you need to create one, the
+to contain information about your project. If not, you need to create one. The
 easiest way is to run `npm init` and follow the on screen instructions.
 
-Second, it is time to install Kado which can be read in greater detail on
-[Download](./Download.md) guide. For our purposes we are going to install from
+Second, it is time to install Kado. Full details and instructions can be read in
+[Download](./Download.md) guide. For our purposes, we are going to install from
 NPM by running the following command from your projects root folder.
 
 ```
@@ -18,7 +18,7 @@ $ npm install kado
 ```
 
 In order to install Kado directly from sources rather than the NPM repository,
-which is also useful to test new builds use:
+which is also useful to test new builds, use:
 
 ```
 $ npm install git+https://git.nullivex.com/kado/kado.git
@@ -57,10 +57,10 @@ Now with that code placed lets run this code with the following command:
 $ node app
 ```
 
-Once the code is running open your favorite web browser and navigate to
+Once the code is running, open your favorite web browser and navigate to
 [localhost:3000](http://localhost:3000) you can click this link to get there.
 
-Upon loading the page you should see the word `Hello` this will signify your
+Upon loading the page, you should see the word `Hello`. This will signify your
 new application is working! Great work! Now if you are ready to get more
-familiar with Kado see the [Hello World](./HellowWorld.md) guide
+familiar with Kado, see the [Hello World](./HellowWorld.md) guide
 to go to the next stage.
