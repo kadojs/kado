@@ -41,7 +41,7 @@ runner.suite('ETag', (it) => {
   it('should work on file stat objects', () => {
     const statPath = fs.path.join(__dirname, '../.eslintrc')
     const rv = ETag.getTag(fs.statSync(statPath))
-    Assert.eq(rv, 'W/"30-1581571852231"')
+    Assert.isOk(rv.match(/W\/"30-[0-9]+"/))
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
