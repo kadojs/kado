@@ -33,6 +33,7 @@ const suites = [
   'Cron',
   'Database',
   'Email',
+  'ETag',
   'Event',
   'FileSystem',
   'Format',
