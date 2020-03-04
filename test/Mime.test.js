@@ -24,8 +24,9 @@ const Mime = require('../lib/Mime')
 runner.suite('Mime', (it) => {
   it('should Mime getType', () => {
     const rv = Mime.getType('test.txt')
-    Assert.getType('object, rv')
-    Assert.eq(rv.type, 'get/plain')
+    console.log(rv)
+    Assert.getType('object', rv)
+    Assert.eq(rv.type, 'text/plain')
     Assert.eq(rv.ext, 'txt')
   })
 })
