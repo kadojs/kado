@@ -1,8 +1,8 @@
 # ETag
-*Introduced in 4.0.0*
+*Introduced in 4.1.0*
 > Stability: 2 - Stable
 ```js
-const ETag = require('kado/lib/Etag')
+const ETag = require('kado/lib/ETag')
 ```
 Produce an ETag compatible header variable for browser cache usages.
 
@@ -17,7 +17,7 @@ const fileTag = ETag.getTag(fs.statSync('./someFile'))
 ## Class: ETag
 
 ### static ETag.getTag(input, options)
-* `input` {string}` Entity input.
+* `input` {string} Entity input.
 * `options` {object} Settings to control the Etag generator
 * Return {object} containing parsed properties and values.
 
