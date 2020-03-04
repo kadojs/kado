@@ -45,6 +45,7 @@ const suites = [
   'Log',
   'Mapper',
   'Message',
+  'Mime',
   'Module',
   'Navigation',
   'Parser',
