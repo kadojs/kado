@@ -55,7 +55,5 @@
     "test": "standard && node ./test/index.js"
   },
   "version": "4.0.1",
-  "dependencies": {
-    "mime": "^2.4.4"
-  }
+  "dependencies": {}
 }
