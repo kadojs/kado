@@ -3,26 +3,24 @@
 [![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
 [![npm version](https://badge.fury.io/js/kado.svg)](https://badge.fury.io/js/kado)
 [![Join the chat at https://gitter.im/KadoOrg/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/KadoOrg/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+```
+npm install kado
+```
+JavaScript Framework Libraries for Node.JS
 
-High Quality JavaScript Libraries based on ES6+
+## Features
 
-## Motivations
-
-Kado provides solutions by combining all the common gaps in JavaScript into a
-consistent, well documented, thoroughly tested collection of libraries that have
-zero external dependencies.
-
-## Why use Kado?
-
-* Libraries for most common application needs.
+* Easily setup web servers to replace Apache, NGINX, etc.
+* Build command line applications quickly.
+* Create back ends for existing applications and save resources.
+* Used by applications serving billions of page views.
 * 0 external dependencies. The buck stops here!
-* LGPL 3.0 License. Use Kado where you need it.
+* Libraries for most common application needs.
 * Thoroughly tested, continuously integrated, actively developed.
 * Make your own framework in just a few minutes!
 * Code is peer reviewed, openly developed, openly licensed.
-* Used by applications serving billions of page views.
 * Assertion, validation, and test running built in.
-* More! Check the library list below!
+* LGPL 3.0 License. Use Kado where you need it.
 
 ## Kado Library List
 
@@ -50,6 +48,7 @@ to be used with a Connect system.
 cron jobs.
 * [Database](https://kado.org/doc/database/) - Connect system made for Databases.
 * [Email](https://kado.org/doc/email/) - Connect system made for Email.
+* [ETag](https://kado.org/doc/etag/) - Class for determining ETag header.
 * [Event](https://kado.org/doc/event/) - Create, track and handle application events with
 log levels.
 * [FileSystem](https://kado.org/doc/file-system/) - Consistent API for use with File System methods.
