@@ -27,6 +27,7 @@
     "locale",
     "logs",
     "merge",
+    "mime",
     "mocha",
     "module",
     "optimist",

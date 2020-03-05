@@ -69,6 +69,7 @@ loading, parsing, and displaying languages.
 * [Message](https://kado.org/doc/message/) - Create, track and handle messages from
 various inputs and outputs.
 * [Module](https://kado.org/doc/module/) - Super class for creating Kado modules.
+* [Mime](https://kado.org/doc/mime/) - Class for determining file types.
 * [Navigation](https://kado.org/doc/navigation/) - Create and manage application menus.
 * [Parser](https://kado.org/doc/parser/) - Parse input strings to variables such as objects.
 * [PathExp](https://kado.org/doc/path-exp/) - Use path notation to validate routes on URIs.
