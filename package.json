@@ -54,6 +54,5 @@
   "scripts": {
     "test": "standard && node ./test/index.js"
   },
-  "version": "4.0.1",
-  "dependencies": {}
+  "version": "4.0.1"
 }
