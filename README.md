@@ -13,7 +13,7 @@ JavaScript Framework Libraries for Node.JS
 * Easily setup web servers to replace Apache, NGINX, etc.
 * Build command line applications quickly.
 * Create back ends for existing applications and save resources.
-* Used by applications serving billions of page views.
+* Trusted by applications serving billions of page views.
 * 0 external dependencies. The buck stops here!
 * Libraries for most common application needs.
 * Thoroughly tested, continuously integrated, actively developed.
@@ -90,7 +90,7 @@ Please see our [bug tracker](https://git.nullivex.com/kado/kado/issues)
 
 ## Change Log
 
-Please see the [CHANGELOG.md](./CHANGELOG.md)
+Please see the [CHANGELOG](./CHANGELOG.md)
 
 ## Contributing
 

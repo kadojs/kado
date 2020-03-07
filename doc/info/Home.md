@@ -4,39 +4,25 @@
 [![npm version](https://badge.fury.io/js/kado.svg)](https://badge.fury.io/js/kado)
 [![Join the chat at https://gitter.im/KadoOrg/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/KadoOrg/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-High Quality JavaScript Libraries based on ES6+
-
 Install Kado quickly or see [Download](../guides/Download.md) for more details.
-
 ```
-$ npm install kado
+npm install kado
 ```
+JavaScript Framework Libraries for Node.JS
 
-## Motivations
+## Features
 
-Kado provides solutions by combining all the common gaps in JavaScript into a
-consistent, well documented, thoroughly tested collection of libraries. Best of all Kado has
-zero external dependencies.
-
-## What is Kado?
-
-  Kado provides High Quality JavaScript libraries written in ES6 or better
-standards. Our collection of libraries will provide most common needs for
-web servers or command line applications. To try Kado in your project simply
-install using the command below and see some of the documentation below
-about how Kado might help simplify your projects workflow.
-
-## Why use Kado?
-
-* Libraries for most common application needs.
+* Easily setup web servers to replace Apache, NGINX, etc.
+* Build command line applications quickly.
+* Create back ends for existing applications and save resources.
+* Trusted by applications serving billions of page views.
 * 0 external dependencies. The buck stops here!
-* LGPL 3.0 License. Use Kado where you need it.
+* Libraries for most common application needs.
 * Thoroughly tested, continuously integrated, actively developed.
 * Make your own framework in just a few minutes!
 * Code is peer reviewed, openly developed, openly licensed.
-* Used by applications serving billions of page views.
 * Assertion, validation, and test running built in.
-* More! Check the library list below!
+* LGPL 3.0 License. Use Kado where you need it.
 
 ## Get Started with our Guides
 
@@ -78,56 +64,75 @@ This is an exhaustive lise of all the JavaScript libraries provided with Kado.
 Each library has a link to its documentation as well as a short description of
 what the library provides.
 
-* [Application](./doc/Application.md) - Create a new application containing most
+* [Application](https://kado.org/doc/application/) - Create a new application containing most
 Kado features.
-* [Assert](./doc/Assert.md) - Make assertions on input or tests.
-* [Asset](./doc/Asset.md) - Store, filter, and query static application
+* [Assert](https://kado.org/doc/assert/) - Make assertions on input or tests.
+* [Asset](https://kado.org/doc/asset/) - Store, filter, and query static application
 files.
-* [ChildProcess](./doc/ChildProcess.md) - Child process library adding convenience and
+* [ChildProcess](https://kado.org/doc/child-process/) - Child process library adding convenience and
 functionality to the core child_process functions.
-* [Cluster](./doc/Cluster.md) - Cluster library for constructing and
+* [Cluster](https://kado.org/doc/cluster/) - Cluster library for constructing and
 operating process clusters.
-* [Command](./doc/Command.md) - Build CLI applications with ease.
-* [CommandServer](./doc/CommandServer.md) - Execute CLI applications like a
+* [Command](https://kado.org/doc/command/) - Build CLI applications with ease.
+* [CommandServer](https://kado.org/doc/command-server/) - Execute CLI applications like a
 web server.
-* [Connect](./doc/Connect.md) - Framework for housing external resource
+* [Connect](https://kado.org/doc/connect/) - Framework for housing external resource
 connections.
-* [ConnectEngine](./doc/ConnectEngine.md) - Interface for creating an engine
+* [ConnectEngine](https://kado.org/doc/connect-engine/) - Interface for creating an engine
 to be used with a Connect system.
-* [Cron](./doc/Cron.md) - Execute functions on a schedule similar to UNIX
+* [Cron](https://kado.org/doc/cron/) - Execute functions on a schedule similar to UNIX
 cron jobs.
-* [Database](./doc/Database.md) - Connect system made for Databases.
-* [Email](./doc/Email.md) - Connect system made for Email.
-* [Event](./doc/Event.md) - Create, track and handle application events with
+* [Database](https://kado.org/doc/database/) - Connect system made for Databases.
+* [Email](https://kado.org/doc/email/) - Connect system made for Email.
+* [ETag](https://kado.org/doc/etag/) - Class for determining ETag header.
+* [Event](https://kado.org/doc/event/) - Create, track and handle application events with
 log levels.
-* [FileSystem](./doc/FileSystem.md) - Consistent API for use with File System methods.
-* [Format](./doc/Format.md) - Commonly used String, Number, and Date format
+* [FileSystem](https://kado.org/doc/file-system/) - Consistent API for use with File System methods.
+* [Format](https://kado.org/doc/format/) - Commonly used String, Number, and Date format
 methods.
-* [GetOpt](./doc/GetOpt.md) - Parse command line string input into an
+* [GetOpt](https://kado.org/doc/get-opt/) - Parse command line string input into an
 object.
-* [History](./doc/History.md) - Track user navigation history throughout
+* [History](https://kado.org/doc/history/) - Track user navigation history throughout
 a session.
-* [HyperText](./doc/HyperText.md) - Connect system made for HTTP servers.
-* [Language](./doc/Language.md) - Internationalization helpers including
+* [HyperText](https://kado.org/doc/hyper-text/) - Connect system made for HTTP servers.
+* [Language](https://kado.org/doc/language/) - Internationalization helpers including
 loading, parsing, and displaying languages.
-* [Library](./doc/Library.md) - Dynamic library loader.
-* [Lifecycle](./doc/Lifecycle.md) - Start and stop systems with events.
-* [Log](./doc/Log.md) - Connect system made for Logs.
-* [Mapper](./doc/Mapper.md) - ECMA Map functionality on Objects.
-* [Message](./doc/Message.md) - Create, track and handle messages from
+* [Library](https://kado.org/doc/library/) - Dynamic library loader.
+* [Lifecycle](https://kado.org/doc/lifecycle/) - Start and stop systems with events.
+* [Log](https://kado.org/doc/log/) - Connect system made for Logs.
+* [Mapper](https://kado.org/doc/mapper/) - ECMA Map functionality on Objects.
+* [Message](https://kado.org/doc/message/) - Create, track and handle messages from
 various inputs and outputs.
-* [Module](./doc/Module.md) - Super class for creating Kado modules.
-* [Navigation](./doc/Navigation.md) - Create and manage application menus.
-* [Parser](./doc/Parser.md) - Parse input strings to variables such as objects.
-* [PathExp](./doc/PathExp.md) - Use path notation to validate routes on URIs.
-* [Permission](./doc/Permission.md) - Create and test permission sets to
+* [Module](https://kado.org/doc/module/) - Super class for creating Kado modules.
+* [Mime](https://kado.org/doc/mime/) - Class for determining file types.
+* [Navigation](https://kado.org/doc/navigation/) - Create and manage application menus.
+* [Parser](https://kado.org/doc/parser/) - Parse input strings to variables such as objects.
+* [PathExp](https://kado.org/doc/path-exp/) - Use path notation to validate routes on URIs.
+* [Permission](https://kado.org/doc/permission/) - Create and test permission sets to
 allow fine grained user control.
-* [Profiler](./doc/Profiler.md) - Track application resource usage and
+* [Profiler](https://kado.org/doc/profiler/) - Track application resource usage and
 timing.
-* [Router](./doc/Router.md) - Store and process application route points.
-* [Search](./doc/Search.md) - Connect system for made for search.
-* [Session](./doc/Session.md) - Session system for storing data against users.
-* [TestRunner](./doc/TestRunner.md) - Define and run Test Suites and Tests.
-* [Util](./doc/Util.md) - Misfit useful functions.
-* [Validate](./doc/Validate.md) - Validate input.
-* [View](./doc/View.md) - Connect system made for rendering.
+* [Router](https://kado.org/doc/router/) - Store and process application route points.
+* [Search](https://kado.org/doc/search/) - Connect system for made for search.
+* [Session](https://kado.org/doc/session/) - Session system for storing data against users.
+* [TestRunner](https://kado.org/doc/test-runner/) - Define and run Test Suites and Tests.
+* [Util](https://kado.org/doc/util/) - Misfit useful functions.
+* [Validate](https://kado.org/doc/validate/) - Validate input.
+* [View](https://kado.org/doc/view/) - Connect system made for rendering.
+
+## Questions or Problems?
+
+Please see our [bug tracker](https://git.nullivex.com/kado/kado/issues)
+
+## Change Log
+
+Please see the [CHANGELOG](./CHANGELOG.md)
+
+## Contributing
+
+Please see the [Contribution Guidelines](./CONTRIBUTING.md)
+
+## License
+Kado Copyright (C) 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado
+is licensed under the Lesser GNU Public License version 3.0 or newer see
+[LICENSE.md](./LICENSE.md) for a complete copy of applicable licenses.
