@@ -41,3 +41,17 @@ keys with.
 ### static Parser.htmlUnescape(input)
 * `input` {string} containing HTML entities to be turned back to HTML tags.
 * Return {string} containing replaced entities.
+
+### static Parser.stringCaseSeparate(input, separator)
+* `input` {string} A TitleCase string to separate.
+* `separator` {string} A string to use to separate title case elements. Default
+is a space ` `.
+* Return {string} The parsed string with added separators.
+
+### static Parser.stringToPath(input, separator)
+* `input` {string} Any string that should be converted to a path using a method
+where all non alpha numeric characters are replaced with whitespace, whitespace
+is then trimmed, compressed, and replaced with the defined `separator`
+* `separator` {string} A string which will separate all instances of white space
+in the resulting path string.
+* Return {string} The parsed string ready to be used as a path or URI.

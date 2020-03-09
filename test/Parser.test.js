@@ -58,5 +58,21 @@ runner.suite('Parser', (it) => {
     const rv = Parser.htmlUnescape(entityString)
     Assert.eq(rv, htmlString)
   })
+  it('should separate TitleCase', () => {
+    const rv = Parser.stringCaseSeparate('SomeTitleCase', '-').toLowerCase()
+    Assert.eq(rv, 'some-title-case')
+  })
+  it('should separate camelCaseStuff', () => {
+    const rv = Parser.stringCaseSeparate('somethingCamelCase')
+    Assert.eq(rv, 'something Camel Case')
+  })
+  it('should create a path from a string', () => {
+    const rv = Parser.stringToPath('some path i want', '-')
+    Assert.eq(rv, 'some-path-i-want')
+  })
+  it('should create a path from a special string', () => {
+    const rv = Parser.stringToPath('some f$%&kn path i want!!!!!')
+    Assert.eq(rv, 'some/fkn/path/i/want')
+  })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
