@@ -25,7 +25,7 @@ prompting you for details about your module.
 Consider the following output from module generation.
 
 ```
-nullivex@nullivex-desktop:~/WebstormProjects/kado-web$ node app kado generate
+$ node app kado generate
 [2018-10-17T04:34:05.962Z 25979-KADO] INFO: Acquiring module info: Title, Name
 Title of new module? Tasks
 Name of new module? tasks
