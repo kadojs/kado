@@ -58,6 +58,17 @@ runner.suite('Parser', (it) => {
     const rv = Parser.htmlUnescape(entityString)
     Assert.eq(rv, htmlString)
   })
+  it('should capitalize a string', () => {
+    Assert.eq(Parser.capitalize('test'), 'Test')
+  })
+  it('should print a date', () => {
+    Assert.isType('string', Parser.printDate(new Date()))
+  })
+  it('should escape and truncate a string', () => {
+    const render = (s) => { return s }
+    Assert.eq(Parser.escapeAndTruncate()(
+      '2,<span>foo bar</span>', render), 'fo')
+  })
   it('should separate TitleCase', () => {
     const rv = Parser.stringCaseSeparate('SomeTitleCase', '-').toLowerCase()
     Assert.eq(rv, 'some-title-case')

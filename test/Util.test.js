@@ -23,16 +23,6 @@ const Assert = require('../lib/Assert')
 const Util = require('../lib/Util')
 runner.suite('Util', (it) => {
   const render = (s) => { return s }
-  it('should capitalize a string', () => {
-    Assert.eq(Util.capitalize('test'), 'Test')
-  })
-  it('should print a date', () => {
-    Assert.isType('string', Util.printDate(new Date()))
-  })
-  it('should escape and truncate a string', () => {
-    Assert.eq(Util.escapeAndTruncate()(
-      '2,<span>foo bar</span>', render), 'fo')
-  })
   it('should check for bool true', () => {
     Assert.eq(Util.is()('true,1,2', render), '1')
     Assert.eq(Util.is()('false,1,2', render), '2')
