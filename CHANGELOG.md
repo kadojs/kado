@@ -1,9 +1,10 @@
 ### 4.1.0
-*Released 3/5/2020*
+*Released 3/9/2020*
 * Add new Mime.js library for looking up file types from extensions.
 * Add new ETag.js library for generating ETag headers for cache protection.
 * Implement the Mime.js in the included HyperText static server.
 * Implement the ETag.js in the included HyperText server.
+* Multiple fixes and changes to the documents.
 
 ### 4.0.1
 *Released 2/20/2020*
