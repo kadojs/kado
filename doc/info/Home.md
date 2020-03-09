@@ -58,7 +58,7 @@ history of Kado and why it was created.
 * [Getting Started](../guides/GettingStarted.md) - Get started using Kado and
 create a simple project that says "Hello" via HTTP on localhost port 3000.
 * [HelloWorld](../guides/HelloWorld.md) - Building upon the
-[GettingStarted](../guides/GettingStarted) guide, this guide will introduce
+[GettingStarted](../guides/GettingStarted.md) guide, this guide will introduce
 rendering and templates that say "Hello World" with HTML.
 * [Make a Simple Website](../guides/MakeSimpleWebsite.md) - Continuing from
 the [HelloWorld](../guides/HelloWorld.md) guide we add partials, static file
