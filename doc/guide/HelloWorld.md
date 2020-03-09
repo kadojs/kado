@@ -1,6 +1,6 @@
 # Hello World
 
-After reading the [Getting Starting](./GettingStarted) guide you should have a
+After reading the [Getting Starting](./GettingStarted.md) guide you should have a
 basic understanding of how to get Kado off the ground for serving web requests.
 This guide will expand on that understanding and provide new example code to
 add a view rending engine as well as a template to your project.
