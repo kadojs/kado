@@ -61,5 +61,5 @@ Once the code is running, open your favorite web browser and navigate to
 
 Upon loading the page, you should see the word `Hello`. This will signify your
 new application is working! Great work! Now if you are ready to get more
-familiar with Kado, see the [Hello World](./HellowWorld.md) guide
+familiar with Kado, see the [Hello World](./HelloWorld.md) guide
 to go to the next stage.
