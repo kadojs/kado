@@ -11,12 +11,19 @@ Some features of the Hello World base line:
 * Uses the Mustache Templating system with full partial support.
 * Default development mode reloads routes and static files instantly.
 
+## Steps to Get Started
+
 1) Make a new blank repository
+
 2) Checkout the repository to your favorite IDE
+
 3) Add https://git.nullivex.com/kado/kado-base.git with the name "base" as a
 remote to Git -> Remotes
+
 4) From the terminal `$ git pull base master`
+
 5) Add any extra initial commits.
+
 6) Push to new repository.
 
 Once these steps are completed, the code is ready for dependency resolution.

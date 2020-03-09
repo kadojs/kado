@@ -11,7 +11,6 @@ file within your project root if it doesnt already exist, and then replace the
 code within that file with the following:
 
 ```js
-'use strict'
 // require kado sources
 const Application = require('kado')
 const fs = require('kado/lib/FileSystem')

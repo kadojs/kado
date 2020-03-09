@@ -11,7 +11,6 @@ file and installed `kado` into your project. Also, it is assumed you have an
 is an updated code example containing our static server and view rendering.
 
 ```js
-'use strict'
 // require kado sources
 const Application = require('kado')
 const fs = require('kado/lib/FileSystem')

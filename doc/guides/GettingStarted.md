@@ -33,7 +33,6 @@ common application entry point file name. Now, within `app.js` add the following
 code.
 
 ```js
-'use strict'
 //require kado sources
 const Application = require('kado')
 // make an application instance

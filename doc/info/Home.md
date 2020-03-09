@@ -1,4 +1,4 @@
-# Welcome To Kado
+# Welcome to Kado
 [![pipeline status](https://git.nullivex.com/kado/kado/badges/4.x/pipeline.svg)](https://git.nullivex.com/kado/kado/commits/4.x)
 [![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
 [![npm version](https://badge.fury.io/js/kado.svg)](https://badge.fury.io/js/kado)
@@ -23,6 +23,27 @@ JavaScript Framework Libraries for Node.JS
 * Code is peer reviewed, openly developed, openly licensed.
 * Assertion, validation, and test running built in.
 * LGPL 3.0 License. Use Kado where you need it.
+
+## Quick Hello Server
+
+Place the following code into an empty JavaScript file, example: `app.js`.
+```js
+const HyperText = require('kado/lib/HyperText')
+const app = require('kado').getInstance()
+const http = new HyperText.HyperTextServer()
+app.http.addEngine('http', http.createServer(app.router))
+app.get('/', (req, res) => { res.end('Hello') })
+app.start().then(() => app.listen())
+```
+After saving the file, execute the code by running the following command from
+the same folder as the JavaScript file.
+```
+node app
+```
+Once the command has executed, a web server that says "Hello" will be available
+on port `3000` of your local machine, example: `http://localhost:3000`.
+
+See the guides below for more examples.
 
 ## Get Started with our Guides
 
@@ -62,7 +83,7 @@ command line applications.
 
 This is an exhaustive lise of all the JavaScript libraries provided with Kado.
 Each library has a link to its documentation as well as a short description of
-what the library provides.
+what is provided by the library.
 
 * [Application](https://kado.org/doc/application/) - Create a new application containing most
 Kado features.
