@@ -68,17 +68,14 @@ Second,
 Before running your application you need Kado in some form. Typically this is
 done by creating a `package.json` by running `npm init` inside of your
 application folder. It will ask for key application details and then generate a
-`package.json` file for you. Afterwards install Kado by running
-`npm i kado --save` which will store Kado inside of your `package.json` which
-will be ready for use in the future installations of your application.
+`package.json` file for you.
 
-This step is optional, Kado can be installed globally to take advantage of some
-CLI helpers when creating new applications. Typically, this step is used in
-development and not used in production.
-
+Now Install Kado 3
 ```
-npm -g install kado
+npm install git+https://git.nullivex.com/kado/kado#3.x
 ```
+Afterwards, Kado will be saved to your projects `package.json` and will be
+installed any time `npm install` is ran within your project root.
 
 Now your system is Kado ready! Check out the
-[Getting Started](./GettingStarted.md) guide.
+[Getting Started](https://kado.org/doc/3.10.6/getting-started/) guide.
