@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/kado.svg)](https://badge.fury.io/js/kado)
 [![Join the chat at https://gitter.im/KadoOrg/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/KadoOrg/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Install Kado quickly or see [Download](../guides/Download.md) for more details.
+Install Kado quickly or see [Download](../info/Download.md) for more details.
 ```
 npm install kado
 ```
@@ -53,29 +53,27 @@ these guides are completed, building websites and applications using Kado should
 feel second nature. Each guide below is accompanied by a link to the full guide
 as well as a short description of what each guide provides.
 
-* [Introduction](../guides/Introduction.md) - Gain some background on the
-history of Kado and why it was created.
-* [Getting Started](../guides/GettingStarted.md) - Get started using Kado and
+* [Getting Started](../guide/GettingStarted.md) - Get started using Kado and
 create a simple project that says "Hello" via HTTP on localhost port 3000.
-* [HelloWorld](../guides/HelloWorld.md) - Building upon the
-[GettingStarted](../guides/GettingStarted.md) guide, this guide will introduce
+* [HelloWorld](../guide/HelloWorld.md) - Building upon the
+[GettingStarted](../guide/GettingStarted.md) guide, this guide will introduce
 rendering and templates that say "Hello World" with HTML.
-* [Make a Simple Website](../guides/MakeSimpleWebsite.md) - Continuing from
-the [HelloWorld](../guides/HelloWorld.md) guide we add partials, static file
+* [Make a Simple Website](../guide/MakeSimpleWebsite.md) - Continuing from
+the [HelloWorld](../guide/HelloWorld.md) guide we add partials, static file
 serving, CSS, and navigation to create a simple working website.
-* [Build an Admin Panel](../guides/BuildAdminPanel.md) - Now with
-[Make a Simple Website](../guides/MakeSimpleWebsite.md) complete, we continue
+* [Build an Admin Panel](../guide/BuildAdminPanel.md) - Now with
+[Make a Simple Website](../guide/MakeSimpleWebsite.md) complete, we continue
 to explore how to build an administration panel on top of our simple website.
-* [Database Work Flows](../guides/DatabaseWorkFlow.md) - With a working
-[Admin Panel](../guides/BuildAdminPanel.md) the next step is to setup a
+* [Database Work Flows](../guide/DatabaseWorkFlow.md) - With a working
+[Admin Panel](../guide/BuildAdminPanel.md) the next step is to setup a
 connection to a database so we can store the data created by the application.
-* [Working With Email](../guides/WorkingWithEmail.md) - Explore sending
+* [Working With Email](../guide/WorkingWithEmail.md) - Explore sending
 emails using the Kado provided libraries and connecting to an email server.
-* [Views and Rendering](../guides/ViewsRendering.md) - Everything you need to
+* [Views and Rendering](../guide/ViewsRendering.md) - Everything you need to
 know about the Kado view system and how to render views.
-* [Writing Tests](../guides/WritingTests.md) - Write tests against your
+* [Writing Tests](../guide/WritingTests.md) - Write tests against your
 application easily using the provided Kado library.
-* [Advanced Techniques](../guides/AdvancedTechniques.md) - Prepare your
+* [Advanced Techniques](../guide/AdvancedTechniques.md) - Prepare your
 application for production with the introduction of clustered processes and
 command line applications.
 

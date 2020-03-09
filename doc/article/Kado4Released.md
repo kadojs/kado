@@ -37,7 +37,7 @@ by step introduction into using Kado 4 in your application.
 
 Kado 4 is proud to announce the ability to write and run tests directly using
 the included [TestRunner](../TestRunner.md) library. Also see the
-[Writing Tests](../guides/WritingTests.md) guide to gain more understanding
+[Writing Tests](../guide/WritingTests.md) guide to gain more understanding
 on constructing test suites.
 
 ## Open Development with Gitlab
