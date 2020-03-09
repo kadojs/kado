@@ -150,8 +150,3 @@ Please see the [CHANGELOG](./CHANGELOG.md)
 ## Contributing
 
 Please see the [Contribution Guidelines](./CONTRIBUTING.md)
-
-## License
-Kado Copyright (C) 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado
-is licensed under the Lesser GNU Public License version 3.0 or newer see
-[LICENSE.md](./LICENSE.md) for a complete copy of applicable licenses.
