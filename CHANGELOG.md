@@ -670,7 +670,7 @@ handling consistent. Includes `base64-js` into the browser bundle as well.
 content to be edited.
 * Change default `{{{_baseUrl}}}` to `''` in order to support more installs
 by default.
-* Use `{{{_baseUrl}}` when loading all assets.
+* Use `{{{_baseUrl}}}` when loading all assets.
 * URI usages should always use `{{{_u.name}}}` to avoid escaping issues.
 * Fix bug in `staff` module when deleting a staff member would fail to redirect.
 * Use TUI Viewer on content display pages.
