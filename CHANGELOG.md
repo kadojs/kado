@@ -1,3 +1,5 @@
+# Changelog
+
 ### 4.1.0
 *Released 3/9/2020*
 * Add new Mime.js library for looking up file types from extensions.
@@ -42,6 +44,28 @@ https://kado.org/content/upgrading-4.x for more.
  interface with enhanced routing makes the most sense. In instances where the
  panels need to be split in however many places this can be done by simply,
  starting multiple instances and using webserver rules to deny or allow urls.
+
+### 3.10.6
+*Released 2/12/2020*
+* This is the more than likely the last release before Kado 4.0 is released.
+* A warning is due now that Kado 4 will be complete incompatible with Kado 3 as
+Kado 4.0 fully realizes ES6. For the future, Kado 3 will continue to be
+maintained within the same repository as Kado 4 in a separate branch. However
+due to limitations on NPM, Kado 3 versions will be released as the kado-legacy
+package.
+* A further warning that Kado 4 will be changing from an MIT license to Lesser
+GPL Version 3+ please plan accordingly!
+* Update and test against latest dependencies
+   * bcrypt                      ^3.0.7  →   ^3.0.8
+   * commander                   ^4.1.0  →   ^4.1.1
+   * connect-session-sequelize   ^6.0.0  →   ^6.1.1
+   * flag-icon-css               ^3.4.5  →   ^3.4.6
+   * highlight.js               ^9.18.0  →  ^9.18.1
+   * pdfmake                    ^0.1.63  →  ^0.1.64
+   * request                    ^2.88.0  →  ^2.88.2
+   * rimraf                      ^3.0.1  →   ^3.0.2
+   * sequelize                  ^5.21.3  →  ^5.21.4
+   * webpack                    ^4.41.5  →  ^4.41.6
 
 ### 3.10.5
 *Released 1/30/2020*
