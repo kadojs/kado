@@ -93,5 +93,9 @@ runner.suite('Parser', (it) => {
     const rv = Parser.stringToTitle('some title we need for stuff')
     Assert.eq(rv, 'Some Title We Need for Stuff')
   })
+  it('should capitalize the first and last word of a title', () => {
+    const rv = Parser.stringToTitle('and the dog came in')
+    Assert.eq(rv, 'And the Dog Came In')
+  })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

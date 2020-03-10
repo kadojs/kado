@@ -88,5 +88,7 @@ in the resulting path string.
 * `input` {string} Any string that should be converted to a title string.
 Like "The Title of a Book".
 * `separator` {string} A string that separates words, default is space ` `.
+* `joiner` {string} A string to join the words back together, default is
+again a space ` `.
 * Return {string} Parsed into a title string with conjunctions, articles and
 prepositions accounted for.
