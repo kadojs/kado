@@ -1,17 +1,16 @@
 # Make A Simple Website
 
-After reading the [Hello World](./HelloWorld) guide you should have an
+After reading the [Hello World](./HelloWorld.md) guide you should have an
 understanding of how to have Kado serve templates to web requests.
 This guide will expand on that knowledge and provide example code to
 add rending partial views and static files to your project.
 
 Now, it is assumed you have created a project, initiated your `package.json`
 file and installed `kado` into your project. Also, it is assumed you have an
-`app.js` created by completed the [Hello World](./HelloWorld) guide. Below,
+`app.js` created by completed the [Hello World](./HelloWorld.md) guide. Below,
 is an updated code example containing our static server and view rendering.
 
 ```js
-'use strict'
 // require kado sources
 const Application = require('kado')
 const fs = require('kado/lib/FileSystem')
@@ -38,7 +37,7 @@ app.start().then(() => { return app.listen() })
 ```
 
 There are a few portions of this code that require explanation let us start with
-what was added from the [Hello World](./HelloWorld) guide.
+what was added from the [Hello World](./HelloWorld.md) guide.
 
 We added the `StaticServer` instance to handle requests for static files.
 This is done with the following code:

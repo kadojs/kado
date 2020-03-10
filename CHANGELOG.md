@@ -1,3 +1,12 @@
+### 4.1.0
+*Released 3/9/2020*
+* Add new Mime.js library for looking up file types from extensions.
+* Add new ETag.js library for generating ETag headers for cache protection.
+* Implement the Mime.js in the included HyperText static server.
+* Implement the ETag.js in the included HyperText server.
+* Multiple fixes and changes to the documents.
+* Add new methods to the Parser library.
+
 ### 4.0.1
 *Released 2/20/2020*
 * Fix the PathExp system to properly handle matching against multiple inputs.
@@ -661,7 +670,7 @@ handling consistent. Includes `base64-js` into the browser bundle as well.
 content to be edited.
 * Change default `{{{_baseUrl}}}` to `''` in order to support more installs
 by default.
-* Use `{{{_baseUrl}}` when loading all assets.
+* Use `{{{_baseUrl}}}` when loading all assets.
 * URI usages should always use `{{{_u.name}}}` to avoid escaping issues.
 * Fix bug in `staff` module when deleting a staff member would fail to redirect.
 * Use TUI Viewer on content display pages.

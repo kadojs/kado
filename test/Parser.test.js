@@ -58,5 +58,44 @@ runner.suite('Parser', (it) => {
     const rv = Parser.htmlUnescape(entityString)
     Assert.eq(rv, htmlString)
   })
+  it('should capitalize a string', () => {
+    Assert.eq(Parser.capitalize('test'), 'Test')
+  })
+  it('should print a date', () => {
+    Assert.isType('string', Parser.printDate(new Date()))
+  })
+  it('should escape and truncate a string', () => {
+    const render = (s) => { return s }
+    Assert.eq(Parser.escapeAndTruncate()(
+      '2,<span>foo bar</span>', render), 'fo')
+  })
+  it('should separate TitleCase', () => {
+    const rv = Parser.stringCaseSeparate('SomeTitleCase', '-').toLowerCase()
+    Assert.eq(rv, 'some-title-case')
+  })
+  it('should separate camelCaseStuff', () => {
+    const rv = Parser.stringCaseSeparate('somethingCamelCase')
+    Assert.eq(rv, 'something Camel Case')
+  })
+  it('should create a path from a string', () => {
+    const rv = Parser.stringToPath('some path i want', '-')
+    Assert.eq(rv, 'some-path-i-want')
+  })
+  it('should create a path from a special string', () => {
+    const rv = Parser.stringToPath('some f$%&kn path i want!!!!!')
+    Assert.eq(rv, 'some/fkn/path/i/want')
+  })
+  it('should create a title string from uri', () => {
+    const rv = Parser.stringToTitle('some-string-with-a-title', '-')
+    Assert.eq(rv, 'Some String with a Title')
+  })
+  it('should create a title string', () => {
+    const rv = Parser.stringToTitle('some title we need for stuff')
+    Assert.eq(rv, 'Some Title We Need for Stuff')
+  })
+  it('should capitalize the first and last word of a title', () => {
+    const rv = Parser.stringToTitle('and the dog came in')
+    Assert.eq(rv, 'And the Dog Came In')
+  })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

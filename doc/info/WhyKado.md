@@ -25,4 +25,4 @@ process system that can scale to any size.
 ## Get Started Today
 
 Give Kado a try today and start embracing the power it can give your team.
-Try our [Quick Start](../guides/QuickStart.md) guide!
+Try our [Quick Start](../guide/QuickStart.md) guide!

@@ -1,5 +1,5 @@
 # Util
-
+*Introduced in 3.0.0*
 > Stability: 2 - Stable
 ```js
 const Util = require('kado/lib/Util')
@@ -9,31 +9,9 @@ The `Util` library implements several convenience methods.
 ## Class: Util
 Util is a completely static class of loosely related methods
 
-### `static Util.capitalize(string)`
-* `string` {string} subject text
-* Returns: {string} the `string` with all words having capital first letter
-
-This Method Makes The Input Look Like This.
-
-### `static Util.printDate (d, emptyString)`
-* `d` {Date} subject date in proper object OR other input will be best-effort
-  coerced into Date object
-* `emptyString` {string} (Default: `'Never'`) text to use when `d` unclear 
-* Returns: {string} equivalent of input in sorting friendly format
-
-Reformat date to a string with a nice format; such as:
-`YYYY-mm-dd HH:MM:SS`
-
-### `static Util.escapeAndTruncate()`
-* Returns: {Function} reference to anonymous function as documented below:
-  ##### `static (text, render)`
-  * `text` {string} subject text
-  * `render` {Function} rendering function reference
-  * Returns: {string} input `text` split and fed to `render` function, modified
-
-  Input `text` uses CSV-like meta-argument format with a length number then `,`
-  then the remaining part of the string is sent to the `render` function.  That
-  output is filtered of any HTML and truncated to the length, and returned.
+**NOTE** In `4.1.0` the `capitalize`, `printDate`, and `escapeAndTruncate`
+methods were moved to the `Parser` library. See their documentation and usage
+from there. Update any usages accordingly.
 
 ### `static Util.is()`
 * Returns: {Function} reference to anonymous function as documented below:

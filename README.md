@@ -1,34 +1,53 @@
 # Kado
-[![pipeline status](https://git.nullivex.com/kado/kado/badges/4.x/pipeline.svg)](https://git.nullivex.com/kado/kado/commits/4.x)
+[![pipeline status](https://git.nullivex.com/kado/kado/badges/master/pipeline.svg)](https://git.nullivex.com/kado/kado/commits/4.x)
 [![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
 [![npm version](https://badge.fury.io/js/kado.svg)](https://badge.fury.io/js/kado)
 [![Join the chat at https://gitter.im/KadoOrg/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/KadoOrg/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+```
+npm install kado
+```
+JavaScript Framework Libraries for Node.JS
 
-High Quality JavaScript Libraries based on ES6+
+## Features
 
-## Motivations
-
-Kado provides solutions by combining all the common gaps in JavaScript into a
-consistent, well documented, thoroughly tested collection of libraries that have
-zero external dependencies.
-
-## Why use Kado?
-
-* Libraries for most common application needs.
+* Easily setup web servers to replace Apache, NGINX, etc.
+* Build command line applications quickly.
+* Create back ends for existing applications and save resources.
+* Trusted by applications serving billions of page views.
 * 0 external dependencies. The buck stops here!
-* LGPL 3.0 License. Use Kado where you need it.
+* Libraries for most common application needs.
 * Thoroughly tested, continuously integrated, actively developed.
 * Make your own framework in just a few minutes!
 * Code is peer reviewed, openly developed, openly licensed.
-* Used by applications serving billions of page views.
 * Assertion, validation, and test running built in.
-* More! Check the library list below!
+* LGPL 3.0 License. Use Kado where you need it.
+
+## Quick Hello Server
+
+Place the following code into an empty JavaScript file, example: `app.js`.
+```js
+const HyperText = require('kado/lib/HyperText')
+const app = require('kado').getInstance()
+const http = new HyperText.HyperTextServer()
+app.http.addEngine('http', http.createServer(app.router))
+app.get('/', (req, res) => { res.end('Hello') })
+app.start().then(() => app.listen())
+```
+After saving the file, execute the code by running the following command from
+the same folder as the JavaScript file.
+```
+node app
+```
+Once the command has executed, a web server that says "Hello" will be available
+on port `3000` of your local machine, example: `http://localhost:3000`.
+
+See [kado.org](https://kado.org) for more guides and examples.
 
 ## Kado Library List
 
 This is an exhaustive lise of all the JavaScript libraries provided with Kado.
 Each library has a link to its documentation as well as a short description of
-what the library provides.
+what is provided by the library.
 
 * [Application](https://kado.org/doc/application/) - Create a new application containing most
 Kado features.
@@ -50,6 +69,7 @@ to be used with a Connect system.
 cron jobs.
 * [Database](https://kado.org/doc/database/) - Connect system made for Databases.
 * [Email](https://kado.org/doc/email/) - Connect system made for Email.
+* [ETag](https://kado.org/doc/etag/) - Class for determining ETag header.
 * [Event](https://kado.org/doc/event/) - Create, track and handle application events with
 log levels.
 * [FileSystem](https://kado.org/doc/file-system/) - Consistent API for use with File System methods.
@@ -91,7 +111,7 @@ Please see our [bug tracker](https://git.nullivex.com/kado/kado/issues)
 
 ## Change Log
 
-Please see the [CHANGELOG.md](./CHANGELOG.md)
+Please see the [CHANGELOG](./CHANGELOG.md)
 
 ## Contributing
 
