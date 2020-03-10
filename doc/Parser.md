@@ -83,3 +83,10 @@ is then trimmed, compressed, and replaced with the defined `separator`
 * `separator` {string} A string which will separate all instances of white space
 in the resulting path string.
 * Return {string} The parsed string ready to be used as a path or URI.
+
+### static Parser.stringToTitle(name, separator)
+* `input` {string} Any string that should be converted to a title string.
+Like "The Title of a Book".
+* `separator` {string} A string that separates words, default is space ` `.
+* Return {string} Parsed into a title string with conjunctions, articles and
+prepositions accounted for.

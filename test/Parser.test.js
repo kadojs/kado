@@ -85,5 +85,13 @@ runner.suite('Parser', (it) => {
     const rv = Parser.stringToPath('some f$%&kn path i want!!!!!')
     Assert.eq(rv, 'some/fkn/path/i/want')
   })
+  it('should create a title string from uri', () => {
+    const rv = Parser.stringToTitle('some-string-with-a-title', '-')
+    Assert.eq(rv, 'Some String with a Title')
+  })
+  it('should create a title string', () => {
+    const rv = Parser.stringToTitle('some title we need for stuff')
+    Assert.eq(rv, 'Some Title We Need for Stuff')
+  })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
