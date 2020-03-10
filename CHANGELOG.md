@@ -5,6 +5,7 @@
 * Implement the Mime.js in the included HyperText static server.
 * Implement the ETag.js in the included HyperText server.
 * Multiple fixes and changes to the documents.
+* Add new methods to the Parser library.
 
 ### 4.0.1
 *Released 2/20/2020*
