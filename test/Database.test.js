@@ -65,5 +65,13 @@ runner.suite('Database', (it) => {
         }
       })
   })
+  it('should have a MySQL engine', () => {
+    Assert.isType('Function', Database.DatabaseMySQL)
+    Assert.isType('Function', Database.MySQL)
+    const rv = new Database.MySQL({ database: 'test' })
+    Assert.isType('DatabaseMySQL', rv)
+    Assert.isType('AsyncFunction', rv.start)
+    Assert.isType('Function', rv.stop)
+  })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

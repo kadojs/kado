@@ -50,3 +50,29 @@ Must be extended and used to connect to underlying database.
 ### DatabaseEngine.close()
 By default will try and call `engine.close()` and then call
 `ConnectEngine.resetEngine()`. Which should be sufficient for most underlays.
+
+## Class: DatabaseMySQL
+`DatabaseMySQL` extends `DatabaseEngine` extends `ConnectEngine` and implements
+a relationship with the JavaScript `mysql2` driver available on NPM and Github.
+
+See the [mysql2 package](https://github.com/sidorares/node-mysql2)
+
+To use this engine it should be required at application startup. Example:
+```js
+const app = require('kado').getInstance()
+const MySQL = require('kado/lib/Database').MySQL
+const mysqlConfig = { host: 'localhost', user: 'test', database: 'test' }
+app.database.addEngine('mysql', new MySQL(mysqlConfig))
+```
+
+### DatabaseMySQL.constructor(options)
+* `options` {Object} containing connection options.
+* Return {DatabaseMySQL} new driver instance ready to be passed to the
+`app.database.addEngine()` call.
+
+The currently supported options are:
+
+* `host` {string} hostname of the database server, default `localhost`
+* `user` {string} the username used to identify the connection
+* `password` {string} the password used to authenticate the connection
+* `database` {string} the database desired to select after connecting
