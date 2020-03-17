@@ -19,51 +19,11 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const focus = new RegExp((process.env.FOCUS || '.') + '', 'i')
-const suites = [
-  // early tests
-  'TestRunner',
-  // normal tests
-  'Asset',
-  'Assert',
-  'ChildProcess',
-  'Cluster',
-  'CommandServer',
-  'Connect',
-  'Cron',
-  'Database',
-  'Email',
-  'ETag',
-  'Event',
-  'FileSystem',
-  'Format',
-  'GetOpt',
-  'History',
-  'HyperText',
-  'Language',
-  'Library',
-  'Lifecycle',
-  'Log',
-  'Mapper',
-  'Message',
-  'Mime',
-  'Model',
-  'Module',
-  'Navigation',
-  'Parser',
-  'PathExp',
-  'Permission',
-  'Profiler',
-  'Query',
-  'Router',
-  'Search',
-  'Session',
-  'Util',
-  'Validate',
-  'View',
-  // late tests
-  'Application'
-]
-const runnableSuites = suites.filter(fn => (fn.search(focus) > -1))
-for (const suite of runnableSuites) require(`./${suite}.test.js`)
-runner.execute().then(code => process.exit(code))
+const Assert = require('../lib/Assert')
+const Query = require('../lib/Query')
+runner.suite('Query', (it) => {
+  it('should construct', () => {
+    Assert.isType('Query', new Query())
+  })
+})
+if (require.main === module) runner.execute().then(code => process.exit(code))
