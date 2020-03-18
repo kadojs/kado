@@ -56,6 +56,7 @@ const suites = [
   'Profiler',
   'Query',
   'Router',
+  'Schema',
   'Search',
   'Session',
   'Util',
