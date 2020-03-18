@@ -21,11 +21,13 @@
 const libSizeTargetKB = 256
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
-const fs = require('../lib/FileSystem')
 const Application = require('../lib/Application')
+const fs = require('../lib/FileSystem')
+const Module = require('../lib/Module')
 const app = new Application()
-class Module {
+class OurModule extends Module {
   constructor () {
+    super()
     this.name = 'foo'
   }
 }
@@ -43,13 +45,13 @@ runner.suite('Application', (it) => {
     Assert.eq(app.setConfig({ name: 'bar' }).config.get('name'), 'bar')
   })
   it('should add a module', () => {
-    Assert.isType('Application', app.addModule(new Module()))
+    Assert.isType('Application', app.addModule(new OurModule()))
   })
   it('should get a module', () => {
-    Assert.isType('Module', app.getModule('foo'))
+    Assert.isType('Module', Object.getPrototypeOf(app.getModule('foo')))
   })
   it('should remove a module', () => {
-    Assert.isType('Module', app.removeModule('foo'))
+    Assert.isType('Module', Object.getPrototypeOf(app.removeModule('foo')))
   })
   it('should load a library', () => {
     app.library.addPath(`${__dirname}/../lib`)

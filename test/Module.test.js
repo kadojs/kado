@@ -21,7 +21,8 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
 const Module = require('../lib/Module')
-const mod = new Module()
+class OurModule extends Module { }
+const mod = new OurModule()
 class Application {}
 runner.suite('Module', (it) => {
   it('should instantiate', () => {
