@@ -76,11 +76,17 @@ runner.suite('Schema', (it) => {
       ' INDEX `updatedAt_index` (`updatedAt`)\n' +
       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
     )
-    Assert.eqDeep(rv.toArray(), [])
+    const result = rv.toArray()
+    Assert.isType('Array', result)
+    Assert.eq(result.length, 3)
   })
   it('should alter a table', () => {
     const rv = SchemaSQL.alter('User')
-    Assert.eq(rv.toString(), '')
+    Assert.eq(rv.toString(),
+      'ALTER TABLE IF EXISTS `User` (\n' +
+      'null\n' +
+      ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
+    )
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

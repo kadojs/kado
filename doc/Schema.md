@@ -61,8 +61,8 @@ Available Options:
 * Return {QuerySQL} this instance
 
 ### SchemaSQL.toArray()
-* Return {Array} containing two entries, the first being an Array of fields
-and the second being an array of indexes.
+* Return {Array} containing three entries, the first being an Array of fields,
+ the second being an array of indexes and finally the primary key.
 
 ### SchemaSQL.toString()
 * Return {string} the complete query ready for execution.
