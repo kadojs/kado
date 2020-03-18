@@ -76,6 +76,11 @@ runner.suite('Schema', (it) => {
       ' INDEX `updatedAt_index` (`updatedAt`)\n' +
       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
     )
+    Assert.eqDeep(rv.toArray(), [])
+  })
+  it('should alter a table', () => {
+    const rv = SchemaSQL.alter('User')
+    Assert.eq(rv.toString(), '')
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
