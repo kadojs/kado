@@ -145,8 +145,8 @@ Please see our [bug tracker](https://git.nullivex.com/kado/kado/issues)
 
 ## Change Log
 
-Please see the [CHANGELOG](./CHANGELOG.md)
+Please see the [CHANGELOG](https://kado.org/info/changelog/)
 
 ## Contributing
 
-Please see the [Contribution Guidelines](./CONTRIBUTING.md)
+Please see the [Contribution Guidelines](https://kado.org/info/contributing/)
