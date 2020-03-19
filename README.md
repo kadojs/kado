@@ -111,13 +111,13 @@ Please see our [bug tracker](https://git.nullivex.com/kado/kado/issues)
 
 ## Change Log
 
-Please see the [CHANGELOG](./CHANGELOG.md)
+Please see the [CHANGELOG](https://kado.org/info/changelog/)
 
 ## Contributing
 
-Please see the [Contribution Guidelines](./CONTRIBUTING.md)
+Please see the [Contribution Guidelines](https://kado.org/info/contributing/)
 
 ## License
 Kado Copyright (C) 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado
 is licensed under the Lesser GNU Public License version 3.0 or newer see
-[LICENSE.md](./LICENSE.md) for a complete copy of applicable licenses.
+[LICENSE.md](https://kado.org/info/license/) for a complete copy of applicable licenses.
