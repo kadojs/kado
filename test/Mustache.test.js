@@ -19,53 +19,18 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
-const focus = new RegExp((process.env.FOCUS || '.') + '', 'i')
-const suites = [
-  // early tests
-  'TestRunner',
-  // normal tests
-  'Asset',
-  'Assert',
-  'ChildProcess',
-  'Cluster',
-  'CommandServer',
-  'Connect',
-  'Cron',
-  'Database',
-  'Email',
-  'ETag',
-  'Event',
-  'FileSystem',
-  'Format',
-  'GetOpt',
-  'History',
-  'HyperText',
-  'Language',
-  'Library',
-  'Lifecycle',
-  'Log',
-  'Mapper',
-  'Message',
-  'Mime',
-  'Model',
-  'Module',
-  'Mustache',
-  'Navigation',
-  'Parser',
-  'PathExp',
-  'Permission',
-  'Profiler',
-  'Query',
-  'Router',
-  'Schema',
-  'Search',
-  'Session',
-  'Util',
-  'Validate',
-  'View',
-  // late tests
-  'Application'
-]
-const runnableSuites = suites.filter(fn => (fn.search(focus) > -1))
-for (const suite of runnableSuites) require(`./${suite}.test.js`)
-runner.execute().then(code => process.exit(code))
+const Assert = require('../lib/Assert')
+const Mustache = require('../lib/Mustache')
+const format = runner.suite('Mustache')
+// all static no constructor test needed
+format.suite('.render()', (it) => {
+  it('requires template to be a string', () => {
+    try {
+      Mustache.render(['dummy template'], ['foo', 'bar'])
+    } catch (e) {
+      Assert.isType('TypeError', e)
+      Assert.match(/Invalid template! Template should be a "string" but "array" was given as the first argument for mustache#render\(template, view, partials\)/, e.message)
+    }
+  })
+})
+if (require.main === module) runner.execute().then(code => process.exit(code))
