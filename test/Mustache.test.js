@@ -20,17 +20,64 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
+const Validate = require('../lib/Validate')
 const Mustache = require('../lib/Mustache')
 const format = runner.suite('Mustache')
 // all static no constructor test needed
+format.beforeEach(() => {
+  console.log('beforeEach()')
+  Mustache.getInstance().clearCache()
+})
 format.suite('.render()', (it) => {
   it('requires template to be a string', () => {
     try {
-      Mustache.render(['dummy template'], ['foo', 'bar'])
+      const mustache = Mustache.getInstance()
+      console.log('typeOf mustache', Validate.getType(mustache))
+      console.log('typeOf render', Validate.getType(mustache.render))
+      mustache.render(['dummy template'], ['foo', 'bar'])
     } catch (e) {
       Assert.isType('TypeError', e)
       Assert.match(/Invalid template! Template should be a "string" but "array" was given as the first argument for mustache#render\(template, view, partials\)/, e.message)
     }
+  })
+
+  it('uses tags argument instead of Mustache.tags when given', () => {
+    const mustache = Mustache.getInstance()
+    const template = '<<placeholder>>bar{{placeholder}}'
+    mustache.tags = ['{{', '}}']
+    Assert.eq(mustache.render(template, { placeholder: 'foo' }, {}, ['<<', '>>']), 'foobar{{placeholder}}')
+  })
+
+  it('uses tags argument instead of Mustache.tags when given, even when it previous rendered the template using Mustache.tags', () => {
+    const mustache = Mustache.getInstance()
+    var template = '((placeholder))bar{{placeholder}}'
+    mustache.tags = ['{{', '}}']
+    mustache.render(template, { placeholder: 'foo' })
+    Assert.eq(mustache.render(template, { placeholder: 'foo' }, {}, ['((', '))']), 'foobar{{placeholder}}')
+  })
+
+  it('uses tags argument instead of Mustache.tags when given, even when it previous rendered the template using different tags', () => {
+    const mustache = Mustache.getInstance()
+    var template = '[[placeholder]]bar<<placeholder>>'
+    mustache.render(template, { placeholder: 'foo' }, {}, ['<<', '>>'])
+    Assert.eq(mustache.render(template, { placeholder: 'foo' }, {}, ['[[', ']]']), 'foobar<<placeholder>>')
+  })
+
+  it('does not mutate Mustache.tags when given tags argument', () => {
+    const mustache = Mustache.getInstance()
+    var correctMustacheTags = ['{{', '}}']
+    mustache.tags = correctMustacheTags
+    mustache.render('((placeholder))', { placeholder: 'foo' }, {}, ['((', '))'])
+    Assert.eq(mustache.tags, correctMustacheTags)
+    Assert.eqDeep(mustache.tags, ['{{', '}}'])
+  })
+
+  it('uses provided tags when rendering partials', () => {
+    const mustache = Mustache.getInstance()
+    var output = mustache.render('<%> partial %>', { name: 'Santa Claus' }, {
+      partial: '<% name %>'
+    }, ['<%', '%>'])
+    Assert.eq(output, 'Santa Claus')
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
