@@ -90,6 +90,30 @@ process.
 * `options` {object} Runtime options to configure the cluster
 * Return {Cluster} new cluster management object
 
+Available Options:
+* `count` {number} the number of workers to start
+* `delayHeartbeat` {number} how many ms before each heartbeat check,
+ default: 5000
+* `delayRespawn` {number} how many ms before respawning a failed process,
+ default: 1000
+* `silent` {boolean} Whether or not to send output to parent's stdio.
+Default: false
+* `maxConnections` {number} When workers serve more than this many connections
+they automatically respawn. 0 is the default which is OFF.
+* `recycleTimeout` {number} Time in ms before forcibly killing a worker being
+ recycled. Default is `null` which is no timeout.
+* `stopTimeout` {number} Time in ms before forcibly killing a worker to
+stop the application. Default is `5000`
+* `respawnTimeout` {number} Time in ms to wait for a respawned process to come
+online, default is `5000`
+* `startTimeout` {number} Time in ms to wait for a process to start on
+application start. Default is `5000`
+* `watchTimeout` {number} The time to wait before restarting on a watched
+file change. Default is `5000`
+* `path` {string} The path to the worker program file. By default it calls back
+into itself. Use an if statement to separate master from worker.
+* `cluster` {object} Any of the settings from [cluster settings](https://nodejs.org/dist/latest-v13.x/docs/api/cluster.html#cluster_cluster_settings)
+
 ### Cluster.isMaster()
 * Return {boolean} `true` when this process is the master
 
