@@ -121,3 +121,20 @@ an instance of `StaticServer` instantiated with `root` and `options`.
 * `res` {Response} An HTTP Response object.
 * Return {Promise} resolved when either a file is found or the stack should
 continue.
+
+## Class: Proxy
+
+### static Proxy.pass(req, res, options)
+* `req` {IncomingMessage} request object from an HTTP(s) request
+* `res` {ServerResponse} response object from an HTTP(s) request
+* `options` {Object} options controlling the proxy request
+* Return {Promise} resolved when request is handled.
+
+Available options:
+* `host` {string} the hostname or IP address to request from
+* `port` {string} the port of the host to connect to
+* `ssl` {boolean} enable HTTPS requests
+* `rejectUnauthorized` {boolean} set `true` to trust invalid SSL hosts.
+* `referrer` {string} A referrer to pass, otherwise uses `req.referer`
+* `method` {string} The type of request to make defaults to `req.method`
+* `maxRedirects` {number} Maximum times to follow redirects, default: 8
