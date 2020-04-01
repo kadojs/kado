@@ -49,6 +49,7 @@ const suites = [
   'Mime',
   'Model',
   'Module',
+  'Mustache',
   'Navigation',
   'Parser',
   'PathExp',
