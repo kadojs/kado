@@ -13,18 +13,18 @@ const { Command } = require('kado')
 ## Class Command
 
 This class is a super class that is extended by the command section
-within the `kado-ui` core object. Let us take a look at that usage snippet.
+within the `Application` core object. Let us take a look at that usage snippet.
 
 ```js
 const CommandSuper = require('./Command')
 class Command extends CommandSuper {
-  constructor(){
+  constructor () {
     super()
     this.name = name
     this.options = options
     this.version = that.version
   }
-  action(opts){
+  action (opts) {
     return options.action.call(this,opts)
   }
 }
@@ -43,9 +43,9 @@ Now take a look at an actual options object.
 const options = {
   description: 'Some command description',
   options: [
-    {definition: '-s, --something <s>', description: 'Some thing'}
+    { definition: '-s, --something <s>', description: 'Some thing' }
   ],
-  action: (opts)=>{
+  action: (opts) => {
     return Promise.resolve(opts)
   }
 }
