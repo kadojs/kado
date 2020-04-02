@@ -53,8 +53,8 @@ Default finalHandler route.
 * Return {HyperTextServer} instance for use.
 
 ### HyperTextServer.setHost(host)
-* `host` {string} or `null`, host to listen on such as `localhost` or
-`127.0.0.1`.
+* `host` {string|Array} or `null`, host to listen on such as `localhost` or
+`127.0.0.1`. When an array of hosts is given, each on will be listened on.
 * Return {HyperTextServer} this instance
 
 ### HyperTextServer.setPort(port)
