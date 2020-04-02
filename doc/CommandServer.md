@@ -47,7 +47,7 @@ Return {string} name of the command requested for removal.
 * Return {string} name of the command added.
 
 This actually uses the `Command` library to setup the new command
-based on te options and is a shortcut for.
+based on the options and is a shortcut for.
 
 ```js
 CommandSerer.addCommand('someModule','someCommand',new Command())
