@@ -92,3 +92,13 @@ Like "The Title of a Book".
 again a space ` `.
 * Return {string} Parsed into a title string with conjunctions, articles and
 prepositions accounted for.
+
+### static Parser.requestBody(req)
+* `req` {IncomingMessage} HTTP incoming request object.
+* Return {Promise} resolved with body parsing is complete and `req.body` will
+be populated with the result.
+
+Example
+```js
+app.use(req => Parser.requestBody(req))
+```
