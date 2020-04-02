@@ -114,8 +114,16 @@ file change. Default is `5000`
 into itself. Use an if statement to separate master from worker.
 * `cluster` {object} Any of the settings from [cluster settings](https://nodejs.org/dist/latest-v13.x/docs/api/cluster.html#cluster_cluster_settings)
 
-### Cluster.isMaster()
+### Cluster.isMaster(options)
+* `options` {Object} containing options about the isMaster check.
 * Return {boolean} `true` when this process is the master
+
+Available Options
+* `maxArguments` {number} the maximum length of `process.argv` to enable cluster
+support. When `process.argv` has more arguments than `maxArguments` {boolean}
+`false` is returned which should trigger single worker mode in standard setups
+and cause the command to be executed within the original process. This results
+in a lean single process CLI applet by using a single check on the argv length.
 
 ### Cluster.isWorker()
 * Return {boolean} `true` when this process is the worker
