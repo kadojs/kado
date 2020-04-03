@@ -6,21 +6,7 @@
 ```
 npm install kado
 ```
-JavaScript Framework Libraries for Node.JS
-
-## Features
-
-* Easily setup web servers to replace Apache, NGINX, etc.
-* Build command line applications quickly.
-* Create back ends for existing applications and save resources.
-* Trusted by applications serving billions of page views.
-* 0 external dependencies. The buck stops here!
-* Libraries for most common application needs.
-* Thoroughly tested, continuously integrated, actively developed.
-* Make your own framework in just a few minutes!
-* Code is peer reviewed, openly developed, openly licensed.
-* Assertion, validation, and test running built in.
-* LGPL 3.0 License. Use Kado where you need it.
+High Quality JavaScript Framework Libraries for Node.JS
 
 ## Quick Hello Server
 
@@ -42,6 +28,21 @@ Once the command has executed, a web server that says "Hello" will be available
 on port `3000` of your local machine, example: `http://localhost:3000`.
 
 See [kado.org](https://kado.org) for more guides and examples.
+
+## Features
+
+* Create servers that produce websites, APIs, or anything really.
+* Create back ends for existing applications and save resources.
+* Build command line applications quickly.
+* Trusted by applications serving billions of page views.
+* 0 external dependencies. The buck stops here!
+* Libraries for most common application needs.
+* Thoroughly tested, continuously integrated, actively developed.
+* Make your own framework in just a few minutes!
+* Code is peer reviewed, openly developed, openly licensed.
+* Assertion, validation, and test running built in.
+* LGPL 3.0 License. Use Kado where you need it.
+* Easily setup web servers to replace Apache, NGINX, and others.
 
 ## Kado Library List
 
@@ -88,8 +89,9 @@ loading, parsing, and displaying languages.
 * [Mapper](https://kado.org/doc/mapper/) - ECMA Map functionality on Objects.
 * [Message](https://kado.org/doc/message/) - Create, track and handle messages from
 various inputs and outputs.
-* [Module](https://kado.org/doc/module/) - Super class for creating Kado modules.
 * [Mime](https://kado.org/doc/mime/) - Class for determining file types.
+* [Module](https://kado.org/doc/module/) - Super class for creating Kado modules.
+* [Mustache](https://kado.org/doc/mustache/) - Mustache templating system.
 * [Navigation](https://kado.org/doc/navigation/) - Create and manage application menus.
 * [Parser](https://kado.org/doc/parser/) - Parse input strings to variables such as objects.
 * [PathExp](https://kado.org/doc/path-exp/) - Use path notation to validate routes on URIs.
@@ -97,7 +99,9 @@ various inputs and outputs.
 allow fine grained user control.
 * [Profiler](https://kado.org/doc/profiler/) - Track application resource usage and
 timing.
+* [Query](https://kado.org/doc/query/) - Query builder for Database languages, includes SQL builder.
 * [Router](https://kado.org/doc/router/) - Store and process application route points.
+* [Schema](https://kado.org/doc/schema/) - Schema builder for Database languages, includes SQL builder.
 * [Search](https://kado.org/doc/search/) - Connect system for made for search.
 * [Session](https://kado.org/doc/session/) - Session system for storing data against users.
 * [TestRunner](https://kado.org/doc/test-runner/) - Define and run Test Suites and Tests.
