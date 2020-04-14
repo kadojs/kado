@@ -44,9 +44,9 @@ This is the `Model` class which extends `Mapper`.
 ### static Model.listQuery(table)
 * `table`
 
-### static async Model.save(db, Model, id, fields, data)
-* `db`
+### static async Model.save(Model, db, id, fields, data)
 * `Model`
+* `db`
 * `id`
 * `fields`
 * `data`
