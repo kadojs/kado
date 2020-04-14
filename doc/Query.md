@@ -100,6 +100,10 @@ together by default `AND`
 field names, functions, sub queries etc.
 * Return {QuerySQL} this instance
 
+### QuerySQL.log()
+Prints the query to process.stdout via console.log, equivalent of
+`console.log(query.toString(), query.toArray())`
+
 ### QuerySQL.leftJoin(query)
 * `query` {Query} a fully prepared Query object to obtain a leftJoin from.
 * Return {QuerySQL} this instance
