@@ -20,6 +20,7 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
+const Application = require('../lib/Application')
 const Router = require('../lib/Router')
 runner.suite('Router', (it) => {
   const router = new Router()
@@ -44,7 +45,8 @@ runner.suite('Router', (it) => {
     Assert.assert(router.finalHandler, finalHandler)
   })
   it('should set a preparer', () => {
-    router.setPreparer(Router.standardPreparation())
+    const app = new Application()
+    router.setPreparer(Router.standardPreparation(app))
     const preparer = router.getPreparer()
     Assert.isType('Function', preparer)
     Assert.eq('standardPreparation', preparer.name)

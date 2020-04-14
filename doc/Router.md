@@ -1,15 +1,55 @@
-# Profiler
+# Router
 *Introduced in 4.0.0*
 > Stability: 2 - Stable
 ```js
 const Router = require('kado/lib/Router')
 ```
-The Router library provides assistance for matching paths or URIs to real locations within the system.
-### static router.getInstance()
+The Router library provides assistance for matching paths or URIs to real
+locations within the system.
+
+## static Router.redirectRequest (res)
+* `res` {Response} the HTTP response
+* Return {Function} used to redirect requests
+
+### static Router.renderJSON (res)
+* `res` {Response} the HTTP response
+* Return {Function} used to render JSON responses.
+
+### static Router.render(app, req, res)
+* `app` {Application} an application instance
+* `req` {Request} the HTTP request
+* `res` {Response} the HTTP response
+* Return {Function} used to render responses with the view engine
+
+If there is no view engine `false` is returned.
+
+### static Router.getRemoteIP (app, req)
+* `app` {Application} an application instance
+* `req` {Request} the HTTP request
+* Return {string} remote IP address.
+
+### static Router.setPoweredBy (res)
+* `res` {Response} the HTTP response
+* Return {void}
+
+Sets the powered by Kado header for the response.
+
+### static Router.standardPreparation(app)
+* `app` {Application} current application instance
+* Return {Function} to be set as the route preparer.
+
+### static Router.getInstance()
 * Return {router} new instance of the router system
 
 ### Router.constructor()
 * Return {router} new instance of the router system
+
+### Router.setPreparer(preparer)
+* `preparer` {function} used to prepare new request for routing
+* Return {Router} this instance
+
+### Router.getPreparer()
+* Return {preparer} the current registered preparation method
 
 ### Router.use(fn)
 * `fn` {function} function to be called as middleware and should return a
@@ -49,11 +89,18 @@ Adds a new route to the system with the specified handler.
 * `uri` {string} the uri of the route to remove
 * Return {boolean} `true` when a route is matched and deleted, otherwise `false`
 
-### Router.get(method, uri, params)
-* `method` {string} the method of the route
+### Router.get(httpMethod, uri, params)
+* `httpMethod` {string} the method of the route
 * `uri` {string} the uri of the route to get
 * `params` {object} blank object to be populated by found path keys
 * Return {object} when a route is found, otherwise {boolean} `false`
+
+### Router.callPreparer(req, res)
+* `req` {Request} HTTP Request object
+* `res` {Response} HTTP Response obje
+* Return {Promise} resolved when the preparation is complete
+
+*Internal Use*
 
 ### Router.callMiddleware(req, res, middlewareKeys)
 * `req` {Request} HTTP Request object
@@ -69,7 +116,7 @@ Adds a new route to the system with the specified handler.
 * Return {Promise} resolved when all middleware, route, and optional final
 handler have been executed.
 
-This method is typically invoked by the `HyperTextServer.onRequest()` method.
+Used by the `HyperTextServer.onRequest()` method.
 
 ### Router.all()
 * Return {object} all routes

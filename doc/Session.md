@@ -216,3 +216,56 @@ will be resolved with an {object} containing the session data.
 
 This method uses the duration and timestamps on the session data to prune the
 records.
+
+## Class: SessionStoreModel
+
+### static SessionStoreModel.fieldList()
+* Return {Object} field definitions for the model
+
+### static SessionStoreModel.createTable()
+* Return {Schema} used to execute a create table query.
+
+### static SessionStoreModel.insert(fields)
+* `fields` {Array} of field names to insert
+* Return {Query} insert query ready for values
+
+### static SessionStoreModel.update(fields)
+* `fields` {Array} of field names to insert
+* Return {Query} update query ready for values
+
+### static SessionStoreModel.byId(id)
+* Return {Query} to find session by id
+
+### static SessionStoreModel.bySid(sid)
+* Return {Query} to find session by sid (session id)
+
+### static SessionStoreModel.pruneSession(boundary)
+* `boundary` {Date} entries updated prior to this are removed.
+* Return {Query} used to delete old session
+
+## Class: SessionStoreSQL
+
+### SessionStoreSQL.constructor(options)
+* `options` {object} Settings for this store instance
+* Return {SessionStoreMemory} new instance
+
+Available Settings:
+* Includes the settings from `SessionStore.constructor()`
+* `db` {DatabaseEngine} The underlying database engine to use such as mysql2
+* `model` {Model} The session model used to build queries.
+
+### SessionStoreSQL.save(sid, data)
+* `sid` {string} the session id to save
+* `data` {object} the session data to save
+* Return {Promise} resolved when the session data is saved.
+
+### SessionStoreSQL.restore(sid)
+* `sid` {string} the session id to restore
+* Return {Promise} resolved when the session data has been restored. The promise
+will be resolved with an {object} containing the session data.
+
+### SessionStoreSQL.prune()
+* Return {number} total number of pruned entries.
+
+This method uses the duration and timestamps on the session data to prune the
+records.
