@@ -23,6 +23,7 @@ const Assert = require('../lib/Assert')
 const fs = require('../lib/FileSystem')
 const Cluster = require('../lib/Cluster')
 const cluster = new Cluster({
+  count: 1,
   maxConnections: 2,
   delayRespawn: 1,
   silent: true
