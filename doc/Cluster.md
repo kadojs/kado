@@ -124,6 +124,27 @@ support. When `process.argv` has more arguments than `maxArguments` {boolean}
 `false` is returned which should trigger single worker mode in standard setups
 and cause the command to be executed within the original process. This results
 in a lean single process CLI applet by using a single check on the argv length.
+* `maxWorkers` {number} the maximum number of workers before enabling cluster
+operations. This is used to provide a single process system for smaller
+deployments. Default setting is `0` meaning `maxWorkers` will start a cluster
+any time there are one or more workers.
+
+Example Usage for Development:
+```js
+const cfg = { worker: { count: require('os').cpus().length + 1 }}
+const Cluster = require('kado/lib/Cluster')
+if (process.env.NODE_ENV !== 'production') cfg.worker.count = 0
+const cluster = Cluster.getInstance({ count: cfg.worker.count })
+if (cluster.isMaster()) {
+ // watch files, set process title, start other children
+} else {
+  // worker operations, listening routing, cli processing etc
+}
+```
+
+The above code provides a single process system in development and a fully
+concurrent ready for load system in production. The scaling in this example is
+fully automatic.
 
 ### Cluster.isWorker()
 * Return {boolean} `true` when this process is the worker
