@@ -21,5 +21,42 @@ class MyModel extends Model {
 }
 ```
 
-### Class: Model
+## Class: Model
 This is the `Model` class which extends `Mapper`.
+
+### static Model.byIdQuery(table, id, fields, idField)
+* `table`
+* `id`
+* `fields`
+* `idField`
+
+### static Model.deleteQuery(table)
+* `table`
+
+### static Model.filterFields(fields, options)
+* `fields`
+* `options`
+
+### static Model.insertQuery(table, fields)
+* `table`
+* `fields`
+
+### static Model.listQuery(table)
+* `table`
+
+### static async Model.save(db, Model, id, fields, data)
+* `db`
+* `Model`
+* `id`
+* `fields`
+* `data`
+* `idField`
+
+### static Model.searchQuery(table, phrase, fields)
+* `table`
+* `phrase`
+* `fields`
+
+### static Model.updateQuery(table, fields)
+* `table`
+* `fields`
