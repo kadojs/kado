@@ -92,11 +92,17 @@ process.
 
 Available Options:
 * `count` {number} the number of workers to start
+NOTE: By default the system will start 1 worker during development and will
+automatically grow to all available CPUs + 1 in production. This is controlled
+with the environment variable `NODE_ENV=production`. To change to manual
+behavior simply pass any number to the `count` option.
 * `delayHeartbeat` {number} how many ms before each heartbeat check,
  default: 5000
 * `delayRespawn` {number} how many ms before respawning a failed process,
  default: 1000
-* `silent` {boolean} Whether or not to send output to parent's stdio.
+* `disableMaster` {boolean} disable the master process and force single user
+mode.
+* `silent` {boolean} Control output to parent's stdio.
 Default: false
 * `maxConnections` {number} When workers serve more than this many connections
 they automatically respawn. 0 is the default which is OFF.
@@ -124,6 +130,24 @@ support. When `process.argv` has more arguments than `maxArguments` {boolean}
 `false` is returned which should trigger single worker mode in standard setups
 and cause the command to be executed within the original process. This results
 in a lean single process CLI applet by using a single check on the argv length.
+
+NOTE: This will always return false when `disableMaster` is set to true which
+enables single process mode.
+
+Example Usage for Development:
+```js
+const Cluster = require('kado/lib/Cluster')
+const cluster = Cluster.getInstance()
+if (cluster.isMaster()) {
+ // watch files, set process title, start other children
+} else {
+  // worker operations, listening routing, cli processing etc
+}
+```
+
+The above code provides a single process system in development and a fully
+concurrent ready for load system in production. The scaling in this example is
+fully automatic.
 
 ### Cluster.isWorker()
 * Return {boolean} `true` when this process is the worker
