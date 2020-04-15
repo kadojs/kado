@@ -2,7 +2,6 @@
 [![pipeline status](https://git.nullivex.com/kado/kado/badges/master/pipeline.svg)](https://git.nullivex.com/kado/kado/commits/4.x)
 [![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
 [![npm version](https://badge.fury.io/js/kado.svg)](https://badge.fury.io/js/kado)
-[![Join the chat at https://gitter.im/KadoOrg/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/KadoOrg/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ```
 npm install kado
 ```
@@ -90,6 +89,7 @@ loading, parsing, and displaying languages.
 * [Message](https://kado.org/doc/message/) - Create, track and handle messages from
 various inputs and outputs.
 * [Mime](https://kado.org/doc/mime/) - Class for determining file types.
+* [Model](https://kado.org/doc/model/) - Super class for data models.
 * [Module](https://kado.org/doc/module/) - Super class for creating Kado modules.
 * [Mustache](https://kado.org/doc/mustache/) - Mustache templating system.
 * [Navigation](https://kado.org/doc/navigation/) - Create and manage application menus.
@@ -100,6 +100,7 @@ allow fine grained user control.
 * [Profiler](https://kado.org/doc/profiler/) - Track application resource usage and
 timing.
 * [Query](https://kado.org/doc/query/) - Query builder for Database languages, includes SQL builder.
+* [QueryCache](https://kado.org/doc/query-cache/) - Query cache system for databases.
 * [Router](https://kado.org/doc/router/) - Store and process application route points.
 * [Schema](https://kado.org/doc/schema/) - Schema builder for Database languages, includes SQL builder.
 * [Search](https://kado.org/doc/search/) - Connect system for made for search.
