@@ -136,3 +136,20 @@ by default a comma `,`
 
 ### QuerySQL.toString()
 * Return {string} the complete query ready for execution.
+
+### QuerySQL.execute(db, options)
+* `db` {MySQL2} Current connection to MySQL
+* `options` {object} options passed to the `db.execute()` call.
+* Return {Promise} resolved when the database query is complete
+
+This is a convenience method to make executing queries involve less typing.
+
+Original Method
+```js
+db.execute(query.toString(), query.toArray(), options)
+```
+
+Better Method
+```js
+query.execute(db)
+```
