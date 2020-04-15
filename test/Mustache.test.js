@@ -35,7 +35,7 @@ format.suite('.render()', (it) => {
     } catch (e) {
       Assert.isType('TypeError', e)
       const errorMessage = 'Invalid template! Template should be a "string" ' +
-        'but "object" was given as the first argument for' +
+        'but "array" was given as the first argument for' +
         ' mustache#render(template, view, partials)'
       Assert.eq(errorMessage, e.message)
     }
@@ -84,6 +84,30 @@ format.suite('.render()', (it) => {
       partial: '<% name %>'
     }, ['<%', '%>'])
     Assert.eq(output, 'Santa Claus')
+  })
+
+  it('supports sections with arrays of objects with number values', () => {
+    const template = '{{#someList}}foo{{thing}}{{/someList}}'
+    const view = { someList: [{ thing: 1 }, { thing: 2 }, { thing: 3 }] }
+    const rv = Mustache.render(template, view)
+    Assert.eq(rv, 'foo1foo2foo3')
+  })
+
+  it('supports sections with arrays of objects with string values', () => {
+    const template = '{{#someList}}foo{{thing}}{{/someList}}'
+    const view = { someList: [{ thing: 'A' }, { thing: 'B' }, { thing: 'C' }] }
+    const rv = Mustache.render(template, view)
+    Assert.eq(rv, 'fooAfooBfooC')
+  })
+
+  it('supports sections with arrays of objects with function return values', () => {
+    const template = '{{#someList}}foo{{thing}}{{/someList}}'
+    const view = {
+      someList: [{ majig: 'x' }, { majig: 'y' }, { majig: 'z' }],
+      thing: function () { return this.majig + '!' }
+    }
+    const rv = Mustache.render(template, view)
+    Assert.eq(rv, 'foox!fooy!fooz!')
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
