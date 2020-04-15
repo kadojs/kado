@@ -15,6 +15,21 @@ locations within the system.
 * `res` {Response} the HTTP response
 * Return {Function} used to render JSON responses.
 
+### static Router.sendFile (req, res)
+* `req` {Request} the HTTP request
+* `res` {Response} the HTTP response
+* Return {Function} used to send files to the response.
+
+Usage:
+```js
+const filepath = './foo.txt'
+res.sendFile(filepath)
+```
+
+This method will set the Content-Length, Content-Type and ETag for the file
+as well as handle responding properly to HEAD requests. Useful for sending
+files back to the consumer.
+
 ### static Router.render(app, req, res)
 * `app` {Application} an application instance
 * `req` {Request} the HTTP request
