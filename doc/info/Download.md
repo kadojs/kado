@@ -21,10 +21,10 @@ root to install Kado into your project.
 Please use the link below to download an archive file containing the latest
 version of Kado.
 
-* [kado-4.1.0.zip](https://git.nullivex.com/kado/kado/-/archive/v4.1.0/kado-v4.1.0.zip) - All Platforms
-* [kado-4.1.0.tar.gz](https://git.nullivex.com/kado/kado/-/archive/v4.1.0/kado-v4.1.0.tar.gz) - All Platforms
-* [kado-4.1.0.tar.bz2](https://git.nullivex.com/kado/kado/-/archive/v4.1.0/kado-v4.1.0.tar.bz2) - All Platforms
-* [kado-4.1.0.tar](https://git.nullivex.com/kado/kado/-/archive/v4.1.0/kado-v4.1.0.tar) - All Platforms
+* [kado-4.2.0.zip](https://git.nullivex.com/kado/kado/-/archive/v4.2.0/kado-v4.2.0.zip) - All Platforms
+* [kado-4.2.0.tar.gz](https://git.nullivex.com/kado/kado/-/archive/v4.2.0/kado-v4.2.0.tar.gz) - All Platforms
+* [kado-4.2.0.tar.bz2](https://git.nullivex.com/kado/kado/-/archive/v4.2.0/kado-v4.2.0.tar.bz2) - All Platforms
+* [kado-4.2.0.tar](https://git.nullivex.com/kado/kado/-/archive/v4.2.0/kado-v4.2.0.tar) - All Platforms
 
 For earlier versions see our [Release Page](https://git.nullivex.com/kado/kado/-/releases).
 
@@ -38,10 +38,10 @@ $ npm install git+https://git.nullivex.com/kado/kado#3.x
 
 ### Direct Download
 Use the archives below for direct installation.
-* [kado-3.10.6.zip](https://git.nullivex.com/kado/kado/-/archive/v3.10.6/kado-v3.10.6.zip) - All Platforms
-* [kado-3.10.6.tar.gz](https://git.nullivex.com/kado/kado/-/archive/v3.10.6/kado-v3.10.6.tar.gz) - All Platforms
-* [kado-3.10.6.tar.bz2](https://git.nullivex.com/kado/kado/-/archive/v3.10.6/kado-v3.10.6.tar.bz2) - All Platforms
-* [kado-3.10.6.tar](https://git.nullivex.com/kado/kado/-/archive/v3.10.6/kado-v3.10.6.tar) - All Platforms
+* [kado-3.10.7.zip](https://git.nullivex.com/kado/kado/-/archive/v3.10.7/kado-v3.10.7.zip) - All Platforms
+* [kado-3.10.7.tar.gz](https://git.nullivex.com/kado/kado/-/archive/v3.10.7/kado-v3.10.7.tar.gz) - All Platforms
+* [kado-3.10.7.tar.bz2](https://git.nullivex.com/kado/kado/-/archive/v3.10.7/kado-v3.10.7.tar.bz2) - All Platforms
+* [kado-3.10.7.tar](https://git.nullivex.com/kado/kado/-/archive/v3.10.7/kado-v3.10.7.tar) - All Platforms
 
 For earlier versions see our [Release Page](https://git.nullivex.com/kado/kado/-/releases).
 
@@ -60,7 +60,7 @@ complete file list.
 
 Example loading `kado/lib/Parse`
 ```
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kado@4.1.0/lib/Parse.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kado@4.2.0/lib/Parse.js"></script>
 ```
 
 NOTE: Kado modules are built using CommonJS and as such CommonJS must be used
