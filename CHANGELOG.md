@@ -1,5 +1,35 @@
 # Changelog
 
+### 4.2.0
+*Released 4/15/20*
+* Add new Model.js for creating and working with Database records.
+* Add new Mustache.js for string templating.
+* Add new MySQL database engine.
+* Add new Query.js for building queries for databases.
+* Add new QueryCache.js for caching queries from a database in a database.
+* Add new Schema.js for building tables for databases.
+* Validate.isType upgraded to be more consistent and predictable.
+* Parser adds `requestBody` parser to assist with input decoding.
+* Router adds `res.json()` for JSON output.
+* Router adds `res.redirect()` for location changes.
+* Router adds `res.sendFile()` for sending files.
+* Session adds `SessionStoreSQL` for SQL backed sessions from databases.
+* Cluster adds `dev` mode and `disableMaster` to help with running in single
+process mode.
+* Cluster now automatically establishes worker counts unless told otherwise.
+* Commands can now return undefined as a valid exit value
+* Fix to only setup cluster master when available.
+* Fix to app startup when commands are present.
+* HyperTextServer now accepts an array of hosts to listen on.
+* Cluster no longer recycles workers from reaching a maxConnection ceiling by
+default.
+* Fix to properly close database connections on stop.
+* Add `HyperText.Proxy` to HyperText.js which provides an HTTP reverse proxy.
+* Make the testing of extended types more robust, to ensure extension of a
+proper parent.
+* Fix the promise chain when starting and stopping connect systems from
+Application.
+
 ### 4.1.0
 *Released 3/9/2020*
 * Add new Mime.js library for looking up file types from extensions.
