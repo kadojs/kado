@@ -75,9 +75,6 @@ emails using the Kado provided libraries and connecting to an email server.
 to know about the Kado view system and how to render views.
 * [Writing Tests](../guide/WritingTests.md) - Write tests against your
 application easily using the provided Kado library.
-* [Advanced Techniques](../guide/AdvancedTechniques.md) - Prepare your
-application for production with the introduction of clustered processes and
-command line applications.
 
 ## Kado Library List
 
