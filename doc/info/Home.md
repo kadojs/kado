@@ -81,7 +81,7 @@ command line applications.
 
 ## Kado Library List
 
-This is an exhaustive lise of all the JavaScript libraries provided with Kado.
+This is an exhaustive list of all the JavaScript libraries provided with Kado.
 Each library has a link to its documentation as well as a short description of
 what is provided by the library.
 
