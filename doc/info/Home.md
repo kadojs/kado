@@ -85,74 +85,74 @@ This is an exhaustive list of all the JavaScript libraries provided with Kado.
 Each library has a link to its documentation as well as a short description of
 what is provided by the library.
 
-* [Application](../../doc/Application.md) - Create a new application containing
+* [Application](../Application.md) - Create a new application containing
 most Kado features.
-* [Assert](../../doc/Assert.md) - Make assertions on input or tests.
-* [Asset](../../doc/Asset.md) - Store, filter, and query static application
+* [Assert](../Assert.md) - Make assertions on input or tests.
+* [Asset](../Asset.md) - Store, filter, and query static application
 files.
-* [ChildProcess](../../doc/ChildProcess.md) - Child process library adding
+* [ChildProcess](../ChildProcess.md) - Child process library adding
 convenience and functionality to the core child_process functions.
-* [Cluster](../../doc/Cluster.md) - Cluster library for constructing and
+* [Cluster](../Cluster.md) - Cluster library for constructing and
 operating process clusters.
-* [Command](../../doc/Command.md) - Build CLI applications with ease.
-* [CommandServer](../../doc/CommandServer.md) - Execute CLI applications like a
+* [Command](../Command.md) - Build CLI applications with ease.
+* [CommandServer](../CommandServer.md) - Execute CLI applications like a
 web server.
-* [Connect](../../doc/Connect.md) - Framework for housing external resource
+* [Connect](../Connect.md) - Framework for housing external resource
 connections.
-* [ConnectEngine](../../doc/ConnectEngine.md) - Interface for creating an engine
+* [ConnectEngine](../ConnectEngine.md) - Interface for creating an engine
 to be used with a Connect system.
-* [Cron](../../doc/Cron.md) - Execute functions on a schedule similar to UNIX
+* [Cron](../Cron.md) - Execute functions on a schedule similar to UNIX
 cron jobs.
-* [Database](../../doc/Database.md) - Connect system made for Databases.
-* [Email](../../doc/Email.md) - Connect system made for Email.
-* [ETag](../../doc/ETag.md) - Class for determining ETag header.
-* [Event](../../doc/Event.md) - Create, track and handle application events with
+* [Database](../Database.md) - Connect system made for Databases.
+* [Email](../Email.md) - Connect system made for Email.
+* [ETag](../ETag.md) - Class for determining ETag header.
+* [Event](../Event.md) - Create, track and handle application events with
 log levels.
-* [FileSystem](../../doc/FileSystem.md) - Consistent API for use with File
+* [FileSystem](../FileSystem.md) - Consistent API for use with File
 System methods.
-* [Format](../../doc/Format.md) - Commonly used String, Number, and Date format
+* [Format](../Format.md) - Commonly used String, Number, and Date format
 methods.
-* [GetOpt](../../doc/GetOpt.md) - Parse command line string input into an
+* [GetOpt](../GetOpt.md) - Parse command line string input into an
 object.
-* [History](../../doc/History.md) - Track user navigation history throughout
+* [History](../History.md) - Track user navigation history throughout
 a session.
-* [HyperText](../../doc/HyperText.md) - Connect system made for HTTP servers.
-* [Language](../../doc/Language.md) - Internationalization helpers including
+* [HyperText](../HyperText.md) - Connect system made for HTTP servers.
+* [Language](../Language.md) - Internationalization helpers including
 loading, parsing, and displaying languages.
-* [Library](../../doc/Library.md) - Dynamic library loader.
-* [Lifecycle](../../doc/Lifecycle.md) - Start and stop systems with events.
-* [Log](../../doc/Log.md) - Connect system made for Logs.
-* [Mapper](../../doc/Mapper.md) - ECMA Map functionality on Objects.
-* [Message](../../doc/Message.md) - Create, track and handle messages from
+* [Library](../Library.md) - Dynamic library loader.
+* [Lifecycle](../Lifecycle.md) - Start and stop systems with events.
+* [Log](../Log.md) - Connect system made for Logs.
+* [Mapper](../Mapper.md) - ECMA Map functionality on Objects.
+* [Message](../Message.md) - Create, track and handle messages from
 various inputs and outputs.
-* [Mime](../../doc/Mime.md) - Class for determining file types.
-* [Model](../../doc/Model.md) - Super class for building new data models used
+* [Mime](../Mime.md) - Class for determining file types.
+* [Model](../Model.md) - Super class for building new data models used
 for interacting with data sets produced by data queries.
-* [Module](../../doc/Module.md) - Super class for creating Kado modules.
-* [Mustache](../../doc/Mustache.md) - Provides a logic-less templating system
+* [Module](../Module.md) - Super class for creating Kado modules.
+* [Mustache](../Mustache.md) - Provides a logic-less templating system
 for use in providing any kind of text rendering.
-* [Navigation](../../doc/Navigation.md) - Create and manage application menus.
-* [Parser](../../doc/Parser.md) - Parse input strings to variables such as
+* [Navigation](../Navigation.md) - Create and manage application menus.
+* [Parser](../Parser.md) - Parse input strings to variables such as
 objects.
-* [PathExp](../../doc/PathExp.md) - Use path notation to validate routes on
+* [PathExp](../PathExp.md) - Use path notation to validate routes on
 URIs.
-* [Permission](../../doc/Permission.md) - Create and test permission sets to
+* [Permission](../Permission.md) - Create and test permission sets to
 allow fine grained user control.
-* [Profiler](../../doc/Profiler.md) - Track application resource usage and
+* [Profiler](../Profiler.md) - Track application resource usage and
 timing.
-* [Query](../../doc/Query.md) - Super class for constructing query builders that
+* [Query](../Query.md) - Super class for constructing query builders that
 are customized for a specific query language.
-* [QueryCache](../../doc/QueryCache.md) - Query cache system for databases.
-* [Router](../../doc/Router.md) - Store and process application route points.
-* [Schema](../../doc/Schema.md) - Super class for constructing schema builders
+* [QueryCache](../QueryCache.md) - Query cache system for databases.
+* [Router](../Router.md) - Store and process application route points.
+* [Schema](../Schema.md) - Super class for constructing schema builders
 that are customized for a specific schema language.
-* [Search](../../doc/Search.md) - Connect system for made for search.
-* [Session](../../doc/Session.md) - Session system for storing data against
+* [Search](../Search.md) - Connect system for made for search.
+* [Session](../Session.md) - Session system for storing data against
 users.
-* [TestRunner](../../doc/TestRunner.md) - Define and run Test Suites and Tests.
-* [Util](../../doc/Util.md) - Misfit useful functions.
-* [Validate](../../doc/Validate.md) - Validate input.
-* [View](../../doc/View.md) - Connect system made for rendering.
+* [TestRunner](../TestRunner.md) - Define and run Test Suites and Tests.
+* [Util](../Util.md) - Misfit useful functions.
+* [Validate](../Validate.md) - Validate input.
+* [View](../View.md) - Connect system made for rendering.
 
 ## Questions or Problems?
 
