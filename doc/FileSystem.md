@@ -19,7 +19,7 @@ the sync APIs and utility methods into the primary. The end result is a clean
 ES6+ fs module with all the core functions. This provides a more intuitive API
 and cleaner usage.
 
-## Class: FileSystem 
+## Class: FileSystem
 
 This class is based on Node.JS File System module, see
 [this documentation](https://github.com/nodejs/node/blob/master/doc/api/fs.md)

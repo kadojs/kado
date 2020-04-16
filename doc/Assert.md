@@ -44,7 +44,7 @@ Extends `Validate` class.
 Evaluates data, types, or other conditions to either
 return boolean `true` or throw.
 
-### `static Assert.getInstance(data)` 
+### `static Assert.getInstance(data)`
 ### `Assert.constructor(data)`
 * `data` {mixed} value to be stored
 * Returns: {Assert} class object
@@ -59,14 +59,14 @@ These are used upon an instance, with the `data` provided in the constructor
 * Returns: {boolean} `true` when above the `floor`
 
 ### `Assert.below(ceiling)`
-* `ceiling` {number} value for upper limit 
+* `ceiling` {number} value for upper limit
 * Returns: {boolean} `true` when below the `ceiling`
 
 ### `Assert.equal(against)`
 * `against` {number} value to compare
 * Returns: {boolean} `true` when equal to `against`
 
-### `Assert.is(type)` 
+### `Assert.is(type)`
 * `type` {string} any valid type or class name
 * Returns: {boolean} `true` when type or class matches `type`
 
@@ -187,7 +187,7 @@ Valid when `test` is less than or equal to `base`
 * Throws: {AssertionError} otherwise, with `message` set as provided
 
 ### `static Assert.catch(v1, v2, msg, method)`
-* `v1` {mixed} first argument to `method` 
+* `v1` {mixed} first argument to `method`
 * `v2` {mixed} second argument to `method`
 * `msg` {mixed} compare this to `Error.message` when caught.
 * `method` {string} class method to execute in try/catch

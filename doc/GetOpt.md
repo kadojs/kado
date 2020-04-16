@@ -52,7 +52,7 @@ third argument to the constructor `optind` is the number of arguments from
 in `argv` are ignored, since they generally denote the path to the node
 executable and the script being run.
 
-##### Format of `optstring` 
+##### Format of `optstring`
 The option string consists of an optional leading `:` (see below) followed by a
 sequence of option-specifiers.  Each option-specifier consists of a single
 character denoting the short option name, optionally followed by a colon if the

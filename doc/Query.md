@@ -17,7 +17,7 @@ are customized for a specific query language.
 * Return {string} containing a suitable base query. Such as `SELECT * FROM x`
 
 ### static Query.addComparison(context, construct, item, operator, value, joiner)
-* `context` {string|null} the existing comparison operators for this condition 
+* `context` {string|null} the existing comparison operators for this condition
 * `construct` {string} the wording used to start the condition such as `WHERE`
 * `item` {string} the name of the field to compare against
 * `operator` {string} the operator to be used to compare the values
