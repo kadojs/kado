@@ -7,7 +7,7 @@ add rending partial views and static files to your project.
 
 Now, it is assumed you have created a project, initiated your `package.json`
 file and installed `kado` into your project. Also, it is assumed you have an
-`app.js` created by completed the [Hello World](./HelloWorld.md) guide. Below,
+`app.js` created by completing the [Hello World](./HelloWorld.md) guide. Below,
 is an updated code example containing our static server and view rendering.
 
 ```js
@@ -67,7 +67,7 @@ a { color: red; }
 h1 { color: purple; }
 ```
 
-This wont do much but this should make a noticeable difference to the page.
+This should make a noticeable difference to the page.
 
 Next, lets break our header and footer into partials that we can call them more
 than once. So, within the `views` folder create a file named `header.html` and
@@ -101,16 +101,16 @@ of the `index.html` file should now look like this:
 {{>footer}}
 ```
 
-Once that code is placed to the file and the file is saved, change to the
+Place the code, and the file saved, change to the
 terminal of your project root and run the following command.
 
 ```
 $ node app
 ```
 
-This command should execute without error. Now, your web server is complete and serving "Hello World" HTML from
-[localhost:3000](http://localhost:3000) now with your partials being rendered
-as well as serving the new CSS.
+This command should execute without error. Now, your web server is complete
+and serving "Hello World" HTML from [localhost:3000](http://localhost:3000) now
+with your partials rendered, and serving the new CSS.
 
 Congratulations! Another stage complete on learning Kado. Now advance to the
 [Build an Admin Panel](./BuildAdminPanel.md) guide where we explain how to turn
