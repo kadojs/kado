@@ -7,4 +7,4 @@ the name of the library it is testing such as `Asset.js` and
 
 Tests are written using the `Validate.Assert` library which can be
 included using `const { expect } = require('../lib/Validate')` from
-within the tests. See [Validate.js](../api/Validate.md) for more.
+within the tests. See [Validate.js](../Validate.md) for more.

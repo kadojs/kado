@@ -1,6 +1,6 @@
 # Hello World
 
-After reading the [Getting Starting](./GettingStarted.md) guide you should have a
+After reading the [Getting Starting](GettingStarted.md) guide you should have a
 basic understanding of how to get Kado off the ground for serving web requests.
 This guide will expand on that understanding and provide new example code to
 add a view rending engine as well as a template to your project.
@@ -34,7 +34,7 @@ app.start().then(() => { return app.listen() })
 ```
 
 There are a few portions of this code that require explanation lets start with
-what was added from the [Getting Started](./GettingStarted.md) guide.
+what was added from the [Getting Started](GettingStarted.md) guide.
 
 First, we added the `FileSystem` library to handle building paths and working
 with files and folders. This is done with the following code:
@@ -106,5 +106,5 @@ web server is complete and serving "Hello World" HTML from
 [localhost:3000](http://localhost:3000)
 
 Congratulations! You are one stage further to creating amazing web applications
-using Kado. To learn more see the [Make a Simple Website](./MakeSimpleWebsite.md)
+using Kado. To learn more see the [Make a Simple Website](MakeSimpleWebsite.md)
 In this guide we explore using partials and routes to create a basic website.

@@ -55,4 +55,4 @@ love for making easy to use libraries for your enjoyment.
 
 We hope this gives you some background so that you can be rest assured your
 efforts in Kado will not go in vein. Ready to get started? Head over to our
-[Quick Start](./QuickStart.md) guide and get going in a few minutes!
+[Quick Start](../guide/QuickStart.md) guide and get going in a few minutes!

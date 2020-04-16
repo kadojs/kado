@@ -10,7 +10,7 @@ to contain information about your project. If not, you need to create one. The
 easiest way is to run `npm init` and follow the on screen instructions.
 
 Second, it is time to install Kado. Full details and instructions can be read in
-[Download](./Download.md) guide. For our purposes, we are going to install from
+[Download](../info/Download.md) guide. For our purposes, we are going to install from
 NPM by running the following command from your projects root folder.
 
 ```
@@ -61,5 +61,5 @@ Once the code is running, open your favorite web browser and navigate to
 
 Upon loading the page, you should see the word `Hello`. This will signify your
 new application is working! Great work! Now if you are ready to get more
-familiar with Kado, see the [Hello World](./HelloWorld.md) guide
+familiar with Kado, see the [Hello World](HelloWorld.md) guide
 to go to the next stage.

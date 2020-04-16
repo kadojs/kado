@@ -9,7 +9,7 @@ are customized for a specific schema language.
 
 ## Class: Schema extends Query
 
-For usage of the `Query` library, see the [Query](./Query.md) documentation.
+For usage of the `Query` library, see the [Query](Query.md) documentation.
 
 ## Class: SchemaSQL
 

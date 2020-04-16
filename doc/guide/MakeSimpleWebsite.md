@@ -1,13 +1,13 @@
 # Make A Simple Website
 
-After reading the [Hello World](./HelloWorld.md) guide you should have an
+After reading the [Hello World](HelloWorld.md) guide you should have an
 understanding of how to have Kado serve templates to web requests.
 This guide will expand on that knowledge and provide example code to
 add rending partial views and static files to your project.
 
 Now, it is assumed you have created a project, initiated your `package.json`
 file and installed `kado` into your project. Also, it is assumed you have an
-`app.js` created by completing the [Hello World](./HelloWorld.md) guide. Below,
+`app.js` created by completing the [Hello World](HelloWorld.md) guide. Below,
 is an updated code example containing our static server and view rendering.
 
 ```js
@@ -37,7 +37,7 @@ app.start().then(() => { return app.listen() })
 ```
 
 There are a few portions of this code that require explanation let us start with
-what was added from the [Hello World](./HelloWorld.md) guide.
+what was added from the [Hello World](HelloWorld.md) guide.
 
 We added the `StaticServer` instance to handle requests for static files.
 This is done with the following code:
@@ -113,5 +113,5 @@ and serving "Hello World" HTML from [localhost:3000](http://localhost:3000) now
 with your partials rendered, and serving the new CSS.
 
 Congratulations! Another stage complete on learning Kado. Now advance to the
-[Build an Admin Panel](./BuildAdminPanel.md) guide where we explain how to turn
+[Build an Admin Panel](BuildAdminPanel.md) guide where we explain how to turn
 your basic website into a fully working administration panel.

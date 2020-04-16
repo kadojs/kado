@@ -12,7 +12,7 @@ There is a `HyperTextEngine` library that provides the needed implementation to
 setup traditional web servers into this abstraction layer.
 
 ## Class: HyperText
-`HyperText` extends `Connect` see [Connect.md](./Connect.md) for more engine
+`HyperText` extends `Connect` see [Connect](Connect.md) for more engine
 management and more.
 
 ### static HyperText.getInstance()
@@ -28,7 +28,7 @@ management and more.
 
 ## Class: HyperTextEngine
 `HyperTextEngine` extends `ConnectEngine` see
-[ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
+[ConnectEngine](ConnectEngine) for more engine management and more.
 
 ### HyperTextEngine.start()
 Must be extended and used to start the underlying server.
