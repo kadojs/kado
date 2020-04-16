@@ -9,7 +9,7 @@ built-in and easy to activate.
 Let's go over some examples for activating the view system first.
 
 We will first assume you have an `app.js` and have at least looked out our
-[Hello World]('./HelloWorld.md') guide, if not take a peek. Next, we take
+[Hello World](HelloWorld.md) guide, if not take a peek. Next, we take
 a look a few lines of code that will activate our view engine.
 
 ```js

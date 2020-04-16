@@ -8,7 +8,7 @@ This library provides logging abstraction to use different log transports
 for system level log messages.
 
 ## Class: Log
-`Log` extends `Connect` see [Connect.md](./Connect.md) for more engine
+`Log` extends `Connect` see [Connect](Connect.md) for more engine
 management and more.
 
 ### static Log.appendFile(path, data)
@@ -29,4 +29,4 @@ management and more.
 
 ## Class: LogEngine
 `LogEngine` extends `ConnectEngine` see
-[ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
+[ConnectEngine](ConnectEngine.md) for more engine management and more.

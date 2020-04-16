@@ -8,7 +8,7 @@ This library provides a register for Email handlers to register and receive
 email messages through the system.
 
 ## Class: Email
-`Email` extends `Connect` see [Connect.md](./Connect.md) for more engine
+`Email` extends `Connect` see [Connect](Connect.md) for more engine
 management and more.
 
 ### static Email.getInstance()
@@ -26,7 +26,7 @@ Note: when no `name` is provided all handlers are executed.
 
 ## Class: EmailEngine
 `EmailEngine` extends `ConnectEngine` see
-[ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
+[ConnectEngine](ConnectEngine.md) for more engine management and more.
 
 ### EmailEngine.send()
 Must be extended and used to send to underlying email system.

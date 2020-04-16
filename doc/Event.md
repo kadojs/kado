@@ -13,7 +13,7 @@ Note: This is not to be confused with the core Node.JS `EventEmitter` which
 serves a much different programmable purpose.
 
 ## Class: Event
-`Event` extends `Connect` see [Connect.md](./Connect.md) for more engine
+`Event` extends `Connect` see [Connect](Connect.md) for more engine
 management and more.
 
 ### static Event.getInstance()
@@ -88,7 +88,7 @@ handler can read.
 
 ## Class: EventEngine
 `EventEngine` extends `ConnectEngine` see
-[ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
+[ConnectEngine](ConnectEngine.md) for more engine management and more.
 
 ### EventEngine.event()
 Must be extended and used to send to underlying event system.

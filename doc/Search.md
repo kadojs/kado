@@ -8,7 +8,7 @@ This library provides engine driven search that can be implemented by modules
 directly or by other providers.
 
 ## Class: Search
-`Search` extends `Connect` see [Connect.md](./Connect.md) for more engine
+`Search` extends `Connect` see [Connect](Connect.md) for more engine
 management and more.
 
 ### static Search.getInstance()
@@ -27,7 +27,7 @@ Note: when no `name` is provided all handlers are executed.
 
 ## Class: SearchEngine
 `SearchEngine` extends `ConnectEngine` see
-[ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
+[ConnectEngine](ConnectEngine.md) for more engine management and more.
 
 ### SearchEngine.search()
 Must be extended and used to send to underlying search system.

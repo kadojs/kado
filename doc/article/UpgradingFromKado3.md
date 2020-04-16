@@ -18,7 +18,7 @@ releases on NPM. Now on with the upgrade notes.
 
 Kado 4 is a major improvement over Kado 3 and you will not find many
 similarities between the two. Kado 4 is an entirely new approach to solving
-the problem originally presented in our [Thesis](./Thesis.md). We have looked
+the problem originally presented in our [Thesis](Thesis.md). We have looked
 backwards into how to write high quality libraries that are used for C++ and
 other languages. Afterwards, we came to a new conclusion on how the Kado
 functionality should be presented to the end user.

@@ -8,7 +8,7 @@ This library provides a register for Message handlers that may register to both
 send and receive messages through the system.
 
 ## Class: Message
-`Message` extends `Connect` see [Connect.md](./Connect.md) for more engine
+`Message` extends `Connect` see [Connect](Connect.md) for more engine
 management and more.
 
 ### static Message.getInstance()
@@ -26,7 +26,7 @@ Note: when no `name` is provided all handlers are executed.
 
 ## Class: MessageEngine
 `MessageEngine` extends `ConnectEngine` see
-[ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
+[ConnectEngine](ConnectEngine.md) for more engine management and more.
 
 ### MessageEngine.send()
 Must be extended and used to send to underlying message system.

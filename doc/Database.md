@@ -8,7 +8,7 @@ This library manages Database connections that are stored through
 instances registered to this library.
 
 ## Class: Database
-`Database` extends `Connect` see [Connect.md](./Connect.md) for more engine
+`Database` extends `Connect` see [Connect](Connect.md) for more engine
 management and more.
 
 ### static Database.queryOptions(config, profiler)
@@ -42,7 +42,7 @@ Note: when no `name` is provided all connections will be closed.
 
 ## Class: DatabaseEngine
 `DatabaseEngine` extends `ConnectEngine` see
-[ConnectEngine.md](./ConnectEngine.md) for more engine management and more.
+[ConnectEngine](ConnectEngine) for more engine management and more.
 
 ### DatabaseEngine.connect()
 Must be extended and used to connect to underlying database.
