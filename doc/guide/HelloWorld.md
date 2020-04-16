@@ -41,7 +41,7 @@ with files and folders. This is done with the following code:
 
 ```js
 const fs = require('kado/lib/FileSystem')
-``` 
+```
 
 Second, we added a view engine pointing to a view folder so that we can render
 templates and send that result as HTML to the user. The following code sets

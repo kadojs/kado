@@ -45,7 +45,7 @@ This is done with the following code:
 ```js
 const staticRoot = fs.path.join(__dirname, 'public')
 app.use(Application.HyperText.StaticServer.getMiddleware(staticRoot))
-``` 
+```
 
 The `staticRoot` path determines where the CSS, image files etc are to be served
 from. In our example, this will be your project root and then create the folder

@@ -17,5 +17,3 @@ and pass that Buffer to `Mime` to determine the type.
 * `input` {string|Buffer} the portion provided to determine file type.
 * Return {MimeType|null} a new instance of a MimeType class populated with the matched type,
 otherwise `null` when no type is matched.
-
- 

@@ -5,7 +5,7 @@
 > Stability: 2 - Stable
 
 The `Navigation` library provides a way to build a navigation bars in your
-application. 
+application.
 
 ```js
 const Navigation = require('kado/lib/Navigation')
@@ -16,7 +16,7 @@ const Navigation = require('kado/lib/Navigation')
 ### static Navigation.checkActive()
 * Return {Function} used to check the active navigation item in mustache
 
-### static Navigation.getInstance() 
+### static Navigation.getInstance()
 * Return {Navigation} new instance of navigation class
 
 ### Navigation.constructor()

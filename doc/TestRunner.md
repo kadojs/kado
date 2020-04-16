@@ -40,7 +40,7 @@ runner.suite('MySuite', (it) => {
     it('should pass this test', () => { return true })
     it('should fail this test', () => { return false })
     it('should pass an assert', () => { expect.eq(true) })
-  }) 
+  })
 })
 const someOptions = {hideFailed: true}
 runner.execute(someOptions)

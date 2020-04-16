@@ -22,7 +22,7 @@ Here is an overview of the primary additions:
 * Session adds `SessionStoreSQL` for SQL backed sessions from databases.
 Add `HyperText.Proxy` to HyperText.js which provides an HTTP reverse proxy.
 
-There are more! See our [CHANGELOG](https://kado.org/info/changelog/)
+There are more! See our [CHANGELOG](../../CHANGELOG.md)
 
 As our team continues to build new applications on Kado 4 we are continuously
 evaluating and engineering the development of Kado. This means we use Kado every

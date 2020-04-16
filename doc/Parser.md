@@ -52,7 +52,7 @@ This Method Makes The Input Look Like This.
 ### static Parser.printDate (d, emptyString)
 * `d` {Date} subject date in proper object OR other input will be best-effort
   coerced into Date object
-* `emptyString` {string} (Default: `'Never'`) text to use when `d` unclear 
+* `emptyString` {string} (Default: `'Never'`) text to use when `d` unclear
 * Returns: {string} equivalent of input in sorting friendly format
 
 Reformat date to a string with a nice format; such as:
