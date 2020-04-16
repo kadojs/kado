@@ -22,10 +22,11 @@ and cleaner usage.
 ## Class: FileSystem
 
 This class is based on Node.JS File System module, see
-[this documentation](https://github.com/nodejs/node/blob/master/doc/api/fs.md)
+[this documentation](https://nodejs.org/api/fs.html)
 for instructions using these methods. Otherwise, see the document for the
-Node.JS version you are using such as
-[this one](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html)
+Node.JS version you are using such as:
+[v10.x](https://nodejs.org/dist/latest-v10.x/docs/api/fs.html) or
+[v12.x](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html), etc
 
 NOTE: All methods are static.
 
@@ -45,7 +46,7 @@ documentation are listed below.
 Refer to [fsPromises.access](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fspromises_access_path_mode)
 
 ### FileSystem.accessSync(path, mode)
-Refer to [fs.accessSync](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fsaccesssyncpath-mode)
+Refer to [fs.accessSync](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fs_accesssync_path_mode)
 
 ### FileSystem.appendFile(path, data, options)
 Refer to [fsPromises.appendFile](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fspromises_appendfile_path_data_options)

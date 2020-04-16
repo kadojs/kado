@@ -14,8 +14,8 @@ execution when input sanity is not achieved.
 const Validate = require('kado/lib/Validate')
 ```
 * `Validate.Error` is the extended version of the standard
-  [`AssertionError`](#class-assertionerror) and should be used instead
-  (for readability)
+  [`assert.AssertionError`](https://nodejs.org/api/assert.html#assert_class_assert_assertionerror)
+  and should be used instead (for readability)
 
 ---
 ## Class: AssertionError

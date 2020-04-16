@@ -28,7 +28,7 @@ management and more.
 
 ## Class: HyperTextEngine
 `HyperTextEngine` extends `ConnectEngine` see
-[ConnectEngine](ConnectEngine) for more engine management and more.
+[ConnectEngine](ConnectEngine.md) for more engine management and more.
 
 ### HyperTextEngine.start()
 Must be extended and used to start the underlying server.

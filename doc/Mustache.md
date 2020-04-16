@@ -324,9 +324,10 @@ delimiters from <code>{{</code> and <code>}}</code> to custom strings.</p>
 tag style, the second uses erb style as defined by the Set Delimiter
 tag, and the third returns to the default style after yet another Set
 Delimiter declaration.</p>
-<p>According to <a href="http://google-ctemplate.googlecode.com/svn/trunk/doc/howto.html">ctemplates</a>, this "is useful for languages like TeX, where
-double-braces may occur in the text and are awkward to use for
-markup."</p>
+<p>According to
+<a href="https://docs.huihoo.com/google-ctemplate/howto.html">ctemplates</a>,
+this "is useful for languages like TeX, where double-braces may occur in the
+text and are awkward to use for markup."</p>
 <p>Custom delimiters may not contain whitespace or the equals sign.</p>
 <h2 id="COPYRIGHT">COPYRIGHT</h2>
 <p>Mustache is Copyright</p>
