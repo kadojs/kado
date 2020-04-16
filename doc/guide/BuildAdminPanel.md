@@ -4,11 +4,11 @@
 Now that you have completed the previous 
 [Hello World](https://kado.org/guide/hello-world/), 
 [Make a Simple Website](https://kado.org/guide/make-simple-website/) and 
-[Database Work Flows](https://kado.org/guide/database-work-flow/) guides, It is 
+[Database Work Flows](https://kado.org/guide/database-work-flow/) guides. It is 
 important to note that all the guides combine together into a single project
-we will be moving on to building an admin panel.The first step we will be doing
+we will be moving on to building an admin panel. The first step we will be doing
 is creating a route folder and within that route folder we will create a 
-admin.js file and you will use the following code: `Admin.js`.
+`Admin.js` file and you will use the following code: `Admin.js`.
 ```js
 
 'use strict'
@@ -24,16 +24,17 @@ class Admin {
 ```
 
 The code above uses `fs(filesystem)` require in order to get the 
-`(‘kado/lib/FileSystem’)` then we use the class function to call the admin object.
-Then we use static register to acquire the app. The next line 
-const route = new Admin makes an instance of our route object, then placing 
-`fs.path.join` method to create and join the path in a string. Lastly, we use 
-the `_dirname` variable to tell us the absolute path of the directory containing 
-the executing file, then using app.get() for matching and handling a specific 
-route when requested.
+`(‘kado/lib/FileSystem’)` then we use the class function to call the admin 
+object. Then we make a static method named register to be called when routes 
+should be placed into the application. The next line 
+`const route = new Admin(fs.path.join(__dirname, '../view/admin'))` makes an 
+instance of our route object, then placing `fs.path.join` method to create and 
+join the path in a string. Lastly, we use the `_dirname` variable to tell us the
+absolute path of the directory containing the executing file. then using 
+`app.get` for matching and handling a specific route when requested.
 
-
-Beneath the code above you’ll be using the following code: `Admin.js`.
+Now we will place a homepage route by adding additional code to Admin.js: 
+`Admin.js`.
 ```js
 
 index () {
@@ -48,8 +49,9 @@ index () {
 ```
 
 The above code is for creating an index and in that we use return to get our 
-request and response. Then using `if(!req.session.get(‘staff’)) {` when we 
-successfully get the session we will return and render a response 
+request and response. Then using `if(!req.session.get(‘staff’)) {` we can send 
+the user to an error page saying they are not logged in successfully get the 
+session we will return and render a response 
 `(‘admin/error’, { error: ‘Must be logged in’ })`. On the last two lines the 
 `pageTitle` is set and we render the page using `res.render(‘admin/home’)`.
 
@@ -74,12 +76,13 @@ login () {
 }
 ```
 
-We will use `login()` and by doing so we are creating the login. Under that we 
-will return the `req` and `res`, then using `if(req.body.email)` we will get the 
-email body and next we will set the session so that it's for staff and get back 
-the email body and respond the `StatusCode 302`. The next line we use referer 
-the headers is the `‘/admin/’` and then match the referer with the admin and 
-login and then get the `setHeader(‘location’, referer)`.
+Above, we make the login method which will display a login page or test a staff 
+members authentication. Depending on whether or not `req.body.email` is present 
+we will check for the staff members login to be valid. When `req.body.email` is 
+present, we test authentication and if valid create a session, otherwise 
+display a login page for the staff member to input authentication details. 
+Upon a successful login we redirect the user to where they previously came 
+from in case they were hot linked into the application.
 
 
 Finally place this section of code to handle staff logging out of the system:
@@ -97,10 +100,10 @@ Finally place this section of code to handle staff logging out of the system:
 }
 ```
 
-This will create the logout feature. The next line of code we route the function
-and set the session for staff and its undefined because it has been declared but 
-not assigned a value. Then we get the `statusCode` and that will be `302` and 
-the set the header and end it.
+The above code will create the logout route to clear staff sessions. Setting the
+staff session to undefined makes it appear as if it never existed. After doing 
+so, we set the status code to 302 and redirect the user back to the login page 
+by setting the Location header to `/admin/login/`.
 
 Then you will use the following code to represent the current module and exports
 as a module: `Admin.js`.
@@ -128,12 +131,12 @@ class Help extends Module {
  }
 ```
 
-The code above we use Assert, fs, HelpModel, Module and Route to require and 
-connect the listed folder and files. Next we use the class Help extends module 
-to create the child class of another class, then we use the constructor() 
-function that initializes an object, then using the super class to call the 
-constructor to access the parent properties and methods which will be the 
-this.app, .name, .title, and .description.
+The code above we use `Assert`, `fs`, `HelpModel`, Module and Route to require 
+and connect the listed folder and files. Next we use the class Help extends 
+module to create the child class of another class, then we use the 
+`constructor()` function that initializes our object, then using the super 
+class to call the constructor to access the parent properties and methods which 
+will be the `this.app`, `.name`, `.title`, and `.description`.
 
 The next section of code we will use the following: `Help.js`.
 ```js
@@ -148,14 +151,10 @@ list () {
 }
 ```
 
-The above code we will create a `list()` and we are doing that because we can use 
-this to store multiple pieces of information at once, such as a list of records 
-in the database or a list of contents. On the next line we use the return async 
-function to create a promise that will be resolved with the returned value. 
-Then we use const db to get the database engine and `HelpModel` is used to obtain 
-a list query from the model to pass that query to the database engine, then we 
-set the page title with `req.locals_pageTitle`, then we pass the return values 
-from the database to the template for rendering. 
+The above code creates a list method to show all our Help articles in a list. 
+To do so it makes a query to the database using the modules list method and our 
+included listRoute helper method from Route. Next, we set the page title and 
+finally render the page passing our database return values to the template. 
 
 
 Use the following for the the next section of code: `Help.js`.
@@ -171,13 +170,11 @@ listAction () {
 }
 ```
 
-Now we will be using the list action method which will be similar to the 
-previous code we used. We are now using the list action method and the 
-difference is that we are using the delete method and that will use the 
-delete query. The next line we are getting the route to the listAction to go to 
-the db, query and `req.body`. The next line we are saying if the variable is 
-deleted we get the setHeader response and redirect to `(‘/admin/help’)`.
-
+The above code adds the edit method which retrieves our Help article from the 
+database and then displays a form where the staff member can edit the content. 
+Assert.isType ensures that the database returned an appropriate response. 
+Finally, we render the `admin/help/edit` template by passing the instance of the 
+`HelpModel`.
 
 
 Moving on to the next section of code you will be using is the following: 
@@ -230,11 +227,10 @@ save () {
 }
 ```
 
-The next part of code is the save which pretty much has a lot of the similar 
-code except this one will save the route for our db, HelpModel, id, and 
-req.body.
-
-The next section of code you will use the following: `Help.js`.
+The save method will allow you to save the changes made on the create or edit 
+form into the database. This is done by passing the contents of `req.body` to 
+the `Route.saveRoute` method which handles inserting or updating the database 
+record. The next section of code you will use the following: `Help.js`.
 ```js
 
 admin (app) {
@@ -247,30 +243,24 @@ admin (app) {
  app.post('/admin/help/save/', this.save())
 }
 ```
-
-With this part of code we have the `admin()` and that will initiate the app and 
-get the database engine and connect the following using the app.get.
-
+Here we register the admin panel routes that are available.
 
 
 Now we will be using the following code for the next section: `Help.js`.
 ```js
 
  main (app) {
-   // need routes
    app.get('/help/', (req, res) => {
      res.render(fs.path.join(__dirname, '/view/help.html'))
    })
  }
 }
 ```
+This portion of the module registers the Help routes that into the main 
+interface.
 
-The code above will have the `main(app)` and you will use app.get for
-`(‘/help/’, (req, res)`  and render the filesystem and join the path to the 
-`(_dirname, ‘/view/help/html’))`.
-
-Finally the last part of code we have is the last part you will need for the 
-same reason as we talked about above: `Help.js`.
+The final portion of code exports our module objects so they can be used to 
+register into the application. `Help.js`.
 ```js
 
 Help.HelpModel = HelpModel
