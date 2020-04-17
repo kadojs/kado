@@ -1,5 +1,27 @@
 # Changelog
 
+### 4.2.1
+*Not Yet Released*
+* Add MariaDB support.
+* Add notify support for showing notifications to end users, such as a save
+being successful. This is done with `req.notify('some message')` which defaults
+to a level of `ok` or success, if there is an error
+`req.notify(new Error('some Error'))` sending an error object will automatically
+set a level of 'error' or failure. Lastly, custom levels support is done through
+class names such as:
+```js
+class MyWarning extends Error {}
+req.notify(new MyWarning('something is broken'))
+```
+NOTE: Sessions must be enabled for notifications to be saved.
+In order to show notifications they are made available through the
+`req.locals._session._notify` variable. Here is a template example:
+```html
+{{#_session._notify}}
+<div class="notify notify-{{level}">{{message}}</div>
+{{/_session._notify}}
+```
+
 ### 4.2.0
 *Released 4/15/20*
 * Add new Model.js for creating and working with Database records.
