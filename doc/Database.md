@@ -76,3 +76,4 @@ The currently supported options are:
 * `user` {string} the username used to identify the connection
 * `password` {string} the password used to authenticate the connection
 * `database` {string} the database desired to select after connecting
+* `driver` {string} the driver to use available choices are: mysql2, mariadb
