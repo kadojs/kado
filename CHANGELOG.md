@@ -17,9 +17,7 @@ NOTE: Sessions must be enabled for notifications to be saved.
 In order to show notifications they are made available through the
 `req.locals._session._notify` variable. Here is a template example:
 ```html
-{{#_session._notify}}
-<div class="notify notify-{{level}">{{message}}</div>
-{{/_session._notify}}
+{{#_notify}}<div class="notify notify-{{level}">{{message}}</div>{{/_notify}}
 ```
 
 ### 4.2.0
