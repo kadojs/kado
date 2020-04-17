@@ -153,3 +153,11 @@ Better Method
 ```js
 query.execute(db)
 ```
+
+### QuerySQL.run(db, options)
+* `db` {mariadb} Current connection to MySQL
+* `options` {object} options passed to the driver during the query
+* Return {Promise} resolved when the query is complete
+
+This method calls the mariadb driver `db.query()` method which returns a
+different return format from the `db.execute()` method.
