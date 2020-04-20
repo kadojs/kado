@@ -8,7 +8,7 @@ The `FileSystem` library provides a clean consistent overlay on top of the core
 file system functions. This library provides promises as a standard method
 of resolution.
 
-## Motivations
+#### Motivations
 
 The core file system methods are amazing, however, they are restricted by
 meeting the demands of legacy software. This library is mostly a wrapper but
@@ -39,8 +39,26 @@ const rv = fs.exists('some/file')
 console.log(rv) //false
 ```
 
-Available methods which usage can be referenced on the corresponding Node.JS
-documentation are listed below.
+Usage can be referenced on the corresponding Node.JS documentation,
+linked below.
+
+## Available properties
+
+### FileSystem.Stats
+This is a convenience reference to the core
+[Stats class](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_class_fs_stats)
+and is sometimes used for type checking as `instanceof fs.Stats`
+
+### FileSystem.Dirent
+This is a convenience reference to the core
+[Dirent class](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_class_fs_dirent)
+and is sometimes used for type checking as `instanceof fs.Dirent`
+
+### FileSystem.path
+This is a convenience reference to the core
+[path module](https://nodejs.org/dist/latest-v12.x/docs/api/path.html)
+
+## Available methods
 
 ### FileSystem.access(path, mode)
 Refer to [fsPromises.access](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fspromises_access_path_mode)
@@ -149,9 +167,6 @@ Refer to [fs.opendirSync](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#
 
 ### FileSystem.openSync(path, flags, mode)
 Refer to [fs.openSync](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fs_opensync_path_flags_mode)
-
-### FileSystem.path
-This is an object the references the core [path module](https://nodejs.org/dist/latest-v12.x/docs/api/path.html)
 
 ### FileSystem.readdir(path, options)
 Refer to [fsPromises.readdir](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fspromises_readdir_path_options)
