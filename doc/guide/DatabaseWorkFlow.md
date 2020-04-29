@@ -219,7 +219,7 @@ preferred web browser and go to your MySQL connection interface and create a
 database and give it a name similar to your project I used (dwf) and go to your
 SQL command line and use the following query: `sql QUERY`
 ```sql
-`CREATE USER 'dwf'@'localhost' IDENTIFIED BY 'dwf';`
+CREATE USER 'dwf'@'localhost' IDENTIFIED BY 'dwf';
 ```
 
 The code above creates a user in the MYSQL server.
@@ -227,7 +227,7 @@ The code above creates a user in the MYSQL server.
 Now proceed to grant the new user permissions on the database with the
 following query: `sql QUERY`
 ```sql
-`GRANT ALL ON dwf.* to 'dwf'@'localhost';`
+GRANT ALL ON dwf.* to 'dwf'@'localhost';
 ```
 
 this command will grant the new dwf user ALL(*)
