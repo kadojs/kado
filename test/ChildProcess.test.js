@@ -18,12 +18,12 @@
  * You should have received a copy of the GNU General Public License
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
-const path = require('path')
+const fs = require('../lib/FileSystem')
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
 const ChildProcess = require('../lib/ChildProcess')
 const child = new ChildProcess({
-  path: path.join(__dirname, '/fixture/childProcess.js'),
+  path: fs.path.join(__dirname, '/fixture/childProcess.js'),
   fork: { silent: true }
 })
 child.setEnv({ test: 'test' })
