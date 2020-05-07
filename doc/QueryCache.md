@@ -1,5 +1,5 @@
 # QueryCache
-* Introduced in 4.2.0
+*Introduced in 4.2.0*
 > Stability: 2 - Stable
 ```js
 const QueryCache = require('kado/lib/QueryCache')
