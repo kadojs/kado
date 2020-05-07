@@ -1,7 +1,7 @@
 # Changelog
 
 ### 4.2.1
-*Not Yet Released*
+*Released 5/7/20*
 * Add MariaDB support.
 * Add notify support for showing notifications to end users, such as a save
 being successful. This is done with `req.notify('some message')` which defaults
@@ -19,6 +19,9 @@ In order to show notifications they are made available through the
 ```html
 {{#_notify}}<div class="notify notify-{{level}">{{message}}</div>{{/_notify}}
 ```
+* Add more core `FS` modules into the `FileSystem` library to add more
+convenience.
+* Various fixes to documentation.
 
 ### 4.2.0
 *Released 4/15/20*
