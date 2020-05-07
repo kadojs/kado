@@ -267,7 +267,7 @@ const Application = require('kado')
 const cfg = require('./config')
 const Database = require('kado/lib/Database')
 const PetModel = require('./PetModel')
-const QueryCache = require('kado/lib/QueryCache/)
+const QueryCache = require('kado/lib/QueryCache')
 // make a new application
 const app = Application.getInstance()
 // setup a database connection and add it to the app
