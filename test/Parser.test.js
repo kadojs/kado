@@ -62,7 +62,10 @@ runner.suite('Parser', (it) => {
     Assert.eq(Parser.capitalize('test'), 'Test')
   })
   it('should print a date', () => {
-    Assert.isType('string', Parser.printDate(new Date()))
+    const testDate = '1985-10-26 01:21:00'
+    const printDate = Parser.printDate(new Date(testDate))
+    Assert.isType('string', printDate)
+    Assert.eq(testDate, printDate)
   })
   it('should escape and truncate a string', () => {
     const render = (s) => { return s }
