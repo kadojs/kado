@@ -77,3 +77,8 @@ The currently supported options are:
 * `password` {string} the password used to authenticate the connection
 * `database` {string} the database desired to select after connecting
 * `driver` {string} the driver to use available choices are: mysql2, mariadb
+
+Timezone is forced to UTC because that's the only way DATE/DATETIME/TIMESTAMP
+values can ever work correctly and predictably. Uses the connection option
+`timezone: 'Etc/GMT0'` and one time on-connect query `SET time_zone='+00:00';`
+per connection.
