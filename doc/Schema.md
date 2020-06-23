@@ -37,7 +37,7 @@ For usage of the `Query` library, see the [Query](Query.md) documentation.
 * `name` {string} name of the new field.
 * `options` {Object|string} an object with field options, or a string containing
 only the field type.
-* Return {QuerySQL} this instance
+* Return {SchemaSQL} this instance
 
 Available Options:
 * `type` {string} type of the field
@@ -51,14 +51,28 @@ Available Options:
 * `name` {string} name of the new index
 * `fields` {Array} an array of fields to contain in the index
 * `options` {Object} containing index options
-* Return {QuerySQL} this instance
+* Return {SchemaSQL} this instance
 
 Available Options:
 * `unique` {boolean} set to `TRUE` to have a `UNIQUE KEY`
 
+### SchemaSQL.foreignKey(name, table, columns, reference, options)
+* `name` {string} name of the new foreign key relation
+* `table` {string} table name to reference columns in
+* `columns` {Array} an array of columns to be referenced
+* `reference` {Array} an array of columns that are referenced by `columns`
+* `options` {Object} containing foreign key options
+* Return {SchemaSQL} this instance
+
+Available Options:
+* `onUpdate` {string} set to `cascade` to have a cascading update key
+* `onDelete` {string} set to `cascade` to have a cascading deletion key
+
+Other values may include: `SET NULL`, `RESTRICT`
+
 ### SchemaSQL.primary(fieldName)
 * `fieldName` {string} the field to define as the primary key.
-* Return {QuerySQL} this instance
+* Return {SchemaSQL} this instance
 
 ### SchemaSQL.toArray()
 * Return {Array} containing three entries, the first being an Array of fields,
