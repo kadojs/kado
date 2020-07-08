@@ -154,6 +154,7 @@ or a custom session parser.
 To use this module it needs to be activated by adding it to your application
 like so
 ```js
+const WebSocket = require('kado/lib/HyperText').WebSocket
 // add a session handler
 app.use((req) => { req.cookie = Parser.cookie('' + req.headers.cookie) })
 const sessionParser = Session.getMiddleware({
