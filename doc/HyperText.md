@@ -138,3 +138,29 @@ Available options:
 * `referrer` {string} A referrer to pass, otherwise uses `req.referer`
 * `method` {string} The type of request to make defaults to `req.method`
 * `maxRedirects` {number} Maximum times to follow redirects, default: 8
+
+## Class: WebSocket
+
+This class requires the `ws` module to be installed. Afterwards, this
+class provides WebSocket support backed by the Kado HyperText engine.
+
+The class has one user accessible method which is the register method
+
+### WebSocket.register(app, sessionParser)
+* `app` {object} The main application object containing an http engine.
+* `sessionParser` {function} the result of a call ot `Session.getMiddleware()`
+or a custom session parser.
+
+To use this module it needs to be activated by adding it to your application
+like so
+```js
+// add a session handler
+app.use((req) => { req.cookie = Parser.cookie('' + req.headers.cookie) })
+const sessionParser = Session.getMiddleware({
+secret: cfg.main.cookieSecret || 'acme-admin',
+store: new Session.SessionStoreLocal()
+})
+app.use(sessionParser)
+// attach inline websocket server to http engine and sessions
+WebSocket.register(app, sessionParser)
+```
