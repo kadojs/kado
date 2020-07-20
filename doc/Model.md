@@ -36,6 +36,24 @@ it should be passed here.
 * `table` {string} literal name of the table to delete from
 * Return {QuerySQL} query ready for predicates and execution.
 
+### static Model.fieldBoolean (defaultValue = false)
+* `defaultValue` {boolean} the default setting of the boolean field
+* Return {Object} field settings
+
+### static Model.fieldDate (nullable = false, writable = true)
+* `nullable` {boolean} set the field ability to be saved as NULL
+* `writable` {boolean} when false removes the field from automatic field lists
+  for write queries,
+* Return {Object} field settings
+
+### static Model.fieldPrimary (autoIncrement = true)
+* `autoIncrement` {boolean} when set false the primary key must be set manually.
+* Return {Object} field settings
+
+### static Model.fieldText (defaultValue = '', nullable = false)
+* Return {Object} field settings
+
+
 ### static Model.filterFields(fields, options)
 * `fields` {object} fieldList defined in model
 * `options` {object} what fields to filter from the list

@@ -25,5 +25,25 @@ runner.suite('Model', (it) => {
   it('should construct', () => {
     Assert.isType('Model', new Model())
   })
+  it('should have fieldBoolean', () => {
+    const rv = Model.fieldBoolean()
+    Assert.isType('Object', rv)
+    Assert.eq(rv.type, 'TINYINT')
+  })
+  it('should have fieldDate', () => {
+    const rv = Model.fieldDate()
+    Assert.isType('Object', rv)
+    Assert.eq(rv.type, 'DATETIME')
+  })
+  it('should have fieldPrimary', () => {
+    const rv = Model.fieldPrimary()
+    Assert.isType('Object', rv)
+    Assert.eq(rv.autoIncrement, true)
+  })
+  it('should have fieldText', () => {
+    const rv = Model.fieldText()
+    Assert.isType('Object', rv)
+    Assert.eq(rv.type, 'TEXT')
+  })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
