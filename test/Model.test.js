@@ -35,6 +35,17 @@ runner.suite('Model', (it) => {
     Assert.isType('Object', rv)
     Assert.eq(rv.type, 'DATETIME')
   })
+  it('should have fieldNumber', () => {
+    const rv = Model.fieldNumber()
+    Assert.isType('Object', rv)
+    Assert.eq(rv.type, 'INT')
+  })
+  it('should have fieldPositiveNumber', () => {
+    const rv = Model.fieldPositiveNumber()
+    Assert.isType('Object', rv)
+    Assert.eq(rv.type, 'INT')
+    Assert.eq(rv.signed, false)
+  })
   it('should have fieldPrimary', () => {
     const rv = Model.fieldPrimary()
     Assert.isType('Object', rv)
