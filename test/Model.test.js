@@ -51,6 +51,11 @@ runner.suite('Model', (it) => {
     Assert.isType('Object', rv)
     Assert.eq(rv.autoIncrement, true)
   })
+  it('should have fieldString', () => {
+    const rv = Model.fieldText()
+    Assert.isType('Object', rv)
+    Assert.eq(rv.type, 'VARCHAR')
+  })
   it('should have fieldText', () => {
     const rv = Model.fieldText()
     Assert.isType('Object', rv)
