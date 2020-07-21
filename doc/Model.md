@@ -46,8 +46,29 @@ it should be passed here.
   for write queries,
 * Return {Object} field settings
 
+### static Model.fieldNumber (defaultValue = '0', signed = true, nullable=false, length)
+* `defaultValue` {String|null} the default value of the field
+* `signed` {boolean} Set the fields signed status (`true` to allow negative numbers)
+* `nullable` {boolean} Set to `true` to allow NULL values
+* `length` {Number} Set this to change the length of the field
+* Return {Object} field settings
+
+### static Model.fieldPositiveNumber (defaultValue = '0', nullable = false, length)
+* `defaultValue` {String|null} the default value of the field
+* `nullable` {boolean} Set to `true` to allow NULL values
+* `length` {Number} Set this to change the length of the field
+* Return {Object} field settings
+
+This always returns an unsigned field.
+
 ### static Model.fieldPrimary (autoIncrement = true)
 * `autoIncrement` {boolean} when set false the primary key must be set manually.
+* Return {Object} field settings
+
+### static Model.fieldString (defaultValue = null, nullable = true, length)
+* `defaultValue` {String|null} the default value of the string
+* `nullable` {boolean} set `true` to allow NULL values
+* `length` {Number} set to change the value of the field length
 * Return {Object} field settings
 
 ### static Model.fieldText (defaultValue = '', nullable = false)
