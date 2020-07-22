@@ -191,9 +191,13 @@ is called from.
 
 ### TestSuite.it(name, test, flags)
 * `name` {string} name of the test
-* `test` {function} function that defines the test can be be `async` or `sync`
+* `test` {function} function that defines the test can be `async` or `sync`
 and return a Promise, {boolean}, or null. Only `false` and thrown `Error` will
 fail a test.
+* `flags` {Object} the current flags are
+  * `only` {boolean} set to `true` to make this the only test ran, when set
+    multiple times the last read test with the `only` option set.
+  * `skip` {boolean} set to `true` to have this test skipped at execution time.
 * Return {TestSuite} current instance of the test runner
 
 ### TestSuite.executeSuite(suiteKeys, runner, testResult, options)
@@ -293,6 +297,10 @@ The suites made from this method are hierarchy linked to this runner.
 * `test` {function} function that defines the test can be be `async` or `sync`
 and return a Promise, {boolean}, or null. Only `false` and thrown `Error` will
 fail a test.
+* `flags` {Object} the current flags are
+  * `only` {boolean} set to `true` to make this the only test ran, when set
+    multiple times the last read test with the `only` option set.
+  * `skip` {boolean} set to `true` to have this test skipped at execution time.
 * Return {TestRunner} current instance of the test runner
 
 ### TestRunner.executeSuite(suiteKeys, options)
