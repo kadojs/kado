@@ -40,7 +40,7 @@ it should be passed here.
 * `defaultValue` {boolean} the default setting of the boolean field
 * Return {Object} field settings
 
-### static Model.fieldDate (nullable = false, writable = true, defaultValue = null)
+### static Model.fieldDate (nullable = false, writable = true, defaultValue)
 * `nullable` {boolean} set the field ability to be saved as NULL
 * `writable` {boolean} when false removes the field from automatic field lists
 * `defaultValue` {String|null} default value for the field
