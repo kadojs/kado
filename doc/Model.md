@@ -40,9 +40,10 @@ it should be passed here.
 * `defaultValue` {boolean} the default setting of the boolean field
 * Return {Object} field settings
 
-### static Model.fieldDate (nullable = false, writable = true)
+### static Model.fieldDate (nullable = false, writable = true, defaultValue = null)
 * `nullable` {boolean} set the field ability to be saved as NULL
 * `writable` {boolean} when false removes the field from automatic field lists
+* `defaultValue` {String|null} default value for the field
   for write queries,
 * Return {Object} field settings
 
@@ -61,8 +62,9 @@ it should be passed here.
 
 This always returns an unsigned field.
 
-### static Model.fieldPrimary (autoIncrement = true)
+### static Model.fieldPrimary (autoIncrement = true, nullable = true)
 * `autoIncrement` {boolean} when set false the primary key must be set manually.
+* `nullable` {boolean} allow the field to be set null (useful with foreign keys)
 * Return {Object} field settings
 
 ### static Model.fieldString (defaultValue = null, nullable = true, length)
