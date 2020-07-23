@@ -61,6 +61,7 @@ const suites = [
   'Schema',
   'Search',
   'Session',
+  'StreamSearch',
   'Util',
   'Validate',
   'View',
