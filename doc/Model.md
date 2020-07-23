@@ -24,6 +24,24 @@ class MyModel extends Model {
 ## Class: Model
 This is the `Model` class which extends `Mapper`.
 
+### static Model.assertDate(date, msg = 'Invalid date')
+* `date` {Date|string) the date to test against
+* `msg` {string} message to print on failure
+* Return {void}
+Throws an error on assertion failure otherwise.
+
+### static Model.assertEmail(email, msg = 'Invalid email')
+* `email` {string) the email to test against
+* `msg` {string} message to print on failure
+* Return {void}
+Throws an error on assertion failure otherwise.
+
+### static Model.assertId(id, msg = 'Invalid id')
+* `id` {Hex|Number|string) the id to test against
+* `msg` {string} message to print on failure
+* Return {void}
+Throws an error on assertion failure otherwise.
+
 ### static Model.byIdQuery(table, id, fields, idField)
 * `table` {string} literal name of the table to select from
 * `id` {string|number} the id of the record to be selected
