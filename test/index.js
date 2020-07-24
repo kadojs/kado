@@ -62,6 +62,7 @@ const suites = [
   'Search',
   'Session',
   'StreamSearch',
+  'StreamSlicer',
   'Util',
   'Validate',
   'View',
