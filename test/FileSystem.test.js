@@ -64,6 +64,12 @@ runner.suite('FileSystem', (it) => {
   it('should have exists', () => {
     Assert.isType('Function', FileSystem.exists)
   })
+  it('should have gunzipFile', () => {
+    Assert.isType('Function', FileSystem.gunzipFile)
+  })
+  it('should have gzipFile', () => {
+    Assert.isType('Function', FileSystem.gzipFile)
+  })
   it('should have fchmodSync', () => {
     Assert.isType('Function', FileSystem.fchmodSync)
   })
