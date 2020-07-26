@@ -52,7 +52,7 @@ format.suite('.render()', (it) => {
   it('uses tags argument instead of Mustache.tags when given, even when it' +
     ' previous rendered the template using Mustache.tags', () => {
     const mustache = Mustache.getInstance({ tags: ['((', '))'] })
-    var template = '((placeholder))bar{{placeholder}}'
+    const template = '((placeholder))bar{{placeholder}}'
     const rv = mustache.render(template, { placeholder: 'foo' }, {})
     Assert.eq(rv, 'foobar{{placeholder}}')
   })
@@ -60,7 +60,7 @@ format.suite('.render()', (it) => {
   it('uses tags argument instead of Mustache.tags when given, even when it' +
     ' previous rendered the template using different tags', () => {
     const mustache = Mustache.getInstance({ tags: ['[[', ']]'] })
-    var template = '[[placeholder]]bar<<placeholder>>'
+    const template = '[[placeholder]]bar<<placeholder>>'
     const rv = mustache.render(template, { placeholder: 'foo' })
     Assert.eq(rv, 'foobar<<placeholder>>')
   })
@@ -80,7 +80,7 @@ format.suite('.render()', (it) => {
   })
 
   it('uses provided tags when rendering partials', () => {
-    var output = Mustache.render('<%> partial %>', { name: 'Santa Claus' }, {
+    const output = Mustache.render('<%> partial %>', { name: 'Santa Claus' }, {
       partial: '<% name %>'
     }, ['<%', '%>'])
     Assert.eq(output, 'Santa Claus')
