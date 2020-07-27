@@ -126,7 +126,7 @@ Refer to [fs.futimesSync](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#
 * Return {Promise} resolved with destination file path
 
 ### FileSystem.gzipFile (path, options)
-* `path` {string} path to the file to zip using zip
+* `path` {string} path to the file to zip using gzip
 * `options` {Object} options passed to zlib.createGzip()
 * Return {Promise} resolved with destination file path
 
