@@ -82,7 +82,7 @@ const testUpload = (resolve, reject) => {
     multipart.on('file', (field, stream, filename, encoding, mimeType) => {
       try {
         Assert.isType('string', field)
-        Assert.isType('ChunkStream', stream)
+        Assert.isType('StreamChunk', stream)
         Assert.isType('string', filename)
         Assert.isType('string', encoding)
         Assert.isType('string', mimeType)

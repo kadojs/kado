@@ -11,12 +11,6 @@ The stream class is an exposure of the Node.JS core Stream class. This provides
 convenience as we overlay common Stream manipulation mechanisms on to the core
 functionality.
 
-## class Stream.ChunkStream
-
-Extends `Stream.Readable`
-
-This is a mirror stream that exports input data to a readable export.
-
 ## class Stream.HeaderParser
 
 Parse header pairs from a readable stream.
@@ -70,6 +64,12 @@ Return {StreamChain} instance.
 ### Stream.StreamChain.addStream(stream)
 * `stream` {Stream.Readable|Buffer|String) append a data gram to the stack.
 * Return {StreamChain} this instance.
+
+## class Stream.StreamChunk
+
+Extends `Stream.Readable`
+
+This is a mirror stream that exports input data to a readable export.
 
 ## class Stream.StreamSearch
 
