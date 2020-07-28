@@ -120,6 +120,16 @@ Refer to [fs.ftruncateSync](https://nodejs.org/dist/latest-v12.x/docs/api/fs.htm
 ### FileSystem.futimesSync(fd, atime, mtime)
 Refer to [fs.futimesSync](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fs_futimessync_fd_atime_mtime)
 
+### FileSystem.gunzipFile (path, options)
+* `path` {string} path to the file to unzip using gzip
+* `options` {Object} options passed to zlib.createGunzip()
+* Return {Promise} resolved with destination file path
+
+### FileSystem.gzipFile (path, options)
+* `path` {string} path to the file to zip using gzip
+* `options` {Object} options passed to zlib.createGzip()
+* Return {Promise} resolved with destination file path
+
 ### FileSystem.lchmod(path, mode)
 Refer to [fsPromises.lchmod](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fspromises_lchmod_path_mode)
 
