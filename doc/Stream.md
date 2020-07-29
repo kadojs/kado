@@ -71,6 +71,14 @@ Extends `Stream.Readable`
 
 This is a mirror stream that exports input data to a readable export.
 
+The `StreamChunk` class implements a header-aware Stream interface.
+
+### StreamChunk Events
+
+#### .on('header', (header) => {...})
+* `header` {Object} An object containing the header for this particular part.
+Each property value is an _array_ of one or more string values.
+
 ## class Stream.StreamSearch
 
 Extends `EventEmitter`
@@ -99,33 +107,43 @@ StreamSlicer takes a boundary needle and divides the stream into chunks based on
 that needle. It will call the `part` even as it finds sections of the stream
 which allows your program to handle the different data regions appropriately.
 
-### Stream.StreamSlicer.constructor(cfg)
-* `cfg` {Object} options to configure the slicer.
-* Return `{Stream.StreamSlicer}` instance.
+### StreamSlicer.constructor(options)
+* `options` {Object} an object with options
+    * `boundary` {string} **(required)** This is the boundary used to detect
+      the beginning of a new part.
+    * `headerFirst` {boolean} If true, preamble header parsing will be
+      performed first.
+    * `maxHeaderPairs` {number} The maximum number of header key=>value pairs
+      to parse **Default:** 2000 (same as node's http).
+* Return {StreamSlicer} new instance of StreamSlicer
 
-It is very important to pass the boundary option.
+### StreamSlicer.setBoundary(boundary)
+* `boundary` {string} This is the boundary used to detect the beginning of a new
+  part.
+* Return {number} of queries executed including currently added
 
-Usage
+Sets the boundary to use for parsing and performs some initialization needed
+for parsing. You should only need to use this if you set `headerFirst` to true
+in the constructor and are parsing the boundary from the preamble header.
 
-```js
-const Assert = require('kado/lib/Assert')
-const fs = require('kado/lib/FileSystem')
-const Stream = require('kado/lib/Stream')
-const StreamSlicer = Stream.StreamSlicer
-const slicer = new StreamSlicer({ boundary: '----MyBoundary123' })
-slicer.on('part', (part) => {
-  Assert.isOk(part instanceof Stream, 'Invalid part')
-  // handle part ...
-})
-const input =  fs.createReadStream(fs.path.resolve('somefile.txt'))
-Stream.pipeline(input, slicer, (err) => {
-  let code = 0
-  if (err) {
-    code++
-    console.log('Had stream errors', err)
-  } else {
-    console.log('Slice complete')
-  }
-  process.exit(code)
-})
-```
+## StreamSlicer Events
+
+### .on('finish', () => {...})
+
+Emitted when all parts have been parsed, and the instance has been ended.
+
+### .on('part', (stream) => {...})
+* `stream` {ChunkStream}
+
+Emitted when a new part has been found.
+
+### .on('preamble', (stream) => {...})
+* `stream` {ChunkStream}
+
+Emitted for preamble if you should happen to need it (can usually be ignored).
+
+### .on('trailer', (data) => {...})
+* `data` {Buffer}
+
+Emitted when trailing data was found after the terminating boundary (as with the preamble, this can usually be ignored too).
+
