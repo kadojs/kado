@@ -21,14 +21,18 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
 const Session = require('../lib/Session')
-const session = new Session('test', new Session.SessionStoreMemory())
+const agent = 'ie1'
+const ip = '127.0.0.1'
+const uid = 1
+const storeMemory = new Session.SessionStoreMemory()
+const session = new Session('test', ip, agent, uid, storeMemory)
 runner.suite('Session', (it) => {
   it('should instantiate', () => {
-    const inst = new Session('foo', new Session.SessionStoreMemory())
+    const inst = new Session('foo', ip, agent, uid, storeMemory)
     Assert.isType('Session', inst)
   })
   it('should generate an sid', () => {
-    const rv = Session.generateId('127.0.0.1', 'local', 'foo')
+    const rv = Session.generateId(ip, agent, 'foo')
     Assert.isType('string', rv)
     Assert.eq(rv.length, 40)
     Assert.eq(rv.match(/^[0-9a-f]+$/).length, 1)

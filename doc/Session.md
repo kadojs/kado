@@ -37,8 +37,11 @@ Available Settings:
 
 *Internal Use*
 
-### Session.constructor(sid, store)
+### Session.constructor(sid, ip, agent, uid, store)
 * `sid` {string} Session ID string. Must be provided.
+* `ip` {string} Remote IP address.
+* `agent` {string} Remote User Agent.
+* `uid` {string} System user id.
 * `store` {SessionStore} Instance of SessionStore to use for saving session
 data.
 * Return {Session} new session instance
