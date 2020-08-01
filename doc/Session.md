@@ -33,7 +33,7 @@ Available Settings:
 * `res` {object} HTTP Response object.
 * `options` {object} settings for the session instance see
 `Session.getMiddleware()`
-* Return {Promise} resolve when the session is restored from storage.
+* Return {Promise} resolve when the session restore completes.
 
 *Internal Use*
 
@@ -99,8 +99,11 @@ Available Settings:
 
 *Internal Use*
 
-### SessionStorage.save(sid, data)
+### SessionStorage.save(sid, ip, agent, uid, data)
 * `sid` {string} session id to save
+* `ip` {string} Remote IP address.
+* `agent` {string} Remote User Agent.
+* `uid` {string} System user id.
 * `data` {object} session data to save to sid
 * Return {SessionStorage} this instance
 
@@ -108,12 +111,12 @@ Available Settings:
 
 ### SessionStorage.restore(sid)
 * `sid` {string} session id to restore
-* Return {object} either a blank one on non existence or the saved data.
+* Return {object} either a blank one or the saved data.
 
 *Internal Use*
 
 ### SessionStorage.saveToDisk()
-* Return {Promise} resolved with session data is written to disk.
+* Return {Promise} resolved with session data disk write completes.
 
 *Internal Use*
 
@@ -148,8 +151,11 @@ Available Settings:
 * `pruneFrequency` {number} How often to prune sessions that are expired.
 Default `60000` or 1 minute.
 
-### SessionStore.save(sid, data)
+### SessionStore.save(sid, ip, agent, uid, data)
 * `sid` {string} the id of the session to save
+* `ip` {string} Remote IP address.
+* `agent` {string} Remote User Agent.
+* `uid` {string} System user id.
 * `data` {object} the data of the session to save
 * Return {void}
 
@@ -176,10 +182,13 @@ Also, it the storage mechanism must decide on a method for pruning.
 Available Settings:
 * `host` {string} Host to connect to, defaults to `localhost`
 * `port` {string} Port to connect on, defaults to `3001`
-* Also the settings from `SessionStore.constructor()`
+* Settings from `SessionStore.constructor()`
 
-### SessionStoreLocal.save(sid, data)
+### SessionStoreLocal.save(sid, ip, agent, uid, data)
 * `sid` {string} the session id to save
+* `ip` {string} Remote IP address.
+* `agent` {string} Remote User Agent.
+* `uid` {string} System user id.
 * `data` {object} the session data to save
 * Return {Promise} resolved when the `SessionStorage` server has completed the
 request.
@@ -202,12 +211,15 @@ records.
 * Return {SessionStoreMemory} new instance
 
 Available Settings:
-* Also the settings from `SessionStore.constructor()`
+* Settings from `SessionStore.constructor()`
 
-### SessionStoreMemory.save(sid, data)
+### SessionStoreMemory.save(sid, ip, agent, uid, data)
 * `sid` {string} the session id to save
+* `ip` {string} Remote IP address.
+* `agent` {string} Remote User Agent.
+* `uid` {string} System user id.
 * `data` {object} the session data to save
-* Return {Promise} resolved when the session data is saved.
+* Return {Promise} resolved when the session save completes.
 
 ### SessionStoreMemory.restore(sid)
 * `sid` {string} the session id to restore
@@ -226,7 +238,7 @@ records.
 * Return {Object} field definitions for the model
 
 ### static SessionStoreModel.createTable()
-* Return {Schema} used to execute a create table query.
+* Return {Schema} used to create a table.
 
 ### static SessionStoreModel.insert(fields)
 * `fields` {Array} of field names to insert
@@ -257,10 +269,13 @@ Available Settings:
 * `db` {DatabaseEngine} The underlying database engine to use such as mysql2
 * `model` {Model} The session model used to build queries.
 
-### SessionStoreSQL.save(sid, data)
+### SessionStoreSQL.save(sid, ip, agent, uid, data)
 * `sid` {string} the session id to save
+* `ip` {string} Remote IP address.
+* `agent` {string} Remote User Agent.
+* `uid` {string} System user id.
 * `data` {object} the session data to save
-* Return {Promise} resolved when the session data is saved.
+* Return {Promise} resolved when the session save completes.
 
 ### SessionStoreSQL.restore(sid)
 * `sid` {string} the session id to restore
