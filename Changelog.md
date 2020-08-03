@@ -1,14 +1,38 @@
+### 3.10.7
+*Released 4/15/2020*
+* Update and test against the latest dependencies
+   * acorn                   ^7.1.0  →   ^7.1.1
+   * bcrypt                  ^3.0.8  →   ^4.0.1
+   * codemirror             ^5.51.0  →  ^5.52.2
+   * cookie-parser           ^1.4.4  →   ^1.4.5
+   * holderjs                ^2.9.6  →   ^2.9.7
+   * infant                  ^1.3.2  →   ^1.3.3
+   * jquery                  ^3.4.1  →   ^3.5.0
+   * jszip                   ^3.2.2  →   ^3.3.0
+   * mocha                   ^7.0.1  →   ^7.1.1
+   * morgan                  ^1.9.1  →  ^1.10.0
+   * mustache                ^4.0.0  →   ^4.0.1
+   * mysql-import            ^3.0.6  →  ^4.0.24
+   * nodemon                 ^2.0.2  →   ^2.0.3
+   * object-manage           ^1.1.0  →   ^1.1.1
+   * pdfmake                ^0.1.64  →  ^0.1.65
+   * qs                      ^6.9.1  →   ^6.9.3
+   * sequelize              ^5.21.4  →  ^5.21.6
+   * terser-webpack-plugin   ^2.3.4  →   ^2.3.5
+   * uriname                 ^0.1.1  →   ^0.3.0
+   * validator              ^12.2.0  →  ^13.0.0
+   * webpack                ^4.41.6  →  ^4.42.1
+
 ### 3.10.6
 *Released 2/12/2020*
 * This is the more than likely the last release before Kado 4.0 is released.
-* A warning is due now that Kado 4 will be complete incompatible with Kado 3 as
-Kado 4.0 fully realizes ES6. For the future, Kado 3 will continue to be
-maintained within the same repository as Kado 4 in a separate branch. However
-due to limitations on NPM, Kado 3 versions will be released as the kado-legacy
-package.
-* A further warning that Kado 4 will be changing from an MIT license to Lesser
-GPL Version 3+ please plan accordingly!
-* Update and test against latest dependencies
+* Kado 4 will not be compatible with Kado 3 as Kado 4.0 fully realizes ES6.
+For the future, Kado 3 will continue to be maintained within the same repository
+as Kado 4 in a separate branch. However, due to limitations on NPM, Kado 3
+versions will be released on gitlab only see https://git.nullivex.com/kado/kado.git.
+* Kado 4 will be changing from an MIT license to Lesser GPL Version 3+,
+plan accordingly!
+* Update and test against the latest dependencies
    * bcrypt                      ^3.0.7  →   ^3.0.8
    * commander                   ^4.1.0  →   ^4.1.1
    * connect-session-sequelize   ^6.0.0  →   ^6.1.1
