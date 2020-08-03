@@ -1,3 +1,11 @@
+### 3.10.9
+*Released 8/3/2020*
+* Fix login referrer to always send to /
+
+### 3.10.8
+*Released 8/3/2020*
+* Update and test against the latest dependencies
+
 ### 3.10.7
 *Released 4/15/2020*
 * Update and test against the latest dependencies
