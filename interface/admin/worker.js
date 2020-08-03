@@ -202,9 +202,10 @@ K.iface.worker(K,interfaceName,interfaceRoot).then((worker) => {
             res.json({success: 'Login success'})
           } else {
             req.flash('success','Login success')
-            let referrer = req.session._loginReferrer || '/'
-            if(referrer.match(/\.(js|jpg|ico|png|html|css)/i)) referrer = '/'
-            res.redirect(302,referrer)
+            // let referrer = req.session._loginReferrer || '/'
+            // if(referrer.match(/\.(js|jpg|ico|png|html|css)/i)) referrer = '/'
+            const referrer = '/'
+            res.redirect(302, referrer)
           }
         })
         .catch((err) => {
