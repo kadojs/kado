@@ -53,6 +53,7 @@ K.scanModules().then(()=>{
       return K.stop()
     })
     describe('interfaces',() => {
+      /*
       describe('cli',() => {
         //here we should loop through the modules and load their tests
         let modInfo
@@ -72,6 +73,7 @@ K.scanModules().then(()=>{
           appTest.cli(K,expect,request,exec,params)
         }
       })
+       */
       describe('admin',() => {
         const baseUrl = 'http://127.0.0.1:3000'
         it('should be up',() => {
