@@ -21,7 +21,7 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
 const Connect = require('../lib/Connect')
-const ConnectEngine = require('../lib/ConnectEngine')
+const ConnectEngine = Connect.ConnectEngine
 runner.suite('Connect', (it) => {
   class CDN extends Connect {
     connect (name, options) {

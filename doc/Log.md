@@ -24,6 +24,77 @@ management and more.
 ### static Log.getInstance()
 * Return {Log} new instance of the logger system
 
+### Log._read ()
+Underlying stream read method for Stream.readable.
+
+*Internal Use*
+
+### Log.getDate(now)
+* `now` {Date} the current date.
+* Return {String} date string to add to the log message
+
+*Internal Use*
+
+### Log.message (level, msg, opts)
+* `level` {Object} the level of severity for the message
+* `msg` {String} the message to print
+* `opts` {Object} options to control messaging
+* Return {void}
+
+Pushes the newly formed message into the stream.
+
+*Internal Use*
+
+### Log.error (msg, opts)
+* `msg` {String} message to print
+* `opts` {Object} options to control messaging
+* Return {void}
+
+Makes use of the `Log.message` method to send the log message.
+
+### Log.warning (msg, opts)
+* `msg` {String} message to print
+* `opts` {Object} options to control messaging
+* Return {void}
+
+Makes use of the `Log.message` method to send the log message.
+
+### Log.info (msg, opts)
+* `msg` {String} message to print
+* `opts` {Object} options to control messaging
+* Return {void}
+
+Makes use of the `Log.message` method to send the log message.
+
+### Log.verbose (msg, opts)
+* `msg` {String} message to print
+* `opts` {Object} options to control messaging
+* Return {void}
+
+Makes use of the `Log.message` method to send the log message.
+
+### Log.debug (msg, opts)
+* `msg` {String} message to print
+* `opts` {Object} options to control messaging
+* Return {void}
+
+Makes use of the `Log.message` method to send the log message.
+
+### Log.extra (msg, opts)
+* `msg` {String} message to print
+* `opts` {Object} options to control messaging
+* Return {void}
+
+Makes use of the `Log.message` method to send the log message.
+
+### Log.dump (msg)
+* `msg` {Mixed} message to print
+* Return {void}
+
+Makes use of the `Log.message` method to send the log message.
+
+This method does not wrap the message with any status information.
+
 ### Log.constructor()
 * Return {Log} new instance of the logger
 

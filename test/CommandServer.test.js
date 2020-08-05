@@ -20,7 +20,8 @@
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
-const CommandServer = require('../lib/CommandServer')
+const Command = require('../lib/Command')
+const CommandServer = Command.CommandServer
 runner.suite('CommandServer', (it) => {
   const cli = new CommandServer()
   cli.setVersion(require('../package.json').version)

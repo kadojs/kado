@@ -62,3 +62,26 @@ cannot be called.
 * `fn` {Function} called fn(engine) where engine is used to do an action, and
  can return a promise.
 * Return {Promise} each engine has the `fn(engine)` executed serially.
+
+## Class: ConnectEngine
+
+Used to manage multiple Connect engines.
+
+### ConnectEngine.constructor()
+* Return {ConnectEngine} new instance of the connect engine
+
+### ConnectEngine.setEngine(instance)
+* `instance` {Object} an instance to be used as the instance, possibly some
+other library or a middle man to another library.
+* Return {Object} the set engine.
+
+### ConnectEngine.resetEngine()
+* Return {boolean} `true` after the engine has been set to `null`
+
+### ConnectEngine.checkEngine()
+
+Throws an error when no engine is available.
+Or no actionable method passed.
+
+### ConnectEngine.getEngine()
+* Return {Object} the currently active engine or `null`
