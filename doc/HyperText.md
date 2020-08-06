@@ -18,6 +18,25 @@ management and more.
 ### static HyperText.getInstance()
 * Return {HyperText} new web server abstraction instance
 
+### static HyperText.logRequest (app, options)
+* `app` {Application} current application instance, for logger use
+* `options` {Object} options to control the logging
+Return `{Function}` to be used on each request.
+
+Available Options
+* `formatMessage` {Function} Formatting function to return a message
+* `statusWarnLevel` {number} Status codes above this get a warning color
+* `statusErrorLevel` {number} Status code above this get an error color
+* `timeWarnLevel` {number} Request times above this get a warning color
+* `timeErrorLevel` {number} Request times above this get an error color.
+
+Example Usage
+```js
+if (process.env.NODE_ENV !== 'production') {
+  app.use(HyperText.logRequest(app))
+}
+```
+
 ### HyperText.start(port, host)
 * `port` {number} Port from 1 - 65536 to start the server on.
 * `host` {string} Hostname or IP address to listen on. {null} will listen on all
