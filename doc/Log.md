@@ -107,6 +107,54 @@ This method does not wrap the message with any status information.
 ### LogEngine.constructor()
 * Return {Log} new instance of the logger
 
+## Class LogRelayUDP extends Stream.Writable
+
+Relay log messages from any LogEngine using UDP.
+
+Example Usage
+```js
+// add our logger
+const log = Log.LogEngine.getInstance({ name: pkg.name })
+const logRelay = new Log.LogRelayUDP()
+log.pipe(logRelay)
+app.log.addEngine('console', log)
+```
+
+Example Log Receiver (this is a standalone program)
+```js
+'use strict'
+const dgram = require('dgram')
+const server = dgram.createSocket('udp4')
+server.on('error', (err) => { console.log(err) })
+server.on('message', (msg) => { process.stdout.write(msg) })
+server.on('listening', () => { console.log('Ready for Log Messages') })
+server.bind('5514')
+```
+
+Log messages are send on UDP over port 5514. They are plain text.
+
+Please consider transport layer encryption or keeping messages on a layer 2
+networks to avoid security concerns.
+
+### LogRelayUDP.constructor(options)
+* `options` {Object} options to control the relay.
+* Return {LogRelayUDP} new instance.
+
+Available Options
+* `host` {string} host to send messages to, default `localhost`
+* `port` {string} port to send messages to, default `5514`
+* `protocol` {string} IP protocol of the transport default `udp4`
+
+Since `LogRelayUDP` is a `Stream.Writable` instance and LogEngine is a
+`Stream.Readable` instance. Use the log relay by piping
+the engine into the relay prior to passing the engine into the log
+multiplexer.
+
+Example
+```
+log.pipe(new Log.LogRelayUDP({ host: 'some-machine' }))
+```
+
 ## Class FileByLine
 
 Based on: https://github.com/nacholibre/node-readlines
