@@ -51,7 +51,8 @@ main()
 when needed.
 * `output` {Array} (internal) used to track processes results as they are
 shifted from the input array.
-* `idx` {Number} index used to keep track of number of processed items.
+* `idx` {Number} (internal) index used to keep track of number of processed
+items.
 * Return {Promise} resolved with the `output` array when all members have been
 processed.
 
