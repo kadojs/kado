@@ -56,6 +56,7 @@ const suites = [
   'PathExp',
   'Permission',
   'Profiler',
+  'PromiseMore',
   'Query',
   'QueryCache',
   'Router',
