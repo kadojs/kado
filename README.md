@@ -91,6 +91,7 @@ various inputs and outputs.
 * [Mime](https://kado.org/doc/mime/) - Class for determining file types.
 * [Model](https://kado.org/doc/model/) - Super class for data models.
 * [Module](https://kado.org/doc/module/) - Super class for creating Kado modules.
+* [Multipart](https://kado.org/doc/multipart/') - Parse and create Multipart encodings.
 * [Mustache](https://kado.org/doc/mustache/) - Mustache templating system.
 * [Navigation](https://kado.org/doc/navigation/) - Create and manage application menus.
 * [Parser](https://kado.org/doc/parser/) - Parse input strings to variables such as objects.
@@ -99,6 +100,7 @@ various inputs and outputs.
 allow fine grained user control.
 * [Profiler](https://kado.org/doc/profiler/) - Track application resource usage and
 timing.
+* [PromiseMore](https://kado.org/doc/PromiseMore/) - Extended Promise control patterns.
 * [Query](https://kado.org/doc/query/) - Query builder for Database languages, includes SQL builder.
 * [QueryCache](https://kado.org/doc/query-cache/) - Query cache system for databases.
 * [Router](https://kado.org/doc/router/) - Store and process application route points.
