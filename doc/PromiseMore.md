@@ -59,6 +59,7 @@ returned arguments applied to the resolution.
 #### Example using EmailJS
 
 ```js
+const Assert = require('kado/lib/Assert')
 const SMTPClient = require('emailjs').SMTPClient
 const client = new SMTPClient({
   // config
