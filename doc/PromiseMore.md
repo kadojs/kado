@@ -1,4 +1,5 @@
 # PromiseMore
+
 *Introduced in 4.3.0*
 > Stability: 1 - Experimental
 ```js
@@ -13,6 +14,7 @@ JavaScript functionality.
 ## Class: PromiseMore
 
 ### static PromiseMore.hoist()
+
 * Return {Promise} with additional properties.
 
 What makes `PromiseMore.hoist()` different from calling `Promise.resolve()` is
@@ -46,6 +48,7 @@ main()
 ```
 
 ### static PromiseMore.series (input, callback, output, idx)
+
 * `input` {Array} items to be processed in a series
 * `callback` {Function} to be called with each item and can resolve a promise
 when needed.
@@ -56,10 +59,29 @@ items.
 * Return {Promise} resolved with the `output` array when all members have been
 processed.
 
+NOTICE: The context of this method will be bound to the callback which allows
+for state keeping while in the loop. Pass an Object in order to have latent
+lookups.
+
+#### Example using series with bound Context
+
+```js
+const PromiseMore = require('./lib/PromiseMore')
+async function payPartial (item, idx, ctx) { ctx.amount -= item.amount }
+const ctx = { amount: 3 }
+const items = [{ amount: 1 }, { amount: 2 }]
+const main = async () => {
+  await PromiseMore.series(items, payPartial, ctx)
+  console.log(ctx.amount) // 0
+}
+main()
+```
+
 This is useful when it is important members of an array are
 processes one after another or in a "series" to produce the proper result.
 
-Example
+#### Series Full Example
+
 ```js
 'use strict'
 const PromiseMore = require('./lib/PromiseMore')

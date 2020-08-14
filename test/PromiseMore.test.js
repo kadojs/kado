@@ -31,22 +31,25 @@ runner.suite('PromiseMore', (it) => {
     Assert.isType('Function', promise.resolve)
     Assert.isType('Function', promise.reject)
   })
-  it('should complete a series', async () => {
+  it('should complete a series with context', async () => {
     const makeItem = () => { return { name: 'Apple' } }
     const makePromise = () => {
       return new Promise((resolve) => { resolve(1) })
     }
-    const processItem = async (item, index) => {
+    const processItem = async (item, index, ctx) => {
       const result = await makePromise() // resolve some promise
       item.index = index + result // use the result
+      ctx.amount -= item.index
       return item
     }
+    const ctx = { amount: 20 }
     const itemList = []
     for (let i = 0; i < 5; i++) itemList.push(makeItem())
-    const result = await PromiseMore.series(itemList, processItem)
-    const reduce = (i, c) => { i.index = i.index + c.index; return i }
-    const answer = result.reduce(reduce).index
-    Assert.eq(answer, 20)
+    const result = await PromiseMore.series(itemList, processItem, ctx)
+    const reduce = (i, c) => { i.index += c.index; return i }
+    const answer = result.reduce(reduce)
+    Assert.eq(answer.index, 20)
+    Assert.eq(ctx.amount, 0)
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
