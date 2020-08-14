@@ -47,6 +47,31 @@ const main = async () => {
 main()
 ```
 
+### static PromiseMore.make (context, method, arguments...)
+
+* `context` {Object} `thisArg` to use when calling `method`
+* `method` {Function} method to be called that uses a callback as the last
+argument, and triggers the callback with (err, arguments...)
+* `arguments...` {Mixed} any arguments that should be passed to the `method`
+* Return {Promise} resolved or rejected depending on the outcome, where all
+returned arguments applied to the resolution.
+
+#### Example using EmailJS
+
+```js
+const SMTPClient = require('emailjs').SMTPClient
+const client = new SMTPClient({
+  // config
+})
+const message = {
+  text: 'Some message',
+  to: 'hello@kado.org'
+  // more message options
+}
+const resp = await PromiseMore.make(client, client.send, message)
+Assert.isOk(resp, 'Invalid message')
+```
+
 ### static PromiseMore.series (input, callback, output, idx)
 
 * `input` {Array} items to be processed in a series
