@@ -31,6 +31,15 @@ runner.suite('PromiseMore', (it) => {
     Assert.isType('Function', promise.resolve)
     Assert.isType('Function', promise.reject)
   })
+  it('should make a promise out of a callback', async () => {
+    const emitter = function (amount, cb) {
+      amount += this.amount
+      cb(null, amount)
+    }
+    const context = { amount: 10 }
+    const answer = await PromiseMore.make(context, emitter, 5)
+    Assert.eq(answer, 15)
+  })
   it('should complete a series with context', async () => {
     const makeItem = () => { return { name: 'Apple' } }
     const makePromise = () => {
