@@ -130,7 +130,7 @@ const main = async () => {
 main()
 ```
 
-### static PromiseMore.series (condition, promise)
+### static PromiseMore.while (condition, promise)
 
 * `condition` {Function} called before each try to run the promise, the loop
 stops when this condition evaluates to `false`
