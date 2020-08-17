@@ -60,5 +60,13 @@ runner.suite('PromiseMore', (it) => {
     Assert.eq(answer.index, 20)
     Assert.eq(ctx.amount, 0)
   })
+  it('should work with while', async () => {
+    let i = 15
+    const k = 10
+    const condition = () => { return i > k }
+    const makePromise = () => { i--; return Promise.resolve() }
+    await PromiseMore.while(condition, makePromise)
+    Assert.eq(i, 10)
+  })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))

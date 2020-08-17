@@ -129,3 +129,23 @@ const main = async () => {
 }
 main()
 ```
+
+### static PromiseMore.series (condition, promise)
+
+* `condition` {Function} called before each try to run the promise, the loop
+stops when this condition evaluates to `false`
+* `promise` {Function} function to be called that returns a promise.
+
+Example
+```js
+const PromiseMore = require('kado/lib/PromiseMore')
+let i = 15
+const k = 10
+const condition = () => { return i > k }
+const makePromise = () => { i--; return Promise.resolve() }
+const main = async () => {
+  await PromiseMore.while(condition, makePromise)
+  console.log(`Finished i is ${i}`)
+}
+main()
+```
