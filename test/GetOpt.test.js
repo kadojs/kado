@@ -139,5 +139,13 @@ runner.suite('GetOpt', (it) => {
       { h: true, v: true, test: true }
     )
   })
+  it('should mapArguments from options', () => {
+    const opts = { n: 'Foo', e: 'foo@foo.com', p: '555-555-5555' }
+    const argList = [['name', 'n'], ['email', 'e'], ['phone', 'p']]
+    const args = GetOpt.mapArguments(argList, opts)
+    Assert.eqDeep(args,
+      { name: 'Foo', email: 'foo@foo.com', phone: '555-555-5555' }
+    )
+  })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
