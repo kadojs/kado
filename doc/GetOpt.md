@@ -151,6 +151,12 @@ an object describing the next argument based on the following cases:
   string if it accepts one.  Combined with automatic `optstring` this
   approximates an interface similar to "minimist"
 
+### `static GetOpt.mapArguments(args, opts)`
+Quick method to collate a set of option aliases into standard option keys
+* `args` {Array} Argument map
+* `opts` {Object} Options map
+* Returns {Object} Options from `opts` renamed as mapped in `args`
+
 ---
 #### Departures from POSIX
 * Global state in the C implementation (e.g., `optind`, `optarg`, and `optopt`) is
