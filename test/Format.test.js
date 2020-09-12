@@ -24,6 +24,102 @@ const intlOk = require('../lib/Language').hasFullIntl()
 const Format = require('../lib/Format')
 const format = runner.suite('Format')
 // all static no constructor test needed
+format.suite('.cookie()', (it) => {
+  const expireDate = 'Thu, 01 Jan 1970 00:00:00 GMT'
+  it('should require a name', () => {
+    try {
+      Format.cookie()
+    } catch (err) {
+      Assert.eq('Name required', err.message)
+    }
+  })
+  it('should build a blank cookie', () => {
+    const cookie = Format.cookie('foo')
+    Assert.eq('foo=', cookie)
+  })
+  it('should accept a string for a value', () => {
+    const cookie = Format.cookie('foo', 'bar')
+    Assert.eq('foo=bar', cookie)
+  })
+  it('should accept an object for a value', () => {
+    const cookie = Format.cookie('foo', { foo: 'bar' })
+    Assert.eq('foo={"foo":"bar"}', cookie)
+  })
+  it('should add a domain', () => {
+    const cookie = Format.cookie('foo', { foo: 'foo: bar' }, { domain: '/' })
+    Assert.eq('foo={"foo":"foo: bar"}; Domain=/', cookie)
+  })
+  it('should add a expires', () => {
+    const cookie = Format.cookie('foo', { foo: 'bar' }, { expires: expireDate })
+    Assert.eq('foo={"foo":"bar"}; Expires=Thu, 01 Jan 1970 00:00:00 GMT', cookie)
+  })
+  it('should only accept UTC date string for expires', () => {
+    try {
+      Format.cookie('foo', { foo: 'bar' }, { expires: 'dog' })
+    } catch (err) {
+      Assert.eq('Invalid Expiration Date Format', err.message)
+    }
+  })
+  it('should add a httpOnly', () => {
+    const cookie = Format.cookie('foo', { foo: 'bar' }, { httpOnly: true })
+    Assert.eq('foo={"foo":"bar"}; HttpOnly', cookie)
+  })
+  it('should add a maxAge', () => {
+    const cookie = Format.cookie('foo', { foo: 'bar' }, { maxAge: 3600 })
+    Assert.eq('foo={"foo":"bar"}; MaxAge=3600', cookie)
+  })
+  it('should only accept integer for maxAge', () => {
+    try {
+      Format.cookie('foo', { foo: 'bar' }, { maxAge: 'potato' })
+    } catch (err) {
+      Assert.eq('Invalid maxAge', err.message)
+    }
+  })
+  it('should add a path', () => {
+    const cookie = Format.cookie('foo', { foo: 'bar' }, { path: '/' })
+    Assert.eq('foo={"foo":"bar"}; Path=/', cookie)
+  })
+  it('should accept sameSite', () => {
+    const cookie = Format.cookie('foo', { foo: 'bar' }, { sameSite: 'strict' })
+    Assert.eq('foo={"foo":"bar"}; SameSite=Strict', cookie)
+  })
+  it('should accept sameSite', () => {
+    const cookie = Format.cookie('foo', { foo: 'bar' }, { sameSite: 'lax' })
+    Assert.eq('foo={"foo":"bar"}; SameSite=Lax', cookie)
+  })
+  it('should accept sameSite', () => {
+    const cookie = Format.cookie('foo', { foo: 'bar' }, { sameSite: 'none' })
+    Assert.eq('foo={"foo":"bar"}; SameSite=None', cookie)
+  })
+  it('should error on sameSite', () => {
+    try {
+      Format.cookie('foo', { foo: 'bar' }, { sameSite: 'foo' })
+    } catch (err) {
+      Assert.eq('Invalid SameSite value', err.message)
+    }
+  })
+  it('should add a secure', () => {
+    const cookie = Format.cookie('foo', { foo: 'bar' }, { secure: true })
+    Assert.eq('foo={"foo":"bar"}; Secure', cookie)
+  })
+  it('should add all options', () => {
+    const options = {}
+    options.domain = '/'
+    options.expires = expireDate
+    options.httpOnly = true
+    options.maxAge = 3600
+    options.path = '/'
+    options.secure = true
+    options.sameSite = 'Strict'
+    const cookie = Format.cookie('foo', { foo: 'bar' }, options)
+    Assert.eq(
+      'foo={"foo":"bar"}; Domain=/; Expires=' +
+      'Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly' +
+      '; MaxAge=3600; Path=/; SameSite=Strict; Secure',
+      cookie
+    )
+  })
+})
 format.suite('.toFixedFix()', (it) => {
   it('(1.236,2) === 1.24', () => {
     Assert.eq(Format.toFixedFix(1.236, 2), 1.24)
