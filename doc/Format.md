@@ -9,6 +9,35 @@ The `Format` library implements a common set of output formatting methods.
 ## Class: Format
 Format is a completely static class of loosely related methods
 
+### static Format.cookie(name, value, options)
+* `name` {string} name of the cookie
+* `value` {string|object} value of the cookie, Objects automatically serialized to JSON
+* `options` {object} set cookie options
+* Return {string} a string ready to set sent view `res.setHeader('Set-Coookie')`
+
+Available Options
+* `domain` {string} set the domain of the cookie eg: `{ domain: 'example.com' }`
+* `expires` {string} UTC date string, indicating when the cookie expires
+* `httpOnly` {boolean} `true` will stop javascript access to the cookie
+* `maxAge` {number} number of seconds the cookie shall be valid
+* `secure` {boolean} `true` for HTTPS only cookies
+* `sameSite` {string} accepts `Strict`, `Lax`, or `None` as values to control cross origin
+
+Example
+
+```js
+const Format = require('kado/lib/Format')
+const Module = require('kado/lib/Module)
+class MyModule extends Module {
+  someRoute (req, res) {
+    const cookie = Format.cookie('myCookie', { id: 1 }, { httpOnly: true })
+    res.setHeader('Set-Cookie', cookie)
+    // or use the built in cookie helper like so
+    res.cookie('myCookie', { id: 1 }, { httpOnly: true })
+  }
+}
+```
+
 ### `static Format.toFixedFix(n, prec)`
 * `n` {mixed} the number, or string containing parsable number-like data
 * `prec` {number} precision; how many places after decimal to retain
