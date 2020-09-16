@@ -66,7 +66,7 @@ format.suite('.cookie()', (it) => {
   })
   it('should add a maxAge', () => {
     const cookie = Format.cookie('foo', { foo: 'bar' }, { maxAge: 3600 })
-    Assert.eq('foo={"foo":"bar"}; MaxAge=3600', cookie)
+    Assert.eq('foo={"foo":"bar"}; Max-Age=3600', cookie)
   })
   it('should only accept integer for maxAge', () => {
     try {
@@ -115,7 +115,7 @@ format.suite('.cookie()', (it) => {
     Assert.eq(
       'foo={"foo":"bar"}; Domain=/; Expires=' +
       'Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly' +
-      '; MaxAge=3600; Path=/; SameSite=Strict; Secure',
+      '; Max-Age=3600; Path=/; SameSite=Strict; Secure',
       cookie
     )
   })
