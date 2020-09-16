@@ -55,8 +55,5 @@
   "scripts": {
     "test": "standard && node ./test/index.js"
   },
-  "version": "4.2.1",
-  "dependencies": {
-    "kado": "git+https://git.nullivex.com/kado/kado.git#master"
-  }
+  "version": "4.2.1"
 }
