@@ -193,11 +193,15 @@ format.suite('.bytes()', (it) => {
   it('(42,{signed:true})   === \'+42 B\'', () => {
     Assert.eq(Format.bytes(42, { signed: true }), '+42 B')
   })
+  function intlTest () {
+    Assert.eq(Format.bytes(1337, { locale: 'de' }), '1,34 kB')
+  }
   it('(1337,{locale:\'de\'}) === \'1,34 kB\'',
     // international does not work when small_icu used in nodejs build
-    (!intlOk) ? undefined : () => {
-      Assert.eq(Format.bytes(1337, { locale: 'de' }), '1,34 kB')
-    })
+    (!intlOk)
+      ? undefined
+      : intlTest
+  )
 })
 format.suite('.inetPtoN()', (it) => {
   it('(\'1.2.3.4\')  === \'\\u0001\\u0002\\u0003\\u0004\'', () => {

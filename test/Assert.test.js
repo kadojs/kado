@@ -274,13 +274,13 @@ assert.suite('isBelow', (it) => {
 })
 assert.suite('match', (it) => {
   it('should match an array containing strings', () => {
-    Assert.eq(Assert.match(new RegExp('foo'), ['foo']))
+    Assert.eq(Assert.match(/foo/, ['foo']))
   })
   it('should match an array within array containing strings', () => {
-    Assert.eq(Assert.match(new RegExp('foo'), [[1, 2], ['foo', 'bar'], { foo: 'foo' }]))
+    Assert.eq(Assert.match(/foo/, [[1, 2], ['foo', 'bar'], { foo: 'foo' }]))
   })
   it('should match an object containing strings', () => {
-    Assert.eq(Assert.match(new RegExp('foo'), [[1, 2], ['bar'], { foo: 'foo' }]))
+    Assert.eq(Assert.match(/foo/, [[1, 2], ['bar'], { foo: 'foo' }]))
   })
   it('should match a string', () => {
     Assert.eq(Assert.match(/foo/, 'somefoostring'))
@@ -369,7 +369,7 @@ assert.suite('types', (it) => {
     Assert.eq(refErr, refErr)
   })
   it('should check for RegExp', () => {
-    const regExp = new RegExp('foo', 'ig')
+    const regExp = /foo/ig
     Assert.eq(regExp, regExp)
   })
   it('should check for String', () => {

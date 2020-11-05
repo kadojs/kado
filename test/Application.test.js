@@ -54,7 +54,7 @@ runner.suite('Application', (it) => {
     Assert.isType('Module', Object.getPrototypeOf(app.removeModule('foo')))
   })
   it('should load a library', () => {
-    app.library.addPath(`${__dirname}/../lib`)
+    app.library.addPath(fs.path.join(__dirname, '/../lib'))
     const Asset = app.lib('Asset')
     Assert.isType('Asset', new Asset())
   })
