@@ -31,7 +31,7 @@ runner.suite('Session', (it) => {
     const inst = new Session('foo', ip, agent, uid, storeMemory)
     Assert.isType('Session', inst)
   })
-  it('should generate an sid', () => {
+  it('should generate a sid', () => {
     const rv = Session.generateId(ip, agent, 'foo')
     Assert.isType('string', rv)
     Assert.eq(rv.length, 40)
