@@ -3,8 +3,8 @@ image: node:8
 prepare:
   stage: build
   script:
-    - npm -g install standard
     - npm install
+    - npm install standard
 
 cache:
   paths:
