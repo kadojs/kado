@@ -1,4 +1,4 @@
-image: node:8
+image: node:10
 
 prepare:
   stage: build
@@ -9,12 +9,6 @@ prepare:
 cache:
   paths:
     - node_modules/
-
-node8:
-  stage: test
-  script:
-    - node -v
-    - npm test
 
 node10:
   stage: test
