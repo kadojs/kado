@@ -1,7 +1,55 @@
-image: node:latest
+image: node:8
 
-test:
+prepare:
+  stage: build
   script:
     - npm -g install standard
     - npm install
+
+cache:
+  paths:
+    - node_modules/
+
+node8:
+  stage: test
+  script:
+    - node -v
     - npm test
+  tags:
+    - nodejs
+
+node10:
+  stage: test
+  image: node:10
+  script:
+    - node -v
+    - npm test
+  tags:
+    - nodejs
+
+node12:
+  stage: test
+  image: node:12
+  script:
+    - node -v
+    - npm test
+  tags:
+    - nodejs
+
+node14:
+  stage: test
+  image: node:10
+  script:
+    - node -v
+    - npm test
+  tags:
+    - nodejs
+
+node-latest:
+  stage: test
+  image: node:latest
+  script:
+    - node -v
+    - npm test
+  tags:
+    - nodejs
