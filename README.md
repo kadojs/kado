@@ -11,11 +11,18 @@ High Quality JavaScript Framework Libraries for Node.JS
 
 Place the following code into an empty JavaScript file, example: `app.js`.
 ```js
-const HyperText = require('kado/lib/HyperText')
-const app = require('kado').getInstance()
-const http = new HyperText.HyperTextServer()
+'use strict'
+// import kado
+const kado = require('kado')
+// create application
+const app = kado.getInstance()
+// create a webserver
+const http = new kado.HyperText.HyperTextServer()
+// register the webserver
 app.http.addEngine('http', http.createServer(app.router))
+// register a route
 app.get('/', (req, res) => { res.end('Hello') })
+// start the application and listen
 app.start().then(() => app.listen())
 ```
 After saving the file, execute the code by running the following command from
@@ -26,91 +33,18 @@ node app
 Once the command has executed, a web server that says "Hello" will be available
 on port `3000` of your local machine, example: `http://localhost:3000`.
 
-See [kado.org](https://kado.org) for more guides and examples.
+See [kado.org](https://kado.org/guide/getting-started/) to go further.
 
 ## Features
 
-* Create servers that produce websites, APIs, or anything really.
-* Create back ends for existing applications and save resources.
-* Build command line applications quickly.
-* Trusted by applications serving billions of page views.
-* 0 external dependencies. The buck stops here!
-* Libraries for most common application needs.
-* Thoroughly tested, continuously integrated, actively developed.
-* Make your own framework in just a few minutes!
-* Code is peer reviewed, openly developed, openly licensed.
-* Assertion, validation, and test running built in.
-* LGPL 3.0 License. Use Kado where you need it.
-* Easily setup web servers to replace Apache, NGINX, and others.
-
-## Kado Library List
-
-This is an exhaustive list of all the JavaScript libraries provided with Kado.
-Each library has a link to its documentation as well as a short description of
-what is provided by the library.
-
-* [Application](https://kado.org/doc/application/) - Create a new application containing most
-Kado features.
-* [Assert](https://kado.org/doc/assert/) - Make assertions on input or tests.
-* [Asset](https://kado.org/doc/asset/) - Store, filter, and query static application
-files.
-* [ChildProcess](https://kado.org/doc/child-process/) - Child process library adding convenience and
-functionality to the core child_process functions.
-* [Cluster](https://kado.org/doc/cluster/) - Cluster library for constructing and
-operating process clusters.
-* [Command](https://kado.org/doc/command/) - Build CLI applications with ease.
-* [CommandServer](https://kado.org/doc/command-server/) - Execute CLI applications like a
-web server.
-* [Connect](https://kado.org/doc/connect/) - Framework for housing external resource
-connections.
-* [ConnectEngine](https://kado.org/doc/connect-engine/) - Interface for creating an engine
-to be used with a Connect system.
-* [Cron](https://kado.org/doc/cron/) - Execute functions on a schedule similar to UNIX
-cron jobs.
-* [Database](https://kado.org/doc/database/) - Connect system made for Databases.
-* [Email](https://kado.org/doc/email/) - Connect system made for Email.
-* [ETag](https://kado.org/doc/etag/) - Class for determining ETag header.
-* [Event](https://kado.org/doc/event/) - Create, track and handle application events with
-log levels.
-* [FileSystem](https://kado.org/doc/file-system/) - Consistent API for use with File System methods.
-* [Format](https://kado.org/doc/format/) - Commonly used String, Number, and Date format
-methods.
-* [GetOpt](https://kado.org/doc/get-opt/) - Parse command line string input into an
-object.
-* [History](https://kado.org/doc/history/) - Track user navigation history throughout
-a session.
-* [HyperText](https://kado.org/doc/hyper-text/) - Connect system made for HTTP servers.
-* [Language](https://kado.org/doc/language/) - Internationalization helpers including
-loading, parsing, and displaying languages.
-* [Library](https://kado.org/doc/library/) - Dynamic library loader.
-* [Lifecycle](https://kado.org/doc/lifecycle/) - Start and stop systems with events.
-* [Log](https://kado.org/doc/log/) - Connect system made for Logs.
-* [Mapper](https://kado.org/doc/mapper/) - ECMA Map functionality on Objects.
-* [Message](https://kado.org/doc/message/) - Create, track and handle messages from
-various inputs and outputs.
-* [Mime](https://kado.org/doc/mime/) - Class for determining file types.
-* [Model](https://kado.org/doc/model/) - Super class for data models.
-* [Module](https://kado.org/doc/module/) - Super class for creating Kado modules.
-* [Multipart](https://kado.org/doc/multipart/') - Parse and create Multipart encodings.
-* [Mustache](https://kado.org/doc/mustache/) - Mustache templating system.
-* [Navigation](https://kado.org/doc/navigation/) - Create and manage application menus.
-* [Parser](https://kado.org/doc/parser/) - Parse input strings to variables such as objects.
-* [PathExp](https://kado.org/doc/path-exp/) - Use path notation to validate routes on URIs.
-* [Permission](https://kado.org/doc/permission/) - Create and test permission sets to
-allow fine grained user control.
-* [Profiler](https://kado.org/doc/profiler/) - Track application resource usage and
-timing.
-* [PromiseMore](https://kado.org/doc/PromiseMore/) - Extended Promise control patterns.
-* [Query](https://kado.org/doc/query/) - Query builder for Database languages, includes SQL builder.
-* [QueryCache](https://kado.org/doc/query-cache/) - Query cache system for databases.
-* [Router](https://kado.org/doc/router/) - Store and process application route points.
-* [Schema](https://kado.org/doc/schema/) - Schema builder for Database languages, includes SQL builder.
-* [Search](https://kado.org/doc/search/) - Connect system for made for search.
-* [Session](https://kado.org/doc/session/) - Session system for storing data against users.
-* [TestRunner](https://kado.org/doc/test-runner/) - Define and run Test Suites and Tests.
-* [Util](https://kado.org/doc/util/) - Misfit useful functions.
-* [Validate](https://kado.org/doc/validate/) - Validate input.
-* [View](https://kado.org/doc/view/) - Connect system made for rendering.
+* Single Node.JS Module
+* Compatible with Node.JS 10 and above.
+* Contains 47 libraries that cover a majority of coding tasks.
+* Use libraries as needed and keep the code light.
+* Consistent stable code that rarely changes.
+* Complete reference documentation.
+* Easy to learn, familiar, inspired by popular modules.
+* Ready for continuous integration.
 
 ## Questions or Problems?
 
