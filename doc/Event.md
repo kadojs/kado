@@ -9,7 +9,7 @@ and follows the same logging levels. However, it is best to think of events as
 news worthy, and serve a higher level of importance than logs. Events are also
 used for tracking user behavior such as database changes etc.
 
-Note: This is not to be confused with the core Node.JS `EventEmitter` which
+Note: This is not to be confused with the core Node.js `EventEmitter` which
 serves a much different programmable purpose.
 
 ## Class: Event

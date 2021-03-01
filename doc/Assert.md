@@ -136,7 +136,7 @@ Valid when `val1` equal to `val2`
 * `val2` {mixed} second value to compare
 
 Valid when `val1` deeply matches `val2`
-_Note: Uses Node.JS->assert->deepStrictEqual for evaluations_
+_Note: Uses Node.js->assert->deepStrictEqual for evaluations_
 
 ### `static Assert.neq(val1, val2)`
 * `val1` {mixed} value to match against

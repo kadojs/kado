@@ -129,7 +129,7 @@ Valid when `val1` equal to `val2`
 * Return {boolean} `true` when val1 deeply matches val2
 
 Valid when `val1` deeply matches `val2`
-_Note: Uses Node.JS->assert->deepStrictEqual for evaluations_
+_Note: Uses Node.js->assert->deepStrictEqual for evaluations_
 
 ### `static Validate.neq(val1, val2)`
 * `val1` {number} to test against

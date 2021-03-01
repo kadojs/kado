@@ -45,13 +45,13 @@ building several portals and they all comprise of the same basic concepts.
 
 I keep looking for an end all to this madness of creating customer portal after
 customer portal. We kept finding software that forced us to adapt our company to
-the software rather than adapting the software to our process. This backwards
+the software rather than adapting the software to our process. These backwards
 process limits companies on new features and time to bring new features to
-market. This is where Kado prevails. Its not built like a traditional web
+market. This is where Kado prevails. It's not built like a traditional web
 portal. It has been produced with the mentality of an operating system, think of
-Windows or Linux. The great part is that Node.JS allows us to implement this
+Windows or Linux. The great part is that Node.js allows us to implement this
 structure in a way that allows the developer to use tools and dependencies of
-their liking. This will allow the developer to install and go. Lets take a look
+their liking. This will allow the developer to install and go. Let's take a look
 at how this would work.
 
 First install Kado globally:

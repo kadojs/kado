@@ -21,10 +21,10 @@ and cleaner usage.
 
 ## Class: FileSystem
 
-This class is based on Node.JS File System module, see
+This class is based on Node.js File System module, see
 [this documentation](https://nodejs.org/api/fs.html)
 for instructions using these methods. Otherwise, see the document for the
-Node.JS version you are using such as:
+Node.js version you are using such as:
 [v10.x](https://nodejs.org/dist/latest-v10.x/docs/api/fs.html) or
 [v12.x](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html), etc
 
@@ -39,7 +39,7 @@ const rv = fs.exists('some/file')
 console.log(rv) //false
 ```
 
-Usage can be referenced on the corresponding Node.JS documentation,
+Usage can be referenced on the corresponding Node.js documentation,
 linked below.
 
 ## Available properties

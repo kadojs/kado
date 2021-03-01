@@ -1,11 +1,11 @@
 # Getting Started
 
-Kado JavaScript libraries will help propel your Node.JS or Web Application
+Kado JavaScript libraries will help propel your Node.js or Web Application
 forward and provide better performance, easier debugging, and simpler overall
 code.
 
 First, you should have created project somewhere, whether it be a Git repository
-or a new project in your code editor. Also you should have a `package.json` file
+or a new project in your code editor. Also, you should have a `package.json` file
 to contain information about your project. If not, you need to create one. The
 easiest way is to run `npm init` and follow the on screen instructions.
 
