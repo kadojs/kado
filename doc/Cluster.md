@@ -4,7 +4,7 @@
 ```js
 const Cluster = require('kado/lib/Cluster')
 ```
-The `Cluster` library is an extension of the Node.JS `cluster` module that comes
+The `Cluster` library is an extension of the Node.js `cluster` module that comes
 bundled. This library adds features to the existing module such as:
 * Connection counting
 * Worker Recycling

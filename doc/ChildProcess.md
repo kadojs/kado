@@ -4,7 +4,7 @@
 ```js
 const ChildProcess = require('kado/lib/ChildProcess')
 ```
-This library provides an enhanced interface to use Node.JS core `child_process`
+This library provides an enhanced interface to use Node.js core `child_process`
 module.
 
 NOTE: This library is not to be confused with the core `ChildProcess` object
@@ -33,7 +33,7 @@ Change the path of the child process after instantiation.
 ### ChildProcess.send(message, sendHandler, options)
 * `message` {mixed} data to send to the child
 * `sendHandler` {Handle} special handle used to pass sockets to workers, see
-the [core Node.JS documentation](https://nodejs.org/dist/latest-v13.x/docs/api/child_process.html#child_process_subprocess_send_message_sendhandle_options_callback)
+the [core Node.js documentation](https://nodejs.org/dist/latest-v13.x/docs/api/child_process.html#child_process_subprocess_send_message_sendhandle_options_callback)
 * `options` {object} available options `keepOpen` which is also use specially
 for sending sockets.
 * Return {object} of results indexed by the child pid.

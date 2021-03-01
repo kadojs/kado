@@ -20,7 +20,7 @@ from our wonderful community. We hope that Kado 4 will vastly improve the
 performance of your applications. Also, we hope that Kado 4 will reduce the
 amount of code you have to write. Most importantly, Kado 4 will significantly
 reduce the amount of third party software your application will depend upon. Our
-goal is that Node.JS + Kado is a combination that puts the developer in control
+goal is that Node.js + Kado is a combination that puts the developer in control
 and provides enough tool depth as well as documentation depth to build applications with
 few to no outside dependencies.
 
@@ -29,7 +29,7 @@ few to no outside dependencies.
 This is impmortant due to the fact  maintenance of those outside packages are
 vital to the continued success of your applications. Without quality
 maintenance, packages are susceptible to incompatibilities with future versions
-of Node.JS as well as SECURITY VULNERABILITIES that may go unhandled!
+of Node.js as well as SECURITY VULNERABILITIES that may go unhandled!
 Furthermore, without being able to easily introspect which packages each named
 dependency relies on, it becomes a struggle making sure your application is
 compliant with the imposed licenses.
