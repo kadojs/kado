@@ -2,23 +2,23 @@
 
 ### 4.3.0
 *Released 2/23/21*
-* Fix bug in Format.cookie() !277
-* Use +00:00 for SQL timezone !288
-* Raise cluster default timeouts !284
-* Fix URI Decoding !283
-* Parameters are now sent through JSON first !282
-* Improved query string handling !274
-* Add BigInteger library !271
-* Add PromiseMore library !264
-* Add LogRelay via UDP !261
-* Add logging support !253
-* Continuously build Kado against Node 10, 12, 14 !289
-* Fix static file handling with query args !275
-* Add Cookie Builder !276
-* Add HTTP request logger !256
-* Add Mutlipart processing !244
-* Add foreign key support to schema !222
-* Various other improvements and fixes see https://git.nullivex.com/kado/kado/-/milestones/5#tab-merge-requests
+* Fix bug in Format.cookie() [!277](https://git.nullivex.com/kado/kado/-/merge_requests/277)
+* Use +00:00 for SQL timezone [!288](https://git.nullivex.com/kado/kado/-/merge_requests/288)
+* Raise cluster default timeouts [!284](https://git.nullivex.com/kado/kado/-/merge_requests/284)
+* Fix URI Decoding [!283](https://git.nullivex.com/kado/kado/-/merge_requests/283)
+* Parameters are now sent through JSON first [!282](https://git.nullivex.com/kado/kado/-/merge_requests/282)
+* Improved query string handling [!274](https://git.nullivex.com/kado/kado/-/merge_requests/274)
+* Add BigInteger library [!271](https://git.nullivex.com/kado/kado/-/merge_requests/271)
+* Add PromiseMore library [!264](https://git.nullivex.com/kado/kado/-/merge_requests/264)
+* Add LogRelay via UDP [!261](https://git.nullivex.com/kado/kado/-/merge_requests/261)
+* Add logging support [!253](https://git.nullivex.com/kado/kado/-/merge_requests/253)
+* Continuously build Kado against Node 10, 12, 14 [!289](https://git.nullivex.com/kado/kado/-/merge_requests/289)
+* Fix static file handling with query args [!275](https://git.nullivex.com/kado/kado/-/merge_requests/275)
+* Add Cookie Builder [!276](https://git.nullivex.com/kado/kado/-/merge_requests/276)
+* Add HTTP request logger [!256](https://git.nullivex.com/kado/kado/-/merge_requests/256)
+* Add Mutlipart processing [!244](https://git.nullivex.com/kado/kado/-/merge_requests/244)
+* Add foreign key support to schema [!222](https://git.nullivex.com/kado/kado/-/merge_requests/222)
+* Various other improvements and fixes see [%v4.3.0](https://git.nullivex.com/kado/kado/-/milestones/5#tab-merge-requests)
 
 ### 4.2.1
 *Released 5/7/20*
