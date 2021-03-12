@@ -5,3 +5,5 @@ node_js:
   - "13"
 env:
   - TRAVIS=travis
+before_script:
+  - npm install standard

@@ -1,7 +1,6 @@
 # Kado
 [![pipeline status](https://git.nullivex.com/kado/kado/badges/master/pipeline.svg)](https://git.nullivex.com/kado/kado/commits/4.x)
 [![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
-[![npm version](https://badge.fury.io/js/kado.svg)](https://badge.fury.io/js/kado)
 ```
 npm install kado
 ```
