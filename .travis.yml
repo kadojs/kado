@@ -1,16 +1,7 @@
 language: node_js
-sudo: required
 node_js:
-  - "8"
   - "10"
-  - "11"
-services:
-  - mysql
+  - "12"
+  - "13"
 env:
   - TRAVIS=travis
-before_script:
-  # Init database
-  - npm install mysql2
-  - mysql -e 'create database kado';
-  - mysql -e "grant all on kado.* to 'kado'@'localhost' identified by 'kado'; flush privileges;"
-  - node test kado dbsetup

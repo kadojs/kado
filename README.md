@@ -1,72 +1,64 @@
 # Kado
+[![pipeline status](https://git.nullivex.com/kado/kado/badges/master/pipeline.svg)](https://git.nullivex.com/kado/kado/commits/4.x)
 [![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
 [![npm version](https://badge.fury.io/js/kado.svg)](https://badge.fury.io/js/kado)
-[![Join the chat at https://gitter.im/KadoOrg/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/KadoOrg/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKadoOrg%2Fkado.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FKadoOrg%2Fkado?ref=badge_shield)
+```
+npm install kado
+```
+High Quality JavaScript Framework Libraries for Node.JS
 
-Web Application System
+## Quick Hello Server
 
-## Why Kado?
+Place the following code into an empty JavaScript file, example: `app.js`.
+```js
+'use strict'
+// import kado
+const kado = require('kado')
+// create application
+const app = kado.getInstance()
+// create a webserver
+const http = new kado.HyperText.HyperTextServer()
+// register the webserver
+app.http.addEngine('http', http.createServer(app.router))
+// register a route
+app.get('/', (req, res) => { res.end('Hello') })
+// start the application and listen
+app.start().then(() => app.listen())
+```
+After saving the file, execute the code by running the following command from
+the same folder as the JavaScript file.
+```
+node app
+```
+Once the command has executed, a web server that says "Hello" will be available
+on port `3000` of your local machine, example: `http://localhost:3000`.
 
-Kado is a consistent curated development environment that aims to empower the
-modern developer. All you need is knowledge of HTML, CSS, JavaScript and then
-Node.JS helps too. Afterwards you can create stunning web products.
-
-## What is it?
-
-Kado is a development platform that provides the necessary features to build
-Web Applications. We consider Node.JS a great interpreter but it expects user
-space to bring all functionality which is good for Node.JS, however hard on the
-developer. Kado aims to ease that pain by bringing a curated set of features
-that make developing in Node.JS much like other first class web languages
-such as: PHP, Ruby, Django on Python, etc. 
+See [kado.org](https://kado.org/guide/getting-started/) to go further.
 
 ## Features
 
-* Provides all the needed tools to build websites.
-* Removes the hassle of searching NPM for each thing.
-* Easy to use and install, most websites need only HTML editing.
-* Extensive features and depth for building new modules.
-* Does not get in the way of your existing style.
-* Speeds up the time needed to get a project started.
-* Keeps development across multiple projects consistent.
-* Reuse code by introducing a completely modular structure.
-* Builds on top of favorite technologies like:
- Node.JS, Express, Sequelize, Mustache, etc
-* There are more! See [kado.org](https://kado.org/)
+* Single Node.JS Module
+* Compatible with Node.JS 10 and above.
+* Contains 47 libraries that cover a majority of coding tasks.
+* Use libraries as needed and keep the code light.
+* Consistent stable code that rarely changes.
+* Complete reference documentation.
+* Easy to learn, familiar, inspired by popular modules.
+* Ready for continuous integration.
 
-## Demo
+## Questions or Problems?
 
-Try out Kado locally its really easy to get going especially if you
-already develop web applications. See the
-[demo installation guide](https://kado.org/content/install-the-demo)
+Please see our [bug tracker](https://git.nullivex.com/kado/kado/issues)
 
-## Usage
+## Change Log
 
-Please [see the documentation](https://kado.org/doc/kado/3.x) for more
+Please see the [CHANGELOG](https://kado.org/info/changelog/)
 
-## Thesis
+## Contributing
 
-Take a look at [this thesis document](https://kado.org/content/thesis) for a
-more expanded look at why Kado was written and learn about how it will solve
-a problem for you or your company.
-
-## Bugs or Issues
-
-Please file an [issue report](https://github.com/KadoOrg/kado/issues)
-
-## Support
-
-Email hello [at] kado.org
-
-or 
-
-[![Join the chat at https://gitter.im/KadoOrg/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/KadoOrg/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-## Changelog
-
-Please see the changelog at [kado.org](https://kado.org/content/changelog)
-
+Please see the [Contribution Guidelines](https://kado.org/info/contributing/)
 
 ## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKadoOrg%2Fkado.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FKadoOrg%2Fkado?ref=badge_large)
+Kado Copyright (C) 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado
+is licensed under the Lesser GNU Public License version 3.0 or newer see
+[LICENSE](https://kado.org/info/license/) for a complete copy of applicable license

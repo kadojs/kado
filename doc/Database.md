@@ -1,27 +1,84 @@
 # Database
+*Introduced in 3.0.0*
+> Stability: 2 - Stable
+```js
+const Database = require('kado/lib/Database')
+```
+This library manages Database connections that are stored through
+instances registered to this library.
 
-When designing a high level framework such as Kado. It comes time to make some tough decisions about certain technologies that must be used in order to make the modules interoperable.
+## Class: Database
+`Database` extends `Connect` see [Connect](Connect.md) for more engine
+management and more.
 
-The biggest concern for module interoperability is the database, its structure, and most importantly its integrity.
+### static Database.queryOptions(config, profiler)
+* `config` {object} application config looking for `{dev: {boolean}}`
+* `profiler` {Profiler} profiler instance to call against
+* Return {object} options safe with use building queries
 
-## What did we choose
+### static Database.getInstance()
+* Return {Database} new instance of the database system
 
-For Kado to operate business grade interfaces and follow proper human management techniques. It is important to implement a structured and keyed database structure.
+### Database.constructor()
+* Return {Database} new instance of the database system
 
-When we choose a solution we think of many factors. The first of which is how widely used and understand the solution that meets our parameters. Second, we evaluate how long the solution choose will last.
+### Database.queryOptions(config, profiler)
+* `config` {object} current system configuration to check for `{dev: true}`
+* `profiler` {Profiler} instance of the Profiler sub system
+* Return {object} options to be sent to a database query
 
-Finally, it brings me to the choice Kado makes for database storage.
+### Database.connect(name)
+* `name` {string} name of the database connection to connect to using the
+connections `connect()` method.
+* Return {Promise} that is resolved when the connection completes.
 
-Kado chooses MySQL to be the primary database backend for modules and internal systems. Now, that being said. There are several other database that may be used in a module and between a subset of modules.
+Note: when no `name` is provided all connections will be executed.
 
-## Database Overview
+### Database.close(name)
+* `name` {string} of a connection to be closed.
+* Return {boolean} `true` when the connection is closed.
 
-So lets overview the main database technology followed by supplemental choices.
+Note: when no `name` is provided all connections will be closed.
 
-* MySQL - Main and preferred module database format. Will include the most frame work support.
+## Class: DatabaseEngine
+`DatabaseEngine` extends `ConnectEngine` see
+[ConnectEngine](ConnectEngine.md) for more engine management and more.
 
-## Additional Software
+### DatabaseEngine.connect()
+Must be extended and used to connect to underlying database.
 
-Obviously, we encourage module developers to use any database system they find to be the right tool for the job and then implement an API layer for interoperability with other modules.
+### DatabaseEngine.close()
+By default will try and call `engine.close()` and then call
+`ConnectEngine.resetEngine()`. Which should be sufficient for most underlays.
 
-Please see the API documentation for more specifics on why modules should expose and API and how Kado makes it easy and secure.
+## Class: DatabaseMySQL
+`DatabaseMySQL` extends `DatabaseEngine` extends `ConnectEngine` and implements
+a relationship with the JavaScript `mysql2` driver available on NPM and Github.
+
+See the [mysql2 package](https://github.com/sidorares/node-mysql2)
+
+To use this engine it should be required at application startup. Example:
+```js
+const app = require('kado').getInstance()
+const MySQL = require('kado/lib/Database').MySQL
+const mysqlConfig = { host: 'localhost', user: 'test', database: 'test' }
+app.database.addEngine('mysql', new MySQL(mysqlConfig))
+```
+
+### DatabaseMySQL.constructor(options)
+* `options` {Object} containing connection options.
+* Return {DatabaseMySQL} new driver instance ready to be passed to the
+`app.database.addEngine()` call.
+
+The currently supported options are:
+
+* `host` {string} hostname of the database server, default `localhost`
+* `user` {string} the username used to identify the connection
+* `password` {string} the password used to authenticate the connection
+* `database` {string} the database desired to select after connecting
+* `driver` {string} the driver to use available choices are: mysql2, mariadb
+
+Timezone is forced to UTC because that's the only way DATE/DATETIME/TIMESTAMP
+values can ever work correctly and predictably. Uses the connection option
+`timezone: 'Etc/GMT0'` and one time on-connect query `SET time_zone='+00:00';`
+per connection.

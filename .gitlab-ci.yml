@@ -1,0 +1,39 @@
+image: node:10
+
+prepare:
+  stage: build
+  script:
+    - npm install
+    - npm install standard
+
+cache:
+  paths:
+    - node_modules/
+
+node10:
+  stage: test
+  image: node:10
+  script:
+    - node -v
+    - npm test
+
+node12:
+  stage: test
+  image: node:12
+  script:
+    - node -v
+    - npm test
+
+node14:
+  stage: test
+  image: node:10
+  script:
+    - node -v
+    - npm test
+
+node-latest:
+  stage: test
+  image: node:latest
+  script:
+    - node -v
+    - npm test
