@@ -12,19 +12,27 @@ $ npm install kado
 ```
 
 This is the preferred installation method and is the easiest. Provided you have
-already installed [Node.JS](https://nodejs.org) then you should have `npm`
+already installed [Node.js](https://nodejs.org) then you should have `npm`
 available on your system. Simply execute the command above from your project
 root to install Kado into your project.
+
+## Install from Yarn
+
+```
+$ yarn add kado
+```
+
+Yarn is a great package manager and works well in production.
 
 ### Direct Download
 
 Please use the link below to download an archive file containing the latest
 version of Kado.
 
-* [kado-4.2.1.zip](https://git.nullivex.com/kado/kado/-/archive/v4.2.1/kado-v4.2.1.zip) - All Platforms
-* [kado-4.2.1.tar.gz](https://git.nullivex.com/kado/kado/-/archive/v4.2.1/kado-v4.2.1.tar.gz) - All Platforms
-* [kado-4.2.1.tar.bz2](https://git.nullivex.com/kado/kado/-/archive/v4.2.1/kado-v4.2.1.tar.bz2) - All Platforms
-* [kado-4.2.1.tar](https://git.nullivex.com/kado/kado/-/archive/v4.2.1/kado-v4.2.1.tar) - All Platforms
+* [kado-4.3.0.zip](https://git.nullivex.com/kado/kado/-/archive/v4.3.0/kado-v4.3.0.zip) - All Platforms
+* [kado-4.3.0.tar.gz](https://git.nullivex.com/kado/kado/-/archive/v4.3.0/kado-v4.3.0.tar.gz) - All Platforms
+* [kado-4.3.0.tar.bz2](https://git.nullivex.com/kado/kado/-/archive/v4.3.0/kado-v4.3.0.tar.bz2) - All Platforms
+* [kado-4.3.0.tar](https://git.nullivex.com/kado/kado/-/archive/v4.3.0/kado-v4.3.0.tar) - All Platforms
 
 For earlier versions see our [Release Page](https://git.nullivex.com/kado/kado/-/releases).
 

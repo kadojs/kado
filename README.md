@@ -5,7 +5,8 @@
 ```
 npm install kado
 ```
-High Quality JavaScript Framework Libraries for Node.JS
+
+Collection of JavaScript Framework Libraries for Node.js
 
 ## Quick Hello Server
 
@@ -37,14 +38,22 @@ See [kado.org](https://kado.org/guide/getting-started/) to go further.
 
 ## Features
 
-* Single Node.JS Module
-* Compatible with Node.JS 10 and above.
+* Single Node.js Module
+* Compatible with Node.js 10 and above.
 * Contains 47 libraries that cover a majority of coding tasks.
 * Use libraries as needed and keep the code light.
 * Consistent stable code that rarely changes.
 * Complete reference documentation.
 * Easy to learn, familiar, inspired by popular modules.
 * Ready for continuous integration.
+
+## Documentation
+
+Visit [kado.org](https://kado.org)
+
+## Kado Library List
+
+See the [Kado Library List](https://kado.org/info/library-list/)
 
 ## Questions or Problems?
 
@@ -59,6 +68,6 @@ Please see the [CHANGELOG](https://kado.org/info/changelog/)
 Please see the [Contribution Guidelines](https://kado.org/info/contributing/)
 
 ## License
-Kado Copyright (C) 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado
+Kado Copyright (C) 2013-2021 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado
 is licensed under the Lesser GNU Public License version 3.0 or newer see
 [LICENSE](https://kado.org/info/license/) for a complete copy of applicable license

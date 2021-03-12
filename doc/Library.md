@@ -8,8 +8,8 @@ const Library = require('kado/lib/Library')
 ```
 This is searching library the helps locate other libraries in various system
 paths. Essentially, this is an extension of the `require()` system provided
-internally by Node.JS and provides a layer of abstraction so that any underlying
-module loader my be used.
+internally by Node.js and provides a layer of abstraction so that any underlying
+module loader may be used.
 
 Example Usage:
 ```js

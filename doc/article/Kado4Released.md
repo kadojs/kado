@@ -21,10 +21,10 @@ current setup.
 
 ## Create Websites and API Servers
 
-The new Kado libraries come with enough functionality to setup both websites
+The new Kado libraries come with enough functionality to set up both websites
 and API servers right out of the box. No extra dependencies needed! The included
-libraries provide everything to setup routes, process requests, and set
-redirects. Keep working close to the core of Node.JS by using Kado for your next
+libraries provide everything to set up routes, process requests, and set
+redirects. Keep working close to the core of Node.js by using Kado for your next
 servers.
 
 ## Step by Step Guides

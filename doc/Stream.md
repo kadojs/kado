@@ -7,7 +7,7 @@ const Stream = require('kado/lib/Stream')
 
 ## class Stream
 
-The stream class is an exposure of the Node.JS core Stream class. This provides
+The stream class is an exposure of the Node.js core Stream class. This provides
 convenience as we overlay common Stream manipulation mechanisms on to the core
 functionality.
 
