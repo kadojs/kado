@@ -1,5 +1,15 @@
 # Changelog
 
+### 4.3.1
+*Pending*
+* Session.set() now saves automatically and returns a promise that should be
+awaited. IN the event multiple session sets are going to happen in the same
+method it is advised to use `{ save: false }` as a third option to
+`Session.set()` then call `Session.save()` and await the promise at the end.
+This is meant to make sure that session saving is not implied to be automatic.
+It should be explicit and handled like any other database transaction.
+
+
 ### 4.3.0
 *Released 2/23/21*
 * Fix bug in Format.cookie() [!277](https://git.nullivex.com/kado/kado/-/merge_requests/277)
