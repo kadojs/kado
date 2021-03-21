@@ -49,10 +49,45 @@ data.
 ### Session.restore()
 * Return {Promise} resolved when the backend storage have loaded the session.
 
-### Session.set(key, value)
+### Session.set(key, value, options = {})
 * `key` {string} name of the session value
 * `value` {mixed} data to save to the session key
+* `options` {object} options to control session set
 * Return {Session} the current instance.
+
+From the changelog:
+
+Session.set() now saves automatically and returns a promise that should be
+awaited. IN the event multiple session sets are going to happen in the same
+method it is advised to use `{ save: false }` as a third option to
+`Session.set()` then call `Session.save()` and await the promise at the end.
+This is meant to make sure that session saving is not implied to be automatic.
+It should be explicit and handled like any other database transaction.
+
+Example
+
+```js
+class MyRoutes extends Module {
+  async myRoute (req, res) {
+    const someData = { foo: 1 }
+    const moreData = { bar: 1 }
+    const saveOpts = { save: false }
+    req.session.set('key1', someData.foo, saveOpts)
+    req.session.set('key2', moreData.bar, saveOpts)
+    await req.session.save()
+    res.end('done')
+  }
+
+  async myRoute2 (req, res) {
+    // this method uses an extra db call
+    const someData = { foo: 1 }
+    const moreData = { bar: 1 }
+    await req.session.set('key1', someData.foo)
+    await req.session.set('key2', moreData.bar)
+    res.end('done')
+  }
+}
+```
 
 ### Session.get(key)
 * `key` {string} name of the session value

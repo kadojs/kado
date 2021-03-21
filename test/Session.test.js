@@ -43,8 +43,14 @@ runner.suite('Session', (it) => {
     Assert.eq(Object.keys(rv).length, 0)
   })
   it('should set and get a key', () => {
-    Assert.isType('Session', session.set('foo', 'bar'))
+    Assert.isType('Session', session.set('foo', 'bar', { save: false }))
     Assert.eq(session.get('foo'), 'bar')
+  })
+  it('should set and save', async () => {
+    const rv = session.set('foo', 'baz')
+    Assert.isType('Promise', rv)
+    await rv
+    Assert.eq(session.get('foo'), 'baz')
   })
   it('should save the data to the store', async () => {
     const rv = await session.save()
