@@ -62,6 +62,8 @@ what is provided by the library.
   allow fine grained user control.
 * [Profiler](../Profiler.md) - Track application resource usage and
   timing.
+* [PromiseMore](../PromiseMore.md) - Additional promise control patterns that
+  expand the core JavaScript functionality.
 * [Query](../Query.md) - Super class for constructing query builders that
   are customized for a specific query language.
 * [QueryCache](../QueryCache.md) - Query cache system for databases.
