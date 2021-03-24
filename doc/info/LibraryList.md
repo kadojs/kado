@@ -17,12 +17,8 @@ what is provided by the library.
 * [Cluster](../Cluster.md) - Cluster library for constructing and
   operating process clusters.
 * [Command](../Command.md) - Build CLI applications with ease.
-* [CommandServer](../CommandServer.md) - Execute CLI applications like a
-  web server.
 * [Connect](../Connect.md) - Framework for housing external resource
   connections.
-* [ConnectEngine](../ConnectEngine.md) - Interface for creating an engine
-  to be used with a Connect system.
 * [Cron](../Cron.md) - Execute functions on a schedule similar to UNIX
   cron jobs.
 * [Database](../Database.md) - Connect system made for Databases.

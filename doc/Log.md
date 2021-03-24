@@ -9,7 +9,7 @@ for system level log messages.
 
 ## Class: Log
 `Log` extends `ConnectEngine` see
-[ConnectEngine](ConnectEngine.md) for more engine management and more.
+[ConnectEngine](Connect.md#classconnectengine) for engine management and more.
 
 This is the log multiplexer to hold engines such as the LogEngine.
 

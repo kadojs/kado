@@ -19,7 +19,7 @@ management and more.
 
 ## Class: ViewEngine
 `ViewEngine` extends `ConnectEngine` see
-[ConnectEngine](ConnectEngine.md) for more engine management and more.
+[ConnectEngine](Connect.md#classconnectengine) for engine management and more.
 
 ### ViewEngine.render()
 Must be extended and used to render to the underlying system.

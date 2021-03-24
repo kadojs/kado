@@ -146,7 +146,7 @@ This actually uses the `Command` library to setup the new command
 based on the options and is a shortcut for.
 
 ```js
-CommandSerer.addCommand('someModule','someCommand',new Command())
+CommandServer.addCommand('someModule','someCommand',new Command())
 ```
 
 ### CommandServer.run(command)
