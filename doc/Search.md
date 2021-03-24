@@ -27,7 +27,7 @@ Note: when no `name` is provided all handlers are executed.
 
 ## Class: SearchEngine
 `SearchEngine` extends `ConnectEngine` see
-[ConnectEngine](Connect.md#classconnectengine) for engine management and more.
+[ConnectEngine](Connect.md#class-connectengine) for engine management and more.
 
 ### SearchEngine.search()
 Must be extended and used to send to underlying search system.
