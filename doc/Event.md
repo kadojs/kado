@@ -88,7 +88,7 @@ handler can read.
 
 ## Class: EventEngine
 `EventEngine` extends `ConnectEngine` see
-[ConnectEngine](ConnectEngine.md) for more engine management and more.
+[ConnectEngine](Connect.md#classconnectengine) for engine management and more.
 
 ### EventEngine.event()
 Must be extended and used to send to underlying event system.

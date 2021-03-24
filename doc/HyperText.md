@@ -47,7 +47,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 ## Class: HyperTextEngine
 `HyperTextEngine` extends `ConnectEngine` see
-[ConnectEngine](ConnectEngine.md) for more engine management and more.
+[ConnectEngine](Connect.md#classconnectengine) for engine management and more.
 
 ### HyperTextEngine.start()
 Must be extended and used to start the underlying server.

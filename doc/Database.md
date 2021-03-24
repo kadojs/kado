@@ -42,7 +42,7 @@ Note: when no `name` is provided all connections will be closed.
 
 ## Class: DatabaseEngine
 `DatabaseEngine` extends `ConnectEngine` see
-[ConnectEngine](ConnectEngine.md) for more engine management and more.
+[ConnectEngine](Connect.md#classconnectengine) for engine management and more.
 
 ### DatabaseEngine.connect()
 Must be extended and used to connect to underlying database.
