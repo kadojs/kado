@@ -26,7 +26,7 @@ Note: when no `name` is provided all handlers are executed.
 
 ## Class: MessageEngine
 `MessageEngine` extends `ConnectEngine` see
-[ConnectEngine](Connect.md#classconnectengine) for engine management and more.
+[ConnectEngine](Connect.md#class-connectengine) for engine management and more.
 
 ### MessageEngine.send()
 Must be extended and used to send to underlying message system.
