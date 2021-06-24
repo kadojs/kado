@@ -16,18 +16,19 @@ Format is a completely static class of loosely related methods
 * Return {string} a string ready to set sent view `res.setHeader('Set-Coookie')`
 
 Available Options
-* `domain` {string} set the domain of the cookie eg: `{ domain: 'example.com' }`
+* `domain` {string} set the domain of the cookie e.g.: `{ domain: 'example.com' }`
 * `expires` {string} UTC date string, indicating when the cookie expires
 * `httpOnly` {boolean} `true` will stop javascript access to the cookie
 * `maxAge` {number} number of seconds the cookie shall be valid
 * `secure` {boolean} `true` for HTTPS only cookies
-* `sameSite` {string} accepts `Strict`, `Lax`, or `None` as values to control cross origin
+* `sameSite` {string} accepts `Strict`, `Lax`, or `None` as
+  values to control cross-origin
 
 Example
 
 ```js
 const Format = require('kado/lib/Format')
-const Module = require('kado/lib/Module)
+const Module = require('kado/lib/Module')
 class MyModule extends Module {
   someRoute (req, res) {
     const cookie = Format.cookie('myCookie', { id: 1 }, { httpOnly: true })
@@ -116,6 +117,79 @@ standard C _inet_ntop()_ function call
 
 Convert input IPv4 or IPv6 to normalized standard form, with optional padding
 and/or HTML-safe output
+
+### `static Format.ProgressBar(fmt, options)`
+* `fmt` {string} Format descriptor
+* `options` {object|number} options or total
+* Returns: {ProgressBar} ProgressBar instance
+
+Initialize a `ProgressBar` with the given `fmt` string and `options` or `total`.
+
+Tokens in `fmt`
+* `:bar` the progress bar itself
+* `:current` current tick number
+* `:total` total ticks
+* `:elapsed` time elapsed in seconds
+* `:percent` completion percentage
+* `:eta` eta in seconds
+* `:rate` rate of ticks per second
+
+Available Options in `options`
+* `curr` current completed index
+* `total` total number of ticks to complete
+* `width` the displayed width of the progress bar defaulting to total
+* `stream` the output stream defaulting to stderr
+* `head` head character defaulting to complete character
+* `complete` completion character defaulting to "="
+* `incomplete` incomplete character defaulting to "-"
+* `renderThrottle` minimum time between updates in milliseconds defaulting to 16
+* `callback` optional function to call when the progress bar completes
+* `clear` will clear the progress bar upon termination
+
+#### `Format.ProgressBar.setTotal(total)`
+* `total` {number} Total
+
+Change the current instance internal/private total to `total`.
+
+#### `Format.ProgressBar.setFmt(fmt)`
+* `fmt` {string} Format descriptor
+
+Change the current instance internal/private format to `fmt`, as described in
+the constructor.
+
+#### `Format.ProgressBar.tick(len, tokens)`
+* `len` {number|object} Tick length (or tokens)
+* `tokens` {object} Tokens
+
+"tick" the progress bar with optional `len` and optional `tokens`.
+
+#### `Format.ProgressBar.render(tokens, force)`
+* `tokens` {object} Tokens
+* `force` {boolean} Forcibly render now
+
+Method to render the progress bar with optional `tokens` to place in the
+progress bar's `fmt` field.
+
+#### `Format.ProgressBar.update(tokens, force)`
+* `ratio` {number} The ratio (between 0 and 1 inclusive) to set the overall
+  completion to.
+* `tokens` {object} Tokens
+
+Method to "update" the progress bar to represent an exact percentage. The ratio
+(between 0 and 1) specified will be multiplied by `total` and floored,
+representing the closest available "tick." For example, if a progress bar has a
+length of 3 and `update(0.5)` is called, the progress will be set to 1.
+
+A ratio of 0.5 will attempt to set the progress to halfway.
+
+#### `Format.ProgressBar.interrupt(message)`
+* `message` {string} The message to write.
+
+Method to "interrupt" the progress bar and write a message above it.
+
+#### `Format.ProgressBar.terminate()`
+
+Terminates a progress bar.
 
 ### `static Format.color(message, fgc, bgc, set, rst)`
 * `message` {mixed} number, or string containing parsable number-like data
