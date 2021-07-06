@@ -1,13 +1,13 @@
 {
-  "author": "Bryan Tong <bryan@nullivex.com> (https://www.nullivex.com)",
+  "author": "Bryan Tong <bryan@burstcloud.co> (https://www.burstcloud.co)",
   "contributors": [
-    "Tony Butler <tony@nullivex.com> (https://www.nullivex.com)",
-    "Justin Fowler <justin@nullivex.com> (https://www.nullivex.com)",
-    "Drew Gordon <drew@nullivex.com> (https://www.nullivex.com)",
-    "George Martinez <george@mconsultors.com> (https://www.nullivex.com)",
-    "Chris Giguere <chris.giguere@nullivex.com> (https://www.nullivex.com)"
+    "Tony Butler <tony@burstcloud.co> (https://www.burstcloud.co)",
+    "Justin Fowler <justin@burstcloud.co> (https://www.burstcloud.co)",
+    "Drew Gordon <drew@burstcloud.co> (https://www.burstcloud.co)",
+    "George Martinez <george@mconsultors.com> (https://www.burstcloud.co)",
+    "Chris Giguere <chris.giguere@burstcloud.co> (https://www.burstcloud.co)"
   ],
-  "description": "High Quality JavasScript Libraries based on ES6+",
+  "description": "JavasScript Libraries based on ES6+",
   "engines": {
     "node": ">=10"
   },
@@ -46,7 +46,6 @@
   ],
   "homepage": "https://kado.org",
   "license": "LGPL-3.0",
-  "main": "./lib/Application.js",
   "name": "kado",
   "repository": {
     "type": "git",
@@ -55,5 +54,5 @@
   "scripts": {
     "test": "standard && node ./test/index.js"
   },
-  "version": "4.3.1"
+  "version": "4.3.2"
 }
