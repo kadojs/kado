@@ -46,6 +46,7 @@
   ],
   "homepage": "https://kado.org",
   "license": "LGPL-3.0",
+  "main": "./lib/Application.js",
   "name": "kado",
   "repository": {
     "type": "git",
@@ -54,5 +55,5 @@
   "scripts": {
     "test": "standard && node ./test/index.js"
   },
-  "version": "4.3.1"
+  "version": "4.3.2"
 }
