@@ -1,14 +1,17 @@
 # Changelog
 
+### 4.3.2
+* Restore main field, with proper value. Ensured compliance.
+* Removed index of Session data on the SessionStoreModel
+
 ### 4.3.1
-*Pending*
 * Session.set() now saves automatically and returns a promise that should be
 awaited. IN the event multiple session sets are going to happen in the same
 method it is advised to use `{ save: false }` as a third option to
 `Session.set()` then call `Session.save()` and await the promise at the end.
 This is meant to make sure that session saving is not implied to be automatic.
 It should be explicit and handled like any other database transaction.
-
+* Remove main field from package.json
 
 ### 4.3.0
 *Released 2/23/21*
