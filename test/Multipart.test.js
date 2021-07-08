@@ -131,7 +131,18 @@ const sendUpload = (headers, data, resolve, reject) => {
     })
   })
   if (data instanceof Stream) {
-    data.pipe(client)
+    // piping from a file fails on Windows 10 with Node 16.4.2 it may be
+    // a bug that will go away, or it might be a miracle that it works the rest
+    // of the time. issue https://git.nullivex.com/kado/kado/-/issues/90
+    // and merge request
+    // https://git.nullivex.com/kado/kado/-/merge_requests/289/
+    // both attempt to correct this mysterious issue however it remains.
+    // the theory is that a race condition happens, and the newest code is
+    // exposing what used to be a rare issue
+    // data.pipe(client)
+    // reading and writing the stream manually works
+    data.on('data', (chunk) => { client.write(chunk) })
+    data.on('close', () => { client.end() })
   } else {
     client.end(data)
   }
@@ -166,6 +177,11 @@ runner.suite('Multipart', (it, suite) => {
         'content-type': 'multipart/form-data; boundary=' + boundary,
         'transfer-encoding': 'chunked'
       }
+      /*
+      const data = fs.createReadStream(
+        fs.path.resolve(__dirname, 'fixture', 'Multipart', 'article.part')
+      )
+       */
       const data = fs.createReadStream(
         fs.path.resolve(__dirname, 'fixture', 'Multipart', 'article.part')
       )
