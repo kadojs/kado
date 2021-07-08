@@ -58,7 +58,7 @@ _runner.suite('TestRunner', (main) => {
     test2.it('should do more stuff', () => { Assert.eq() })
     // and again
     const test3 = test2.suite('something really deep')
-    test3.it('that is what she said', () => { Assert.eq() })
+    test3.it('that is deep', () => { Assert.eq() })
     runner.test('something out of band', () => { Assert.eq(false, false) })
     runner.test('something out of band 2', () => { Assert.eq(false, true) })
     Assert.eq(await runner.execute({ indent: indent, hideFailed: true })
