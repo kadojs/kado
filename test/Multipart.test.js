@@ -177,11 +177,6 @@ runner.suite('Multipart', (it, suite) => {
         'content-type': 'multipart/form-data; boundary=' + boundary,
         'transfer-encoding': 'chunked'
       }
-      /*
-      const data = fs.createReadStream(
-        fs.path.resolve(__dirname, 'fixture', 'Multipart', 'article.part')
-      )
-       */
       const data = fs.createReadStream(
         fs.path.resolve(__dirname, 'fixture', 'Multipart', 'article.part')
       )
