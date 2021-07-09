@@ -4,9 +4,10 @@
 *Pending*
 * Log now writes to console synchronously when toConsole is on.
 * Improved log dump to work with all variable types.
-* Better log dumping on errors.
+* Better log dumping on errors. Fixes #108
 * Added `log.print(msg)` which is an alias for `log.info(msg)`
 * Added `log.log(msg)` which is an alias for `log.info(msg)`
+* Better handling of invalid JSON input #110 and #103
 
 ### 4.3.2
 *Released 7/7/21*
