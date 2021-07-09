@@ -1,5 +1,13 @@
 # Changelog
 
+### 4.3.3
+*Pending*
+* Log now writes to console synchronously when toConsole is on.
+* Improved log dump to work with all variable types.
+* Better log dumping on errors.
+* Added `log.print(msg)` which is an alias for `log.info(msg)`
+* Added `log.log(msg)` which is an alias for `log.info(msg)`
+
 ### 4.3.2
 *Released 7/7/21*
 * Restore main field, with proper value. Ensured compliance.
