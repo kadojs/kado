@@ -19,8 +19,12 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
+const Application = require('../lib/Application')
 const Assert = require('../lib/Assert')
+const http = require('http')
+const HyperText = require('../lib/HyperText')
 const Parser = require('../lib/Parser')
+const PromiseMore = require('../lib/PromiseMore')
 const cookieString = '_ga=GA1.2.637651231.1575923282;' +
   ' mm2_cookieA=06bad8dd-ecda-4e00-abbe-1e641adde6f0; _ym_d=1586356006;' +
   ' _ym_uid=1576356006128031579; __qca=P0-1332394709-1576356006094'
@@ -31,7 +35,20 @@ const htmlString = '<!doctype HTML><html lang="en"><head><title>Hello World' +
 const entityString = '&lt;!doctype HTML&gt;&lt;html lang=&quot;en&quot;&gt;' +
   '&lt;head&gt;&lt;title&gt;Hello World&lt;/title&gt;&lt;/head&gt;' +
   '&lt;body&gt;&lt;h1&gt;Hello World&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;'
-runner.suite('Parser', (it) => {
+runner.suite('Parser', (it, suite) => {
+  let app
+  let server
+  suite.before(async () => {
+    app = new Application()
+    server = new HyperText.HyperTextServer()
+    server.setPort(3031)
+    app.http.addEngine('http', server.createServer(app.router))
+    await app.start()
+    await app.listen()
+  })
+  suite.after(async () => {
+    await app.stop()
+  })
   it('should parse cookies', () => {
     const rv = Parser.cookie(cookieString)
     Assert.isType('Object', rv)
@@ -99,6 +116,31 @@ runner.suite('Parser', (it) => {
   it('should capitalize the first and last word of a title', () => {
     const rv = Parser.stringToTitle('and the dog came in')
     Assert.eq(rv, 'And the Dog Came In')
+  })
+  it('should handle broken JSON', async () => {
+    const promise = PromiseMore.hoist()
+    app.post('/test/', (req, res) => { res.json(req.body) })
+    const client = http.request({
+      port: 3031,
+      host: 'localhost',
+      method: 'POST',
+      path: '/test/',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    client.on('response', (res) => {
+      let buf = Buffer.alloc(0)
+      res.on('data', (chunk) => { buf = Buffer.concat([buf, chunk]) })
+      res.on('end', () => {
+        const response = buf.toString('utf-8')
+        Assert.isOk(response === '{}', 'Invalid response for bad JSON input')
+        promise.resolve()
+      })
+    })
+    client.on('error', promise.reject)
+    client.end('{"foo":')
+    await promise
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
