@@ -162,13 +162,6 @@ runner.suite('Multipart', (it, suite) => {
   it('should construct', () => {
     Assert.isType('Multipart', new Multipart())
   })
-  it('should accept and parse a multipart locally built request', () => {
-    return new Promise((resolve, reject) => {
-      app.post('/upload/', testUpload(resolve, reject))
-      const form = buildFormData()
-      sendUpload(form.headers, form.data, resolve, reject)
-    })
-  })
   it('should accept and parse from a capture', () => {
     return new Promise((resolve, reject) => {
       app.post('/upload/', testUpload(resolve, reject))
@@ -181,6 +174,13 @@ runner.suite('Multipart', (it, suite) => {
         fs.path.resolve(__dirname, 'fixture', 'Multipart', 'article.part')
       )
       sendUpload(headers, data, resolve, reject)
+    })
+  })
+  it('should accept and parse a multipart locally built request', () => {
+    return new Promise((resolve, reject) => {
+      app.post('/upload/', testUpload(resolve, reject))
+      const form = buildFormData()
+      sendUpload(form.headers, form.data, resolve, reject)
     })
   })
   it('should accept and parse from Multipart.FormBuild', () => {
