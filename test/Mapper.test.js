@@ -26,6 +26,18 @@ runner.suite('Mapper', (it) => {
   it('should construct', () => {
     Assert.isType('Mapper', new Mapper())
   })
+  it('should map an object', () => {
+    const productList = { test1: 'foo', test2: 'bar', test3: 'baz' }
+    const keyList = ['test1', 'test2', 'test3']
+    const valueList = ['foo', 'bar', 'baz']
+    Mapper.getInstance(productList).map((value, key) => {
+      const keyTest = keyList.shift()
+      const valueTest = valueList.shift()
+      Assert.isOk(key === keyTest, 'Failed key match')
+      Assert.isOk(value === valueTest, 'Failed value match')
+      return value
+    })
+  })
   it('should set a value with a string', () => {
     Assert.eq(mapper.set('foo1', 'bar'), 'bar')
   })
