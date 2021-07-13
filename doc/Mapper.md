@@ -21,6 +21,19 @@ creating a full instance.
 
 Instantiates a new empty `Mapper` instance, optionally populated with `data`
 
+### `Mapper.map (iterator)`
+* `iterator` {Function} a method that takes `value` and `key` as arguments.
+* Returns: {Mapper} the original object.
+
+Example
+```js
+const someObject = { foo: 'baz', two: 2, three: null }
+Mapper.getInstance(someObject).map((value, key) => {
+  if (value === null) value = ''
+  return value
+})
+```
+
 ### `Mapper.merge (data)`
 * `data` {Object} optional data to populate
 * Returns: {Mapper} the same as the called `Mapper`, for chaining
