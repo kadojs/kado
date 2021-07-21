@@ -8,6 +8,7 @@
 * Added `log.print(msg)` which is an alias for `log.info(msg)`
 * Added `log.log(msg)` which is an alias for `log.info(msg)`
 * Better handling of invalid JSON input #110 and #103
+* Fix issue with statusCode overwrite due to etag support in render.
 
 ### 4.3.2
 *Released 7/7/21*
