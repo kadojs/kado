@@ -176,6 +176,20 @@ runner.suite('Multipart', (it, suite) => {
       sendUpload(headers, data, resolve, reject)
     })
   })
+  it('should accept and parse from a capture using quoted boundary', () => {
+    return new Promise((resolve, reject) => {
+      app.post('/upload/', testUpload(resolve, reject))
+      const boundary = '--------------------------131504236582514718146901'
+      const headers = {
+        'content-type': 'multipart/form-data; boundary="' + boundary + '"',
+        'transfer-encoding': 'chunked'
+      }
+      const data = fs.createReadStream(
+        fs.path.resolve(__dirname, 'fixture', 'Multipart', 'article.part')
+      )
+      sendUpload(headers, data, resolve, reject)
+    })
+  })
   it('should accept and parse a multipart locally built request', () => {
     return new Promise((resolve, reject) => {
       app.post('/upload/', testUpload(resolve, reject))
