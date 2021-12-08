@@ -96,8 +96,8 @@ runner.suite('Cluster', (it) => {
         })
         setTimeout(() => {
           reject(new Error('Failed to restart cluster before' +
-            ' timeout of 1000ms'))
-        }, 1000)
+            ' timeout of 5000ms'))
+        }, 5000)
       })
     })
   })

@@ -114,6 +114,32 @@ assert.suite('date', (it) => {
     Assert.date(new Date(), await getFutureDate(2), { distance: 333 })
   })
 })
+assert.suite('ensure', (it) => {
+  it('should keep data the same, when typed properly', () => {
+    const arr1 = []
+    const arr2 = Assert.ensure('arr', arr1)
+    Assert.eq(Assert.getType(arr1), Assert.getType(arr2))
+    const obj1 = {}
+    const obj2 = Assert.ensure('obj', obj1)
+    Assert.eq(Assert.getType(obj1), Assert.getType(obj2))
+    const str1 = 'foo'
+    const str2 = Assert.ensure('str', str1)
+    Assert.eq(Assert.getType(str1), Assert.getType(str2))
+  })
+  it('should make non arrays into the first member of an array', () => {
+    const someString = 'A string'
+    const someArray = []
+    const arr = Assert.ensure('arr', someString)
+    Assert.eq(Assert.getType(someArray), Assert.getType(arr))
+  })
+  it('should make non objects into the first member a of an object', () => {
+    const someString = 'A string'
+    const someObject = {}
+    const obj = Assert.ensure('obj', someString)
+    Assert.eq(Assert.getType(someObject), Assert.getType(obj))
+    Assert.eq(obj.a, someString)
+  })
+})
 assert.suite('eq', (it) => {
   it('should eq array', () => {
     const arr1 = []
