@@ -212,17 +212,17 @@ validate.suite('isOwn', (it) => {
   }
   const inst1 = new Obj2()
   const inst2 = new Obj3()
-  it('should match local properties', () => {
-    const isTest1Local = Validate.isOwn(obj1, 'test1') // true
-    Assert.eq(isTest1Local, true)
+  it('should match own properties', () => {
+    const isTest1Own = Validate.isOwn(obj1, 'test1') // true
+    Assert.eq(isTest1Own, true)
   })
   it('should not match prototype properties', () => {
-    const isTest2Local = Validate.isOwn(inst1, 'test2') // false
-    Assert.eq(isTest2Local, false)
+    const isTest2Own = Validate.isOwn(inst1, 'test2') // false
+    Assert.eq(isTest2Own, false)
   })
   it('should match extended, defined properties', () => {
-    const isTest3Local = Validate.isOwn(inst2, 'test3') // true
-    Assert.eq(isTest3Local, true)
+    const isTest3Own = Validate.isOwn(inst2, 'test3') // true
+    Assert.eq(isTest3Own, true)
   })
 })
 validate.suite('match', (it) => {
