@@ -21,30 +21,30 @@
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const Assert = require('../lib/Assert')
 const BigInt = require('../lib/BigInteger')
-runner.suite('BigInteger', (it, suite) => {
-  const two = BigInt(2)
-  it('should construct', () => {
-    Assert.isType('BigInteger', two)
+runner.suite('BigInteger', (it, bigint) => {
+  const strNumber = '91823918239182398123'
+  const bi = new BigInt(strNumber)
+  it(`should construct with ('${strNumber}')`, () => {
+    Assert.isType('BigInteger', bi)
   })
-  it('should .toJSON()', () => {
-    Assert.eq(two.toJSON(), '@BigInteger(2)')
-  })
-  it('should JSON.stringify()', () => {
-    Assert.eq(JSON.stringify({ two: two }), '{"two":"@BigInteger(2)"}')
-  })
-  suite.suite('.pow()', (it) => {
-    const fullBits = 340282366920938463463374607431768211456n
-    it('should .pow() with Number input', () => {
-      Assert.eq(two.pow(128), fullBits)
+  bigint.suite('.toString()', (it) => {
+    const binNumber = '1001111101001010000000101110010001001110010111110101010001010101011'
+    const hexNumber = '4fa50172272faa2ab'
+    const octNumber = '11751200562116276521253'
+    it(`.toString()   === '${strNumber}'`, () => {
+      Assert.eq(bi.toString(), strNumber)
     })
-    it('should .pow() with native BigInt input', () => {
-      Assert.eq(two.pow(128n), fullBits)
+    it('.toString(10) === .toString()', () => {
+      Assert.eq(bi.toString(10), bi.toString())
     })
-    it('should .pow() with BigInteger input', () => {
-      Assert.eq(two.pow(BigInt(128)), fullBits)
+    it(`.toString(16) === '${hexNumber}'`, () => {
+      Assert.eq(bi.toString(16), hexNumber)
     })
-    it('should .pow() with String input', () => {
-      Assert.eq(two.pow('128'), fullBits)
+    it(`.toString(2)  === '${binNumber}'`, () => {
+      Assert.eq(bi.toString(2), binNumber)
+    })
+    it(`.toString(8)  === '${octNumber}'`, () => {
+      Assert.eq(bi.toString(8), octNumber)
     })
   })
 })

@@ -53,6 +53,7 @@ const suites = [
   'Multipart',
   'Mustache',
   'Navigation',
+  'Network',
   'Parser',
   'PathExp',
   'Permission',
