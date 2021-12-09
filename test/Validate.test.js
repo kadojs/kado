@@ -200,7 +200,7 @@ validate.suite('isBelow', (it) => {
     Assert.neq(Val.isBelow(7, 4))
   })
 })
-validate.suite('isLocal', (it) => {
+validate.suite('isOwn', (it) => {
   const obj1 = { test1: 'test1' }
   class Obj2 {}
   Obj2.prototype.test2 = 'test2'
@@ -213,15 +213,15 @@ validate.suite('isLocal', (it) => {
   const inst1 = new Obj2()
   const inst2 = new Obj3()
   it('should match local properties', () => {
-    const isTest1Local = Validate.isLocal(obj1, 'test1') // true
+    const isTest1Local = Validate.isOwn(obj1, 'test1') // true
     Assert.eq(isTest1Local, true)
   })
   it('should not match prototype properties', () => {
-    const isTest2Local = Validate.isLocal(inst1, 'test2') // false
+    const isTest2Local = Validate.isOwn(inst1, 'test2') // false
     Assert.eq(isTest2Local, false)
   })
   it('should match extended, defined properties', () => {
-    const isTest3Local = Validate.isLocal(inst2, 'test3') // true
+    const isTest3Local = Validate.isOwn(inst2, 'test3') // true
     Assert.eq(isTest3Local, true)
   })
 })
