@@ -53,7 +53,7 @@
     "url": "https://git.nullivex.com/kado/kado.git"
   },
   "scripts": {
-    "test": "standard && node ./test/index.js"
+    "test": "standard && node --trace-warnings ./test/index.js"
   },
   "version": "4.3.3"
 }
