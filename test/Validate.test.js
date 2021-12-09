@@ -20,6 +20,7 @@
  */
 const Val = require('../lib/Validate')
 const Assert = require('../lib/Assert')
+const Validate = require('../lib/Validate')
 const runner = require('../lib/TestRunner').getInstance('Kado')
 const validate = runner.suite('Validate', (it) => {
   it('should construct', () => {
@@ -197,6 +198,31 @@ validate.suite('isBelow', (it) => {
   })
   it('should be false if a number is above a base', () => {
     Assert.neq(Val.isBelow(7, 4))
+  })
+})
+validate.suite('isOwn', (it) => {
+  const obj1 = { test1: 'test1' }
+  class Obj2 {}
+  Obj2.prototype.test2 = 'test2'
+  class Obj3 extends Obj2 {
+    constructor () {
+      super()
+      this.test3 = 'test3'
+    }
+  }
+  const inst1 = new Obj2()
+  const inst2 = new Obj3()
+  it('should match own properties', () => {
+    const isTest1Own = Validate.isOwn(obj1, 'test1') // true
+    Assert.eq(isTest1Own, true)
+  })
+  it('should not match prototype properties', () => {
+    const isTest2Own = Validate.isOwn(inst1, 'test2') // false
+    Assert.eq(isTest2Own, false)
+  })
+  it('should match extended, defined properties', () => {
+    const isTest3Own = Validate.isOwn(inst2, 'test3') // true
+    Assert.eq(isTest3Own, true)
   })
 })
 validate.suite('match', (it) => {

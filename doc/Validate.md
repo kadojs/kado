@@ -155,11 +155,53 @@ Valid when type or class of `value` matches
 
 Valid when `test` is greater than `base`
 
-### `static Validate.isbelow(base, test)`
+### `static Validate.isBelow(base, test)`
 * `base` {number} to test against
 * `test` {number} to compare with
 
 Valid when `test` is less than `base`
+
+### `static Validate.isOwn(base, prop)`
+* `base` {Object} to test against
+* `prop` {string} name of property to test
+* Return {boolean} `true` when property is owned by `base`, otherwise `false`.
+
+This method is a shortcut of the following call
+```js
+Object.prototype.hasOwnProperty.call(base, prop)
+```
+
+It serves as a shorthand to replace a lengthy call. Below are some examples of
+where this is used. Most commonly found when looping through objects, see
+example 2.
+
+Example 1
+```js
+const Validate = require('./lib/Validate')
+const obj1 = { test1: 'test1' }
+class Obj2 {}
+Obj2.prototype.test2 = 'test2'
+class Obj3 extends Obj2 {
+  constructor () {
+    super()
+    this.test3 = 'test3'
+  }
+}
+const inst1 = new Obj2()
+const inst2 = new Obj3()
+const isTest1Local = Validate.isOwn(obj1, 'test1') // true
+const isTest2Local = Validate.isOwn(inst1, 'test2') // false
+const isTest3Local = Validate.isOwn(inst2, 'test3') // true
+```
+
+Example 2
+```js
+const obj1 = { test1: 'test1', test2: 'test2', test3: 'test3' }
+for (let key in obj1) {
+  if (!Validate.isOwn(obj1, key)) continue
+  // the key is owned by obj1
+}
+```
 
 ### `static Validate.minimum(base, test)`
 * `base` {number} to test against
