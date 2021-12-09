@@ -125,6 +125,38 @@ When granularity is used, time is subdivided by the provided milliseconds and
 When distance is used, `val1` difference from `val2` should be equal to or less
 than provided milliseconds to be considered valid.
 
+### `static Assert.ensure(type, val)`
+* `type` {string} The type of value to be returned
+* `val` {mixed} The actual input value
+* Return {mixed} the request type if possible.
+
+This method will coerce input of various types into an acceptable version of
+that input, even when the type does not match. WARNING, will coerce data into
+different types. It is important to understand the mechanics of data coercion
+and why user input must be sanitized before using a method like this.
+
+Example
+
+```js
+const someString = 'foo'
+const arr = Assert.ensure('Array', someString) // ['foo']
+const obj = Assert.ensure('Object', someString) // { a: 'foo' }
+const i = Assert.ensure('Number', someString) // Assert.Error
+```
+
+Types can be referenced by their short version see below.
+
+* Array - arr
+* Object - obj
+* Number - num or int
+
+Example
+
+```js
+const someNum = '0'
+const num = Assert.ensure('num', somNum) // 0
+```
+
 ### `static Assert.eq(val1, val2)`
 * `val1` {mixed} first value to compare
 * `val2` {mixed} second value to compare
