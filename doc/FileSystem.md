@@ -217,6 +217,12 @@ Refer to [fsPromises.rmdir](https://nodejs.org/dist/latest-v12.x/docs/api/fs.htm
 ### FileSystem.rmdirSync(path, options)
 Refer to [fs.rmdirSync](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fs_rmdirsync_path_options)
 
+### FileSystem.rm(path, options)
+Refer to [fsPromises.rm](https://nodejs.org/api/fs.html#fspromisesrmpath-options)
+
+### FileSystem.rmSync(path, options)
+Refer to [fs.rmSync](https://nodejs.org/api/fs.html#fsrmsyncpath-options)
+
 ### FileSystem.stat(path, options)
 Refer to [fsPromises.stat](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fspromises_stat_path_options)
 
