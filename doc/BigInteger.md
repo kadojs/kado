@@ -24,9 +24,6 @@ BigInteger is the main interface
 ### `BigInteger.clone()`
 * Returns: {BigInteger} New clone of `this`
 
-### `BigInteger.bitLength()`
-* Returns: {number} The number of bits in `this`
-
 ## Coercion Operations
 ### `BigInteger.intValue()`
 * Returns: {number} `this` as integer
@@ -47,7 +44,7 @@ BigInteger is the main interface
 ## Comparison Operations
 ### `BigInteger.compareTo(a)`
 * `a` {BigInteger} Operand to compare with `this`
-* Returns: {number} `this` < `a`: -1; equal: 0; `this` > `a`: 1
+* Returns: {number} `this` < `a`: positive delta; equal: 0; `this` > `a`: negative delta
 
 ### `BigInteger.equals(a)`
 * `a` {BigInteger} Operand to compare with `this`
@@ -62,15 +59,18 @@ BigInteger is the main interface
 * Returns: {BigInteger} Maximal of either `this` or `a`
 
 ## Bitwise Operations
+### `BigInteger.not()`
 ### `BigInteger.and(a)`
+### `BigInteger.andNot(a)`
 ### `BigInteger.or(a)`
 ### `BigInteger.xor(a)`
-### `BigInteger.andNot(a)`
-### `BigInteger.not()`
 ### `BigInteger.shiftLeft(n)`
 ### `BigInteger.shiftRight(n)`
 ### `BigInteger.getLowestSetBit()`
 ### `BigInteger.bitCount()`
+### `BigInteger.bitLength()`
+* Returns: {number} The number of bits in `this`
+
 ### `BigInteger.testBit(n)`
 ### `BigInteger.setBit(n)`
 ### `BigInteger.clearBit(n)`
@@ -95,6 +95,7 @@ BigInteger is the main interface
 
 ### `BigInteger.modInverse(m)`
 ### `BigInteger.pow(e)`
+### `BigInteger.square()`
 ### `BigInteger.gcd(a)`
 ### `BigInteger.negate()`
 * Returns: {BigInteger} Representation of `-(this)`
@@ -106,7 +107,6 @@ BigInteger is the main interface
 * Returns: {number} `this` < 0: -1; equal: 0; `this` > 0: 1
 
 ### `BigInteger.isProbablePrime(t)`
-### `BigInteger.square()`
 
 ---
 > BigInteger interfaces not implemented in jsbn:
