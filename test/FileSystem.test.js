@@ -169,6 +169,12 @@ runner.suite('FileSystem', (it) => {
   it('should have rmdirSync', () => {
     Assert.isType('Function', FileSystem.rmdirSync)
   })
+  it('should have rm', () => {
+    Assert.isType('Function', FileSystem.rm)
+  })
+  it('should have rmSync', () => {
+    Assert.isType('Function', FileSystem.rmSync)
+  })
   it('should have stat', () => {
     Assert.isType('Function', FileSystem.stat)
   })
