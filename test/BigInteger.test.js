@@ -47,6 +47,10 @@ runner.suite('BigInteger', (it, bigint) => {
   it(`should construct with ('${strNumber}')`, () => {
     Assert.isType('BigInteger', bi)
   })
+  it('should construct with ([0x4, 0xfa501722, 0x72faa2ab])', () => {
+    const bi2 = new BigInteger([0x4, 0xfa501722, 0x72faa2ab])
+    Assert.eqDeep(bi, bi2)
+  })
   it('.clone() should return a clone', () => {
     const bi2 = bi.clone()
     Assert.eqDeep(bi, bi2)
@@ -413,21 +417,6 @@ runner.suite('BigInteger', (it, bigint) => {
         const bns = bi.negate().signum()
         Assert.eq(bns.toString(), desired)
       })
-    }
-    {
-      const ippDesired = {
-        997: true,
-        996: false,
-        353: true,
-        352: false
-      }
-      for (const ippVal of Object.keys(ippDesired).sort(numeric)) {
-        const desired = ippDesired[ippVal]
-        it(`('${ippVal}').isProbablePrime() === ${desired}`, () => {
-          const ipp = (new BigInteger(ippVal.toString())).isProbablePrime()
-          Assert.eq(ipp, desired)
-        })
-      }
     }
   })
 })

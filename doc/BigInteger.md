@@ -6,8 +6,6 @@ const BigInteger = require('kado/lib/BigInteger')
 ```
 The `BigInteger` library implements methods to handle very large numbers
 
-Based on: https://github.com/andyperlitch/jsbn
-
 ## Class: BigInteger
 BigInteger is the main interface
 
