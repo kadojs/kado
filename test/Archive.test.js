@@ -29,11 +29,16 @@ runner.suite('Archive', (it, archive) => {
     Assert.isType('AsyncFunction', Archive.Unzip.fromFd)
   })
   archive.suite('Unzip', (it) => {
+    const {
+      buffer: zipBuffer,
+      names: expectedNames,
+      sha1s: expectedSha1s
+    } = require('./fixture/Archive/test.zip')
     let zipFile
     it('.fromBuffer(buf)', async () => {
       zipFile = await new Promise((resolve, reject) => {
         Archive.Unzip.fromBuffer(
-          require('./fixture/Archive/zipBuffer'),
+          zipBuffer,
           { lazyEntries: true },
           (err, result) => {
             if (!err) { resolve(result) } else { reject(err) }
@@ -74,12 +79,8 @@ runner.suite('Archive', (it, archive) => {
         })
         zipFile.readEntry()
       })
-      Assert.eqDeep(['test1', 'test2', 'test3'], names)
-      Assert.eqDeep([
-        '52478e87589ab97f0e5cce8d8d1746d3a447b9fb',
-        '951a0daccf0eace234fed6eb69dba427af7e6931',
-        'f59fc3328de32ce4ccf5a21e2798f05f4b87c566'
-      ], sha1s)
+      Assert.eqDeep(expectedNames, names)
+      Assert.eqDeep(expectedSha1s, sha1s)
     })
   })
 })
