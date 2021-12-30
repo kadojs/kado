@@ -23,6 +23,7 @@ const Assert = require('../lib/Assert')
 const fs = require('../lib/FileSystem')
 const { createHash } = require('crypto')
 const Archive = require('../lib/Archive')
+const fixturePath = 'fixture/Archive'
 runner.suite('Archive', (it, archive) => {
   it('should have Unzip', () => {
     Assert.isType('Function', Archive.Unzip)
@@ -31,8 +32,8 @@ runner.suite('Archive', (it, archive) => {
     Assert.isType('AsyncFunction', Archive.Unzip.fromFd)
   })
   archive.suite('Unzip', (it, unzip) => {
-    const fixturePath = 'fixture/Archive'
     const fixtures = fs.readdirSync(`${fs.path.join(__dirname, fixturePath)}`)
+      .filter((v) => /\.zip\.js$/.test(v))
       .map((v) => v.replace(/\.js$/, ''))
     for (const fixtureFile of fixtures) {
       const {
@@ -114,6 +115,6 @@ runner.suite('Archive', (it, archive) => {
 })
 if (require.main === module) {
   runner.execute().then((code) => {
-    process.exitCode = code
+    process.exitCode = 0 + code
   })
 }
