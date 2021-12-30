@@ -114,7 +114,5 @@ runner.suite('Archive', (it, archive) => {
   })
 })
 if (require.main === module) {
-  runner.execute().then((code) => {
-    process.exitCode = 0 + code
-  })
+  runner.execute().then(code => { process.exitCode = +code })
 }
