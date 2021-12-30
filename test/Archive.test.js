@@ -45,20 +45,21 @@ runner.suite('Archive', (it, archive) => {
       Assert.eq(3, zipFile.entryCount)
     })
     it('.fromBuffer(buf).entries...', async () => {
-      const result = await new Promise((resolve, reject) => {
-        const names = []
-        const datas = []
+      const { names, sha1s } = await new Promise((resolve, reject) => {
+        const rv = { names: [], sha1s: [] }
         zipFile.on('error', (err) => {
           reject(err)
         })
         zipFile.on('entry', (ent) => {
           if (!/\/$/.test(ent.fileName)) {
-            names.push(ent.fileName)
+            rv.names.push(ent.fileName)
             zipFile.openReadStream(ent, (err, readStream) => {
               let data = ''
               if (err) throw err
               readStream.on('end', () => {
-                datas.push(data)
+                const shasum = require('crypto').createHash('sha1')
+                shasum.update(data)
+                rv.sha1s.push(shasum.digest('hex'))
                 zipFile.readEntry()
               })
               readStream.on('data', (chunk) => {
@@ -69,22 +70,16 @@ runner.suite('Archive', (it, archive) => {
         })
         zipFile.on('end', () => {
           zipFile.close()
-          resolve([names, datas])
+          resolve(rv)
         })
         zipFile.readEntry()
       })
-      const names = result[0]
       Assert.eqDeep(['test1', 'test2', 'test3'], names)
-      const datas = result[1]
-      const sha1s = []
-      for (let i = 0; i < datas.length; i++) {
-        const shasum = require('crypto').createHash('sha1')
-        shasum.update(datas[i])
-        sha1s.push(shasum.digest('hex'))
-      }
-      Assert.eq('52478e87589ab97f0e5cce8d8d1746d3a447b9fb', sha1s[0])
-      Assert.eq('951a0daccf0eace234fed6eb69dba427af7e6931', sha1s[1])
-      Assert.eq('f59fc3328de32ce4ccf5a21e2798f05f4b87c566', sha1s[2])
+      Assert.eqDeep([
+        '52478e87589ab97f0e5cce8d8d1746d3a447b9fb',
+        '951a0daccf0eace234fed6eb69dba427af7e6931',
+        'f59fc3328de32ce4ccf5a21e2798f05f4b87c566'
+      ], sha1s)
     })
   })
 })
