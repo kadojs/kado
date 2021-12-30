@@ -30,10 +30,11 @@ runner.suite('Archive', (it, archive) => {
   })
   archive.suite('Unzip', (it) => {
     const {
-      buffer: zipBuffer,
+      count: expectedCount,
       names: expectedNames,
       sizes: expectedSizes,
-      sha1s: expectedSha1s
+      sha1s: expectedSha1s,
+      buffer: zipBuffer
     } = require('./fixture/Archive/test.zip')
     let zipFile
     it('.fromBuffer(buf)', async () => {
@@ -47,8 +48,8 @@ runner.suite('Archive', (it, archive) => {
       })
       Assert.isType('ZipFile', zipFile)
     })
-    it('.fromBuffer(buf).entryCount === 3', () => {
-      Assert.eq(3, zipFile.entryCount)
+    it(`.fromBuffer(buf).entryCount === ${expectedCount}`, () => {
+      Assert.eq(expectedCount, zipFile.entryCount)
     })
     it('.fromBuffer(buf).entries...', async () => {
       const { names, sizes, sha1s } = await new Promise((resolve, reject) => {

@@ -10,6 +10,7 @@
      39747            39239   1%                            3 files
 */
 module.exports = {
+  count: 3,
   names: ['test1', 'test2', 'test3'],
   sizes: [5120, 33792, 835],
   sha1s: [
