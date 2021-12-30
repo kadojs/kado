@@ -1,4 +1,22 @@
+/*
+  $ unzip -v test.zip
+  Archive:  test.zip
+   Length   Method    Size  Cmpr    Date    Time   CRC-32   Name
+  --------  ------  ------- ---- ---------- ----- --------  ----
+      5120  Stored     5120   0% 2021-12-12 20:18 84a6a1b7  test1
+     33792  Defl:X    33802   0% 2021-12-12 20:20 f84654d2  test2
+       835  Defl:X      317  62% 2021-12-12 20:24 d267dc25  test3
+  --------          -------  ---                            -------
+     39747            39239   1%                            3 files
+*/
 module.exports = {
+  names: ['test1', 'test2', 'test3'],
+  sizes: [5120, 33792, 835],
+  sha1s: [
+    '52478e87589ab97f0e5cce8d8d1746d3a447b9fb',
+    '951a0daccf0eace234fed6eb69dba427af7e6931',
+    'f59fc3328de32ce4ccf5a21e2798f05f4b87c566'
+  ],
   buffer: Buffer.from(`
 UEsDBAoAAgAAAFSijFO3oaaEABQAAAAUAAAFABwAdGVzdDFVVAkAA5C7tmGyu7ZhdXgLAAEE6AMA
 AAToAwAAHK3ofSmR6XzJeAQ7o2y4gJHSIcWf5VjCtqwTBk3liViMQ5PcqLVGlficD1IgxAtLdHvX
@@ -697,11 +715,5 @@ AABQSwECHgMUAAIACACLooxT0lRG+AqEAAAAhAAABQAYAAAAAAAAAAAAtIE/FAAAdGVzdDJVVAUA
 A/W7tmF1eAsAAQToAwAABOgDAABQSwECHgMUAAIACAAFo4xTJdxn0j0BAABDAwAABQAYAAAAAAAB
 AAAAtIGImAAAdGVzdDNVVAUAA9m8tmF1eAsAAQToAwAABOgDAABQSwUGAAAAAAMAAwDhAAAABJoA
 AAAA
-         `, 'base64'),
-  names: ['test1', 'test2', 'test3'],
-  sha1s: [
-    '52478e87589ab97f0e5cce8d8d1746d3a447b9fb',
-    '951a0daccf0eace234fed6eb69dba427af7e6931',
-    'f59fc3328de32ce4ccf5a21e2798f05f4b87c566'
-  ]
+         `, 'base64')
 }
