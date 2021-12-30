@@ -32,6 +32,7 @@ runner.suite('Archive', (it, archive) => {
     const {
       buffer: zipBuffer,
       names: expectedNames,
+      sizes: expectedSizes,
       sha1s: expectedSha1s
     } = require('./fixture/Archive/test.zip')
     let zipFile
@@ -50,14 +51,15 @@ runner.suite('Archive', (it, archive) => {
       Assert.eq(3, zipFile.entryCount)
     })
     it('.fromBuffer(buf).entries...', async () => {
-      const { names, sha1s } = await new Promise((resolve, reject) => {
-        const rv = { names: [], sha1s: [] }
+      const { names, sizes, sha1s } = await new Promise((resolve, reject) => {
+        const rv = { names: [], sizes: [], sha1s: [] }
         zipFile.on('error', (err) => {
           reject(err)
         })
         zipFile.on('entry', (ent) => {
           if (!/\/$/.test(ent.fileName)) {
             rv.names.push(ent.fileName)
+            rv.sizes.push(ent.uncompressedSize)
             zipFile.openReadStream(ent, (err, readStream) => {
               let data = ''
               if (err) throw err
@@ -80,6 +82,7 @@ runner.suite('Archive', (it, archive) => {
         zipFile.readEntry()
       })
       Assert.eqDeep(expectedNames, names)
+      Assert.eqDeep(expectedSizes, sizes)
       Assert.eqDeep(expectedSha1s, sha1s)
     })
   })
