@@ -26,6 +26,7 @@ const suites = [
   // normal tests
   'Asset',
   'Assert',
+  'Archive',
   'BigInteger',
   'ChildProcess',
   'Cluster',
