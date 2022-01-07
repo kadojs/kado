@@ -32,7 +32,7 @@ Design principles:
  * Catch unsafe file names.
    See `validateFileName()`.
 
-## Usage
+### Usage
 
 ```js
 Archive.Unzip.open('path/to/file.zip', { lazyEntries: true },
@@ -59,16 +59,16 @@ Archive.Unzip.open('path/to/file.zip', { lazyEntries: true },
   })
 ```
 
-## API
+### API
 
 The default for every optional `callback` parameter is:
 ```js
 const defaultCallback = (err) => { if (err) throw err }
 ```
 
-### open(path, \[options], \[callback])
+#### Archive.Unzip.open(path, \[options], \[callback])
 
-Calls `fs.open(path, "r")` and reads the `fd` effectively the same as `fromFd()` would.
+Calls `fs.open(path, 'r')` and reads the `fd` effectively the same as `fromFd()` would.
 
 `options` may be omitted or `null`. The defaults are:
 ```js
@@ -102,7 +102,7 @@ The exact effects of turning this option off are:
 * Automatic file name validation will not be performed. See `validateFileName()`.
 
 `validateEntrySizes` is the default and ensures that an entry's reported uncompressed size matches its actual uncompressed size.
-This check happens as early as possible, which is either before emitting each `"entry"` event (for entries with no compression),
+This check happens as early as possible, which is either before emitting each `entry` event (for entries with no compression),
 or during the `readStream` piping after calling `openReadStream()`.
 See `openReadStream()` for more information on defending against zip bomb attacks.
 
@@ -122,7 +122,7 @@ An `err` is provided if the End of Central Directory Record cannot be found, or 
 This kind of error usually indicates that this is not a zip file.
 Otherwise, `zipFile` is an instance of `ZipFile`.
 
-### fromFd(fd, \[options], \[callback])
+#### Archive.Unzip.fromFd(fd, \[options], \[callback])
 
 Reads from the fd, which is presumed to be an open .zip file.
 Note that random access is required by the zip file specification,
@@ -141,7 +141,7 @@ const defaultOptions = {
 
 See `open()` for the meaning of the options and callback.
 
-### fromBuffer(buffer, \[options], \[callback])
+#### Archive.Unzip.fromBuffer(buffer, \[options], \[callback])
 
 Like `fromFd()`, but reads from a RAM buffer instead of an open file.
 `buffer` is a `Buffer`.
@@ -163,7 +163,7 @@ const defaultOptions = {
 See `open()` for the meaning of the options and callback.
 The `autoClose` option is ignored for this method.
 
-### fromRandomAccessReader(reader, totalSize, \[options], \[callback])
+#### Archive.Unzip.fromRandomAccessReader(reader, totalSize, \[options], \[callback])
 
 This method of reading a zip file allows clients to implement their own back-end file system.
 For example, a client might translate read calls into network requests.
@@ -185,17 +185,17 @@ const defaultOptions = {
 
 See `open()` for the meaning of the options and callback.
 
-### dosDateTimeToDate(date, time)
+#### Archive.Unzip.dosDateTimeToDate(date, time)
 
 Converts MS-DOS `date` and `time` data into a JavaScript `Date` object.
 Each parameter is a `Number` treated as an unsigned 16-bit integer.
 Note that this format does not support timezones,
 so the returned object will use the local timezone.
 
-### validateFileName(fileName)
+#### Archive.Unzip.validateFileName(fileName)
 
 Returns `null` or a `String` error message depending on the validity of `fileName`.
-If `fileName` starts with `"/"` or `/[A-Za-z]:\//` or if it contains `".."` path segments or `"\\"`,
+If `fileName` starts with `'/'` or `/[A-Za-z]:\//` or if it contains `'..'` path segments or `'\\'`,
 this function returns an error message appropriate for use like this:
 
 ```js
@@ -204,14 +204,14 @@ if (errorMessage != null) throw new Error(errorMessage)
 ```
 
 This function is automatically run for each entry, as long as `decodeStrings` is `true`.
-See `open()`, `strictFileNames`, and `Event: "entry"` for more information.
+See `open()`, `strictFileNames`, and `Event: 'entry'` for more information.
 
-### Class: ZipFile
+### Class: Archive.Unzip.ZipFile
 
 The constructor for the class is not part of the public API.
 Use `open()`, `fromFd()`, `fromBuffer()`, or `fromRandomAccessReader()` instead.
 
-#### Event: "entry"
+#### Event: 'entry'
 
 Callback gets `(entry)`, which is an `Entry`.
 See `open()` and `readEntry()` for when this event is emitted.
@@ -223,12 +223,12 @@ If `validateEntrySizes` is `true` and this entry's `compressionMethod` is `0` (s
 this entry has already passed entry size validation.
 See `open()` for more information.
 
-#### Event: "end"
+#### Event: 'end'
 
 Emitted after the last `entry` event has been emitted.
 See `open()` and `readEntry()` for more info on when this event is emitted.
 
-#### Event: "close"
+#### Event: 'close'
 
 Emitted after the fd is actually closed.
 This is after calling `close()` (or after the `end` event when `autoClose` is `true`),
@@ -239,14 +239,14 @@ the "fd" in the previous paragraph refers to the `RandomAccessReader` implemente
 
 If this `ZipFile` was acquired from `fromBuffer()`, this event is never emitted.
 
-#### Event: "error"
+#### Event: 'error'
 
 Emitted in the case of errors with reading the zip file.
 (Note that other errors can be emitted from the streams created from `openReadStream()` as well.)
 After this event has been emitted, no further `entry`, `end`, or `error` events will be emitted,
 but the `close` event may still be emitted.
 
-#### readEntry()
+#### ZipFile.readEntry()
 
 Causes this `ZipFile` to emit an `entry` or `end` event (or an `error` event).
 This method must only be called when this `ZipFile` was created with the `lazyEntries` option set to `true` (see `open()`).
@@ -260,7 +260,7 @@ After calling this method, calling this method again before the response event h
 Calling this method after the `end` event has been emitted will cause undefined behavior.
 Calling this method after calling `close()` will cause undefined behavior.
 
-#### openReadStream(entry, \[options], callback)
+#### ZipFile.openReadStream(entry, \[options], callback)
 
 `entry` must be an `Entry` object from this `ZipFile`.
 `callback` gets `(err, readStream)`, where `readStream` is a `Readable Stream` that provides the file data for this entry.
@@ -327,7 +327,7 @@ If this ZipFile was created using `fromRandomAccessReader()`, the `RandomAccessR
 must provide readable streams that implement a `.destroy()` method (see `randomAccessReader._readStreamForRange()`)
 in order for calls to `readStream.destroy()` to work in this context.
 
-#### close()
+#### ZipFile.close()
 
 Causes all future calls to `openReadStream()` to fail,
 and closes the fd, if any, after all streams created by `openReadStream()` have emitted their `end` events.
@@ -352,21 +352,21 @@ For zipfiles created with `fromBuffer()`, the `close()` function has no effect w
 Regardless of how this `ZipFile` was created, there are no resources other than those listed above that require cleanup from this function.
 This means it may be desirable to never call `close()` in some use-cases.
 
-#### isOpen
+#### ZipFile.isOpen
 
 `Boolean`. `true` until `close()` is called; then it's `false`.
 
-#### entryCount
+#### ZipFile.entryCount
 
 `Number`. Total number of central directory records.
 
-#### comment
+#### ZipFile.comment
 
 `String`. Always decoded with `CP437` per the spec.
 
 If `decodeStrings` is `false` (see `open()`), this field is the un-decoded `Buffer` instead of a decoded `String`.
 
-### Class: Entry
+### Class: Archive.Unzip.Entry
 
 Objects of this class represent Central Directory Records.
 Refer to the zipfile specification for more details about these fields.
@@ -389,7 +389,7 @@ These fields are of type `Number`:
  * `externalFileAttributes`
  * `relativeOffsetOfLocalHeader`
 
-#### fileName
+#### Entry.fileName
 
 `String`.
 Following the spec, the bytes for the file name are decoded with
@@ -397,14 +397,14 @@ Following the spec, the bytes for the file name are decoded with
 Alternatively, this field may be populated from the Info-ZIP Unicode Path Extra Field
 (see `extraFields`).
 
-This field is automatically validated by `validateFileName()` before `Archive.Unzip` emits an "entry" event.
+This field is automatically validated by `validateFileName()` before `Archive.Unzip` emits an `entry` event.
 If this field would contain unsafe characters, `Archive.Unzip` emits an error instead of an entry.
 
 If `decodeStrings` is `false` (see `open()`), this field is the un-decoded `Buffer` instead of a decoded `String`.
 Therefore, `generalPurposeBitFlag` and any Info-ZIP Unicode Path Extra Field are ignored.
 Furthermore, no automatic file name validation is performed for this file name.
 
-#### extraFields
+#### Entry.extraFields
 
 `Array` with each entry in the form `{id: id, data: data}`,
 where `id` is a `Number` and `data` is a `Buffer`.
@@ -423,7 +423,7 @@ Note that when `decodeStrings` is false, all Info-ZIP Unicode Path Extra Fields 
 None of the other fields are considered significant by this library.
 Fields that this library reads are left unaltered in the `extraFields` array.
 
-#### fileComment
+#### Entry.fileComment
 
 `String` decoded with the charset indicated by `generalPurposeBitFlag & 0x800` as with the `fileName`.
 (The Info-ZIP Unicode Path Extra Field has no effect on the charset used for this field.)
@@ -434,7 +434,7 @@ Prior to `yauzl` version 2.7.0, this field was erroneously documented as `commen
 For compatibility with any code that uses the field name `comment`,
 Archive.Unzip creates an alias field named `comment` which is identical to `fileComment`.
 
-#### getLastModDate()
+#### Entry.getLastModDate()
 
 Effectively implemented as:
 
@@ -442,7 +442,7 @@ Effectively implemented as:
 return dosDateTimeToDate(this.lastModFileDate, this.lastModFileTime)
 ```
 
-#### isEncrypted()
+#### Entry.isEncrypted()
 
 Returns is this entry encrypted with "Traditional Encryption".
 Effectively implemented as:
@@ -453,9 +453,9 @@ return (this.generalPurposeBitFlag & 0x1) !== 0
 
 See `openReadStream()` for the implications of this value.
 
-Note that "Strong Encryption" is not supported, and will result in an `"error"` event emitted from the `ZipFile`.
+Note that "Strong Encryption" is not supported, and will result in an `error` event emitted from the `ZipFile`.
 
-#### isCompressed()
+#### Entry.isCompressed()
 
 Effectively implemented as:
 
@@ -465,13 +465,13 @@ return this.compressionMethod === 8
 
 See `openReadStream()` for the implications of this value.
 
-### Class: RandomAccessReader
+### Class: Archive.Unzip.RandomAccessReader
 
 This class is meant to be subclassed by clients and instantiated for the `fromRandomAccessReader()` function.
 
 An example implementation can be found in `test/test.js`.
 
-#### randomAccessReader._readStreamForRange(start, end)
+#### RandomAccessReader._readStreamForRange(start, end)
 
 Subclasses *must* implement this method.
 
@@ -497,14 +497,14 @@ If you never call `readStream.destroy()`, then streams returned from this method
 Note that the stream returned from this method might not be the same object that is provided by `openReadStream()`.
 The stream returned from this method might be `pipe()`d through one or more filter streams (for example, a zlib inflate stream).
 
-#### randomAccessReader.read(buffer, offset, length, position, callback)
+#### RandomAccessReader.read(buffer, offset, length, position, callback)
 
 Subclasses may implement this method.
 The default implementation uses `createReadStream()` to fill the `buffer`.
 
 This method should behave like `fs.read()`.
 
-#### randomAccessReader.close(callback)
+#### RandomAccessReader.close(callback)
 
 Subclasses may implement this method.
 The default implementation is effectively `setImmediate(callback)`.
@@ -514,7 +514,9 @@ The default implementation is effectively `setImmediate(callback)`.
 This method is called once the all streams returned from `_readStreamForRange()` have ended,
 and no more `_readStreamForRange()` or `read()` requests will be issued to this object.
 
-## How to Avoid Crashing
+## Additional Notes
+
+### How to Avoid Crashing
 
 When a malformed zipfile is encountered, the default behavior is to crash (throw an exception).
 If you want to handle errors more gracefully than this,
@@ -526,9 +528,9 @@ be sure to do the following:
 
 Minor version updates to `Archive.Unzip` will not add any additional requirements to this list.
 
-## Limitations
+### Limitations
 
-### No Streaming Unzip API
+#### No Streaming Unzip API
 
 Due to the design of the .zip file format, it's impossible to interpret a .zip file from start to finish
 (such as from a readable stream) without sacrificing correctness.
@@ -563,7 +565,7 @@ By using General Purpose Bit 3 (and compression method 0),
 it's possible to create arbitrarily ambiguous .zip files that
 distract parsers with file contents that contain apparently valid .zip file metadata.
 
-### Limited ZIP64 Support
+#### Limited ZIP64 Support
 
 For ZIP64, only zip files smaller than `8PiB` are supported,
 not the full `16EiB` range that a 64-bit integer should be able to index.
@@ -571,13 +573,13 @@ This is due to the JavaScript Number type being an IEEE 754 double precision flo
 
 The Node.js `fs` module probably has this same limitation.
 
-### ZIP64 Extensible Data Sector Is Ignored
+#### ZIP64 Extensible Data Sector Is Ignored
 
 The spec does not allow zip file creators to put arbitrary data here,
 but rather reserves its use for PKWARE and mentions something about Z390.
 This doesn't seem useful to expose in this library, so it is ignored.
 
-### No Multi-Disk Archive Support
+#### No Multi-Disk Archive Support
 
 This library does not support multi-disk zip files.
 The multi-disk fields in the zipfile spec were intended for a zip file to span multiple floppy disks,
@@ -590,7 +592,7 @@ By extension the following zip file fields are ignored by this library and not p
  * Number of central directory records on this disk
  * Disk number where file starts
 
-### Limited Encryption Handling
+#### Limited Encryption Handling
 
 You can detect when a file entry is encrypted with "Traditional Encryption" via `isEncrypted()`,
 but `Archive.Unzip` will not help you decrypt it.
@@ -600,41 +602,41 @@ If a zip file contains file entries encrypted with "Strong Encryption", `Archive
 
 If the central directory is encrypted or compressed, `Archive.Unzip` emits an error.
 
-### Local File Headers Are Ignored
+#### Local File Headers Are Ignored
 
 Many unzip libraries mistakenly read the Local File Header data in zip files.
 This data is officially defined to be redundant with the Central Directory information,
 and is not to be trusted.
 Aside from checking the signature, `Archive.Unzip` ignores the content of the Local File Header.
 
-### No CRC-32 Checking
+#### No CRC-32 Checking
 
 This library provides the `crc32` field of `Entry` objects read from the Central Directory.
 However, this field is not used for anything in this library.
 
-### versionNeededToExtract Is Ignored
+#### versionNeededToExtract Is Ignored
 
 The field `versionNeededToExtract` is ignored,
 because this library doesn't support the complete zip file spec at any version,
 
-### No Support For Obscure Compression Methods
+#### No Support For Obscure Compression Methods
 
 Regarding the `compressionMethod` field of `Entry` objects,
 only method `0` (stored with no compression)
 and method `8` (deflated) are supported.
 Any of the other 15 official methods will cause the `openReadStream()` `callback` to receive an `err`.
 
-### Data Descriptors Are Ignored
+#### Data Descriptors Are Ignored
 
 There may or may not be Data Descriptor sections in a zip file.
 This library provides no support for finding or interpreting them.
 
-### Archive Extra Data Record Is Ignored
+#### Archive Extra Data Record Is Ignored
 
 There may or may not be an Archive Extra Data Record section in a zip file.
 This library provides no support for finding or interpreting it.
 
-### No Language Encoding Flag Support
+#### No Language Encoding Flag Support
 
 Zip files officially support charset encodings other than CP437 and UTF-8,
 but the zip file spec does not specify how it works.
