@@ -39,6 +39,7 @@ const suites = [
   'Event',
   'FileSystem',
   'Format',
+  'GeoIP',
   'GetOpt',
   'History',
   'HyperText',
