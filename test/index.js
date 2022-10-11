@@ -63,6 +63,7 @@ const suites = [
   'PromiseMore',
   'Query',
   'QueryCache',
+  'RequestEngine',
   'Router',
   'Schema',
   'Search',
