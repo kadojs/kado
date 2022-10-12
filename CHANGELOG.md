@@ -27,6 +27,8 @@
 * Add GeoIP Library. [!260](https://git.nullivex.com/kado/kado/-/merge_requests/260)
 * Return valid MimeType for literal requests. [!331](https://git.nullivex.com/kado/kado/-/merge_requests/331)
 * Add Request Engine. [!332](https://git.nullivex.com/kado/kado/-/merge_requests/332)
+* Fix Multipart tests on Windows. [!338](https://git.nullivex.com/kado/kado/-/merge_requests/338)
+* Library Stream syntax fix. [!339](https://git.nullivex.com/kado/kado/-/merge_requests/339)
 
 ### 4.3.2
 *Released 7/7/21*
