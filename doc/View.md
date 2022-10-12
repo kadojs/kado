@@ -105,7 +105,6 @@ viewEngine.use((view) => {
 })
 viewEngine.use((view) => {
   if (view.params.captchaEnabled) view.params.captchaKey = 'something'
-  
 })
 viewEngine.use((view) => {
   if (!req.isJSON) return // continue through middleware

@@ -75,7 +75,6 @@ runner.suite('View', (it) => {
     // add middleware
     engine.use((view) => {
       if (view.params.captchaEnabled) view.params.captchaKey = 'something'
-
     })
     engine.use((view) => {
       if (!req.isJSON) return // continue through middleware
