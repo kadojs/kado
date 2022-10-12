@@ -1,18 +1,36 @@
 # Changelog
 
-### 4.3.3
-*Pending*
+### 4.4.0
+*Released 10/12/22*
 * Log now writes to console synchronously when toConsole is on.
-* Improved log dump to work with all variable types.
-* Better log dumping on errors. Fixes #108
-* Added `log.print(msg)` which is an alias for `log.info(msg)`
-* Added `log.log(msg)` which is an alias for `log.info(msg)`
-* Better handling of invalid JSON input #110 and #103
-* Fix issue with statusCode overwrite due to etag support in render.
+* Improved log dump to work with all variable types. [!309](https://git.nullivex.com/kado/kado/-/merge_requests/309)
+* Better log dumping on errors. Fixes #108 [!309](https://git.nullivex.com/kado/kado/-/merge_requests/309)
+* Added `log.print(msg)` which is an alias for `log.info(msg)` [!309](https://git.nullivex.com/kado/kado/-/merge_requests/309)
+* Added `log.log(msg)` which is an alias for `log.info(msg)` [!309](https://git.nullivex.com/kado/kado/-/merge_requests/309)
+* Fix issue with statusCode overwrite due to etag support in render. [!312](https://git.nullivex.com/kado/kado/-/merge_requests/312)
+* Fix on delete propagation in regard to foreign key constraints. [!301](https://git.nullivex.com/kado/kado/-/merge_requests/301)
+* Add File Support for JFIF. [!302](https://git.nullivex.com/kado/kado/-/merge_requests/302)
+* Change session ID generator to avoid clashes. [!287](https://git.nullivex.com/kado/kado/-/merge_requests/287)
+* Cache log instances to avoid overloading writers. [!303](https://git.nullivex.com/kado/kado/-/merge_requests/303)
+* Format Library, add progress bar widget. [!304](https://git.nullivex.com/kado/kado/-/merge_requests/304)
+* Graceful failure handling for JSON input. Better handling of invalid JSON input #110 and #103 [!310](https://git.nullivex.com/kado/kado/-/merge_requests/310)
+* Mapper Library, add map. [!311](https://git.nullivex.com/kado/kado/-/merge_requests/311)
+* Add working with email guide. [!317](https://git.nullivex.com/kado/kado/-/merge_requests/317)
+* Minor fixes to multipart and stream libraries. [!316](https://git.nullivex.com/kado/kado/-/merge_requests/316)
+* Assert Library, add ensure method for types. [!318](https://git.nullivex.com/kado/kado/-/merge_requests/318)
+* Validate Library, add isOwn method. [!319](https://git.nullivex.com/kado/kado/-/merge_requests/319)
+* Fix command help generation [!321](https://git.nullivex.com/kado/kado/-/merge_requests/321)
+* Fix logger to print day of month instead of week. [!322](https://git.nullivex.com/kado/kado/-/merge_requests/322)
+* Fix content length when multibyte characters are present. [!329](https://git.nullivex.com/kado/kado/-/merge_requests/329)
+* Add Archive Library. [!326](https://git.nullivex.com/kado/kado/-/merge_requests/326)
+* Documentation for BigInteger. [!324](https://git.nullivex.com/kado/kado/-/merge_requests/324)
+* Add GeoIP Library. [!260](https://git.nullivex.com/kado/kado/-/merge_requests/260)
+* Return valid MimeType for literal requests. [!331](https://git.nullivex.com/kado/kado/-/merge_requests/331)
+* Add Request Engine. [!332](https://git.nullivex.com/kado/kado/-/merge_requests/332)
 
 ### 4.3.2
 *Released 7/7/21*
-* Restore main field, with proper value. Ensured compliance.
+* Restore main field, with proper value. Ensured compliance. [!307](https://git.nullivex.com/kado/kado/-/merge_requests/307)
 * Removed index of Session data on the SessionStoreModel
 
 ### 4.3.1
@@ -22,8 +40,8 @@ awaited. IN the event multiple session sets are going to happen in the same
 method it is advised to use `{ save: false }` as a third option to
 `Session.set()` then call `Session.save()` and await the promise at the end.
 This is meant to make sure that session saving is not implied to be automatic.
-It should be explicit and handled like any other database transaction.
-* Remove main field from package.json
+It should be explicit and handled like any other database transaction. [!294](https://git.nullivex.com/kado/kado/-/merge_requests/294)
+* Remove main field from package.json. [!305](https://git.nullivex.com/kado/kado/-/merge_requests/305)
 
 ### 4.3.0
 *Released 2/23/21*
