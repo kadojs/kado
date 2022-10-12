@@ -1,7 +1,7 @@
 'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
- * Copyright © 2013-2022 Bryan Tong, NULLIVEX LLC. All rights reserved.
+ * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
  *
  * This file is part of Kado.
  *
@@ -25,11 +25,9 @@ const fs = require('../lib/FileSystem')
 const http = require('http')
 const HyperText = require('../lib/HyperText')
 const Multipart = require('../lib/Multipart')
-const os = require('os')
 const Stream = require('stream')
 let app
 let server
-const isWin = !!os.platform().match('win')
 const buildFormData = () => {
   const inputFile = fs.path.resolve(
     __dirname, 'fixture', 'Multipart', 'article.json')
@@ -78,7 +76,7 @@ const testUpload = () => {
         Assert.isType('string', val)
         Assert.eq(false, fieldnameShort)
         Assert.eq(false, valShort)
-      } catch (err) { res.json({ error: err.message }) }
+      } catch (err) { console.log(err) }
       gotField = true
     })
     multipart.on('file', (field, stream, filename, encoding, mimeType) => {
@@ -88,7 +86,7 @@ const testUpload = () => {
         Assert.isType('string', filename)
         Assert.isType('string', encoding)
         Assert.isType('string', mimeType)
-      } catch (err) { res.json({ error: err.message }) }
+      } catch (err) { console.log(err) }
       gotFile = true
       filePromise.push(new Promise((resolve, reject) => {
         stream.on('data', (chunk) => {
@@ -99,29 +97,20 @@ const testUpload = () => {
         stream.on('end', () => { resolve() })
       }))
     })
-    multipart.on('error', (err) => { res.json({ error: err.message }) })
+    multipart.on('error', (err) => { throw err })
     multipart.on('finish', async () => {
+      await Promise.all(filePromise)
       try {
-        await Promise.all(filePromise)
         Assert.isOk(gotField, 'Missing field')
         Assert.isOk(gotFile, 'Missing file')
-        res.json({ status: 'ok' })
-      } catch (err) {
-        res.json({ error: err.message })
-      }
+      } catch (err) { console.log(err) }
+      res.setHeader('Content-Type', 'application/json')
+      res.end(JSON.stringify({ status: 'ok' }))
     })
     req.pipe(multipart)
   }
 }
-const sendUpload = (headers, data, resolve, reject, attempt = 0) => {
-  function sendAgain (err) {
-    if (attempt < 2) {
-      attempt++
-      sendUpload(headers, data, resolve, reject, attempt)
-    } else {
-      reject(err)
-    }
-  }
+const sendUpload = (headers, data, resolve, reject) => {
   const client = http.request({
     port: 3030,
     host: 'localhost',
@@ -130,33 +119,30 @@ const sendUpload = (headers, data, resolve, reject, attempt = 0) => {
     headers: headers
   })
   let buf = ''
-  client.on('error', (err) => { sendAgain(err) })
+  client.on('error', (err) => { reject(err) })
   client.on('response', async (res) => {
-    res.on('data', (chunk) => { buf += chunk })
+    res.on('data', (chunk) => { buf += chunk.toString('utf-8') })
     res.on('end', () => {
       try {
-        const rv = JSON.parse(buf.toString('utf-8'))
-        console.log(rv)
+        const rv = JSON.parse(buf)
         Assert.isOk(rv.status === 'ok', 'Invalid response')
         resolve()
-      } catch (err) {
-        sendAgain(err)
-      }
+      } catch (err) { reject(err) }
     })
   })
-  // piping from a file fails on Windows 10 with Node 16.4.2 it may be
-  // a bug that will go away, or it might be a miracle that it works the rest
-  // of the time. issue https://git.nullivex.com/kado/kado/-/issues/90
-  // and merge request
-  // https://git.nullivex.com/kado/kado/-/merge_requests/289/
-  // both attempt to correct this mysterious issue however it remains.
-  // the theory is that a race condition happens, and the newest code is
-  // exposing what used to be a rare issue
-  // data.pipe(client)
-  // reading and writing the stream manually works
-  // UPDATE: switched to Stream.pipeline to correct this
-  if (data instanceof Stream.Readable) {
-    Stream.pipeline(data, client, (err) => { if (err) sendAgain(err) })
+  if (data instanceof Stream) {
+    // piping from a file fails on Windows 10 with Node 16.4.2 it may be
+    // a bug that will go away, or it might be a miracle that it works the rest
+    // of the time. issue https://git.nullivex.com/kado/kado/-/issues/90
+    // and merge request
+    // https://git.nullivex.com/kado/kado/-/merge_requests/289/
+    // both attempt to correct this mysterious issue however it remains.
+    // the theory is that a race condition happens, and the newest code is
+    // exposing what used to be a rare issue
+    // data.pipe(client)
+    // reading and writing the stream manually works
+    data.on('data', (chunk) => { client.write(chunk) })
+    data.on('close', () => { client.end() })
   } else {
     client.end(data)
   }
@@ -184,10 +170,9 @@ runner.suite('Multipart', (it, suite) => {
         'content-type': 'multipart/form-data; boundary=' + boundary,
         'transfer-encoding': 'chunked'
       }
-      const file = fs.path.resolve(
-        __dirname, 'fixture', 'Multipart', 'article.part'
+      const data = fs.createReadStream(
+        fs.path.resolve(__dirname, 'fixture', 'Multipart', 'article.part')
       )
-      const data = isWin ? fs.readFileSync(file) : fs.createReadStream(file)
       sendUpload(headers, data, resolve, reject)
     })
   })
@@ -198,21 +183,25 @@ runner.suite('Multipart', (it, suite) => {
         'content-type': 'multipart/form-data; boundary="' + boundary + '"',
         'transfer-encoding': 'chunked'
       }
-      const file = fs.path.resolve(
-        __dirname, 'fixture', 'Multipart', 'article.part'
+      const data = fs.createReadStream(
+        fs.path.resolve(__dirname, 'fixture', 'Multipart', 'article.part')
       )
-      const data = isWin ? fs.readFileSync(file) : fs.createReadStream(file)
-      sendUpload(headers, data, resolve, reject)
+      // let things settle, for real fast testers
+      setTimeout(() => {
+        sendUpload(headers, data, resolve, reject)
+      }, 20)
     })
   })
   it('should accept and parse a multipart locally built request', () => {
     return new Promise((resolve, reject) => {
+      app.post('/upload/', testUpload(resolve, reject))
       const form = buildFormData()
       sendUpload(form.headers, form.data, resolve, reject)
     })
   })
   it('should accept and parse from Multipart.FormBuild', () => {
     return new Promise((resolve, reject) => {
+      app.post('/upload/', testUpload(resolve, reject))
       const form = new Multipart.FormBuild()
       form.add('testField', 'foo')
       form.add('testFile', fs.createReadStream(
