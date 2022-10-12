@@ -47,13 +47,17 @@ const expectMap = {
     region: 'NH',
     eu: '1',
     timezone: 'Europe/Amsterdam',
-    city: 'Amsterdam',
+    city: {
+      '4c7da85ef71cc11a32343fdc9928d206': 'Zandvoort',
+      default: 'Amsterdam'
+    },
     metro: 0,
     area: 5
   },
   'UTF8;2.139.175.1': {
     city: {
       bc89d8fe9d357cb37fe63596d5558351: 'Zaragoza',
+      '4c7da85ef71cc11a32343fdc9928d206': 'Barcelona',
       free: 'Pamplona',
       default: 'Girona'
     }
