@@ -1,9 +1,8 @@
-const argv = process.argv.filter((v, i, a) => {
+const argv0 = require('os').platform().match('win') ? 'node.exe' : process.argv0
+const argv = process.argv.filter((v) => {
   return !(
-    v.indexOf(process.argv0) === v.length - process.argv0.length ||
+    v.indexOf(argv0) === v.length - argv0.length ||
     v.indexOf(__filename.replace(/\.js$/, '')) === 0
   )
 })
-;(async () => await require('./lib/GeoIPUpdate')
-  .getInstance()
-  .updateData(argv[0] || 'free'))()
+require('./lib/GeoIPUpdate').getInstance().updateData(argv[0] || 'free')
