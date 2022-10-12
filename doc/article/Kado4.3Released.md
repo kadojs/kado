@@ -1,7 +1,7 @@
 # Kado 4.3 Released
 *By Bryan Tong 10/11/22*
 
-Kado 4.3 has been releases since February 2022 and stabilizes the big additions
+Kado 4.3 has been released since February 2022 and stabilizes the big additions
 made in Kado 4.2.
 
 Most of the Kado 4.3 features and changes come from real life testing and
@@ -11,7 +11,7 @@ stability in public.
 Our team has been continuing the security review and testing of Kado. To this
 point, we have had great success.
 
-Here is an overview of the primary additions:
+Here is a summary of the changes:
 * Fix bug in Format.cookie() [!277](https://git.nullivex.com/kado/kado/-/merge_requests/277)
 * Use +00:00 for SQL timezone [!288](https://git.nullivex.com/kado/kado/-/merge_requests/288)
 * Raise cluster default timeouts [!284](https://git.nullivex.com/kado/kado/-/merge_requests/284)

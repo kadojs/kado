@@ -1,7 +1,7 @@
 'use strict'
 /**
  * Kado - High Quality JavaScript Libraries based on ES6+ <https://kado.org>
- * Copyright © 2013-2020 Bryan Tong, NULLIVEX LLC. All rights reserved.
+ * Copyright © 2013-202 Bryan Tong, NULLIVEX LLC. All rights reserved.
  *
  * This file is part of Kado.
  *
