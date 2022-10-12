@@ -42,7 +42,7 @@ See more guides and examples below.
 
 * Single Node.js Module
 * Compatible with Node.js 10 and above.
-* Contains 47 libraries that cover a majority of coding tasks.
+* Contains 51 libraries that cover a majority of coding tasks.
 * Use libraries as needed and keep the code light.
 * Consistent stable code that rarely changes.
 * Complete reference documentation.
