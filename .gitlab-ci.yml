@@ -5,7 +5,7 @@ node10:
   image: node:10
   script:
     - node -v
-    - npm install standard
+    - npm install standard@16
     - npm run geoip-update
     - npm test
 
@@ -14,7 +14,7 @@ node12:
   image: node:12
   script:
     - node -v
-    - npm install standard
+    - npm install standard@16
     - npm run geoip-update
     - npm test
 
@@ -23,7 +23,7 @@ node14:
   image: node:14
   script:
     - node -v
-    - npm install standard
+    - npm install standard@16
     - npm run geoip-update
     - npm test
 
@@ -32,6 +32,6 @@ node-latest:
   image: node:latest
   script:
     - node -v
-    - npm install standard
+    - npm install standard@16
     - npm run geoip-update
     - npm test

@@ -19,6 +19,7 @@
  * along with Kado.  If not, see <https://www.gnu.org/licenses/>.
  */
 const runner = require('../lib/TestRunner').getInstance('Kado')
+const fs = require('../lib/FileSystem')
 const Assert = require('../lib/Assert')
 const View = require('../lib/View')
 const ViewEngine = View.ViewEngine
@@ -67,6 +68,36 @@ runner.suite('View', (it) => {
   })
   it('should remove the view', () => {
     Assert.eq(view.remove('home'), 'home')
+  })
+  it('should process middleware', async () => {
+    const viewFolder = fs.path.resolve('./test/fixture/View')
+    const engine = new View.ViewMustache(viewFolder)
+    // add middleware
+    engine.use((view) => {
+      if (view.params.captchaEnabled) view.params.captchaKey = 'something'
+    })
+    engine.use((view) => {
+      if (!req.isJSON) return // continue through middleware
+      res.json(view.params)
+      return true // halt middleware processing since the response was sent
+    })
+    const blankfn = () => {}
+    const options = {}
+    const params = { things: 'stuff', captchaEnabled: true }
+    const req = { headers: {} }
+    const res = {
+      setHeader: blankfn,
+      end: (data) => {
+        Assert.isType('string', data)
+        Assert.isOk(data.match('stuff'), 'Missing content')
+      }
+    }
+    const template = 'template'
+    const rv = await engine.render(req, res, template, params, options)
+    Assert.isType('object', rv)
+    Assert.isType('string', rv.body)
+    Assert.isOk(rv.body.match('stuff'), 'Missing content')
+    Assert.isOk(rv.params.captchaKey === 'something', 'Missing parameter mod')
   })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
