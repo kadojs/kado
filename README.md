@@ -67,6 +67,6 @@ Please see the [CHANGELOG](https://kado.org/info/changelog/)
 Please see the [Contribution Guidelines](https://kado.org/info/contributing/)
 
 ## License
-Kado Copyright (C) 2013-2021 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado
+Kado Copyright (C) 2013-2022 Bryan Tong, NULLIVEX LLC. All rights reserved. Kado
 is licensed under the Lesser GNU Public License version 3.0 or newer see
 [LICENSE](https://kado.org/info/license/) for a complete copy of applicable license
