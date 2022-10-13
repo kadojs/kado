@@ -334,6 +334,6 @@ text and are awkward to use for markup."</p>
 <p>(C) 2009 Chris Wanstrath</p>
 <p>(C) 2010-2020 Jan Lehnardt (JavaScript)</p>
 <p>(C) 2010-2020 The mustache.js community</p>
-<p>(C) 2020-2021 Bryan Tong, Kado (JavaScript ES6 Upgrades)</p>
+<p>(C) 2020-2022 Bryan Tong, Kado (JavaScript ES6 Upgrades)</p>
 <p>Original CTemplate by Google</p>
 </div>
