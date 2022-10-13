@@ -136,7 +136,6 @@ const sendUpload = (headers, data, resolve, reject, attempt = 0) => {
     res.on('end', () => {
       try {
         const rv = JSON.parse(buf.toString('utf-8'))
-        console.log(rv)
         Assert.isOk(rv.status === 'ok', 'Invalid response')
         resolve()
       } catch (err) {
