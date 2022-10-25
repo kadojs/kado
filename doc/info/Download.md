@@ -29,10 +29,10 @@ Yarn is a great package manager and works well in production.
 Please use the link below to download an archive file containing the latest
 version of Kado.
 
-* [kado-4.3.0.zip](https://git.nullivex.com/kado/kado/-/archive/v4.3.0/kado-v4.3.0.zip) - All Platforms
-* [kado-4.3.0.tar.gz](https://git.nullivex.com/kado/kado/-/archive/v4.3.0/kado-v4.3.0.tar.gz) - All Platforms
-* [kado-4.3.0.tar.bz2](https://git.nullivex.com/kado/kado/-/archive/v4.3.0/kado-v4.3.0.tar.bz2) - All Platforms
-* [kado-4.3.0.tar](https://git.nullivex.com/kado/kado/-/archive/v4.3.0/kado-v4.3.0.tar) - All Platforms
+* [kado-4.4.0.zip](https://git.nullivex.com/kado/kado/-/archive/v4.4.0/kado-v4.4.0.zip) - All Platforms
+* [kado-4.4.0.tar.gz](https://git.nullivex.com/kado/kado/-/archive/v4.4.0/kado-v4.4.0.tar.gz) - All Platforms
+* [kado-4.4.0.tar.bz2](https://git.nullivex.com/kado/kado/-/archive/v4.4.0/kado-v4.4.0.tar.bz2) - All Platforms
+* [kado-4.4.0.tar](https://git.nullivex.com/kado/kado/-/archive/v4.4.0/kado-v4.4.0.tar) - All Platforms
 
 For earlier versions see our [Release Page](https://git.nullivex.com/kado/kado/-/releases).
 
