@@ -1,9 +1,5 @@
 # Kado
 [![pipeline status](https://git.nullivex.com/kado/kado/badges/master/pipeline.svg)](https://git.nullivex.com/kado/kado/commits/4.x)
-[![Build Status](https://travis-ci.org/KadoOrg/kado.svg?branch=master)](https://travis-ci.org/KadoOrg/kado)
-```
-npm install kado
-```
 
 Collection of JavaScript Framework Libraries for Node.js
 
@@ -34,6 +30,20 @@ Once the command has executed, a web server that says "Hello" will be available
 on port `3000` of your local machine, example: `http://localhost:3000`.
 
 See [kado.org](https://kado.org/guide/getting-started/) to go further.
+
+## Install
+
+Use your favorite package manager.
+
+```
+npm install kado
+```
+
+or
+
+```
+yarn add kado
+```
 
 ## Features
 
