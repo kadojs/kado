@@ -58,5 +58,13 @@ runner.suite('PathExp', (it) => {
     Assert.eq(path.match(url.pathname, params), true)
     Assert.eq(params.action, 'settings')
   })
+  it('should match against /c/package-label/some/file/somewhere/foo.js', () => {
+    const path = new PathExp('/c/:package/:__all')
+    const params = {}
+    const url = new URL('http://localhost/c/package-label/some/file/somewhere/foo.js')
+    Assert.eq(path.match(url.pathname, params), true)
+    Assert.eq(params.package, 'package-label')
+    Assert.eq(params.__all, 'some/file/somewhere/foo.js')
+  })
 })
 if (require.main === module) runner.execute().then(code => process.exit(code))
