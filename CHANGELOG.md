@@ -1,5 +1,10 @@
 # Changelog
 
+### 4.4.1
+*Not Released*
+* Remove unused build buttons from README
+* Add `:_all` handling to PathExp to capture remaining URI [!349](https://git.nullivex.com/kado/kado/-/merge_requests/349)
+
 ### 4.4.0
 *Released 10/12/22*
 * Log now writes to console synchronously when toConsole is on.

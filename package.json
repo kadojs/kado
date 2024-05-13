@@ -56,7 +56,7 @@
     "geoip-update": "node geoip-update",
     "test": "standard && node --trace-warnings ./test/index.js"
   },
-  "version": "4.4.0",
+  "version": "4.4.1",
   "devDependencies": {
     "lazy": "^1.0.11"
   }
