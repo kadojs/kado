@@ -13,33 +13,80 @@ libraries in a system form.
 * `name` {string} name identifying the instance, defaults to `main`
 * Return {Application} a new application instance for use.
 
+Example:
+```js
+const app = Application.getInstance() // default name is 'main'
+```
+
 ### Application.constructor()
 * Return {Application} a new application instance for use.
+
+Example:
+```js
+const app = Application.getInstance()
+```
 
 ### Application.setConfig(cfg)
 * `cfg` {object} new config, can be set multiple times and will merge into
 existing.
 * Return {Application} this instance
 
+Example:
+```js
+const app = Application.getInstance()
+app.setConfig({
+    name: 'my-app'
+})
+```
+
 ### Application.setName(name)
 * `name` {object} update the instance name of the application
 * Return {Application} this instance
+
+Example:
+```js
+const app = Application.getInstance()
+app.setName('my-app')
+```
 
 ### Application.setTrustProxy(trustProxy)
 * `trustProxy` {boolean} Whether or not to use the X-Forwarded-For header when
 setting `req.ip` on `HyperTextServer` connections.
 * Return {Application} this instance
 
+Example:
+```js
+const app = Application.getInstance()
+app.setTrustProxy(true)
+```
+
 ### Application.setVersion(version)
 * `version` {string} the version of the current application
 * Return {Application} this instance
 
+Example:
+```js
+const app = Application.getInstance()
+app.setVersion('1.0.0')
+```
 
-### Application.addModules(mod)
+### Application.addModule(mod)
 * `mod` {Module} instance of the module to be added
 * Return {Application} this instance
 
 Adds a new module to the system.
+
+Example:
+```js
+const app = Application.getInstance()
+app.addModule(new Module('my-module', {
+    name: 'My Module',
+    description: 'A module to do something',
+    version: '1.0.0',
+    author: 'John Doe',
+    license: 'MIT'
+}))
+```
 
 ### Application.getModule(name)
 * `name` {string} name of the module to retrieve
@@ -47,24 +94,48 @@ Adds a new module to the system.
 
 Get a module by name if it exists.
 
+Example:
+```js
+const app = Application.getInstance()
+const module = app.getModule('my-module')
+```
+
 ### Application.removeModule(name)
 * `name` {string} name of the module to remove.
 * Return {Module} instance of removed module or `false` if not found.
 
 Remove a module by name if it exists.
 
+Example:
+```js
+const app = Application.getInstance()
+const module = app.removeModule('my-module')
+```
+
 ### Application.lib(name)
-* `name` {string} name of the library to require.
+* `name` {string} name of the library to require. Throws an error if the library does not exist.
 * Return {Object} required contents of searched library by `name`
 
 Note: this will require the library and fail if it doesnt exists. Use
 `app.library.search(name)` to check for a libraries existence.
+
+Example:
+```js
+const app = Application.getInstance()
+const library = app.lib('my-library')
+```
 
 ### Application.start(argv)
 * Return {Promise} resolved when application is ready for use.
 
 This will setup and connect sub systems, then check for a command to execute,
 tests to run, or will default to starting any http servers.
+
+Example:
+```js
+const app = Application.getInstance()
+app.start()
+```
 
 ### Application.listen()
 * Return {Promise} resolved when all servers are listening.
@@ -73,14 +144,32 @@ Note: When the application is `started` only connectors are setup. This method
 must be called to listen on ports. This is by design to support cleaner
 initialization for scripting.
 
+Example:
+```js
+const app = Application.getInstance()
+app.listen()
+```
+
 ### Application.stop()
 * Return {Promise} resolved when application is shutdown.
 
 This will stop listening of any servers, disconnect sub systems and close
 connections.
 
+Example:
+```js
+const app = Application.getInstance()
+app.stop()
+```
+
 ### Application.getDefaultConfig()
 * Return {Object} default application configuration.
+
+Example:
+```js
+const app = Application.getInstance()
+const config = app.getDefaultConfig()
+```
 
 *Internal Use*
 

@@ -8,6 +8,20 @@ const Connect = require('kado/lib/Connect')
 This library is the repository for registering external connectors
 into a Kado System.
 
+The ConnectEngine system serves as an interface for creating and managing various connectors within the Kado framework. It allows developers to define specific engines that can handle different types of external resources, such as databases or APIs. By registering these engines with the Connect system, users can easily switch between different implementations or configurations as needed. The ConnectEngine provides methods to activate, deactivate, and check the status of these engines, ensuring that the application can dynamically adapt to the requirements of the external resources it interacts with. This modular approach enhances the flexibility and scalability of applications built using Kado.
+
+The ConnectEngine system is designed to facilitate the integration of various external systems within a Kado application. It is particularly useful for managing connections to databases, allowing seamless interactions with different database engines, whether SQL or NoSQL. Additionally, the ConnectEngine can be utilized to route requests to web servers, enabling efficient handling of HTTP requests and responses. Furthermore, it supports template systems, allowing developers to dynamically render views based on the data retrieved from these external sources. By registering and routing these engines, the ConnectEngine enhances the modularity and flexibility of applications, making it easier to adapt to changing requirements and technologies.
+
+Example:
+
+```js
+const Connect = require('kado/lib/Connect')
+const connect = new Connect()
+connect.addEngine('mysql', new MySQLEngine())
+// add a template engine
+connect.addEngine('template', new TemplateEngine())
+```
+
 ## Class: Connect
 
 ### static Connect.each(that, name, options, method)
@@ -16,19 +30,52 @@ into a Kado System.
 * `options` {object} options object passed to engines for method
 * `method` {string} name of the method that should exist on the Connect instance
 
+This method is used to iterate over all engines and call a method on each engine.
+
 Note: will throw an error when either the input is incomplete or the methods
 cannot be called.
+
+Example:
+
+```js
+const Connect = require('kado/lib/Connect')
+const connect = new Connect()
+connect.each(connect, 'mysql', {name: 'mysql'}, 'connect')
+```
 
 ### static Connect.getInstance()
 * Return {Connect} new instance of the connector
 
+Example:
+
+```js
+const Connect = require('kado/lib/Connect')
+const connect = Connect.getInstance()
+```
+
 ### Connect.constructor()
 * Return {Connect} new instance of the Connect system
+
+Example:
+
+```js
+const Connect = require('kado/lib/Connect')
+const connect = new Connect()
+```
 
 ### Connect.addEngine(name, instance)
 * `name` {string} name of the connector
 * `instance` {object} instance of the new connector to access
 * Return {object} the instance added to the system
+
+Example:
+
+```js
+const Connect = require('kado/lib/Connect')
+const Database = require('kado/lib/Database')
+const connect = new Connect()
+connect.addEngine('mysql', new Database.MySQL())
+```
 
 ### Connect.checkEngine(name)
 * `name` {string} name of the engine

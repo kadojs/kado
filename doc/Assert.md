@@ -58,29 +58,72 @@ These are used upon an instance, with the `data` provided in the constructor
 * `floor` {number} value for lower limit
 * Returns: {boolean} `true` when above the `floor`
 
+Example:
+```js
+const assert = new Assert(10)
+assert.above(5) // true
+```
+
 ### `Assert.below(ceiling)`
 * `ceiling` {number} value for upper limit
 * Returns: {boolean} `true` when below the `ceiling`
+
+Example:
+```js
+const assert = new Assert(10)
+assert.below(15) // true
+```
+
 
 ### `Assert.equal(against)`
 * `against` {number} value to compare
 * Returns: {boolean} `true` when equal to `against`
 
+Example:
+```js
+const assert = new Assert(10)
+assert.equal(10) // true
+```
+
 ### `Assert.is(type)`
 * `type` {string} any valid type or class name
 * Returns: {boolean} `true` when type or class matches `type`
+
+Example:
+```js
+const assert = new Assert(10)
+assert.is('number') // true
+```
 
 ### `Assert.min(bottom)`
 * `bottom` {number} value for lower limit
 * Returns: {boolean} `true` when above or equal to the `bottom`
 
+Example:
+```js
+const assert = new Assert(10)
+assert.min(5) // true
+```
+
 ### `Assert.max(top)`
 * `top` {number} value for upper limit
 * Returns: {boolean} `true` when below or equal to the `top`
 
+Example:
+```js
+const assert = new Assert(10)
+assert.max(15) // true
+```
+
 ### `Assert.not(val)`
 * `val` {number} value to compare
 * Returns: {boolean} `true` when not equal to `val`
+
+Example:
+```js
+const assert = new Assert(10)
+assert.not(5) // true
+```
 
 ### `Assert.ok(message)`
 * `message` {string} message used in throw when stored value is not truthy
@@ -110,6 +153,11 @@ to improve matching types:
 If none of the above types are passed, the assertion will be tested
 against [`Assert.eq(val1, val2)`](#static-asserteqval1-val2)
 
+Example:
+```js
+Assert.assert(10, 10) // true
+```
+
 ### `static Assert.date(val1, val2, options)`
 * `val1` {Date} Base date
 * `val2` {Date} Date to assert against Base
@@ -124,6 +172,11 @@ When granularity is used, time is subdivided by the provided milliseconds and
 
 When distance is used, `val1` difference from `val2` should be equal to or less
 than provided milliseconds to be considered valid.
+
+Example:
+```js
+Assert.date(new Date(), new Date(), { granularity: 1000 }) // true
+```
 
 ### `static Assert.ensure(type, val)`
 * `type` {string} The type of value to be returned
@@ -163,6 +216,11 @@ const num = Assert.ensure('num', somNum) // 0
 
 Valid when `val1` equal to `val2`
 
+Example:
+```js
+Assert.eq(10, 10) // true
+```
+
 ### `static Assert.eqDeep(val1, val2)`
 * `val1` {mixed} first value to compare
 * `val2` {mixed} second value to compare
@@ -170,11 +228,26 @@ Valid when `val1` equal to `val2`
 Valid when `val1` deeply matches `val2`
 _Note: Uses Node.js->assert->deepStrictEqual for evaluations_
 
+Example:
+```js
+Assert.eqDeep(10, 10) // true
+```
+
+Example:
+```js
+Assert.eqDeep(0, false) // false
+```
+
 ### `static Assert.neq(val1, val2)`
 * `val1` {mixed} value to match against
 * `val2` {mixed} value to test against
 
 Valid when `val1` not equal to `val2`
+
+Example:
+```js
+Assert.neq(10, 5) // true
+```
 
 ### `static Assert.getType(val)`
 * `val` {mixed} value to query for type
@@ -182,11 +255,21 @@ Valid when `val1` not equal to `val2`
 
 Utility method to obtain type or class, internally used by the next method:
 
+Example:
+```js
+Assert.getType(10) // 'number'
+```
+
 ### `static Assert.isType(type, value)`
 * `type` {string} name of type to test against
 * `value` {mixed} value to obtain type from
 
 Valid when type or class of `value` matches
+
+Example:
+```js
+Assert.isType('number', 10) // true
+```
 
 ### `static Assert.isAbove(base, test)`
 * `base` {number} to test against
@@ -194,11 +277,21 @@ Valid when type or class of `value` matches
 
 Valid when `test` is greater than `base`
 
+Example:
+```js
+Assert.isAbove(5, 10) // true
+```
+
 ### `static Assert.isBelow(base, test)`
 * `base` {number} to test against
 * `test` {number} to compare with
 
 Valid when `test` is less than `base`
+
+Example:
+```js
+Assert.isBelow(15, 10) // true
+```
 
 ### `static Assert.minimum(base, test)`
 * `base` {number} to test against
@@ -206,17 +299,43 @@ Valid when `test` is less than `base`
 
 Valid when `test` is greater than or equal to `base`
 
+Example:
+```js
+Assert.minimum(5, 10) // true
+```
+
+Example:
+```js
+Assert.minimum(5, 4) // false
+```
+
 ### `static Assert.maximum(base, test)`
 * `base` {number} to test against
 * `test` {number} to compare with
 
 Valid when `test` is less than or equal to `base`
 
+Example:
+```js
+Assert.maximum(15, 10) // true
+```
+
 ### `static Assert.isOk(value, message)`
 * `value` {mixed} value to match truthiness against
 * `message` {string} message used in throw
 * Returns: {boolean} `true` if `value` is truthy
 * Throws: {AssertionError} otherwise, with `message` set as provided
+
+Example:
+```js
+Assert.isOk(10) // true
+```
+
+Example:
+```js
+Assert.isOk(0) // false
+```
+
 
 ### `static Assert.catch(v1, v2, msg, method)`
 * `v1` {mixed} first argument to `method`
@@ -234,6 +353,10 @@ Comparison modes supported for `msg`:
 Also, `msg` can be an Array of any of the above supported types to allow for
 "any" style multi-matching.  At least one must match or the catch falls through.
 
+Example:
+```js
+Assert.catch(10, 10, 'these numbers are equal', checkForNotEqual()) // true
+```
 ---
 ## Catch Wrappers
 

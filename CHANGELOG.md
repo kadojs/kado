@@ -1,5 +1,16 @@
 # Changelog
 
+### 4.5.0
+*Released 2/20/2025*
+* Update copyright year to 2025.
+* NOTICE: License changed to from GPLv3 to MIT.
+* Notice added to lib/GeoIP to warn if the data is not present.
+* Added example usage to Application.md
+* Added example usage to Assert.md
+* Added example usage to Asset.md
+* Added example usage to ChildProcess.md
+* Added example usage to Cluster.md
+
 ### 4.4.1
 *Not Released*
 * Remove unused build buttons from README

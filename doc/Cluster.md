@@ -327,3 +327,102 @@ master process with `code`.
 ### Cluster.restart()
 * Return {Promise} resolved with `Cluster.stop()` and `Cluster.start()` have
 finished.
+
+### Zero Downtime Restart
+```js
+const Cluster = require('kado/lib/Cluster')
+const http = require('http')
+
+const cluster = Cluster.getInstance({
+  count: require('os').cpus().length,
+  delayRespawn: 1000,
+  stopTimeout: 30000
+})
+
+if (cluster.isMaster({ maxArguments: 2 })) {
+  process.title = 'master'
+  
+  // Handle SIGUSR2 for zero-downtime restart
+  process.on('SIGUSR2', async () => {
+    console.log('Received SIGUSR2, performing zero-downtime restart...')
+    try {
+      await cluster.restart()
+      console.log('Zero-downtime restart completed successfully')
+    } catch (err) {
+      console.error('Restart failed:', err)
+    }
+  })
+
+  // Monitor worker lifecycle
+  cluster.on('recycle', (oldWorker, newWorker) => {
+    console.log(
+      `Worker ${oldWorker.process.pid} recycled, ` +
+      `replaced by ${newWorker.process.pid}`
+    )
+  })
+
+  cluster.on('status', (status) => {
+    console.log('Cluster status:', status)
+  })
+
+  // Start the cluster
+  cluster.start().then(() => {
+    console.log(`Master ${process.pid} started with ${cluster.count} workers`)
+  })
+} else {
+  // Worker process
+  const server = http.createServer((req, res) => {
+    res.writeHead(200)
+    res.end(`Hello from worker ${process.pid}\n`)
+  })
+
+  Cluster.child(
+    server,
+    'worker',
+    async () => {
+      // Start handling requests
+      server.listen(3000)
+      console.log(`Worker ${process.pid} started`)
+    },
+    async () => {
+      // Graceful shutdown
+      return new Promise((resolve) => {
+        // Stop accepting new connections
+        server.close(() => {
+          console.log(`Worker ${process.pid} cleaned up`)
+          resolve()
+        })
+        
+        // Force close after timeout
+        setTimeout(() => {
+          server.close()
+          resolve()
+        }, 10000)
+      })
+    }
+  )
+}
+```
+
+To trigger a zero-downtime restart, you can send SIGUSR2 to the master process:
+```bash
+kill -SIGUSR2 <master_pid>
+```
+
+This example demonstrates:
+1. Proper setup of master and worker processes
+2. Graceful shutdown handling in workers
+3. Using `cluster.restart()` for zero-downtime restarts
+4. Event monitoring for cluster status changes
+5. Connection draining during worker shutdown
+6. Timeout handling for stuck workers
+
+The restart process:
+1. When SIGUSR2 is received, `cluster.restart()` is called
+2. Each worker receives stop signal and begins shutdown
+3. New workers are spawned as old ones shut down
+4. Existing connections are allowed to complete
+5. New requests are routed to new workers
+6. Old workers exit after connections drain
+
+This ensures your application remains available during updates or configuration changes.

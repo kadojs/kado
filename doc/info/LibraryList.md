@@ -58,6 +58,7 @@ what is provided by the library.
 * [Mustache](../Mustache.md) - Provides a logic-less templating system
   for use in providing any kind of text rendering.
 * [Navigation](../Navigation.md) - Create and manage application menus.
+* [Network](../Network.md) - Networking utilities. IP address utilities.
 * [Parser](../Parser.md) - Parse input strings to variables such as
   objects.
 * [PathExp](../PathExp.md) - Use path notation to validate routes on

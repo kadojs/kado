@@ -1,15 +1,15 @@
 {
-  "author": "Bryan Tong <bryan@burstcloud.co> (https://www.burstcloud.co)",
+  "author": "Bryan Tong <bryan@nullivex.com> (https://www.nullivex.com)",
   "contributors": [
-    "Tony Butler <tony@burstcloud.co> (https://www.burstcloud.co)",
+    "Tony Butler <tony@nullivex.com> (https://www.nullivex.com)",
     "Justin Fowler <justin@burstcloud.co> (https://www.burstcloud.co)",
     "Drew Gordon <drew@burstcloud.co> (https://www.burstcloud.co)",
-    "George Martinez <george@mconsultors.com> (https://www.burstcloud.co)",
-    "Chris Giguere <chris.giguere@burstcloud.co> (https://www.burstcloud.co)"
+    "George Martinez <george@mconsultors.com> (https://www.mconsolutors.com)",
+    "Chris Giguere <chris.giguere@esited.com> (https://www.esited.com)"
   ],
   "description": "JavasScript Libraries based on ES6+",
   "engines": {
-    "node": ">=10"
+    "node": ">=16"
   },
   "keywords": [
     "app",
@@ -45,8 +45,9 @@
     "workers"
   ],
   "homepage": "https://kado.org",
-  "license": "LGPL-3.0",
-  "main": "./lib/Application.js",
+  "license": "MIT",
+  "main": "./lib/index.cjs",
+  "module": "./lib/index.js",
   "name": "kado",
   "repository": {
     "type": "git",
@@ -56,8 +57,15 @@
     "geoip-update": "node geoip-update",
     "test": "standard && node --trace-warnings ./test/index.js"
   },
-  "version": "4.4.1",
+  "version": "4.5.0",
   "devDependencies": {
     "lazy": "^1.0.11"
+  },
+  "exports": {
+    ".": {
+      "require": "./lib/index.cjs",
+      "import": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
   }
 }

@@ -5,16 +5,73 @@
 const ChildProcess = require('kado/lib/ChildProcess')
 ```
 This library provides an enhanced interface to use Node.js core `child_process`
-module.
+module, making it easier to manage long-running child processes with automatic
+respawning and message passing capabilities.
 
 NOTE: This library is not to be confused with the core `ChildProcess` object
 which is used internally.
+
+## Examples
+
+### Basic Worker Process
+```js
+const ChildProcess = require('kado/lib/ChildProcess')
+
+// Create a child process that runs a worker file
+const worker = new ChildProcess({
+  path: './workers/data-processor.js',
+  env: { WORKER_ID: '1' },
+  respawn: true  // automatically restart if the process dies
+})
+
+// Start the worker
+await worker.start()
+
+// Send data to the worker for processing
+worker.send({ type: 'PROCESS_DATA', data: [1, 2, 3] })
+
+// Listen for results from the worker
+worker.on('message', (message) => {
+  if (message.type === 'RESULT') {
+    console.log('Processed result:', message.data)
+  }
+})
+
+// Later, stop the worker
+await worker.stop()
+```
+
+### Example Worker File (data-processor.js)
+```js
+// This is the code that runs in the child process
+process.on('message', (message) => {
+  if (message.type === 'PROCESS_DATA') {
+    // Do some CPU-intensive work
+    const result = message.data.map(x => x * 2)
+    
+    // Send result back to parent
+    process.send({ type: 'RESULT', data: result })
+  }
+})
+```
+
+The above example demonstrates how to:
+- Create a worker process for CPU-intensive tasks
+- Pass messages between parent and child processes
+- Automatically restart crashed workers
+- Handle graceful shutdown
 
 ## Class: ChildProcess extends EventEmitter
 
 ### ChildProcess.constructor(options)
 * `options` {object} options used to setup the child process
 * Return {ChildProcess} new instance tied to the child process.
+
+Example:
+```js
+const child = new ChildProcess()
+child.start()
+```
 
 ### ChildProcess.setEnv(env)
 * `env` {object} new environment parameters to merge in
