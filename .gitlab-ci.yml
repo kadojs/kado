@@ -1,31 +1,4 @@
-image: node:10
-
-node10:
-  stage: test
-  image: node:10
-  script:
-    - node -v
-    - npm install standard@16
-    - npm run geoip-update
-    - npm test
-
-node12:
-  stage: test
-  image: node:12
-  script:
-    - node -v
-    - npm install standard@16
-    - npm run geoip-update
-    - npm test
-
-node14:
-  stage: test
-  image: node:14
-  script:
-    - node -v
-    - npm install standard@16
-    - npm run geoip-update
-    - npm test
+image: node:16
 
 node16:
   stage: test
