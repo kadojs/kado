@@ -102,7 +102,7 @@ Create a new directory `public` and add an `index.html` file:
 
 ```html
 <!DOCTYPE html>
-<html lang="en-US">
+<html>
 <head>
     <title>License Administration Panel</title>
     <style>
